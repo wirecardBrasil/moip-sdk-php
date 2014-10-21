@@ -1,0 +1,19 @@
+{
+    "name": "moip/sdk-php",
+    "description": "Moip PHP client SDK",
+    "homepage": "https://github.com/moip/sdk-php",
+    "require": {
+        "php": ">=5.4"
+    },
+	"require-dev": {
+        "phpunit/phpunit": "@stable",
+		"sebastian/phpcpd": "@stable",
+		"phpmd/phpmd": "@stable",
+		"pdepend/pdepend": "@stable"
+	},
+    "autoload": {
+        "psr-0": {
+            "": ["src/", "tests/"]
+        }
+    }
+}
