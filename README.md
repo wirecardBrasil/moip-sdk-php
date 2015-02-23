@@ -54,7 +54,7 @@ Then run:
 
 ## Documentation
 
-[Official Documentation](#)
+[Official Documentation](https://moip.com.br/referencia-api/)
 
 ## License
 
