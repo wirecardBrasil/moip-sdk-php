@@ -39,8 +39,8 @@ class Payment extends MoipResource
         }
         
         $httpResponse = $httpConnection->execute($path, HTTPRequest::POST);
-            
-        if ($httpResponse->getStatusCode() != 200) {
+
+        if ($httpResponse->getStatusCode() != 200 && $httpResponse->getStatusCode() != 201) {
             throw new \RuntimeException($httpResponse->getStatusMessage(), $httpResponse->getStatusCode());
         }
 
