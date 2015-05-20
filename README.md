@@ -1,4 +1,4 @@
-# Moip PHP client SDK
+# Moip v2 PHP client SDK
 O jeito mais simples e rápido de integrar o Moip a sua aplicação PHP
 
 ---
