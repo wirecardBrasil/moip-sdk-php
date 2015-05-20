@@ -1,17 +1,17 @@
 # Moip PHP client SDK
-The faster and easier way to start your integration with the Moip API using PHP
+O jeito mais simples e rápido de integrar o Moip a sua aplicação PHP
 
 ---
 
-## Dependencies
+## Dependências
 
 * PHP >= 5.4
 
-## Installation
+## Instalação
 
-#### Using composer
+#### Usando composer
 
-Add to your composer.json file:
+Adicione o trecho abaixo em seu arquivo `composer.json`:
 
     {
         "require" : {
@@ -19,43 +19,53 @@ Add to your composer.json file:
         }
     }
     
-Then run:
+Execute:
 
     composer install
     
-## Quick start
+## Configurando sua autenticação
+```php
+require 'vendor/autoload.php';
 
-    <?php
-    require 'vendor/autoload.php';
+use Moip\Moip;
+use Moip\MoipBasicAuth;
 
-    use Moip\Moip;
-    use Moip\MoipBasicAuth;
+$moip = new Moip(new MoipBasicAuth('api-token', 'api-key'));
+```
 
-    $moip = new Moip(new MoipBasicAuth('api-token', 'api-key'));
-    
-    $customer = $moip->customer()->setOwnId('meu_id_de_cliente')
-                                 ->setFullname('Fulano de Tal')
-                                 ->setEmail('fulano@email.com')
-                                 ->setBirthDate('1988-12-30')
-                                 ->setTaxDocument('22222222222')
-                                 ->setPhone(11, 66778899)
-                                 ->addAddress('BILLING',
-                                              'Rua de teste', 123,
-                                              'Bairro', 'Sao Paulo', 'SP',
-                                              '01234567', 8);
+## Criando um pedido
+Nesse exemplo será criado um pedido com dados do cliente.
 
-    $order = $moip->orders()->setOwnId('id_proprio')
-                            ->addItem('Bicicleta Specialized Tarmac 26 Shimano Alivio', 1, 'uma linda bicicleta', 10000)
-                            ->setCustomer($customer)
-                            ->create();
-                            
-    $payment = $order->payments()->setCreditCard(12, 15, '4073020000000002', '123', $customer)
-                                 ->execute();
+```php
+$customer = $moip->customer()->setOwnId('meu_id_de_cliente')
+                             ->setFullname('Fulano de Tal')
+                             ->setEmail('fulano@email.com')
+                             ->setBirthDate('1988-12-30')
+                             ->setTaxDocument('22222222222')
+                             ->setPhone(11, 66778899)
+                             ->addAddress('BILLING',
+                                          'Rua de teste', 123,
+                                          'Bairro', 'Sao Paulo', 'SP',
+                                          '01234567', 8);
+```
+```php
+$order = $moip->orders()->setOwnId('id_proprio')
+                        ->addItem('Bicicleta Specialized Tarmac 26 Shimano Alivio', 1, 'uma linda bicicleta', 10000)
+                        ->setCustomer($customer)
+                        ->create();
+```
 
-## Documentation
+## Criando o pagamento
+Após criar o pedido basta criar um pagamento nesse pedido.
 
-[Official Documentation](https://moip.com.br/referencia-api/)
+```php
+$payment = $order->payments()->setCreditCard(12, 15, '4073020000000002', '123', $customer)
+                             ->execute();
+```
+## Documentação
 
-## License
+[Documentação oficial](https://moip.com.br/referencia-api/)
+
+## Licença
 
 [The MIT License](https://github.com/moip/php-sdk/blob/master/LICENSE)
