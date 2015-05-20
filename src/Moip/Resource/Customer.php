@@ -9,9 +9,7 @@ class Customer extends MoipResource
     public function initialize()
     {
         $this->data = new stdClass();
-        $this->data->taxDocument = new stdClass();
-        $this->data->phone = new stdClass();
-        $this->data->addresses = array();
+
     }
     
     public function addAddress($type, $street, $number, $district, $city, $state, $zip, $complement = null, $country = 'BRA')
