@@ -1,7 +1,7 @@
 {
-    "name": "moip/sdk-php",
-    "description": "Moip PHP client SDK",
-    "homepage": "https://github.com/moip/sdk-php",
+    "name": "moip/moip-sdk-php",
+    "description": "Cliente em PHP para integração server-side com APIs Moip v2",
+    "homepage": "https://github.com/moip/moip-sdk-php",
     "require": {
         "php": ">=5.4"
     },

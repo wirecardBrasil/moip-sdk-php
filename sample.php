@@ -21,11 +21,11 @@ $customer = $moip->customers()->setOwnId('sandbox_v2_1401147277')
                                            'Itaim', 'Sao Paulo', 'SP',
                                            '01234000', 8);
 
-print_r($order = $moip->orders()->setOwnId('sandbox_v2_1401147277')
+$order = $moip->orders()->setOwnId('sandbox_v2_1401147277')
                         ->addItem('Pedido de testes Sandbox - 1401147277', 1, 'Mais info...', 10000)
                         ->setShippingAmount(100)
                         ->setCustomer($customer)
-                        ->create());
+                        ->create();
 
 /*
 $customer = $moip->customers()->setOwnId('sandbox_v2_1401147277')
@@ -34,7 +34,8 @@ $customer = $moip->customers()->setOwnId('sandbox_v2_1401147277')
                               ->setBirthDate('1988-12-30')
                               ->setTaxDocument('33333333333')
                               ->setPhone(11, 66778899);
-$payment = $order->payments()
+*/                              
+print_r($payment = $order->payments()
                  ->setCreditCard('05', '18', '4012001038443335', '123', $customer)
-                 ->execute();
- */
+                 ->execute());
+
