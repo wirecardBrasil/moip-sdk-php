@@ -206,6 +206,7 @@ class Customer extends MoipResource
     
     public function setTaxDocument($number, $type = 'CPF')
     {
+        $this->data->taxDocument = new stdClass();
         $this->data->taxDocument->type = $type;
         $this->data->taxDocument->number = $number;
         
