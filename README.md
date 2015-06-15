@@ -37,7 +37,7 @@ $moip = new Moip(new MoipBasicAuth('api-token', 'api-key'));
 Nesse exemplo será criado um pedido com dados do cliente.
 
 ```php
-$customer = $moip->customer()->setOwnId('meu_id_de_cliente')
+$customer = $moip->customers()->setOwnId('meu_id_de_cliente')
                              ->setFullname('Fulano de Tal')
                              ->setEmail('fulano@email.com')
                              ->setBirthDate('1988-12-30')
