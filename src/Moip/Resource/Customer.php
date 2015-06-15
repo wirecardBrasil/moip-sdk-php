@@ -206,6 +206,7 @@ class Customer extends MoipResource
     
     public function setTaxDocument($number, $type = 'CPF')
     {
+        $this->data->taxDocument = new stdClass();
         $this->data->taxDocument->type = $type;
         $this->data->taxDocument->number = $number;
         
@@ -214,6 +215,7 @@ class Customer extends MoipResource
     
     public function setPhone($areaCode, $number, $countryCode = 55)
     {
+        $this->data->phone = new stdClass();
         $this->data->phone->countryCode = $countryCode;
         $this->data->phone->areaCode = $areaCode;
         $this->data->phone->number = $number;
