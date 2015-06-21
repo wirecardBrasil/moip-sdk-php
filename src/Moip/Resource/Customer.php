@@ -106,6 +106,19 @@ class Customer extends MoipResource
     {
         return $this->getIfSet('number', $this->data->taxDocument);
     }
+
+    private function getAddresses(stdClass $response)
+    {
+        if (isset($response->shippingAddress)) {
+            $response->addresses[] = $response->shippingAddress;
+        }
+
+        if (isset($response->billingAddress)) {
+            $response->addresses[] = $response->billingAddress;
+        }
+
+        return $response->addresses;
+    }
     
     protected function populate(stdClass $response)
     {
@@ -124,6 +137,8 @@ class Customer extends MoipResource
         $customer->data->taxDocument->type = $this->getIfSet('type', $response->taxDocument);
         $customer->data->taxDocument->number = $this->getIfSet('number', $response->taxDocument);
         $customer->data->addresses = array();
+
+        $response->addresses = $this->getAddresses($response);
         
         foreach ($response->addresses as $responseAddress) {
             $address = new stdClass();
