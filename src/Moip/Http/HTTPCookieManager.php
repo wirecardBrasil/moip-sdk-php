@@ -1,8 +1,9 @@
 <?php
+
 namespace Moip\Http;
 
-use \ArrayIterator;
-use \RuntimeException;
+use ArrayIterator;
+use RuntimeException;
 
 /**
  * Gerenciador de Cookies HTTP.
@@ -26,9 +27,9 @@ class HTTPCookieManager implements CookieManager
      * Constroi o gerenciador de cookies que grava as informações em um arquivo.
      *
      * @param string $dirname
-     *            Diretório onde os cookies serão gravados, caso
-     *            não informado o diretório temporário do sistema será
-     *            utilizado.
+     *                        Diretório onde os cookies serão gravados, caso
+     *                        não informado o diretório temporário do sistema será
+     *                        utilizado.
      */
     public function __construct($dirname = null)
     {
@@ -37,21 +38,21 @@ class HTTPCookieManager implements CookieManager
         }
 
         if (is_readable($dirname) && is_writable($dirname)) {
-            $cookieFile = realpath($dirname) . '/cookie.jar';
+            $cookieFile = realpath($dirname).'/cookie.jar';
 
             if (!is_file($cookieFile)) {
                 touch($cookieFile);
             } else {
                 $cookieManager = unserialize(file_get_contents($cookieFile));
 
-                if ($cookieManager instanceof HTTPCookieManager) {
+                if ($cookieManager instanceof self) {
                     $this->cookies = $cookieManager->cookies;
                 }
             }
 
             $this->cookieFile = $cookieFile;
         } else {
-            throw new RuntimeException('Permission denied at ' . $dirname);
+            throw new RuntimeException('Permission denied at '.$dirname);
         }
     }
 
@@ -93,7 +94,7 @@ class HTTPCookieManager implements CookieManager
         $secure = $secure === true;
 
         if (isset($this->cookies[$domain])) {
-            foreach ( $this->cookies[$domain] as $cookie ) {
+            foreach ($this->cookies[$domain] as $cookie) {
                 if ($cookie->isSecure() == $secure && $cookie->getPath() == $path) {
                     $cookies[] = $cookie;
                 }
@@ -117,19 +118,18 @@ class HTTPCookieManager implements CookieManager
     public function setCookie($setCookie, $domain = null)
     {
         if (is_array($setCookie)) {
-            foreach ( $setCookie as $setCookieItem ) {
+            foreach ($setCookie as $setCookieItem) {
                 $this->setCookie($setCookieItem);
             }
         } else {
             $matches = array();
 
             if (preg_match(
-                '/(?<name>[^\=]+)\=(?<value>[^;]+)' .
-                     '(; expires=(?<expires>[^;]+))?' .
-                     '(; path=(?<path>[^;]+))?' . '(; domain=(?<domain>[^;]+))?' .
-                     '(; (?<secure>secure))?' . '(; (?<httponly>httponly))?/',
+                '/(?<name>[^\=]+)\=(?<value>[^;]+)'.
+                     '(; expires=(?<expires>[^;]+))?'.
+                     '(; path=(?<path>[^;]+))?'.'(; domain=(?<domain>[^;]+))?'.
+                     '(; (?<secure>secure))?'.'(; (?<httponly>httponly))?/',
                     $setCookie, $matches)) {
-
                 $cookieName = null;
                 $cookieValue = null;
                 $cookieExpires = INF;
@@ -137,7 +137,7 @@ class HTTPCookieManager implements CookieManager
                 $cookieDomain = $domain;
                 $cookieSecure = false;
 
-                foreach ( $matches as $key => $value ) {
+                foreach ($matches as $key => $value) {
                     if (!empty($value)) {
                         switch ($key) {
                             case 'name' :
@@ -191,8 +191,8 @@ class HTTPCookieManager implements CookieManager
         if (is_array($cookies)) {
             $now = time();
 
-            foreach ( $cookies as $domain => $domainCookies ) {
-                foreach ( $domainCookies as $cookie ) {
+            foreach ($cookies as $domain => $domainCookies) {
+                foreach ($domainCookies as $cookie) {
                     if ($cookie instanceof Cookie) {
                         if ($cookie->getExpires() > $now) {
                             if (!isset($this->cookies[$domain])) {

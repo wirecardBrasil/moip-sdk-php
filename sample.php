@@ -1,4 +1,5 @@
 <?php
+
 require 'vendor/autoload.php';
 
 use Moip\Moip;
@@ -34,8 +35,7 @@ $customer = $moip->customers()->setOwnId('sandbox_v2_1401147277')
                               ->setBirthDate('1988-12-30')
                               ->setTaxDocument('33333333333')
                               ->setPhone(11, 66778899);
-*/                              
+*/
 print_r($payment = $order->payments()
                  ->setCreditCard('05', '18', '4012001038443335', '123', $customer)
                  ->execute());
-

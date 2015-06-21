@@ -1,7 +1,8 @@
 <?php
+
 namespace Moip\Resource;
 
-use \stdClass;
+use stdClass;
 use Moip\Http\HTTPRequest;
 
 class Multiorders extends MoipResource
@@ -12,7 +13,7 @@ class Multiorders extends MoipResource
         $this->data->ownId = null;
         $this->data->orders = array();
     }
-    
+
     public function addOrder(Orders $order)
     {
         $this->data->orders[] = $order;
@@ -37,66 +38,66 @@ class Multiorders extends MoipResource
 
         return $this->populate(json_decode($httpResponse->getContent()));
     }
-    
+
     public function get($id)
     {
         $httpConnection = $this->createConnection();
         $httpConnection->addHeader('Content-Type', 'application/json');
-        
+
         $httpResponse = $httpConnection->execute('/v2/multiorders/'.$id, HTTPRequest::GET);
-        
+
         if ($httpResponse->getStatusCode() != 200) {
             throw new \RuntimeException($httpResponse->getStatusMessage(), $httpResponse->getStatusCode());
         }
-        
+
         return $this->populate(json_decode($httpResponse->getContent()));
     }
-    
+
     public function getId()
     {
         return $this->getIfSet('id');
     }
-    
+
     public function getOwnId()
     {
         return $this->getIfSet('ownId');
     }
-    
+
     public function getStatus()
     {
         return $this->getIfSet('status');
     }
-    
+
     public function getAmountTotal()
     {
         return $this->getIfSet('total', $this->data->amount);
     }
-    
+
     public function getAmountCurrency()
     {
         return $this->getIfSet('currency', $this->data->amount);
     }
-    
+
     public function getCreatedAt()
     {
         return $this->getIfSet('createdAt');
     }
-    
+
     public function getUpdatedAt()
     {
         return $this->getIfSet('updatedAt');
     }
-    
+
     public function getOrderIterator()
     {
         return new \ArrayIterator($this->getIfSet('orders'));
     }
-    
+
     public function multipayments()
     {
         $payments = new Payment($this->moip);
         $payments->setMultiorder($this);
-        
+
         return $payments;
     }
 
@@ -111,18 +112,18 @@ class Multiorders extends MoipResource
         $multiorders->data->amount->total = $response->amount->total;
         $multiorders->data->amount->currency = $response->amount->currency;
         $multiorders->data->orders = array();
-        
+
         foreach ($response->orders as $responseOrder) {
             $order = new Orders($multiorders->moip);
             $order->populate($responseOrder);
-            
+
             $multiorders->data->orders[] = $order;
         }
-        
+
         $multiorders->data->createdAt = $response->createdAt;
         $multiorders->data->updatedAt = $response->updatedAt;
         $multiorders->data->_links = $response->_links;
-        
+
         return $multiorders;
     }
 
