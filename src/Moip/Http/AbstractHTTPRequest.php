@@ -1,7 +1,8 @@
 <?php
+
 namespace Moip\Http;
 
-use \InvalidArgumentException;
+use InvalidArgumentException;
 
 /**
  * Base para facilitar a implementação da interface HTTPRequest para uma
@@ -15,7 +16,7 @@ abstract class AbstractHTTPRequest implements HTTPRequest
     protected $httpResponse;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $openned = false;
 
@@ -52,7 +53,7 @@ abstract class AbstractHTTPRequest implements HTTPRequest
 
             if ($override === true || !isset($this->requestHeader[$key])) {
                 $this->requestHeader[$key] = array('name' => $name,
-                    'value' => $value
+                    'value' => $value,
                 );
 
                 return true;
@@ -68,6 +69,7 @@ abstract class AbstractHTTPRequest implements HTTPRequest
      * Autentica uma requisição HTTP.
      *
      * @param HTTPAuthenticator $authenticator
+     *
      * @see HTTPRequest::authenticate()
      */
     public function authenticate(HTTPAuthenticator $authenticator)
@@ -88,11 +90,13 @@ abstract class AbstractHTTPRequest implements HTTPRequest
      * par nome-valor que será enviado como uma query string.
      *
      * @param string $name
-     *            Nome do parâmetro.
+     *                      Nome do parâmetro.
      * @param string $value
-     *            Valor do parâmetro.
+     *                      Valor do parâmetro.
+     *
      * @throws InvalidArgumentException Se o nome ou o valor do campo não forem
-     *         valores scalar.
+     *                                  valores scalar.
+     *
      * @see HTTPRequest::setParameter()
      */
     public function setParameter($name, $value)

@@ -1,7 +1,8 @@
 <?php
+
 namespace Moip\Http;
 
-use \Serializable;
+use Serializable;
 
 /**
  * Interface para definição de um gerenciador de cookies.
@@ -19,14 +20,15 @@ interface CookieManager extends Serializable
      * Recupera os cookies armazenados para um determinado domínio.
      *
      * @param string $domain
-     *            Domínio dos cookies.
-     * @param boolean $secure
-     *            Indica ambiente seguro (https).
+     *                       Domínio dos cookies.
+     * @param bool   $secure
+     *                       Indica ambiente seguro (https).
      * @param string $path
-     *            Caminho dos cookies.
+     *                       Caminho dos cookies.
+     *
      * @return string O valor retornado segue o padrão especificado pela
-     *         RFC 2965 para ser utilizado diretamente no campo de cabeçalho
-     *         Cookie.
+     *                RFC 2965 para ser utilizado diretamente no campo de cabeçalho
+     *                Cookie.
      */
     public function getCookie($domain, $secure, $path);
 
@@ -34,11 +36,12 @@ interface CookieManager extends Serializable
      * Recupera uma lista com os cookies gerenciados.
      *
      * @param string $domain
-     *            Domínio dos cookies.
-     * @param boolean $secure
-     *            Indica ambiente seguro.
+     *                       Domínio dos cookies.
+     * @param bool   $secure
+     *                       Indica ambiente seguro.
      * @param string $path
-     *            Caminho dos cookies.
+     *                       Caminho dos cookies.
+     *
      * @return Iterator
      */
     public function getCookieIterator($domain, $secure, $path);

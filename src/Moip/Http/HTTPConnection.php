@@ -1,8 +1,9 @@
 <?php
+
 namespace Moip\Http;
 
-use \BadMethodCallException;
-use \InvalidArgumentException;
+use BadMethodCallException;
+use InvalidArgumentException;
 
 /**
  * Implementação de um conector HTTP.
@@ -24,73 +25,61 @@ class HTTPConnection
     const HTTPS_PORT = 443;
 
     /**
-     *
      * @var HTTPAuthenticator
      */
     protected $httpAuthenticator;
 
     /**
-     *
      * @var CookieManager
      */
     protected $cookieManager;
 
     /**
-     *
-     * @var integer
+     * @var int
      */
     protected $connectionTimeout;
 
     /**
-     *
      * @var string
      */
     protected $hostname;
 
     /**
-     *
-     * @var boolean
+     * @var bool
      */
     protected $initialized = false;
 
     /**
-     *
-     * @var integer
+     * @var int
      */
     protected $port;
 
     /**
-     *
      * @var string
      */
     protected $requestBody;
 
     /**
-     *
      * @var array
      */
     protected $requestHeader;
 
     /**
-     *
      * @var array
      */
     protected $requestParameter;
 
     /**
-     *
-     * @var boolean
+     * @var bool
      */
     protected $secure;
 
     /**
-     *
-     * @var integer
+     * @var int
      */
     protected $timeout;
 
     /**
-     *
      * @var string
      */
     protected static $userAgent;
@@ -122,15 +111,16 @@ class HTTPConnection
      * Adiciona um campo de cabeçalho para ser enviado com a requisição.
      *
      * @param string $name
-     *            Nome do campo de cabeçalho.
+     *                         Nome do campo de cabeçalho.
      * @param string $value
-     *            Valor do campo de cabeçalho.
-     * @param boolean $override
-     *            Indica se o campo deverá ser sobrescrito caso
-     *            já tenha sido definido.
+     *                         Valor do campo de cabeçalho.
+     * @param bool   $override
+     *                         Indica se o campo deverá ser sobrescrito caso
+     *                         já tenha sido definido.
+     *
      * @throws InvalidArgumentException Se o nome ou o valor do campo não forem
-     *         valores scalar.
-     *         @FIXME
+     *                                  valores scalar.
+     * @FIXME
      */
     public function addHeader($name, $value, $override = true)
     {
@@ -139,7 +129,7 @@ class HTTPConnection
 
             if ($override === true || !isset($this->requestHeader[$key])) {
                 $this->requestHeader[$key] = array('name' => $name,
-                    'value' => $value
+                    'value' => $value,
                 );
 
                 return true;
@@ -194,12 +184,14 @@ class HTTPConnection
      * método específico.
      *
      * @param string $path
-     *            Caminho da requisição.
+     *                       Caminho da requisição.
      * @param string $method
-     *            Método da requisição.
+     *                       Método da requisição.
+     *
      * @return paypal\http\HTTPResponse Resposta HTTP.
+     *
      * @throws BadMethodCallException Se não houver uma conexão inicializada ou
-     *         se o objeto de requisição não for válido.
+     *                                se o objeto de requisição não for válido.
      */
     public function execute($path = '/', $method = HTTPRequest::GET)
     {
@@ -236,7 +228,7 @@ class HTTPConnection
                 $request->authenticate($this->httpAuthenticator);
             }
 
-            foreach ( $this->requestHeader as $header ) {
+            foreach ($this->requestHeader as $header) {
                 $request->addRequestHeader($header['name'], $header['value']);
             }
 
@@ -247,7 +239,7 @@ class HTTPConnection
                     $this->isSecure(), $path);
 
                 if (isset($this->requestHeader['cookie'])) {
-                    $buffer = $this->requestHeader['cookie']['value'] . '; ' .
+                    $buffer = $this->requestHeader['cookie']['value'].'; '.
                          $cookies;
                 } else {
                     $buffer = $cookies;
@@ -256,7 +248,7 @@ class HTTPConnection
                 $request->addRequestHeader('Cookie', $buffer);
             }
 
-            foreach ( $this->requestParameter as $name => $value ) {
+            foreach ($this->requestParameter as $name => $value) {
                 $request->setParameter($name, $value);
             }
 
@@ -264,8 +256,8 @@ class HTTPConnection
 
             if ($path == null || !is_string($path) || empty($path)) {
                 $path = '/';
-            } else if (substr($path, 0, 1) != '/') {
-                $path = '/' . $path;
+            } elseif (substr($path, 0, 1) != '/') {
+                $path = '/'.$path;
             }
 
             if ($this->timeout != null) {
@@ -288,7 +280,7 @@ class HTTPConnection
     /**
      * Recupera o timeout de conexão.
      *
-     * @return integer
+     * @return int
      */
     public function getConnectionTimeout()
     {
@@ -309,6 +301,7 @@ class HTTPConnection
      * Recupera o host da conexão.
      *
      * @return string
+     *
      * @throws BadMethodCallException Se a conexão não tiver sido inicializada.
      */
     public function getHost()
@@ -316,10 +309,9 @@ class HTTPConnection
         if ($this->initialized) {
             $hostname = $this->getHostName();
 
-            if (($this->secure && $this->port != HTTPConnection::HTTPS_PORT) ||
-                 (!$this->secure && $this->port != HTTPConnection::HTTP_PORT)) {
-
-                $hostname .= ':' . $this->port;
+            if (($this->secure && $this->port != self::HTTPS_PORT) ||
+                 (!$this->secure && $this->port != self::HTTP_PORT)) {
+                $hostname .= ':'.$this->port;
             }
 
             return $hostname;
@@ -332,6 +324,7 @@ class HTTPConnection
      * Recupera o nome do host.
      *
      * @return string
+     *
      * @throws BadMethodCallException Se não houver uma conexão inicializada.
      */
     public function getHostName()
@@ -346,7 +339,8 @@ class HTTPConnection
     /**
      * Recupera a porta que será utilizada na conexão.
      *
-     * @return integer
+     * @return int
+     *
      * @throws BadMethodCallException Se não houver uma conexão inicializada.
      */
     public function getPort()
@@ -361,7 +355,7 @@ class HTTPConnection
     /**
      * Recupera o timeout.
      *
-     * @return integer
+     * @return int
      */
     public function getTimeout()
     {
@@ -372,6 +366,7 @@ class HTTPConnection
      * Recupera a URI que será utilizada na conexão.
      *
      * @return string
+     *
      * @throws BadMethodCallException Se não houver uma conexão inicializada.
      */
     public function getURI()
@@ -388,18 +383,18 @@ class HTTPConnection
      * Inicializa a conexão HTTP.
      *
      * @param string $hostname
-     *            Servidor que receberá a requisição.
-     * @param boolean $secure
-     *            Indica se a conexão será segura (https).
-     * @param integer $port
-     *            Porta da requisição.
-     * @param integer $connectionTimeout
-     *            Timeout de conexão em segundos.
-     * @param integer $timeout
-     *            Timeout de espera em segundos.
+     *                                  Servidor que receberá a requisição.
+     * @param bool   $secure
+     *                                  Indica se a conexão será segura (https).
+     * @param int    $port
+     *                                  Porta da requisição.
+     * @param int    $connectionTimeout
+     *                                  Timeout de conexão em segundos.
+     * @param int    $timeout
+     *                                  Timeout de espera em segundos.
      */
     public function initialize($hostname, $secure = false,
-                            $port = HTTPConnection::HTTP_PORT, $connectionTimeout = 0, $timeout = 0)
+                            $port = self::HTTP_PORT, $connectionTimeout = 0, $timeout = 0)
     {
         if ($this->initialized) {
             $this->close();
@@ -410,7 +405,7 @@ class HTTPConnection
         $this->secure = $secure === true;
 
         if (func_num_args() == 2) {
-            $this->port = $this->secure ? HTTPConnection::HTTPS_PORT : HTTPConnection::HTTP_PORT;
+            $this->port = $this->secure ? self::HTTPS_PORT : self::HTTP_PORT;
         } else {
             $this->port = (int) $port;
         }
@@ -422,7 +417,7 @@ class HTTPConnection
     /**
      * Verifica se é uma conexão segura.
      *
-     * @return boolean
+     * @return bool
      */
     public function isSecure()
     {
@@ -452,9 +447,10 @@ class HTTPConnection
     /**
      * Define o timeout de conexão.
      *
-     * @param integer $connectionTimeout
+     * @param int $connectionTimeout
+     *
      * @throws InvalidArgumentException Se $connectionTimeout não for um
-     *         inteiro.
+     *                                  inteiro.
      */
     public function setConnectionTimeout($connectionTimeout)
     {
@@ -481,11 +477,12 @@ class HTTPConnection
      * par nome-valor que será enviado como uma query string.
      *
      * @param string $name
-     *            Nome do parâmetro.
+     *                      Nome do parâmetro.
      * @param string $value
-     *            Valor do parâmetro.
+     *                      Valor do parâmetro.
+     *
      * @throws InvalidArgumentException Se o nome ou o valor do campo não forem
-     *         valores scalar.
+     *                                  valores scalar.
      */
     public function setParam($name, $value = null)
     {
@@ -509,7 +506,8 @@ class HTTPConnection
     /**
      * Define o timeout.
      *
-     * @param integer $timeout
+     * @param int $timeout
+     *
      * @throws InvalidArgumentException Se $timeout não for um inteiro.
      */
     public function setTimeout($timeout)

@@ -1,7 +1,8 @@
 <?php
+
 namespace Moip\Resource;
 
-use \stdClass;
+use stdClass;
 use Moip\Http\HttpRequest;
 
 class Payment extends MoipResource
@@ -10,19 +11,19 @@ class Payment extends MoipResource
      * @var \Moip\Resource\Orders
      */
     private $order;
-    
+
     /**
      * @var \Moip\Resource\Multiorders
      */
     private $multiorder;
-    
+
     protected function initialize()
     {
         $this->data = new stdClass();
         $this->data->installmentCount = 1;
         $this->data->fundingInstrument = new stdClass();
     }
-    
+
     public function execute()
     {
         $body = json_encode($this);
@@ -31,13 +32,13 @@ class Payment extends MoipResource
         $httpConnection->addHeader('Content-Type', 'application/json');
         $httpConnection->addHeader('Content-Length', strlen($body));
         $httpConnection->setRequestBody($body);
-        
-        if ($this->order !== null) {        
+
+        if ($this->order !== null) {
             $path = sprintf('/v2/orders/%s/payments', $this->order->getId());
         } else {
             $path = sprintf('/v2/multiorders/%s/multipayments', $this->multiorder->getId());
         }
-        
+
         $httpResponse = $httpConnection->execute($path, HTTPRequest::POST);
 
         if ($httpResponse->getStatusCode() != 200 && $httpResponse->getStatusCode() != 201) {
@@ -49,41 +50,39 @@ class Payment extends MoipResource
         if (!is_object($response)) {
             throw new \UnexpectedValueException('O servidor enviou uma resposta inesperada');
         }
-        
+
         return $this->populate(json_decode($httpResponse->getContent()));
     }
-    
+
     public function get($id)
     {
         $httpConnection = $this->createConnection();
         $httpConnection->addHeader('Content-Type', 'application/json');
-        
-        if ($this->order !== null) {        
+
+        if ($this->order !== null) {
             $path = sprintf('/v2/payments/%s', $this->order->getId());
         } else {
             $path = sprintf('/v2/multipayments/%s', $this->multiorder->getId());
         }
-        
+
         $httpResponse = $httpConnection->execute('/v2/payments/'.$id, HTTPRequest::GET);
-        
+
         if ($httpResponse->getStatusCode() != 200) {
             throw new \RuntimeException($httpResponse->getStatusMessage(), $httpResponse->getStatusCode());
         }
-        
+
         return $this->populate(json_decode($httpResponse->getContent()));
-        
     }
-    
+
     public function getId()
     {
         return $this->getIfSet('id');
     }
-    
-    
+
     protected function populate(stdClass $response)
     {
         $payment = clone $this;
-        
+
         $payment->data->id = $this->getIfSet('id', $response);
         $payment->data->status = $this->getIfSet('status', $response);
         $payment->data->amount = new stdClass();
@@ -94,38 +93,38 @@ class Payment extends MoipResource
         $payment->data->fees = $this->getIfSet('fees', $response);
         $payment->data->refunds = $this->getIfSet('refunds', $response);
         $payment->data->_links = $this->getIfSet('_links', $response);
-        
+
         return $payment;
     }
-    
+
     public function refunds()
     {
         $refund = new Refund($this->moip);
         $refund->setPayment($this);
-        
+
         return $refund;
     }
-    
+
     public function setFundingInstrument(stdClass $fundingInstrument)
     {
         $this->data->fundingInstrument = $fundingInstrument;
-        
+
         return $this;
     }
-    
+
     public function setBoleto($expirationDate, $logoUri, array $instructionLines = array())
     {
         $keys = array('first', 'second', 'third');
-        
+
         $this->data->fundingInstrument->method = 'BOLETO';
         $this->data->fundingInstrument->boleto = new stdClass();
         $this->data->fundingInstrument->boleto->expirationDate = $expirationDate;
         $this->data->fundingInstrument->boleto->instructionLines = array_combine($keys, $instructionLines);
         $this->data->fundingInstrument->boleto->logoUri = $logoUri;
-        
+
         return $this;
     }
-    
+
     public function setCreditCard($expirationMonth, $expirationYear, $number, $cvc, Customer $holder)
     {
         $this->data->fundingInstrument->method = 'CREDIT_CARD';
@@ -144,17 +143,17 @@ class Payment extends MoipResource
         $this->data->fundingInstrument->creditCard->holder->phone->countryCode = $holder->getPhoneCountryCode();
         $this->data->fundingInstrument->creditCard->holder->phone->areaCode = $holder->getPhoneAreaCode();
         $this->data->fundingInstrument->creditCard->holder->phone->number = $holder->getPhoneNumber();
-        
+
         return $this;
     }
-    
+
     public function setInstallmentCount($installmentCount)
     {
         $this->data->installmentCount = $installmentCount;
-        
+
         return $this;
     }
-    
+
     public function setOnlineBankDebit($bankNumber, $expirationDate, $returnUri)
     {
         $this->data->fundingInstrument->method = 'ONLINE_BANK_DEBIT';
@@ -162,19 +161,19 @@ class Payment extends MoipResource
         $this->data->fundingInstrument->onlineBankDebit->bankNumber = $bankNumber;
         $this->data->fundingInstrument->onlineBankDebit->expirationDate = $expirationDate;
         $this->data->fundingInstrument->onlineBankDebit->returnUri = $returnUri;
-        
+
         return $this;
     }
-    
+
     public function setMultiorder(Multiorders $multiorder)
     {
         $this->multiorder = $multiorder;
     }
-    
+
     public function setOrder(Orders $order)
     {
         $this->order = $order;
-        
+
         return $this;
     }
 }

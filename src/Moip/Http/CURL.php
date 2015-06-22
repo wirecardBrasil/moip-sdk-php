@@ -1,8 +1,9 @@
 <?php
+
 namespace Moip\Http;
 
-use \RuntimeException;
-use \UnexpectedValueException;
+use RuntimeException;
+use UnexpectedValueException;
 
 /**
  * Requisição HTTP cURL.
@@ -37,7 +38,7 @@ class CURL extends AbstractHTTPRequest
      */
     public function execute($path = '/', $method = HTTPRequest::GET)
     {
-        $targetURL = $this->httpConnection->getURI() . $path;
+        $targetURL = $this->httpConnection->getURI().$path;
         $hasParameters = count($this->requestParameter) > 0;
         $query = $hasParameters ? http_build_query($this->requestParameter) : null;
 
@@ -55,7 +56,7 @@ class CURL extends AbstractHTTPRequest
                     curl_setopt($this->curlResource, CURLOPT_POSTFIELDS, $query);
                 } else {
                     if ($hasParameters) {
-                        $targetURL .= '?' . $query;
+                        $targetURL .= '?'.$query;
                     }
 
                     curl_setopt($this->curlResource, CURLOPT_POSTFIELDS,
@@ -72,7 +73,7 @@ class CURL extends AbstractHTTPRequest
                 curl_setopt($this->curlResource, CURLOPT_CUSTOMREQUEST, $method);
             case HTTPRequest::GET :
                 if ($hasParameters) {
-                    $targetURL .= '?' . $query;
+                    $targetURL .= '?'.$query;
                 }
 
                 curl_setopt($this->curlResource, CURLOPT_URL, $targetURL);
@@ -114,14 +115,14 @@ class CURL extends AbstractHTTPRequest
     public function open(HTTPConnection $httpConnection)
     {
         if (function_exists('curl_init')) {
-            /**
+            /*
              * Fechamos uma conexão existente antes de abrir uma nova
              */
             $this->close();
 
             $curl = curl_init();
 
-            /**
+            /*
              * Verificamos se o recurso CURL foi criado com êxito
              */
             if (is_resource($curl)) {
@@ -142,7 +143,7 @@ class CURL extends AbstractHTTPRequest
 
                 $headers = array();
 
-                foreach ( $this->requestHeader as $header ) {
+                foreach ($this->requestHeader as $header) {
                     $headers[] = sprintf('%s: %s', $header['name'],
                         $header['value']);
                 }

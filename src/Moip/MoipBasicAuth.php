@@ -1,4 +1,5 @@
 <?php
+
 namespace Moip;
 
 use Moip\Http\HTTPRequest;
@@ -7,13 +8,13 @@ class MoipBasicAuth implements MoipAuthentication
 {
     private $token;
     private $key;
-    
+
     public function __construct($token, $key)
     {
         $this->token = $token;
         $this->key = $key;
     }
-    
+
     /**
      * Autentica uma requisição HTTP.
      *
@@ -22,6 +23,6 @@ class MoipBasicAuth implements MoipAuthentication
     public function authenticate(HTTPRequest $httpRequest)
     {
         $httpRequest->addRequestHeader('Authorization',
-                                       'Basic ' . base64_encode($this->token . ':' . $this->key));
+                                       'Basic '.base64_encode($this->token.':'.$this->key));
     }
 }

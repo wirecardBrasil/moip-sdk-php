@@ -1,4 +1,5 @@
 <?php
+
 namespace Moip\Http;
 
 /**
@@ -17,7 +18,7 @@ class HTTPResponse
     private $responseBody;
 
     /**
-     * @var integer
+     * @var int
      */
     private $statusCode;
 
@@ -39,7 +40,7 @@ class HTTPResponse
     /**
      * Recupera o tamanho do corpo da resposta.
      *
-     * @return integer
+     * @return int
      */
     public function getContentLength()
     {
@@ -59,7 +60,7 @@ class HTTPResponse
     /**
      * Recupera o código de status da resposta do servidor.
      *
-     * @return integer
+     * @return int
      */
     public function getStatusCode()
     {
@@ -80,8 +81,9 @@ class HTTPResponse
      * Verifica se existe um cabeçalho de resposta HTTP.
      *
      * @param string $name
-     *            Nome do cabeçalho
-     * @return boolean
+     *                     Nome do cabeçalho
+     *
+     * @return bool
      */
     public function hasResponseHeader($name)
     {
@@ -92,7 +94,8 @@ class HTTPResponse
      * Recupera o valor um campo de cabeçalho da resposta HTTP.
      *
      * @param string $name
-     *            Nome do campo de cabeçalho.
+     *                     Nome do campo de cabeçalho.
+     *
      * @return string O valor do campo ou NULL se não estiver existir.
      */
     public function getHeader($name)
@@ -102,10 +105,9 @@ class HTTPResponse
         if (isset($this->responseHeader[$key])) {
             if (!isset($this->responseHeader[$key]['name']) &&
                  is_array($this->responseHeader[$key])) {
-
                 $values = array();
 
-                foreach ( $this->responseHeader[$key] as $header ) {
+                foreach ($this->responseHeader[$key] as $header) {
                     $values[] = $header['value'];
                 }
 
@@ -115,15 +117,16 @@ class HTTPResponse
             }
         }
 
-        return null;
+        return;
     }
 
     /**
      * Recupera um valor como inteiro de um campo de cabeçalho da resposta HTTP.
      *
      * @param string $name
-     *            Nome do campo de cabeçalho.
-     * @return integer
+     *                     Nome do campo de cabeçalho.
+     *
+     * @return int
      */
     public function getHeaderInt($name)
     {
@@ -136,8 +139,9 @@ class HTTPResponse
      * HTTP.
      *
      * @param string $name
-     *            Nome do campo de cabeçalho.
-     * @return integer UNIX Timestamp ou NULL se não estiver definido.
+     *                     Nome do campo de cabeçalho.
+     *
+     * @return int UNIX Timestamp ou NULL se não estiver definido.
      */
     public function getHeaderDate($name)
     {
@@ -152,7 +156,7 @@ class HTTPResponse
      * Define a resposta da requisição HTTP.
      *
      * @param string $response
-     *            Toda a resposta da requisição
+     *                         Toda a resposta da requisição
      */
     public function setRawResponse($response,
                                 CookieManager $cookieManager = null)
@@ -164,11 +168,10 @@ class HTTPResponse
             $this->responseBody = $parts[1];
 
             if (preg_match_all(
-                '/(HTTP\/[1-9]\.[0-9]\s+(?<statusCode>\d+)\s+(?<statusMessage>.*)' .
+                '/(HTTP\/[1-9]\.[0-9]\s+(?<statusCode>\d+)\s+(?<statusMessage>.*)'.
                      "|(?<headerName>[^:]+)\\s*:\\s*(?<headerValue>.*))\r\n/m",
                     $parts[0], $matches)) {
-
-                foreach ( $matches['statusCode'] as $offset => $match ) {
+                foreach ($matches['statusCode'] as $offset => $match) {
                     if (!empty($match)) {
                         $this->statusCode = (int) $match;
                         $this->statusMessage = $matches['statusMessage'][$offset];
@@ -176,17 +179,17 @@ class HTTPResponse
                     }
                 }
 
-                foreach ( $matches['headerName'] as $offset => $name ) {
+                foreach ($matches['headerName'] as $offset => $name) {
                     if (!empty($name)) {
                         $key = strtolower($name);
                         $header = array('name' => $name,
-                            'value' => $matches['headerValue'][$offset]
+                            'value' => $matches['headerValue'][$offset],
                         );
 
                         if (isset($this->responseHeader[$key])) {
                             if (isset($this->responseHeader[$key]['name'])) {
                                 $this->responseHeader[$key] = array(
-                                    $this->responseHeader[$key]
+                                    $this->responseHeader[$key],
                                 );
                             }
 

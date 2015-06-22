@@ -1,7 +1,8 @@
 <?php
+
 namespace Moip\Resource;
 
-use \stdClass;
+use stdClass;
 
 class Event extends MoipResource
 {
@@ -12,21 +13,22 @@ class Event extends MoipResource
         $this->data->createdAt = null;
         $this->data->descriotion = null;
     }
-    
+
     public function getType()
     {
         return $this->data->type;
     }
-    
+
     public function getCreatedAt()
     {
         return $this->data->createdAt;
     }
-    
-    public function getDescription(){
+
+    public function getDescription()
+    {
         return $this->data->description;
     }
-    
+
     protected function populate(stdClass $response)
     {
         $this->data = $response;

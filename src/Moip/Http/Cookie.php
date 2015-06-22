@@ -1,7 +1,8 @@
 <?php
+
 namespace Moip\Http;
 
-use \InvalidArgumentException;
+use InvalidArgumentException;
 
 /**
  * Implementação de um cookie HTTP segundo a especificação RFC 2109.
@@ -9,35 +10,35 @@ use \InvalidArgumentException;
 class Cookie
 {
     /**
-     * Comentário opcional do cookie
+     * Comentário opcional do cookie.
      *
      * @var string
      */
     protected $comment;
 
     /**
-     * Domínio do cookie
+     * Domínio do cookie.
      *
      * @var string
      */
     protected $domain;
 
     /**
-     * Expiração do cookie (unix timestamp)
+     * Expiração do cookie (unix timestamp).
      *
-     * @var integer
+     * @var int
      */
     protected $expires;
 
     /**
-     * Nome do cookie
+     * Nome do cookie.
      *
      * @var string
      */
     protected $name;
 
     /**
-     * Caminho do cookie
+     * Caminho do cookie.
      *
      * @var string
      */
@@ -46,36 +47,37 @@ class Cookie
     /**
      * Ambiente seguro (HTTPS).
      * Indica se o User-Agent deve utilizar o cookie
-     * apenas em ambiente seguro (HTTPS)
+     * apenas em ambiente seguro (HTTPS).
      *
-     * @var boolean
+     * @var bool
      */
     protected $secure;
 
     /**
-     * Valor do cookie
+     * Valor do cookie.
      *
      * @var string
      */
     protected $value;
 
     /**
-     * Constroi um cookie
+     * Constroi um cookie.
      *
      * @param string $name
-     *            Nome do cookie
+     *                        Nome do cookie
      * @param string $value
-     *            Valor do cookie
+     *                        Valor do cookie
      * @param string $domain
-     *            Domínio do cookie
-     * @param integer $expires
-     *            Timestamp da expiração do cookie
+     *                        Domínio do cookie
+     * @param int    $expires
+     *                        Timestamp da expiração do cookie
      * @param string $path
-     *            Caminho do cookie
-     * @param boolean $secure
-     *            Se o cookie é usado apenas em ambiente seguro.
+     *                        Caminho do cookie
+     * @param bool   $secure
+     *                        Se o cookie é usado apenas em ambiente seguro.
      * @param string $comment
-     *            Comentário do cookie
+     *                        Comentário do cookie
+     *
      * @throws InvalidArgumentException Se $expires não for um número
      */
     public function __construct($name, $value, $domain, $expires, $path = '/',
@@ -129,7 +131,7 @@ class Cookie
     /**
      * Recupera o timestamp da expiração do cookie.
      *
-     * @return integer
+     * @return int
      */
     public function getExpires()
     {
@@ -171,7 +173,7 @@ class Cookie
      * Verifica se o User-Agent deve utilizar o
      * cookie apenas em ambiente seguro.
      *
-     * @return boolean
+     * @return bool
      */
     public function isSecure()
     {
