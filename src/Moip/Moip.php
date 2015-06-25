@@ -2,35 +2,60 @@
 
 namespace Moip;
 
-use Moip\Http\HTTPConnection;
-use Moip\Resource\Orders;
-use Moip\Resource\Customer;
-use Moip\Resource\Payment;
-use Moip\Resource\Multiorders;
 use Moip\Resource\Entry;
+use Moip\Resource\Orders;
+use Moip\Resource\Payment;
+use Moip\Resource\Customer;
+use Moip\Http\HTTPConnection;
+use Moip\Resource\Multiorders;
 
 class Moip
 {
+    /**
+     * endpoint of production.
+     *
+     * @const string
+     */
     const PRODUCTION_ENDPOINT = 'moip.com.br';
+
+    /**
+     * endpoint of sandbox.
+     *
+     * @const string
+     */
     const SANDBOX_ENDPOINT = 'test.moip.com.br';
 
     /**
-     * @var MoipAuthentication
+     * Authentication that will be added to the header of request.
+     *
+     * @var \Moip\MoipAuthentication
      */
     private $moipAuthentication;
 
     /**
-     * @var string
+     * Endpoint of request.
+     *
+     * @var PRODUCTION_ENDPOINT
      */
     private $endpoint = self::PRODUCTION_ENDPOINT;
 
-    public function __construct(MoipAuthentication $moipAuthentication,
-                                $endpoint = self::PRODUCTION_ENDPOINT)
+    /**
+     * Create a new aurhentication with the endpoint.
+     *
+     * @param \Moip\MoipAuthentication $moipAuthentication
+     * @param PRODUCTION_ENDPOINT      $endpoint
+     */
+    public function __construct(MoipAuthentication $moipAuthentication, $endpoint = self::PRODUCTION_ENDPOINT)
     {
         $this->moipAuthentication = $moipAuthentication;
         $this->endpoint = $endpoint;
     }
 
+    /**
+     * Create a new api connection instance.
+     *
+     * @return \Moip\Http\HTTPConnection
+     */
     public function createConnection()
     {
         $httpConnection = new HTTPConnection('Moip SDK');
@@ -41,26 +66,51 @@ class Moip
         return $httpConnection;
     }
 
+    /**
+     * Create a new Customer instance.
+     *
+     * @return \Moip\Resource\Customer
+     */
     public function customers()
     {
         return new Customer($this);
     }
 
+    /**
+     * Create a new Entry instance.
+     *
+     * @return \Moip\Resource\Entry
+     */
     public function entries()
     {
         return new Entry($this);
     }
 
+    /**
+     * Create a new Orders instance.
+     *
+     * @return \Moip\Resource\Orders
+     */
     public function orders()
     {
         return new Orders($this);
     }
 
+    /**
+     * Create a new Payment instance.
+     *
+     * @return \Moip\Resource\Payment
+     */
     public function payments()
     {
         return new Payment($this);
     }
 
+    /**
+     * Create a new Multiorders instance.
+     *
+     * @return \Moip\Resource\Multiorders
+     */
     public function multiorders()
     {
         return new Multiorders($this);
