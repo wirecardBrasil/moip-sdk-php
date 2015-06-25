@@ -6,9 +6,26 @@ use Moip\Http\HTTPRequest;
 
 class MoipBasicAuth implements MoipAuthentication
 {
+    /**
+     * Access token.
+     *
+     * @var string
+     */
     private $token;
+
+    /**
+     * Access key.
+     *
+     * @var string
+     */
     private $key;
 
+    /**
+     * Create a new MoipBasic instance.
+     *
+     * @param string $token
+     * @param string $key
+     */
     public function __construct($token, $key)
     {
         $this->token = $token;
@@ -16,13 +33,12 @@ class MoipBasicAuth implements MoipAuthentication
     }
 
     /**
-     * Autentica uma requisição HTTP.
+     * authentication of a HTTP request.
      *
-     * @param HTTPRequest $httpRequest
+     * @param \Moip\Http\HTTPRequest $httpRequest
      */
     public function authenticate(HTTPRequest $httpRequest)
     {
-        $httpRequest->addRequestHeader('Authorization',
-                                       'Basic '.base64_encode($this->token.':'.$this->key));
+        $httpRequest->addRequestHeader('Authorization', 'Basic '.base64_encode($this->token.':'.$this->key));
     }
 }
