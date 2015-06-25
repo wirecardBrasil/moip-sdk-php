@@ -7,7 +7,7 @@ use Moip\Http\HTTPRequest;
 class MoipBasicAuth implements MoipAuthentication
 {
     /**
-     * Access token.
+     * Token.
      *
      * @var string
      */
@@ -33,7 +33,7 @@ class MoipBasicAuth implements MoipAuthentication
     }
 
     /**
-     * authentication of a HTTP request.
+     * Authentication of a HTTP request.
      *
      * @param \Moip\Http\HTTPRequest $httpRequest
      */
