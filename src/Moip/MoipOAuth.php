@@ -7,23 +7,29 @@ use Moip\Http\HTTPRequest;
 class MoipOAuth implements MoipAuthentication
 {
     /**
+     * Access Token.
+     *
      * @var string
      */
     private $accessToken;
 
+    /**
+     * Create a new MoipOAuth instance.
+     *
+     * @param string $accessToken
+     */
     public function __construct($accessToken)
     {
         $this->accessToken = $accessToken;
     }
 
     /**
-     * Autentica uma requisição HTTP.
+     * Authentication of a HTTP request.
      *
-     * @param HTTPRequest $httpRequest
+     * @param \Moip\Http\HTTPRequest $httpRequest
      */
     public function authenticate(HTTPRequest $httpRequest)
     {
-        $httpRequest->addRequestHeader('Authorization',
-                                       'OAuth '.$this->accessToken);
+        $httpRequest->addRequestHeader('Authorization', 'OAuth '.$this->accessToken);
     }
 }
