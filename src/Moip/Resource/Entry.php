@@ -8,7 +8,7 @@ use Moip\Http\HTTPRequest;
 class Entry extends MoipResource
 {
     /**
-     * Initializes new instances
+     * Initializes new instances.
      */
     protected function initialize()
     {
@@ -19,7 +19,8 @@ class Entry extends MoipResource
     }
 
     /**
-     * Mount the entry
+     * Mount the entry.
+     * 
      * @param  \stdClass $response
      * @return \stdClass Entry information
      */
@@ -53,9 +54,10 @@ class Entry extends MoipResource
     }
 
     /**
+     * Get entry in api by id
      * 
-     * @param  [type] $id [description]
-     * @return [type]     [description]
+     * @param  string $id Event ID that generated the launch.
+     * @return \Moip\Resource\Entry
      */
     public function get($id)
     {
@@ -71,21 +73,39 @@ class Entry extends MoipResource
         return $this->populate(json_decode($httpResponse->getContent()));
     }
 
+    /**
+     * Get id from entry
+     * 
+     * @return strign Event ID that generated the launch.
+     */
     public function getId()
     {
         return $this->getIfSet('id');
     }
 
+    /**
+     * Get status from entry.
+     * 
+     * @return string Launch status. Possible values: SCHEDULEDor SETTLED.
+     */
     public function getStatus()
     {
         return $this->getIfSet('status');
     }
 
+    /**
+     * [getOperation description]
+     * @return [type] [description]
+     */
     public function getOperation()
     {
         return $this->getIfSet('operation');
     }
 
+    /**
+     * [getAmountTotal description]
+     * @return [type] [description]
+     */
     public function getAmountTotal()
     {
         return $this->getIfSet('total', $this->data->amount);
@@ -131,6 +151,7 @@ class Entry extends MoipResource
         return $this->getIfSet('updatedAt');
     }
 
+    
     public function getCreatedAt()
     {
         return $this->getIfSet('createdAt');

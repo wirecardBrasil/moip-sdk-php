@@ -4,11 +4,12 @@ namespace Moip\Resource;
 
 use Moip\Moip;
 use stdClass;
+use JsonSerializable;
 
-abstract class MoipResource implements \JsonSerializable
+abstract class MoipResource implements JsonSerializable
 {
     /**
-     * @var Moip\Moip
+     * @var \Moip\Moip
      */
     protected $moip;
 
@@ -17,6 +18,24 @@ abstract class MoipResource implements \JsonSerializable
      */
     protected $data;
 
+    /**
+     * Initialize a new instance
+     */
+    abstract protected function initialize();
+    
+    /**
+     * Mount information of a determined object
+     * 
+     * @param  \stdClass $response
+     * @return \stdClass
+     */
+    abstract protected function populate(stdClass $response);
+
+    /**
+     * Create a new instance
+     * 
+     * @param Moip\Moip $moip
+     */
     public function __construct(Moip $moip)
     {
         $this->moip = $moip;
@@ -24,11 +43,23 @@ abstract class MoipResource implements \JsonSerializable
         $this->initialize();
     }
 
+    /**
+     * Create a new connecttion
+     * 
+     * @return Moip\Moip
+     */
     protected function createConnection()
     {
         return $this->moip->createConnection();
     }
 
+    /**
+     * Get a key of an object if he exist
+     * 
+     * @param  string        $key
+     * @param  \stdClass|null $data 
+     * @return \stdClass|string|null
+     */
     protected function getIfSet($key, stdClass $data = null)
     {
         if ($data == null) {
@@ -40,12 +71,13 @@ abstract class MoipResource implements \JsonSerializable
         }
     }
 
-    abstract protected function initialize();
-
+    /**
+     * Specify data which should be serialized to JSON
+     * 
+     * @return \stdClass
+     */
     public function jsonSerialize()
     {
         return $this->data;
     }
-
-    abstract protected function populate(stdClass $response);
 }

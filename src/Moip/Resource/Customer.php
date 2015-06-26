@@ -50,7 +50,7 @@ class Customer extends MoipResource
     /**
      * Create a new customer.
      * 
-     * @return \stdClass Customer information
+     * @return \Moip\Resource\Customer
      */
     public function create()
     {
@@ -75,7 +75,7 @@ class Customer extends MoipResource
      * Find a customer.
      * 
      * @param  string $id
-     * @return \stdClass
+     * @return \Moip\Resource\Customer
      */
     public function get($id)
     {
