@@ -7,6 +7,9 @@ use Moip\Http\HTTPRequest;
 
 class Entry extends MoipResource
 {
+    /**
+     * Initializes new instances
+     */
     protected function initialize()
     {
         $this->data = new stdClass();
@@ -15,18 +18,23 @@ class Entry extends MoipResource
         $this->data->parentPayments = new stdClass();
     }
 
+    /**
+     * Mount the entry
+     * @param  \stdClass $response
+     * @return \stdClass Entry information
+     */
     protected function populate(stdClass $response)
     {
         $entry = clone $this;
 
-        $entry->data->id = $this->getIfSet('id', $response);
-        $entry->data->status = $this->getIfSet('status', $response);
+        $entry->data->id        = $this->getIfSet('id', $response);
+        $entry->data->status    = $this->getIfSet('status', $response);
         $entry->data->operation = $this->getIfSet('operation', $response);
 
         if (isset($response->amount)) {
-            $entry->data->amount->total = $this->getIfSet('total', $response->amount);
-            $entry->data->amount->fee = $this->getIfSet('fee', $response->amount);
-            $entry->data->amount->liquid = $this->getIfSet('liquid', $response->amount);
+            $entry->data->amount->total    = $this->getIfSet('total', $response->amount);
+            $entry->data->amount->fee      = $this->getIfSet('fee', $response->amount);
+            $entry->data->amount->liquid   = $this->getIfSet('liquid', $response->amount);
             $entry->data->amount->currency = $this->getIfSet('currency', $response->amount);
         }
 
@@ -44,6 +52,11 @@ class Entry extends MoipResource
         return $entry;
     }
 
+    /**
+     * 
+     * @param  [type] $id [description]
+     * @return [type]     [description]
+     */
     public function get($id)
     {
         $httpConnection = $this->createConnection();

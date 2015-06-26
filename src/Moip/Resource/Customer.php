@@ -8,7 +8,7 @@ use Moip\Http\HTTPRequest;
 class Customer extends MoipResource
 {
     /**
-     * Initialize a new 
+     * Initialize a new instance
      */
     public function initialize()
     {
