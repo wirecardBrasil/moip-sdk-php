@@ -1,5 +1,4 @@
 <?php
-
 namespace Moip\Resource;
 
 use stdClass;
@@ -125,14 +124,8 @@ class Payment extends MoipResource
         return $this;
     }
 
-    public function setCreditCard($expirationMonth, $expirationYear, $number, $cvc, Customer $holder)
+    private function setCreditCardHolder(Customer $holder)
     {
-        $this->data->fundingInstrument->method = 'CREDIT_CARD';
-        $this->data->fundingInstrument->creditCard = new stdClass();
-        $this->data->fundingInstrument->creditCard->expirationMonth = $expirationMonth;
-        $this->data->fundingInstrument->creditCard->expirationYear = $expirationYear;
-        $this->data->fundingInstrument->creditCard->number = $number;
-        $this->data->fundingInstrument->creditCard->cvc = $cvc;
         $this->data->fundingInstrument->creditCard->holder = new stdClass();
         $this->data->fundingInstrument->creditCard->holder->fullname = $holder->getFullname();
         $this->data->fundingInstrument->creditCard->holder->birthdate = $holder->getBirthDate();
@@ -142,7 +135,28 @@ class Payment extends MoipResource
         $this->data->fundingInstrument->creditCard->holder->phone = new stdClass();
         $this->data->fundingInstrument->creditCard->holder->phone->countryCode = $holder->getPhoneCountryCode();
         $this->data->fundingInstrument->creditCard->holder->phone->areaCode = $holder->getPhoneAreaCode();
-        $this->data->fundingInstrument->creditCard->holder->phone->number = $holder->getPhoneNumber();
+        $this->data->fundingInstrument->creditCard->holder->phone->number = $holder->getPhoneNumber();     
+    }
+
+    public function setCreditCardHash($hash, Customer $holder)
+    {
+        $this->data->fundingInstrument= 'CREDIT_CARD';
+        $this->data->fundingInstrument->creditCard = new stdClass();
+        $this->data->fundingInstrument->creditCard->hash = $hash;
+        $this->setCreditCardHolder($holder);
+
+        return $this;
+    }
+
+    public function setCreditCard($expirationMonth, $expirationYear, $number, $cvc, Customer $holder)
+    {
+        $this->data->fundingInstrument->method = 'CREDIT_CARD';
+        $this->data->fundingInstrument->creditCard = new stdClass();
+        $this->data->fundingInstrument->creditCard->expirationMonth = $expirationMonth;
+        $this->data->fundingInstrument->creditCard->expirationYear = $expirationYear;
+        $this->data->fundingInstrument->creditCard->number = $number;
+        $this->data->fundingInstrument->creditCard->cvc = $cvc;
+        $this->setCreditCardHolder($holder);
 
         return $this;
     }
