@@ -15,7 +15,6 @@ class Customer extends MoipResource
     public function addAddress($type, $street, $number, $district, $city, $state, $zip, $complement = null, $country = 'BRA')
     {
         $address = new stdClass();
-        $address->type = $type;
         $address->street = $street;
         $address->streetNumber = $number;
         $address->complement = $complement;
@@ -25,7 +24,17 @@ class Customer extends MoipResource
         $address->country = $country;
         $address->zipCode = $zip;
 
-        $this->data->addresses[] = $address;
+        switch ($type) {
+            case 'BILLING':
+                $this->data->billingAddress = $address;
+                break;
+            case 'SHIPPING':
+                $this->data->shippingAddress = $address;
+                break;
+            default:
+                throw new \UnexpectedValueException(sprintf('%s não é um tipo de endereço válido', $type));
+                break;
+        }
 
         return $this;
     }
@@ -107,19 +116,6 @@ class Customer extends MoipResource
         return $this->getIfSet('number', $this->data->taxDocument);
     }
 
-    private function getAddresses(stdClass $response)
-    {
-        if (isset($response->shippingAddress)) {
-            $response->addresses[] = $response->shippingAddress;
-        }
-
-        if (isset($response->billingAddress)) {
-            $response->addresses[] = $response->billingAddress;
-        }
-
-        return $response->addresses;
-    }
-
     protected function populate(stdClass $response)
     {
         $customer = clone $this;
@@ -129,37 +125,22 @@ class Customer extends MoipResource
         $customer->data->fullname = $this->getIfSet('fullname', $response);
         $customer->data->email = $this->getIfSet('email', $response);
         $customer->data->phone = new stdClass();
-        $customer->data->phone->countryCode = $this->getIfSet('countryCode', $response->phone);
-        $customer->data->phone->areaCode = $this->getIfSet('areaCode', $response->phone);
-        $customer->data->phone->number = $this->getIfSet('number', $response->phone);
+
+        $phone = $this->getIfSet('phone', $response);
+
+        $customer->data->phone->countryCode = $this->getIfSet('countryCode', $phone);
+        $customer->data->phone->areaCode = $this->getIfSet('areaCode', $phone);
+        $customer->data->phone->number = $this->getIfSet('number', $phone);
         $customer->data->birthDate = $this->getIfSet('birthDate', $response);
         $customer->data->taxDocument = new stdClass();
         $customer->data->taxDocument->type = $this->getIfSet('type', $response->taxDocument);
         $customer->data->taxDocument->number = $this->getIfSet('number', $response->taxDocument);
         $customer->data->addresses = array();
-
-        $response->addresses = $this->getAddresses($response);
-
-        foreach ($response->addresses as $responseAddress) {
-            $address = new stdClass();
-            $address->type = $this->getIfSet('type', $responseAddress);
-            $address->street = $this->getIfSet('street', $responseAddress);
-            $address->streetNumber = $this->getIfSet('streetNumber', $responseAddress);
-            $address->complement = $this->getIfSet('complement', $responseAddress);
-            $address->district = $this->getIfSet('district', $responseAddress);
-            $address->city = $this->getIfSet('city', $responseAddress);
-            $address->state = $this->getIfSet('state', $responseAddress);
-            $address->country = $this->getIfSet('country', $responseAddress);
-            $address->zipCode = $this->getIfSet('zipCode', $responseAddress);
-
-            $customer->data->addresses[] = $address;
-        }
+        $customer->data->shippingAddress = $this->getIfSet('shippingAddress', $response);
+        $customer->data->billingAddress = $this->getIfSet('billingAddress', $response);
+        $customer->data->fundingInstrument = $this->getIfSet('fundingInstrument', $response);
 
         $customer->data->_links = $this->getIfSet('_links', $response);
-
-        if (isset($response->fundingInstrument)) {
-            $customer->data->fundingInstrument = $response->fundingInstrument;
-        }
 
         return $customer;
     }
