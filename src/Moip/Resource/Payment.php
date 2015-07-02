@@ -140,7 +140,7 @@ class Payment extends MoipResource
 
     public function setCreditCardHash($hash, Customer $holder)
     {
-        $this->data->fundingInstrument= 'CREDIT_CARD';
+        $this->data->fundingInstrument->method = 'CREDIT_CARD';
         $this->data->fundingInstrument->creditCard = new stdClass();
         $this->data->fundingInstrument->creditCard->hash = $hash;
         $this->setCreditCardHolder($holder);
