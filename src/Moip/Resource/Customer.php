@@ -12,6 +12,9 @@ class Customer extends MoipResource
         $this->data = new stdClass();
     }
 
+    /**
+     * @deprecated Use setBillingAddress or setShippingAddress methods instead
+     */
     public function addAddress($type, $street, $number, $district, $city, $state, $zip, $complement = null, $country = 'BRA')
     {
         $address = new stdClass();
@@ -74,6 +77,16 @@ class Customer extends MoipResource
     public function getId()
     {
         return $this->getIfSet('id');
+    }
+
+    public function getBillingAddress()
+    {
+        return $this->getIfSet('billingAddress');
+    }
+
+    public function getShippingAddress()
+    {
+        return $this->getIfSet('shippingAddress');
     }
 
     public function getFullname()
@@ -148,6 +161,36 @@ class Customer extends MoipResource
     public function setOwnId($ownId)
     {
         $this->data->ownId = $ownId;
+
+        return $this;
+    }
+
+    public function setBillingAddress($street, $number, $district, $city, $state, $zip, $complement = null, $country = 'BRA')
+    {
+        $this->data->billingAddress = new stdClass();
+        $this->data->billingAddress->street = $street;
+        $this->data->billingAddress->streetNumber = $number;
+        $this->data->billingAddress->complement = $complement;
+        $this->data->billingAddress->district = $district;
+        $this->data->billingAddress->city = $city;
+        $this->data->billingAddress->state = $state;
+        $this->data->billingAddress->country = $country;
+        $this->data->billingAddress->zipCode = $zip;
+
+        return $this;
+    }
+
+    public function setShippingAddress($street, $number, $district, $city, $state, $zip, $complement = null, $country = 'BRA')
+    {
+        $this->data->shippingAddress = new stdClass();
+        $this->data->shippingAddress->street = $street;
+        $this->data->shippingAddress->streetNumber = $number;
+        $this->data->shippingAddress->complement = $complement;
+        $this->data->shippingAddress->district = $district;
+        $this->data->shippingAddress->city = $city;
+        $this->data->shippingAddress->state = $state;
+        $this->data->shippingAddress->country = $country;
+        $this->data->shippingAddress->zipCode = $zip;
 
         return $this;
     }
