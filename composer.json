@@ -2,6 +2,7 @@
     "name": "moip/moip-sdk-php",
     "description": "Cliente em PHP para integração server-side com APIs Moip v2",
     "homepage": "https://github.com/moip/moip-sdk-php",
+    "license": "MIT",
     "require": {
         "php": ">=5.4"
     },
