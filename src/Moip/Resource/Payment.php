@@ -25,7 +25,7 @@ class Payment extends MoipResource
 
     public function execute()
     {
-        $body = json_encode($this);
+        $body = json_encode($this, JSON_UNESCAPED_SLASHES);
 
         $httpConnection = $this->createConnection();
         $httpConnection->addHeader('Content-Type', 'application/json');

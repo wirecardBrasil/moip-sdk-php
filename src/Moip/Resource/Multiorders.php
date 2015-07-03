@@ -23,7 +23,7 @@ class Multiorders extends MoipResource
 
     public function create()
     {
-        $body = json_encode($this);
+        $body = json_encode($this, JSON_UNESCAPED_SLASHES);
 
         $httpConnection = $this->createConnection();
         $httpConnection->addHeader('Content-Type', 'application/json');
