@@ -29,20 +29,31 @@ class Customer extends MoipResource
      * @param string $country    
      * 
      * @return $this;
+     * @deprecated Use setBillingAddress or setShippingAddress methods instead
      */
     public function addAddress($type, $street, $number, $district, $city, $state, $zip, $complement = null, $country = 'BRA')
     {
-        $address                 = new stdClass();
-        $address->type           = $type;
-        $address->street         = $street;
-        $address->streetNumber   = $number;
-        $address->complement     = $complement;
-        $address->district       = $district;
-        $address->city           = $city;
-        $address->state          = $state;
-        $address->country        = $country;
-        $address->zipCode        = $zip;
-        $this->data->addresses[] = $address;
+        $address = new stdClass();
+        $address->street = $street;
+        $address->streetNumber = $number;
+        $address->complement = $complement;
+        $address->district = $district;
+        $address->city = $city;
+        $address->state = $state;
+        $address->country = $country;
+        $address->zipCode = $zip;
+
+        switch ($type) {
+            case 'BILLING':
+                $this->data->billingAddress = $address;
+                break;
+            case 'SHIPPING':
+                $this->data->shippingAddress = $address;
+                break;
+            default:
+                throw new \UnexpectedValueException(sprintf('%s não é um tipo de endereço válido', $type));
+                break;
+        }
 
         return $this;
     }
@@ -54,7 +65,7 @@ class Customer extends MoipResource
      */
     public function create()
     {
-        $body = json_encode($this);
+        $body = json_encode($this, JSON_UNESCAPED_SLASHES);
 
         $httpConnection = $this->createConnection();
         $httpConnection->addHeader('Content-Type', 'application/json');
@@ -99,6 +110,26 @@ class Customer extends MoipResource
     public function getId()
     {
         return $this->getIfSet('id');
+    }
+
+    /**
+     * Get customer address
+     * 
+     * @return string Customer's address.
+     */
+    public function getBillingAddress()
+    {
+        return $this->getIfSet('billingAddress');
+    }
+
+    /**
+     * Get customer address
+     * 
+     * @return string Customer's address.
+     */
+    public function getShippingAddress()
+    {
+        return $this->getIfSet('shippingAddress');
     }
 
     /**
@@ -182,25 +213,6 @@ class Customer extends MoipResource
     }
 
     /**
-     * Get the address from customer.
-     * 
-     * @param  \stdClass $response
-     * @return \stdClass Customer's address.
-     */
-    private function getAddresses(stdClass $response)
-    {
-        if (isset($response->shippingAddress)) {
-            $response->addresses[] = $response->shippingAddress;
-        }
-
-        if (isset($response->billingAddress)) {
-            $response->addresses[] = $response->billingAddress;
-        }
-
-        return $response->addresses;
-    }
-
-    /**
      * Mount the buyer structure from customer.
      * 
      * @param  \stdClass $response
@@ -208,44 +220,29 @@ class Customer extends MoipResource
      */
     protected function populate(stdClass $response)
     {
-        $customer                            = clone $this;
-        $customer->data                      = new stdClass();
-        $customer->data->id                  = $this->getIfSet('id', $response);
-        $customer->data->ownId               = $this->getIfSet('ownId', $response);
-        $customer->data->fullname            = $this->getIfSet('fullname', $response);
-        $customer->data->email               = $this->getIfSet('email', $response);
-        $customer->data->phone               = new stdClass();
-        $customer->data->phone->countryCode  = $this->getIfSet('countryCode', $response->phone);
-        $customer->data->phone->areaCode     = $this->getIfSet('areaCode', $response->phone);
-        $customer->data->phone->number       = $this->getIfSet('number', $response->phone);
-        $customer->data->birthDate           = $this->getIfSet('birthDate', $response);
-        $customer->data->taxDocument         = new stdClass();
-        $customer->data->taxDocument->type   = $this->getIfSet('type', $response->taxDocument);
+        $customer = clone $this;
+        $customer->data = new stdClass();
+        $customer->data->id = $this->getIfSet('id', $response);
+        $customer->data->ownId = $this->getIfSet('ownId', $response);
+        $customer->data->fullname = $this->getIfSet('fullname', $response);
+        $customer->data->email = $this->getIfSet('email', $response);
+        $customer->data->phone = new stdClass();
+
+        $phone = $this->getIfSet('phone', $response);
+
+        $customer->data->phone->countryCode = $this->getIfSet('countryCode', $phone);
+        $customer->data->phone->areaCode = $this->getIfSet('areaCode', $phone);
+        $customer->data->phone->number = $this->getIfSet('number', $phone);
+        $customer->data->birthDate = $this->getIfSet('birthDate', $response);
+        $customer->data->taxDocument = new stdClass();
+        $customer->data->taxDocument->type = $this->getIfSet('type', $response->taxDocument);
         $customer->data->taxDocument->number = $this->getIfSet('number', $response->taxDocument);
-        $customer->data->addresses           = array();
-
-        $response->addresses = $this->getAddresses($response);
-
-        foreach ($response->addresses as $responseAddress) {
-            $address               = new stdClass();
-            $address->type         = $this->getIfSet('type', $responseAddress);
-            $address->street       = $this->getIfSet('street', $responseAddress);
-            $address->streetNumber = $this->getIfSet('streetNumber', $responseAddress);
-            $address->complement   = $this->getIfSet('complement', $responseAddress);
-            $address->district     = $this->getIfSet('district', $responseAddress);
-            $address->city         = $this->getIfSet('city', $responseAddress);
-            $address->state        = $this->getIfSet('state', $responseAddress);
-            $address->country      = $this->getIfSet('country', $responseAddress);
-            $address->zipCode      = $this->getIfSet('zipCode', $responseAddress);
-
-            $customer->data->addresses[] = $address;
-        }
+        $customer->data->addresses = array();
+        $customer->data->shippingAddress = $this->getIfSet('shippingAddress', $response);
+        $customer->data->billingAddress = $this->getIfSet('billingAddress', $response);
+        $customer->data->fundingInstrument = $this->getIfSet('fundingInstrument', $response);
 
         $customer->data->_links = $this->getIfSet('_links', $response);
-
-        if (isset($response->fundingInstrument)) {
-            $customer->data->fundingInstrument = $response->fundingInstrument;
-        }
 
         return $customer;
     }
@@ -259,6 +256,66 @@ class Customer extends MoipResource
     public function setOwnId($ownId)
     {
         $this->data->ownId = $ownId;
+
+        return $this;
+    }
+
+    /**
+     * Add a new billing address to the customer.
+     * 
+     * @param string $type       Type of values: SHIPPING and BILLING.
+     * @param string $street     
+     * @param string $number     
+     * @param string $district   
+     * @param string $city       
+     * @param string $state      
+     * @param string $zip        
+     * @param string $complement 
+     * @param string $country    
+     * 
+     * @return $this;
+     */
+    public function setBillingAddress($street, $number, $district, $city, $state, $zip, $complement = null, $country = 'BRA')
+    {
+        $this->data->billingAddress = new stdClass();
+        $this->data->billingAddress->street = $street;
+        $this->data->billingAddress->streetNumber = $number;
+        $this->data->billingAddress->complement = $complement;
+        $this->data->billingAddress->district = $district;
+        $this->data->billingAddress->city = $city;
+        $this->data->billingAddress->state = $state;
+        $this->data->billingAddress->country = $country;
+        $this->data->billingAddress->zipCode = $zip;
+
+        return $this;
+    }
+
+    /**
+     * Add a new shipping address to the customer.
+     * 
+     * @param string $type       Type of values: SHIPPING and BILLING.
+     * @param string $street     
+     * @param string $number     
+     * @param string $district   
+     * @param string $city       
+     * @param string $state      
+     * @param string $zip        
+     * @param string $complement 
+     * @param string $country    
+     * 
+     * @return $this;
+     */
+    public function setShippingAddress($street, $number, $district, $city, $state, $zip, $complement = null, $country = 'BRA')
+    {
+        $this->data->shippingAddress = new stdClass();
+        $this->data->shippingAddress->street = $street;
+        $this->data->shippingAddress->streetNumber = $number;
+        $this->data->shippingAddress->complement = $complement;
+        $this->data->shippingAddress->district = $district;
+        $this->data->shippingAddress->city = $city;
+        $this->data->shippingAddress->state = $state;
+        $this->data->shippingAddress->country = $country;
+        $this->data->shippingAddress->zipCode = $zip;
 
         return $this;
     }
@@ -358,8 +415,8 @@ class Customer extends MoipResource
     /**
      * Set phone from customer
      * 
-     * @param [type]  $areaCode    DDD telephone.
-     * @param [type]  $number      Telephone number.
+     * @param integer $areaCode    DDD telephone.
+     * @param integer $number      Telephone number.
      * @param integer $countryCode Country code.
      * @return  $this
      */

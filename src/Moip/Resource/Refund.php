@@ -65,7 +65,7 @@ class Refund extends MoipResource
 
     private function execute(stdClass $data = null)
     {
-        $body = $data == null ? '{}' : json_encode($data);
+        $body = $data == null ? '{}' : json_encode($data, JSON_UNESCAPED_SLASHES);
 
         $httpConnection = $this->createConnection();
         $httpConnection->addHeader('Content-Type', 'application/json');
