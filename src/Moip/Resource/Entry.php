@@ -7,6 +7,9 @@ use Moip\Http\HTTPRequest;
 
 class Entry extends MoipResource
 {
+    /**
+     * Initializes new instances.
+     */
     protected function initialize()
     {
         $this->data = new stdClass();
@@ -15,18 +18,24 @@ class Entry extends MoipResource
         $this->data->parentPayments = new stdClass();
     }
 
+    /**
+     * Mount the entry.
+     * 
+     * @param  \stdClass $response
+     * @return \stdClass Entry information
+     */
     protected function populate(stdClass $response)
     {
         $entry = clone $this;
 
-        $entry->data->id = $this->getIfSet('id', $response);
-        $entry->data->status = $this->getIfSet('status', $response);
+        $entry->data->id        = $this->getIfSet('id', $response);
+        $entry->data->status    = $this->getIfSet('status', $response);
         $entry->data->operation = $this->getIfSet('operation', $response);
 
         if (isset($response->amount)) {
-            $entry->data->amount->total = $this->getIfSet('total', $response->amount);
-            $entry->data->amount->fee = $this->getIfSet('fee', $response->amount);
-            $entry->data->amount->liquid = $this->getIfSet('liquid', $response->amount);
+            $entry->data->amount->total    = $this->getIfSet('total', $response->amount);
+            $entry->data->amount->fee      = $this->getIfSet('fee', $response->amount);
+            $entry->data->amount->liquid   = $this->getIfSet('liquid', $response->amount);
             $entry->data->amount->currency = $this->getIfSet('currency', $response->amount);
         }
 
@@ -44,6 +53,12 @@ class Entry extends MoipResource
         return $entry;
     }
 
+    /**
+     * Get entry in api by id
+     * 
+     * @param  string $id Event ID that generated the launch.
+     * @return \Moip\Resource\Entry
+     */
     public function get($id)
     {
         $httpConnection = $this->createConnection();
@@ -58,21 +73,39 @@ class Entry extends MoipResource
         return $this->populate(json_decode($httpResponse->getContent()));
     }
 
+    /**
+     * Get id from entry
+     * 
+     * @return strign Event ID that generated the launch.
+     */
     public function getId()
     {
         return $this->getIfSet('id');
     }
 
+    /**
+     * Get status from entry.
+     * 
+     * @return string Launch status. Possible values: SCHEDULEDor SETTLED.
+     */
     public function getStatus()
     {
         return $this->getIfSet('status');
     }
 
+    /**
+     * [getOperation description]
+     * @return [type] [description]
+     */
     public function getOperation()
     {
         return $this->getIfSet('operation');
     }
 
+    /**
+     * [getAmountTotal description]
+     * @return [type] [description]
+     */
     public function getAmountTotal()
     {
         return $this->getIfSet('total', $this->data->amount);
@@ -118,6 +151,7 @@ class Entry extends MoipResource
         return $this->getIfSet('updatedAt');
     }
 
+    
     public function getCreatedAt()
     {
         return $this->getIfSet('createdAt');
