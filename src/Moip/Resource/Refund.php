@@ -8,20 +8,29 @@ use Moip\Http\HTTPRequest;
 class Refund extends MoipResource
 {
     /**
-     * @var \Moip\Orders
+     * @var \Moip\Resource\Orders
      */
     private $order;
 
     /**
-     * @var \Moip\Payment
+     * @var \Moip\Resource\Payment
      */
     private $payment;
 
+    /**
+     * Initializes new instances.
+     */
     public function initialize()
     {
         $this->data = new stdClass();
     }
 
+    /**
+     * Mount refund structure.
+     * 
+     * @param  \stdClass $response
+     * @return $this
+     */
     protected function populate(stdClass $response)
     {
         $refund = clone $this;
@@ -63,6 +72,11 @@ class Refund extends MoipResource
         return $refund;
     }
 
+    /**
+     * Create a new refund in api MoIP.
+     * 
+     * @return $this
+     */
     private function execute(stdClass $data = null)
     {
         $body = $data == null ? '{}' : json_encode($data, JSON_UNESCAPED_SLASHES);
@@ -87,6 +101,18 @@ class Refund extends MoipResource
         return $this->populate(json_decode($httpResponse->getContent()));
     }
 
+    /**
+     * Bank account is the bank address of a particular vendor or a customer.
+     * 
+     * @param  string   $type               Kind of refund. possible values: FULL, PARTIAL.
+     * @param  string   $bankNumber         Bank number. possible values: 001, 237, 341, 041.
+     * @param  integer  $agencyNumber       Branch number.
+     * @param  integer  $agencyCheckNumber  Checksum of the agency.
+     * @param  integer  $accountNumber      Account number.
+     * @param  integer  $accountCheckNumber Digit account checker.
+     * @param  \Moip\Resource\Customer $holder
+     * @return \stdClass
+     */
     private function bankAccount($type, $bankNumber, $agencyNumber, $agencyCheckNumber, $accountNumber, $accountCheckNumber, Customer $holder)
     {
         $data = new stdClass();
@@ -107,6 +133,18 @@ class Refund extends MoipResource
         return $data;
     }
 
+    /**
+     * Making a full refund to the bank account
+     * 
+     * @param  string   $type               Kind of refund. possible values: FULL, PARTIAL.
+     * @param  string   $bankNumber         Bank number. possible values: 001, 237, 341, 041.
+     * @param  integer  $agencyNumber       Branch number.
+     * @param  integer  $agencyCheckNumber  Checksum of the agency.
+     * @param  integer  $accountNumber      Account number.
+     * @param  integer  $accountCheckNumber Digit account checker.
+     * @param  \Moip\Resource\Customer $holder
+     * @return \stdClass
+     */
     public function bankAccountFull($type, $bankNumber, $agencyNumber, $agencyCheckNumber, $accountNumber, $accountCheckNumber, Customer $holder)
     {
         $data = $this->bankAccount($type, $bankNumber, $agencyNumber, $agencyCheckNumber, $accountNumber, $accountCheckNumber, $holder);
@@ -114,6 +152,18 @@ class Refund extends MoipResource
         return $this->execute($data);
     }
 
+    /**
+     * Making a partial refund in the bank account
+     * 
+     * @param  string   $type               Kind of refund. possible values: FULL, PARTIAL.
+     * @param  string   $bankNumber         Bank number. possible values: 001, 237, 341, 041.
+     * @param  integer  $agencyNumber       Branch number.
+     * @param  integer  $agencyCheckNumber  Checksum of the agency.
+     * @param  integer  $accountNumber      Account number.
+     * @param  integer  $accountCheckNumber Digit account checker.
+     * @param  \Moip\Resource\Customer $holder
+     * @return \stdClass
+     */
     public function bankAccountPartial($amount, $type, $bankNumber, $agencyNumber, $agencyCheckNumber, $accountNumber, $accountCheckNumber, Customer $holder)
     {
         $data = $this->bankAccount($type, $bankNumber, $agencyNumber, $agencyCheckNumber, $accountNumber, $accountCheckNumber, $holder);
@@ -122,11 +172,22 @@ class Refund extends MoipResource
         return $this->execute($data);
     }
 
+    /**
+     * Making a full refund in credit card.
+     * 
+     * @return \Moip\Resource\Refund
+     */
     public function creditCardFull()
     {
         return $this->execute();
     }
 
+    /**
+     * Making a partial refund in credit card.
+     * 
+     * @param  integer|float $amount value of refund.
+     * @return \Moip\Resource\Refund
+     */
     public function creditCardPartial($amount)
     {
         $data = new stdClass();
@@ -135,6 +196,11 @@ class Refund extends MoipResource
         return $this->execute($data);
     }
 
+    /**
+     * Get iterator.
+     * 
+     * @return \ArrayIterator
+     */
     public function getIterator()
     {
         $httpConnection = $this->createConnection();
@@ -162,11 +228,21 @@ class Refund extends MoipResource
         return new \ArrayIterator($refunds);
     }
 
+    /**
+     * Set order.
+     * 
+     * @param \Moip\Resource\Orders $order
+     */
     public function setOrder(Orders $order)
     {
         $this->order = $order;
     }
 
+    /**
+     * Set payment.
+     * 
+     * @param \Moip\Resource\Payment $payment
+     */
     public function setPayment(Payment $payment)
     {
         $this->payment = $payment;
