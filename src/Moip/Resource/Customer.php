@@ -272,8 +272,8 @@ class Customer extends MoipResource
      * @param string $zip        
      * @param string $complement 
      * @param string $country    
-     * 
      * @return $this;
+     * @deprecated
      */
     public function setBillingAddress($street, $number, $district, $city, $state, $zip, $complement = null, $country = 'BRA')
     {
@@ -302,8 +302,8 @@ class Customer extends MoipResource
      * @param string $zip        
      * @param string $complement 
      * @param string $country    
-     * 
      * @return $this;
+     * @deprecated
      */
     public function setShippingAddress($street, $number, $district, $city, $state, $zip, $complement = null, $country = 'BRA')
     {
