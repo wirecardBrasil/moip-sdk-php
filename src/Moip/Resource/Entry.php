@@ -22,7 +22,7 @@ class Entry extends MoipResource
      * Mount the entry.
      * 
      * @param  \stdClass $response
-     * @return \stdClass Entry information
+     * @return \stdClass Entry information.
      */
     protected function populate(stdClass $response)
     {
@@ -54,7 +54,7 @@ class Entry extends MoipResource
     }
 
     /**
-     * Get entry in api by id
+     * Get entry in api by id.
      * 
      * @param  string $id Event ID that generated the launch.
      * @return \Moip\Resource\Entry
@@ -86,72 +86,112 @@ class Entry extends MoipResource
     /**
      * Get status from entry.
      * 
-     * @return string Launch status. Possible values: SCHEDULEDor SETTLED.
+     * @return string Launch status. Possible values: SCHEDULED, SETTLED.
      */
     public function getStatus()
     {
         return $this->getIfSet('status');
     }
 
-    /**
-     * [getOperation description]
-     * @return [type] [description]
-     */
     public function getOperation()
     {
         return $this->getIfSet('operation');
     }
 
     /**
-     * [getAmountTotal description]
-     * @return [type] [description]
+     * Get total value of order.
+     * 
+     * @return integer|float
      */
     public function getAmountTotal()
     {
         return $this->getIfSet('total', $this->data->amount);
     }
 
+    /**
+     * Get total value of MoIP rate.
+     * 
+     * @return integer|float
+     */
     public function getAmountFee()
     {
         return $this->getIfSet('fee', $this->data->amount);
     }
 
+    /**
+     * Get net total value.
+     * 
+     * @return integer|float
+     */
     public function getAmountLiquid()
     {
         return $this->getIfSet('liquid', $this->data->amount);
     }
 
+    /**
+     * Get currency used in the application. Possible values: BRL
+     * 
+     * @return string
+     */
     public function getAmountCurrency()
     {
         return $this->getIfSet('currency', $this->data->amount);
     }
 
+    /**
+     * Get additional description
+     * 
+     * @return string
+     */
     public function getDetails()
     {
         return $this->getIfSet('details');
     }
 
+    /**
+     * Get parant payments
+     * 
+     * @return string
+     */
     public function getParentPayments()
     {
         return $this->getIfSet('parentPayments');
     }
 
+    /**
+     * Get expected date of settlement.
+     * 
+     * @return \DateTime
+     */
     public function getScheduledFor()
     {
         return $this->getIfSet('scheduledFor');
     }
 
+    /**
+     * Get Settlement date;
+     * @return \DateTime
+     */
     public function getSettledAt()
     {
         return $this->getIfSet('settledAt');
     }
 
+    /**
+     * Get date of last update.
+     * 
+     * @return \DateTime
+     */
     public function getUpdatedAt()
     {
         return $this->getIfSet('updatedAt');
     }
 
-    
+    /**
+     * Get creation date of launch.
+     * 
+     * @return \DateTime
+     */
     public function getCreatedAt()
     {
         return $this->getIfSet('createdAt');
