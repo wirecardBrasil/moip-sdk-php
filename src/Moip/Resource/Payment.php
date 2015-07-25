@@ -1,4 +1,5 @@
 <?php
+
 namespace Moip\Resource;
 
 use stdClass;
@@ -62,9 +63,10 @@ class Payment extends MoipResource
     }
 
     /**
-     * Get an payment in MoIP
+     * Get an payment in MoIP.
      * 
-     * @param  string $id Id MoIP payment
+     * @param string $id Id MoIP payment
+     *
      * @return \Moip\Resource\Payment
      */
     public function get($id)
@@ -88,9 +90,10 @@ class Payment extends MoipResource
     }
 
     /**
-     * Get id MoIP payment
+     * Get id MoIP payment.
      * 
-     * @param  string $id
+     * @param string $id
+     *
      * @return \Moip\Resource\Payment
      */
     public function getId()
@@ -101,7 +104,8 @@ class Payment extends MoipResource
     /**
      * Mount payment structure.
      * 
-     * @param  \stdClass $response
+     * @param \stdClass $response
+     *
      * @return $this
      */
     protected function populate(stdClass $response)
@@ -139,6 +143,7 @@ class Payment extends MoipResource
      * Set means of payment.
      * 
      * @param \stdClass $fundingInstrument
+     *
      * @return $this
      */
     public function setFundingInstrument(stdClass $fundingInstrument)
@@ -152,9 +157,10 @@ class Payment extends MoipResource
      * Set boleto.
      * 
      * @param \DateTime $expirationDate   Expiration date of a billet.
-     * @param string $logoUri             Logo of billet.
-     * @param array  $instructionLines    Instructions billet.
-     * @return  $this
+     * @param string    $logoUri          Logo of billet.
+     * @param array     $instructionLines Instructions billet.
+     *
+     * @return $this
      */
     public function setBoleto($expirationDate, $logoUri, array $instructionLines = [])
     {
@@ -185,14 +191,16 @@ class Payment extends MoipResource
         $this->data->fundingInstrument->creditCard->holder->phone = new stdClass();
         $this->data->fundingInstrument->creditCard->holder->phone->countryCode = $holder->getPhoneCountryCode();
         $this->data->fundingInstrument->creditCard->holder->phone->areaCode = $holder->getPhoneAreaCode();
-        $this->data->fundingInstrument->creditCard->holder->phone->number = $holder->getPhoneNumber();     
+        $this->data->fundingInstrument->creditCard->holder->phone->number = $holder->getPhoneNumber();
     }
 
     /**
-     * Set credit cardHash
-     * @param string   $hash   [description]
+     * Set credit cardHash.
+     *
+     * @param string                  $hash   [description]
      * @param \Moip\Resource\Customer $holder
-     * @return $this 
+     *
+     * @return $this
      */
     public function setCreditCardHash($hash, Customer $holder)
     {
@@ -207,14 +215,15 @@ class Payment extends MoipResource
     /**
      * Set credit card
      * Credit card used in a payment. 
-     * The card when returned within a parent resource is presented in its minimum representation
+     * The card when returned within a parent resource is presented in its minimum representation.
      * 
-     * @param integer  $expirationMonth Card expiration month
-     * @param integer  $expirationYear  Year of card expiration.
-     * @param integer  $number          Card number.
-     * @param integer  $cvc             Card Security Code.
+     * @param int                     $expirationMonth Card expiration month
+     * @param int                     $expirationYear  Year of card expiration.
+     * @param int                     $number          Card number.
+     * @param int                     $cvc             Card Security Code.
      * @param \Moip\Resource\Customer $holder
-     * @return  $this
+     *
+     * @return $this
      */
     public function setCreditCard($expirationMonth, $expirationYear, $number, $cvc, Customer $holder)
     {
@@ -242,10 +251,11 @@ class Payment extends MoipResource
     /**
      * Set payment means made available by banks.
      * 
-     * @param string    $bankNumber         Bank number. Possible values: 001, 237, 341, 041.
-     * @param \DateTime $expirationDate     Date of expiration debit.
-     * @param string    $returnUri          Return Uri.
-     * @return  $this
+     * @param string    $bankNumber     Bank number. Possible values: 001, 237, 341, 041.
+     * @param \DateTime $expirationDate Date of expiration debit.
+     * @param string    $returnUri      Return Uri.
+     *
+     * @return $this
      */
     public function setOnlineBankDebit($bankNumber, $expirationDate, $returnUri)
     {
@@ -272,7 +282,8 @@ class Payment extends MoipResource
      * Set order.
      * 
      * @param \Moip\Resource\Orders $order
-     * @return  $this
+     *
+     * @return $this
      */
     public function setOrder(Orders $order)
     {

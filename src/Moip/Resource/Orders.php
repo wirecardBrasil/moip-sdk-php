@@ -8,12 +8,13 @@ use Moip\Http\HTTPRequest;
 class Orders extends MoipResource
 {
     /**
-     * Adds a new item to order
+     * Adds a new item to order.
      * 
      * @param string  $product  Name of the product.
-     * @param integer $quantity Product Quantity.
+     * @param int     $quantity Product Quantity.
      * @param string  $detail   Additional product description.
      * @param intefer $price    Initial value of the item.
+     *
      * @return $this
      */
     public function addItem($product, $quantity, $detail, $price)
@@ -34,6 +35,7 @@ class Orders extends MoipResource
      * 
      * @param string $moipAccount Id MoIP MoIP account that will receive payment values.
      * @param string $type        Define qual o tipo de recebedor do pagamento, valores possíveis: PRIMARY, SECONDARY.
+     *
      * @return $this
      */
     public function addReceiver($moipAccount, $type = 'PRIMARY')
@@ -74,7 +76,8 @@ class Orders extends MoipResource
     /**
      * Mount the structure of order.
      * 
-     * @param  \stdClass $response
+     * @param \stdClass $response
+     *
      * @return \stdClass Response order.
      */
     protected function populate(stdClass $response)
@@ -144,7 +147,7 @@ class Orders extends MoipResource
     }
 
     /**
-     * Create a new order in MoIP
+     * Create a new order in MoIP.
      * 
      * @return \Moip\Resource\Order
      */
@@ -167,9 +170,10 @@ class Orders extends MoipResource
     }
 
     /**
-     * Get an order in MoIP
+     * Get an order in MoIP.
      * 
-     * @param  string $id Id MoIP order id
+     * @param string $id Id MoIP order id
+     *
      * @return \Moip\Resource\Order
      */
     public function get($id)
@@ -191,7 +195,7 @@ class Orders extends MoipResource
     }
 
     /**
-     * Get MoIP order id
+     * Get MoIP order id.
      * 
      * @return strign
      */
@@ -201,7 +205,7 @@ class Orders extends MoipResource
     }
 
     /**
-     * Get own request id. external reference
+     * Get own request id. external reference.
      * 
      * @return string
      */
@@ -211,9 +215,9 @@ class Orders extends MoipResource
     }
 
     /**
-     * Get total value of order
+     * Get total value of order.
      * 
-     * @return integer|float
+     * @return int|float
      */
     public function getAmountTotal()
     {
@@ -221,9 +225,9 @@ class Orders extends MoipResource
     }
 
     /**
-     * Get total value of MoIP rate
+     * Get total value of MoIP rate.
      * 
-     * @return integer|float
+     * @return int|float
      */
     public function getAmountFees()
     {
@@ -231,9 +235,9 @@ class Orders extends MoipResource
     }
 
     /**
-     * Get total amount of refunds
+     * Get total amount of refunds.
      * 
-     * @return integer|float
+     * @return int|float
      */
     public function getAmountRefunds()
     {
@@ -241,9 +245,9 @@ class Orders extends MoipResource
     }
 
     /**
-     * Get net total value
+     * Get net total value.
      * 
-     * @return integer|float
+     * @return int|float
      */
     public function getAmountLiquid()
     {
@@ -251,9 +255,9 @@ class Orders extends MoipResource
     }
 
     /**
-     * Get sum of amounts received by other recipients. Used in Marketplaces
+     * Get sum of amounts received by other recipients. Used in Marketplaces.
      * 
-     * @return integer|float
+     * @return int|float
      */
     public function getAmountOtherReceivers()
     {
@@ -261,7 +265,7 @@ class Orders extends MoipResource
     }
 
     /**
-     * Get currency used in the application. Possible values: BRL
+     * Get currency used in the application. Possible values: BRL.
      * 
      * @return string
      */
@@ -271,9 +275,9 @@ class Orders extends MoipResource
     }
 
     /**
-     * Get greight value of the item will be added to the value of the items
+     * Get greight value of the item will be added to the value of the items.
      * 
-     * @return integer|float
+     * @return int|float
      */
     public function getSubtotalShipping()
     {
@@ -285,7 +289,7 @@ class Orders extends MoipResource
     /**
      * Get Additional value to the item will be added to the value of the items.
      * 
-     * @return integer|float
+     * @return int|float
      */
     public function getSubtotalAddition()
     {
@@ -295,9 +299,9 @@ class Orders extends MoipResource
     }
 
     /**
-     * Get discounted value of the item will be subtracted from the total value of the items
+     * Get discounted value of the item will be subtracted from the total value of the items.
      * 
-     * @return integer|float
+     * @return int|float
      */
     public function getSubtotalDiscount()
     {
@@ -307,9 +311,9 @@ class Orders extends MoipResource
     }
 
     /**
-     * Get summing the values of all items
+     * Get summing the values of all items.
      * 
-     * @return integer|float
+     * @return int|float
      */
     public function getSubtotalItems()
     {
@@ -319,7 +323,7 @@ class Orders extends MoipResource
     }
 
     /**
-     * Ger structure item information request
+     * Ger structure item information request.
      * 
      * @return \ArrayIterator
      */
@@ -329,7 +333,7 @@ class Orders extends MoipResource
     }
 
     /**
-     * Get Customer associated with the request
+     * Get Customer associated with the request.
      * 
      * @return \Moip\Resource\Customer
      */
@@ -339,7 +343,7 @@ class Orders extends MoipResource
     }
 
     /**
-     * Get payments associated with the request
+     * Get payments associated with the request.
      * 
      * @return \Moip\Resource\Payment
      */
@@ -349,7 +353,7 @@ class Orders extends MoipResource
     }
 
     /**
-     * Get recipient structure of payments
+     * Get recipient structure of payments.
      * 
      * @return \Moip\Resource\
      */
@@ -359,7 +363,7 @@ class Orders extends MoipResource
     }
 
     /**
-     * Get releases associated with the request
+     * Get releases associated with the request.
      * 
      * @return \stdClass
      */
@@ -369,7 +373,7 @@ class Orders extends MoipResource
     }
 
     /**
-     * Get repayments associated with the request
+     * Get repayments associated with the request.
      * 
      * @return \Moip\Resource\Refund
      */
@@ -380,7 +384,7 @@ class Orders extends MoipResource
 
     /**
      * Get order status. 
-     * Possible values: CREATED, WAITING, PAID, NOT_PAID, REVERTED
+     * Possible values: CREATED, WAITING, PAID, NOT_PAID, REVERTED.
      * 
      * @return string
      */
@@ -390,7 +394,7 @@ class Orders extends MoipResource
     }
 
     /**
-     * Get date of resource creation
+     * Get date of resource creation.
      * 
      * @return \DateTime
      */
@@ -400,7 +404,7 @@ class Orders extends MoipResource
     }
 
     /**
-     * Get updated resource
+     * Get updated resource.
      * 
      * @return \DateTime
      */
@@ -410,7 +414,7 @@ class Orders extends MoipResource
     }
 
     /**
-     * Get hypermedia link structure (HATEOAS) resource Orders
+     * Get hypermedia link structure (HATEOAS) resource Orders.
      * 
      * @return \stdClass
      */
@@ -420,7 +424,7 @@ class Orders extends MoipResource
     }
 
     /**
-     * Structure of payment
+     * Structure of payment.
      * 
      * @return \Moip\Resource\Payment
      */
@@ -433,7 +437,7 @@ class Orders extends MoipResource
     }
 
     /**
-     * Structure of refund
+     * Structure of refund.
      * 
      * @return \Moip\Resource\Refund
      */
@@ -448,7 +452,7 @@ class Orders extends MoipResource
     /**
      * Set additional value to the item will be added to the value of the items.
      * 
-     * @param integer|float $value additional value to the item.
+     * @param int|float $value additional value to the item.
      */
     public function setAddition($value)
     {
@@ -472,7 +476,7 @@ class Orders extends MoipResource
     /**
      * Set discounted value of the item will be subtracted from the total value of the items.
      * 
-     * @param integer|float $value discounted value.
+     * @param int|float $value discounted value.
      */
     public function setDiscont($value)
     {
@@ -497,6 +501,7 @@ class Orders extends MoipResource
      * Set shipping Amount.
      * 
      * @param float $value shipping Amount.
+     *
      * @return $this
      */
     public function setShippingAmount($value)

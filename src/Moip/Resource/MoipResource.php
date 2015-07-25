@@ -19,20 +19,21 @@ abstract class MoipResource implements JsonSerializable
     protected $data;
 
     /**
-     * Initialize a new instance
+     * Initialize a new instance.
      */
     abstract protected function initialize();
-    
+
     /**
-     * Mount information of a determined object
+     * Mount information of a determined object.
      * 
-     * @param  \stdClass $response
+     * @param \stdClass $response
+     *
      * @return \stdClass
      */
     abstract protected function populate(stdClass $response);
 
     /**
-     * Create a new instance
+     * Create a new instance.
      * 
      * @param Moip\Moip $moip
      */
@@ -44,7 +45,7 @@ abstract class MoipResource implements JsonSerializable
     }
 
     /**
-     * Create a new connecttion
+     * Create a new connecttion.
      * 
      * @return Moip\Moip
      */
@@ -54,10 +55,11 @@ abstract class MoipResource implements JsonSerializable
     }
 
     /**
-     * Get a key of an object if he exist
+     * Get a key of an object if he exist.
      * 
-     * @param  string        $key
-     * @param  \stdClass|null $data 
+     * @param string         $key
+     * @param \stdClass|null $data
+     *
      * @return \stdClass|string|null
      */
     protected function getIfSet($key, stdClass $data = null)
@@ -72,7 +74,7 @@ abstract class MoipResource implements JsonSerializable
     }
 
     /**
-     * Specify data which should be serialized to JSON
+     * Specify data which should be serialized to JSON.
      * 
      * @return \stdClass
      */

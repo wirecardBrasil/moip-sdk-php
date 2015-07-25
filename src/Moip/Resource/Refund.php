@@ -28,7 +28,8 @@ class Refund extends MoipResource
     /**
      * Mount refund structure.
      * 
-     * @param  \stdClass $response
+     * @param \stdClass $response
+     *
      * @return $this
      */
     protected function populate(stdClass $response)
@@ -104,13 +105,14 @@ class Refund extends MoipResource
     /**
      * Bank account is the bank address of a particular vendor or a customer.
      * 
-     * @param  string   $type               Kind of refund. possible values: FULL, PARTIAL.
-     * @param  string   $bankNumber         Bank number. possible values: 001, 237, 341, 041.
-     * @param  integer  $agencyNumber       Branch number.
-     * @param  integer  $agencyCheckNumber  Checksum of the agency.
-     * @param  integer  $accountNumber      Account number.
-     * @param  integer  $accountCheckNumber Digit account checker.
-     * @param  \Moip\Resource\Customer $holder
+     * @param string                  $type               Kind of refund. possible values: FULL, PARTIAL.
+     * @param string                  $bankNumber         Bank number. possible values: 001, 237, 341, 041.
+     * @param int                     $agencyNumber       Branch number.
+     * @param int                     $agencyCheckNumber  Checksum of the agency.
+     * @param int                     $accountNumber      Account number.
+     * @param int                     $accountCheckNumber Digit account checker.
+     * @param \Moip\Resource\Customer $holder
+     *
      * @return \stdClass
      */
     private function bankAccount($type, $bankNumber, $agencyNumber, $agencyCheckNumber, $accountNumber, $accountCheckNumber, Customer $holder)
@@ -134,15 +136,16 @@ class Refund extends MoipResource
     }
 
     /**
-     * Making a full refund to the bank account
+     * Making a full refund to the bank account.
      * 
-     * @param  string   $type               Kind of refund. possible values: FULL, PARTIAL.
-     * @param  string   $bankNumber         Bank number. possible values: 001, 237, 341, 041.
-     * @param  integer  $agencyNumber       Branch number.
-     * @param  integer  $agencyCheckNumber  Checksum of the agency.
-     * @param  integer  $accountNumber      Account number.
-     * @param  integer  $accountCheckNumber Digit account checker.
-     * @param  \Moip\Resource\Customer $holder
+     * @param string                  $type               Kind of refund. possible values: FULL, PARTIAL.
+     * @param string                  $bankNumber         Bank number. possible values: 001, 237, 341, 041.
+     * @param int                     $agencyNumber       Branch number.
+     * @param int                     $agencyCheckNumber  Checksum of the agency.
+     * @param int                     $accountNumber      Account number.
+     * @param int                     $accountCheckNumber Digit account checker.
+     * @param \Moip\Resource\Customer $holder
+     *
      * @return \stdClass
      */
     public function bankAccountFull($type, $bankNumber, $agencyNumber, $agencyCheckNumber, $accountNumber, $accountCheckNumber, Customer $holder)
@@ -153,15 +156,16 @@ class Refund extends MoipResource
     }
 
     /**
-     * Making a partial refund in the bank account
+     * Making a partial refund in the bank account.
      * 
-     * @param  string   $type               Kind of refund. possible values: FULL, PARTIAL.
-     * @param  string   $bankNumber         Bank number. possible values: 001, 237, 341, 041.
-     * @param  integer  $agencyNumber       Branch number.
-     * @param  integer  $agencyCheckNumber  Checksum of the agency.
-     * @param  integer  $accountNumber      Account number.
-     * @param  integer  $accountCheckNumber Digit account checker.
-     * @param  \Moip\Resource\Customer $holder
+     * @param string                  $type               Kind of refund. possible values: FULL, PARTIAL.
+     * @param string                  $bankNumber         Bank number. possible values: 001, 237, 341, 041.
+     * @param int                     $agencyNumber       Branch number.
+     * @param int                     $agencyCheckNumber  Checksum of the agency.
+     * @param int                     $accountNumber      Account number.
+     * @param int                     $accountCheckNumber Digit account checker.
+     * @param \Moip\Resource\Customer $holder
+     *
      * @return \stdClass
      */
     public function bankAccountPartial($amount, $type, $bankNumber, $agencyNumber, $agencyCheckNumber, $accountNumber, $accountCheckNumber, Customer $holder)
@@ -185,7 +189,8 @@ class Refund extends MoipResource
     /**
      * Making a partial refund in credit card.
      * 
-     * @param  integer|float $amount value of refund.
+     * @param int|float $amount value of refund.
+     *
      * @return \Moip\Resource\Refund
      */
     public function creditCardPartial($amount)

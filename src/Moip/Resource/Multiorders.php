@@ -17,7 +17,7 @@ class Multiorders extends MoipResource
         $this->data->orders = array();
     }
     /**
-     * Structure of order
+     * Structure of order.
      * 
      * @return $this
      */
@@ -29,7 +29,7 @@ class Multiorders extends MoipResource
     }
 
     /**
-     * Create a new multiorder in MoIP
+     * Create a new multiorder in MoIP.
      * 
      * @return \Moip\Resource\Multiorder
      */
@@ -52,9 +52,10 @@ class Multiorders extends MoipResource
     }
 
     /**
-     * Get an multiorder in MoIP
+     * Get an multiorder in MoIP.
      * 
-     * @param  string $id Id MoIP order id
+     * @param string $id Id MoIP order id
+     *
      * @return \Moip\Resource\Multiorder
      */
     public function get($id)
@@ -72,7 +73,7 @@ class Multiorders extends MoipResource
     }
 
     /**
-     * Get MoIP order id
+     * Get MoIP order id.
      * 
      * @return strign
      */
@@ -82,7 +83,7 @@ class Multiorders extends MoipResource
     }
 
     /**
-     * Get own request id. external reference
+     * Get own request id. external reference.
      * 
      * @return string
      */
@@ -93,7 +94,7 @@ class Multiorders extends MoipResource
 
     /**
      * Get order status. 
-     * Possible values: CREATED, WAITING, PAID, NOT_PAID, REVERTED
+     * Possible values: CREATED, WAITING, PAID, NOT_PAID, REVERTED.
      * 
      * @return string
      */
@@ -103,9 +104,9 @@ class Multiorders extends MoipResource
     }
 
     /**
-     * Get total value of order
+     * Get total value of order.
      * 
-     * @return integer|float
+     * @return int|float
      */
     public function getAmountTotal()
     {
@@ -113,7 +114,7 @@ class Multiorders extends MoipResource
     }
 
     /**
-     * Get currency used in the application. Possible values: BRL
+     * Get currency used in the application. Possible values: BRL.
      * 
      * @return string
      */
@@ -143,7 +144,7 @@ class Multiorders extends MoipResource
     }
 
     /**
-     * Get orders
+     * Get orders.
      * 
      * @return \ArrayIterator
      */
@@ -153,7 +154,7 @@ class Multiorders extends MoipResource
     }
 
     /**
-     * Structure of multipayments
+     * Structure of multipayments.
      * 
      * @return \Moip\Resource\Payment
      */
@@ -168,7 +169,8 @@ class Multiorders extends MoipResource
     /**
      * Mount the structure of order.
      * 
-     * @param  \stdClass $response
+     * @param \stdClass $response
+     *
      * @return \stdClass
      */
     protected function populate(stdClass $response)

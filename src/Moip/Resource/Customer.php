@@ -8,7 +8,7 @@ use Moip\Http\HTTPRequest;
 class Customer extends MoipResource
 {
     /**
-     * Initialize a new instance
+     * Initialize a new instance.
      */
     public function initialize()
     {
@@ -19,16 +19,17 @@ class Customer extends MoipResource
      * Add a new address to the customer.
      * 
      * @param string $type       Type of values: SHIPPING and BILLING.
-     * @param string $street     
-     * @param string $number     
-     * @param string $district   
-     * @param string $city       
-     * @param string $state      
-     * @param string $zip        
-     * @param string $complement 
-     * @param string $country    
+     * @param string $street
+     * @param string $number
+     * @param string $district
+     * @param string $city
+     * @param string $state
+     * @param string $zip
+     * @param string $complement
+     * @param string $country
      * 
      * @return $this;
+     *
      * @deprecated Use setBillingAddress or setShippingAddress methods instead
      */
     public function addAddress($type, $street, $number, $district, $city, $state, $zip, $complement = null, $country = 'BRA')
@@ -81,11 +82,11 @@ class Customer extends MoipResource
         return $this->populate(json_decode($httpResponse->getContent()));
     }
 
-
     /**
      * Find a customer.
      * 
-     * @param  string $id
+     * @param string $id
+     *
      * @return \Moip\Resource\Customer
      */
     public function get($id)
@@ -113,7 +114,7 @@ class Customer extends MoipResource
     }
 
     /**
-     * Get customer address
+     * Get customer address.
      * 
      * @return string Customer's address.
      */
@@ -123,7 +124,7 @@ class Customer extends MoipResource
     }
 
     /**
-     * Get customer address
+     * Get customer address.
      * 
      * @return string Customer's address.
      */
@@ -175,7 +176,7 @@ class Customer extends MoipResource
     /**
      * Get phone country code from customer.
      * 
-     * @return integer Country code.
+     * @return int Country code.
      */
     public function getPhoneCountryCode()
     {
@@ -185,7 +186,7 @@ class Customer extends MoipResource
     /**
      * Get phone number from customer.
      * 
-     * @return integer Telephone number.
+     * @return int Telephone number.
      */
     public function getPhoneNumber()
     {
@@ -215,7 +216,8 @@ class Customer extends MoipResource
     /**
      * Mount the buyer structure from customer.
      * 
-     * @param  \stdClass $response
+     * @param \stdClass $response
+     *
      * @return \stdClass Customer information.
      */
     protected function populate(stdClass $response)
@@ -251,6 +253,7 @@ class Customer extends MoipResource
      * Set Own id from customer.
      * 
      * @param strign $ownId Customer's own id. external reference.
+     *
      * @return $this
      */
     public function setOwnId($ownId)
@@ -264,15 +267,17 @@ class Customer extends MoipResource
      * Add a new billing address to the customer.
      * 
      * @param string $type       Type of values: SHIPPING and BILLING.
-     * @param string $street     
-     * @param string $number     
-     * @param string $district   
-     * @param string $city       
-     * @param string $state      
-     * @param string $zip        
-     * @param string $complement 
-     * @param string $country    
+     * @param string $street
+     * @param string $number
+     * @param string $district
+     * @param string $city
+     * @param string $state
+     * @param string $zip
+     * @param string $complement
+     * @param string $country
+     *
      * @return $this;
+     *
      * @deprecated
      */
     public function setBillingAddress($street, $number, $district, $city, $state, $zip, $complement = null, $country = 'BRA')
@@ -294,15 +299,17 @@ class Customer extends MoipResource
      * Add a new shipping address to the customer.
      * 
      * @param string $type       Type of values: SHIPPING and BILLING.
-     * @param string $street     
-     * @param string $number     
-     * @param string $district   
-     * @param string $city       
-     * @param string $state      
-     * @param string $zip        
-     * @param string $complement 
-     * @param string $country    
+     * @param string $street
+     * @param string $number
+     * @param string $district
+     * @param string $city
+     * @param string $state
+     * @param string $zip
+     * @param string $complement
+     * @param string $country
+     *
      * @return $this;
+     *
      * @deprecated
      */
     public function setShippingAddress($street, $number, $district, $city, $state, $zip, $complement = null, $country = 'BRA')
@@ -324,6 +331,7 @@ class Customer extends MoipResource
      * Set fullname from customer.
      * 
      * @param string $fullname Customer's full name.
+     *
      * @return $this
      */
     public function setFullname($fullname)
@@ -337,6 +345,7 @@ class Customer extends MoipResource
      * Set e-mail from customer.
      * 
      * @param string $email Email customer.
+     *
      * @return $this
      */
     public function setEmail($email)
@@ -354,6 +363,7 @@ class Customer extends MoipResource
      * @param insteger      $number          Card number.
      * @param insteger      $cvc             Card Security Code.
      * @param Customer|null $holder          Cardholder.
+     *
      * @return $this
      */
     public function setCreditCard($expirationMonth, $expirationYear, $number, $cvc, Customer $holder = null)
@@ -362,23 +372,23 @@ class Customer extends MoipResource
             $holder = $this;
         }
 
-        $this->data->fundingInstrument                                          = new stdClass();
-        $this->data->fundingInstrument->method                                  = 'CREDIT_CARD';
-        $this->data->fundingInstrument->creditCard                              = new stdClass();
-        $this->data->fundingInstrument->creditCard->expirationMonth             = $expirationMonth;
-        $this->data->fundingInstrument->creditCard->expirationYear              = $expirationYear;
-        $this->data->fundingInstrument->creditCard->number                      = $number;
-        $this->data->fundingInstrument->creditCard->cvc                         = $cvc;
-        $this->data->fundingInstrument->creditCard->holder                      = new stdClass();
-        $this->data->fundingInstrument->creditCard->holder->fullname            = $holder->getFullname();
-        $this->data->fundingInstrument->creditCard->holder->birthdate           = $holder->getBirthDate();
-        $this->data->fundingInstrument->creditCard->holder->taxDocument         = new stdClass();
-        $this->data->fundingInstrument->creditCard->holder->taxDocument->type   = $holder->getTaxDocumentType();
+        $this->data->fundingInstrument = new stdClass();
+        $this->data->fundingInstrument->method = 'CREDIT_CARD';
+        $this->data->fundingInstrument->creditCard = new stdClass();
+        $this->data->fundingInstrument->creditCard->expirationMonth = $expirationMonth;
+        $this->data->fundingInstrument->creditCard->expirationYear = $expirationYear;
+        $this->data->fundingInstrument->creditCard->number = $number;
+        $this->data->fundingInstrument->creditCard->cvc = $cvc;
+        $this->data->fundingInstrument->creditCard->holder = new stdClass();
+        $this->data->fundingInstrument->creditCard->holder->fullname = $holder->getFullname();
+        $this->data->fundingInstrument->creditCard->holder->birthdate = $holder->getBirthDate();
+        $this->data->fundingInstrument->creditCard->holder->taxDocument = new stdClass();
+        $this->data->fundingInstrument->creditCard->holder->taxDocument->type = $holder->getTaxDocumentType();
         $this->data->fundingInstrument->creditCard->holder->taxDocument->number = $holder->getTaxDocumentNumber();
-        $this->data->fundingInstrument->creditCard->holder->phone               = new stdClass();
-        $this->data->fundingInstrument->creditCard->holder->phone->countryCode  = $holder->getPhoneCountryCode();
-        $this->data->fundingInstrument->creditCard->holder->phone->areaCode     = $holder->getPhoneAreaCode();
-        $this->data->fundingInstrument->creditCard->holder->phone->number       = $holder->getPhoneNumber();
+        $this->data->fundingInstrument->creditCard->holder->phone = new stdClass();
+        $this->data->fundingInstrument->creditCard->holder->phone->countryCode = $holder->getPhoneCountryCode();
+        $this->data->fundingInstrument->creditCard->holder->phone->areaCode = $holder->getPhoneAreaCode();
+        $this->data->fundingInstrument->creditCard->holder->phone->number = $holder->getPhoneNumber();
 
         return $this;
     }
@@ -387,7 +397,8 @@ class Customer extends MoipResource
      * Set birth date from customer.
      * 
      * @param date $birthDate Date of birth of the credit card holder.
-     * @return  $this
+     *
+     * @return $this
      */
     public function setBirthDate($birthDate)
     {
@@ -399,8 +410,9 @@ class Customer extends MoipResource
     /**
      * Set tax document from customer.
      * 
-     * @param integer $number Document number.
-     * @param string $type    Document type.
+     * @param int    $number Document number.
+     * @param string $type   Document type.
+     *
      * @return $this
      */
     public function setTaxDocument($number, $type = 'CPF')
@@ -413,12 +425,13 @@ class Customer extends MoipResource
     }
 
     /**
-     * Set phone from customer
+     * Set phone from customer.
      * 
-     * @param integer $areaCode    DDD telephone.
-     * @param integer $number      Telephone number.
-     * @param integer $countryCode Country code.
-     * @return  $this
+     * @param int $areaCode    DDD telephone.
+     * @param int $number      Telephone number.
+     * @param int $countryCode Country code.
+     *
+     * @return $this
      */
     public function setPhone($areaCode, $number, $countryCode = 55)
     {

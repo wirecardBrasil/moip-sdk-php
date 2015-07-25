@@ -21,21 +21,22 @@ class Entry extends MoipResource
     /**
      * Mount the entry.
      * 
-     * @param  \stdClass $response
+     * @param \stdClass $response
+     *
      * @return \stdClass Entry information.
      */
     protected function populate(stdClass $response)
     {
         $entry = clone $this;
 
-        $entry->data->id        = $this->getIfSet('id', $response);
-        $entry->data->status    = $this->getIfSet('status', $response);
+        $entry->data->id = $this->getIfSet('id', $response);
+        $entry->data->status = $this->getIfSet('status', $response);
         $entry->data->operation = $this->getIfSet('operation', $response);
 
         if (isset($response->amount)) {
-            $entry->data->amount->total    = $this->getIfSet('total', $response->amount);
-            $entry->data->amount->fee      = $this->getIfSet('fee', $response->amount);
-            $entry->data->amount->liquid   = $this->getIfSet('liquid', $response->amount);
+            $entry->data->amount->total = $this->getIfSet('total', $response->amount);
+            $entry->data->amount->fee = $this->getIfSet('fee', $response->amount);
+            $entry->data->amount->liquid = $this->getIfSet('liquid', $response->amount);
             $entry->data->amount->currency = $this->getIfSet('currency', $response->amount);
         }
 
@@ -56,7 +57,8 @@ class Entry extends MoipResource
     /**
      * Get entry in api by id.
      * 
-     * @param  string $id Event ID that generated the launch.
+     * @param string $id Event ID that generated the launch.
+     *
      * @return \Moip\Resource\Entry
      */
     public function get($id)
@@ -74,7 +76,7 @@ class Entry extends MoipResource
     }
 
     /**
-     * Get id from entry
+     * Get id from entry.
      * 
      * @return strign Event ID that generated the launch.
      */
@@ -101,7 +103,7 @@ class Entry extends MoipResource
     /**
      * Get total value of order.
      * 
-     * @return integer|float
+     * @return int|float
      */
     public function getAmountTotal()
     {
@@ -111,7 +113,7 @@ class Entry extends MoipResource
     /**
      * Get total value of MoIP rate.
      * 
-     * @return integer|float
+     * @return int|float
      */
     public function getAmountFee()
     {
@@ -121,7 +123,7 @@ class Entry extends MoipResource
     /**
      * Get net total value.
      * 
-     * @return integer|float
+     * @return int|float
      */
     public function getAmountLiquid()
     {
@@ -129,7 +131,7 @@ class Entry extends MoipResource
     }
 
     /**
-     * Get currency used in the application. Possible values: BRL
+     * Get currency used in the application. Possible values: BRL.
      * 
      * @return string
      */
@@ -139,7 +141,7 @@ class Entry extends MoipResource
     }
 
     /**
-     * Get additional description
+     * Get additional description.
      * 
      * @return string
      */
@@ -149,7 +151,7 @@ class Entry extends MoipResource
     }
 
     /**
-     * Get parant payments
+     * Get parant payments.
      * 
      * @return string
      */
@@ -169,7 +171,8 @@ class Entry extends MoipResource
     }
 
     /**
-     * Get Settlement date;
+     * Get Settlement date;.
+     *
      * @return \DateTime
      */
     public function getSettledAt()
