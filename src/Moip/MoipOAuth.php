@@ -3,6 +3,7 @@
 namespace Moip;
 
 use Moip\Http\HTTPRequest;
+use Moip\MoipAuthentication;
 
 class MoipOAuth implements MoipAuthentication
 {

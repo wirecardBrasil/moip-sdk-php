@@ -6,6 +6,7 @@ use Moip\Resource\Entry;
 use Moip\Resource\Orders;
 use Moip\Resource\Payment;
 use Moip\Resource\Customer;
+use Moip\MoipAuthentication;
 use Moip\Http\HTTPConnection;
 use Moip\Resource\Multiorders;
 
