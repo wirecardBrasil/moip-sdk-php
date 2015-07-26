@@ -63,25 +63,17 @@ class Cookie
     /**
      * Constroi um cookie.
      *
-     * @param string $name
-     *                        Nome do cookie
-     * @param string $value
-     *                        Valor do cookie
-     * @param string $domain
-     *                        Domínio do cookie
-     * @param int    $expires
-     *                        Timestamp da expiração do cookie
-     * @param string $path
-     *                        Caminho do cookie
-     * @param bool   $secure
-     *                        Se o cookie é usado apenas em ambiente seguro.
-     * @param string $comment
-     *                        Comentário do cookie
+     * @param string $name Nome do cookie
+     * @param string $value Valor do cookie
+     * @param string $domain Domínio do cookie
+     * @param int    $expires Timestamp da expiração do cookie
+     * @param string $path Caminho do cookie
+     * @param bool   $secure Se o cookie é usado apenas em ambiente seguro.
+     * @param string $comment Comentário do cookie
      *
      * @throws InvalidArgumentException Se $expires não for um número
      */
-    public function __construct($name, $value, $domain, $expires, $path = '/',
-                                $secure = false, $comment = null)
+    public function __construct($name, $value, $domain, $expires, $path = '/', $secure = false, $comment = null)
     {
         $this->name = (string) $name;
         $this->value = (string) $value;

@@ -2,6 +2,9 @@
 
 namespace Moip\Http;
 
+use Moip\Http\HTTPRequest;
+use Moip\Http\HTTPAuthenticator;
+
 use InvalidArgumentException;
 
 /**
@@ -44,7 +47,15 @@ abstract class AbstractHTTPRequest implements HTTPRequest
     }
 
     /**
-     * @see HTTPRequest::addRequestHeader()
+     * Adiciona um campo de cabeçalho para ser enviado com a requisição.
+     *
+     * @param string $name Nome do campo de cabeçalho.
+     * @param string $value Valor do campo de cabeçalho.
+     * @param bool   $override Indica se o campo deverá ser sobrescrito caso já tenha sido definido.
+     *
+     * @throws \InvalidArgumentException Se o nome ou o valor do campo não forem valores scalar.
+     * 
+     * @see \Moip\Http\HTTPRequest::addRequestHeader()
      */
     public function addRequestHeader($name, $value, $override = true)
     {
@@ -68,9 +79,9 @@ abstract class AbstractHTTPRequest implements HTTPRequest
     /**
      * Autentica uma requisição HTTP.
      *
-     * @param HTTPAuthenticator $authenticator
+     * @param \Moip\Http\HTTPAuthenticator $authenticator
      *
-     * @see HTTPRequest::authenticate()
+     * @see \Moip\Http\HTTPRequest::authenticate()
      */
     public function authenticate(HTTPAuthenticator $authenticator)
     {
@@ -78,7 +89,11 @@ abstract class AbstractHTTPRequest implements HTTPRequest
     }
 
     /**
-     * @see HTTPRequest::getResponse()
+     * Abre a requisição.
+     *
+     * @param \Moip\Http\HTTPConnection $httpConnection Conexão HTTP relacionada com essa requisição
+     * 
+     * @see \Moip\Http\HTTPRequest::getResponse()
      */
     public function getResponse()
     {
@@ -89,15 +104,12 @@ abstract class AbstractHTTPRequest implements HTTPRequest
      * Define um parâmetro que será enviado com a requisição, um parâmetro é um
      * par nome-valor que será enviado como uma query string.
      *
-     * @param string $name
-     *                      Nome do parâmetro.
-     * @param string $value
-     *                      Valor do parâmetro.
+     * @param string $name Nome do parâmetro.
+     * @param string $value Valor do parâmetro.
      *
-     * @throws InvalidArgumentException Se o nome ou o valor do campo não forem
-     *                                  valores scalar.
+     * @throws \InvalidArgumentException Se o nome ou o valor do campo não forem valores scalar.
      *
-     * @see HTTPRequest::setParameter()
+     * @see \Moip\Http\HTTPRequest::setParameter()
      */
     public function setParameter($name, $value)
     {
@@ -105,7 +117,7 @@ abstract class AbstractHTTPRequest implements HTTPRequest
     }
 
     /**
-     * @see HTTPRequest::setRequestBody()
+     * @see \Moip\Http\HTTPRequest::setRequestBody()
      */
     public function setRequestBody($requestBody)
     {
