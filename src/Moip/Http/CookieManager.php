@@ -2,8 +2,6 @@
 
 namespace Moip\Http;
 
-use Moip\Http\Cookie;
-
 use Serializable;
 
 /**
@@ -23,10 +21,10 @@ interface CookieManager extends Serializable
      *
      * @param string $domain Domínio dos cookies.
      * @param bool   $secure Indica ambiente seguro (https).
-     * @param string $path Caminho dos cookies.
+     * @param string $path   Caminho dos cookies.
      *
      * @return string O valor retornado segue o padrão especificado pela
-     *                  RFC 2965 para ser utilizado diretamente no campo de cabeçalho Cookie.
+     *                RFC 2965 para ser utilizado diretamente no campo de cabeçalho Cookie.
      */
     public function getCookie($domain, $secure, $path);
 
@@ -35,7 +33,7 @@ interface CookieManager extends Serializable
      *
      * @param string $domain Domínio dos cookies.
      * @param bool   $secure Indica ambiente seguro.
-     * @param string $path Caminho dos cookies.
+     * @param string $path   Caminho dos cookies.
      *
      * @return Iterator
      */

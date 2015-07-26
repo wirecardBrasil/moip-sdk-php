@@ -2,8 +2,6 @@
 
 namespace Moip\Http;
 
-use Moip\Http\CookieManager;
-
 /**
  * Implementação de um objeto representa uma resposta HTTP.
  */
@@ -151,7 +149,7 @@ class HTTPResponse
     /**
      * Define a resposta da requisição HTTP.
      * 
-     * @param string $response Toda a resposta da requisição
+     * @param string                        $response      Toda a resposta da requisição
      * @param \Moip\Http\CookieManager|null $cookieManager
      */
     public function setRawResponse($response, CookieManager $cookieManager = null)

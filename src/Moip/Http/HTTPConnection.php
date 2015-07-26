@@ -2,9 +2,6 @@
 
 namespace Moip\Http;
 
-use Moip\Http\CookieManager;
-use Moip\Http\HTTPRequest;
-
 use BadMethodCallException;
 use InvalidArgumentException;
 
@@ -113,8 +110,8 @@ class HTTPConnection
     /**
      * Adiciona um campo de cabeçalho para ser enviado com a requisição.
      *
-     * @param string $name Nome do campo de cabeçalho.
-     * @param string $value Valor do campo de cabeçalho.
+     * @param string $name     Nome do campo de cabeçalho.
+     * @param string $value    Valor do campo de cabeçalho.
      * @param bool   $override Indica se o campo deverá ser sobrescrito caso já tenha sido definido.
      *
      * @throws \InvalidArgumentException Se o nome ou o valor do campo não forem valores scalar.
@@ -180,7 +177,7 @@ class HTTPConnection
      * Executa a requisição a requisição HTTP em um caminho utilizando um
      * método específico.
      *
-     * @param string $path Caminho da requisição.
+     * @param string $path   Caminho da requisição.
      * @param string $method Método da requisição.
      *
      * @return paypal\http\HTTPResponse Resposta HTTP.
@@ -376,11 +373,11 @@ class HTTPConnection
     /**
      * Inicializa a conexão HTTP.
      *
-     * @param string $hostname Servidor que receberá a requisição.
-     * @param bool   $secure Indica se a conexão será segura (https).
-     * @param int    $port Porta da requisição.
+     * @param string $hostname          Servidor que receberá a requisição.
+     * @param bool   $secure            Indica se a conexão será segura (https).
+     * @param int    $port              Porta da requisição.
      * @param int    $connectionTimeout Timeout de conexão em segundos.
-     * @param int    $timeout Timeout de espera em segundos.
+     * @param int    $timeout           Timeout de espera em segundos.
      */
     public function initialize($hostname, $secure = false,
                             $port = self::HTTP_PORT, $connectionTimeout = 0, $timeout = 0)
@@ -464,7 +461,7 @@ class HTTPConnection
      * Define um parâmetro que será enviado com a requisição, um parâmetro é um
      * par nome-valor que será enviado como uma query string.
      *
-     * @param string $name Nome do parâmetro.
+     * @param string $name  Nome do parâmetro.
      * @param string $value Valor do parâmetro.
      *
      * @throws \InvalidArgumentException Se o nome ou o valor do campo não forem valores scalar.

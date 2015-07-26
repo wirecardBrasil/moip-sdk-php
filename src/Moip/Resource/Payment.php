@@ -2,12 +2,7 @@
 
 namespace Moip\Resource;
 
-use Moip\Resource\Orders;
 use Moip\Http\HTTPRequest;
-use Moip\Resource\Customer;
-use Moip\Resource\MoipResource;
-use Moip\Resource\Multiorders;
-
 use stdClass;
 use RuntimeException;
 use UnexpectedValueException;

@@ -3,7 +3,6 @@
 namespace Moip\Resource;
 
 use Moip\Moip;
-
 use stdClass;
 use JsonSerializable;
 

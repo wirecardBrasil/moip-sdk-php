@@ -2,12 +2,7 @@
 
 namespace Moip\Resource;
 
-use Moip\Resource\Orders;
 use Moip\Http\HTTPRequest;
-use Moip\Resource\Payment;
-use Moip\Resource\Customer;
-use Moip\Resource\MoipResource;
-
 use stdClass;
 use ArrayIterator;
 use RuntimeException;

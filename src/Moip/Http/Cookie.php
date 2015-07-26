@@ -63,12 +63,12 @@ class Cookie
     /**
      * Constroi um cookie.
      *
-     * @param string $name Nome do cookie
-     * @param string $value Valor do cookie
-     * @param string $domain Domínio do cookie
+     * @param string $name    Nome do cookie
+     * @param string $value   Valor do cookie
+     * @param string $domain  Domínio do cookie
      * @param int    $expires Timestamp da expiração do cookie
-     * @param string $path Caminho do cookie
-     * @param bool   $secure Se o cookie é usado apenas em ambiente seguro.
+     * @param string $path    Caminho do cookie
+     * @param bool   $secure  Se o cookie é usado apenas em ambiente seguro.
      * @param string $comment Comentário do cookie
      *
      * @throws InvalidArgumentException Se $expires não for um número

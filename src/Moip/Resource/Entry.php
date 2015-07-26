@@ -3,9 +3,6 @@
 namespace Moip\Resource;
 
 use Moip\Http\HTTPRequest;
-use Moip\Resource\Payment;
-use Moip\Resource\MoipResource;
-
 use stdClass;
 use RuntimeException;
 

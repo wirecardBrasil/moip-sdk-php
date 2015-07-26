@@ -2,8 +2,6 @@
 
 namespace Moip\Http;
 
-use Moip\Http\HTTPRequest;
-
 /**
  * Interface para definição de um autenticador HTTP.
  */

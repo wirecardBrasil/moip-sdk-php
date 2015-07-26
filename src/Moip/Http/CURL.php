@@ -2,11 +2,6 @@
 
 namespace Moip\Http;
 
-use Moip\Http\HTTPRequest;
-use Moip\Http\HTTPResponse;
-use Moip\Http\HTTPConnection;
-use Moip\Http\AbstractHTTPRequest;
-
 use RuntimeException;
 use UnexpectedValueException;
 
@@ -44,7 +39,7 @@ class CURL extends AbstractHTTPRequest
      * Executa a requisição HTTP em um caminho utilizando um método específico.
      *
      * @param string $method Método da requisição.
-     * @param string $path Alvo da requisição.
+     * @param string $path   Alvo da requisição.
      *
      * @return string Resposta HTTP.
      *
@@ -124,8 +119,8 @@ class CURL extends AbstractHTTPRequest
 
         return $statusCode < 400;
     }
-    
-    /**
+
+/**
      * Abre a requisição.
      *
      * @param \Moip\Http\HTTPConnection $httpConnection Conexão HTTP relacionada com essa requisição

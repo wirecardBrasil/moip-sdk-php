@@ -3,9 +3,6 @@
 namespace Moip\Resource;
 
 use Moip\Http\HTTPRequest;
-use Moip\Resource\Customer;
-use Moip\Resource\MoipResource;
-
 use stdClass;
 use RuntimeException;
 use UnexpectedValueException;
@@ -363,10 +360,10 @@ class Customer extends MoipResource
     /**
      * Set credit card from customer.
      * 
-     * @param insteger      $expirationMonth Card expiration month.
-     * @param insteger      $expirationYear  Year card expiration.
-     * @param insteger      $number          Card number.
-     * @param insteger      $cvc             Card Security Code.
+     * @param insteger                     $expirationMonth Card expiration month.
+     * @param insteger                     $expirationYear  Year card expiration.
+     * @param insteger                     $number          Card number.
+     * @param insteger                     $cvc             Card Security Code.
      * @param \Moip\Resource\Customer|null $holder          Cardholder.
      *
      * @return $this

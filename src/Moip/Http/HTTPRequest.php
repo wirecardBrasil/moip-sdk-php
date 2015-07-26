@@ -2,11 +2,7 @@
 
 namespace Moip\Http;
 
-use Moip\Http\HTTPConnection;
-use Moip\Http\HTTPAuthenticator;
 
-use BadMethodCallException;
-use InvalidArgumentException;
 
 /**
  * Interface para definição de um objeto que fará uma requisição HTTP.
@@ -72,8 +68,8 @@ interface HTTPRequest
     /**
      * Adiciona um campo de cabeçalho para ser enviado com a requisição.
      *
-     * @param string $name Nome do campo de cabeçalho.
-     * @param string $value Valor do campo de cabeçalho.
+     * @param string $name     Nome do campo de cabeçalho.
+     * @param string $value    Valor do campo de cabeçalho.
      * @param bool   $override Indica se o campo deverá ser sobrescrito caso já tenha sido definido.
      *
      * @throws \InvalidArgumentException Se o nome ou o valor do campo não forem valores scalar.
@@ -96,7 +92,7 @@ interface HTTPRequest
      * Executa a requisição HTTP em um caminho utilizando um método específico.
      *
      * @param string $method Método da requisição.
-     * @param string $path Alvo da requisição.
+     * @param string $path   Alvo da requisição.
      *
      * @return string Resposta HTTP.
      *
@@ -122,7 +118,7 @@ interface HTTPRequest
      * Define um parâmetro que será enviado com a requisição, um parâmetro é um
      * par nome-valor que será enviado como uma query string.
      *
-     * @param string $name Nome do parâmetro.
+     * @param string $name  Nome do parâmetro.
      * @param string $value Valor do parâmetro.
      *
      * @throws \InvalidArgumentException Se o nome ou o valor do campo não forem valores scalar.

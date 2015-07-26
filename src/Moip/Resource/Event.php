@@ -2,8 +2,6 @@
 
 namespace Moip\Resource;
 
-use Moip\Resource\MoipResource;
-
 use stdClass;
 
 class Event extends MoipResource
