@@ -2,8 +2,15 @@
 
 namespace Moip\Resource;
 
-use stdClass;
+use Moip\Resource\Orders;
 use Moip\Http\HTTPRequest;
+use Moip\Resource\Payment;
+use Moip\Resource\Customer;
+use Moip\Resource\MoipResource;
+
+use stdClass;
+use ArrayIterator;
+use RuntimeException;
 
 class Refund extends MoipResource
 {
@@ -96,7 +103,7 @@ class Refund extends MoipResource
         $httpResponse = $httpConnection->execute($path, HTTPRequest::POST);
 
         if ($httpResponse->getStatusCode() != 200) {
-            throw new \RuntimeException($httpResponse->getStatusMessage(), $httpResponse->getStatusCode());
+            throw new RuntimeException($httpResponse->getStatusMessage(), $httpResponse->getStatusCode());
         }
 
         return $this->populate(json_decode($httpResponse->getContent()));
@@ -220,7 +227,7 @@ class Refund extends MoipResource
         $httpResponse = $httpConnection->execute($path, HTTPRequest::GET);
 
         if ($httpResponse->getStatusCode() != 200) {
-            throw new \RuntimeException($httpResponse->getStatusMessage(), $httpResponse->getStatusCode());
+            throw new RuntimeException($httpResponse->getStatusMessage(), $httpResponse->getStatusCode());
         }
 
         $response = json_decode($httpResponse->getContent());
@@ -230,7 +237,7 @@ class Refund extends MoipResource
             $refunds[] = $this->populate($refund);
         }
 
-        return new \ArrayIterator($refunds);
+        return new ArrayIterator($refunds);
     }
 
     /**

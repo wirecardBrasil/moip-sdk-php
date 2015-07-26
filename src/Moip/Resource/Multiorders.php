@@ -2,8 +2,14 @@
 
 namespace Moip\Resource;
 
-use stdClass;
+use Moip\Resource\Orders;
 use Moip\Http\HTTPRequest;
+use Moip\Resource\Payment;
+use Moip\Resource\MoipResource;
+
+use stdClass;
+use ArrayIterator;
+use RuntimeException;
 
 class Multiorders extends MoipResource
 {
@@ -45,7 +51,7 @@ class Multiorders extends MoipResource
         $httpResponse = $httpConnection->execute('/v2/multiorders', HTTPRequest::POST);
 
         if ($httpResponse->getStatusCode() != 201) {
-            throw new \RuntimeException($httpResponse->getStatusMessage(), $httpResponse->getStatusCode());
+            throw new RuntimeException($httpResponse->getStatusMessage(), $httpResponse->getStatusCode());
         }
 
         return $this->populate(json_decode($httpResponse->getContent()));
@@ -66,7 +72,7 @@ class Multiorders extends MoipResource
         $httpResponse = $httpConnection->execute('/v2/multiorders/'.$id, HTTPRequest::GET);
 
         if ($httpResponse->getStatusCode() != 200) {
-            throw new \RuntimeException($httpResponse->getStatusMessage(), $httpResponse->getStatusCode());
+            throw new RuntimeException($httpResponse->getStatusMessage(), $httpResponse->getStatusCode());
         }
 
         return $this->populate(json_decode($httpResponse->getContent()));
@@ -150,7 +156,7 @@ class Multiorders extends MoipResource
      */
     public function getOrderIterator()
     {
-        return new \ArrayIterator($this->getIfSet('orders'));
+        return new ArrayIterator($this->getIfSet('orders'));
     }
 
     /**

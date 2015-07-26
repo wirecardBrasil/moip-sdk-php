@@ -2,8 +2,13 @@
 
 namespace Moip\Resource;
 
-use stdClass;
 use Moip\Http\HTTPRequest;
+use Moip\Resource\Customer;
+use Moip\Resource\MoipResource;
+
+use stdClass;
+use RuntimeException;
+use UnexpectedValueException;
 
 class Customer extends MoipResource
 {
@@ -52,7 +57,7 @@ class Customer extends MoipResource
                 $this->data->shippingAddress = $address;
                 break;
             default:
-                throw new \UnexpectedValueException(sprintf('%s não é um tipo de endereço válido', $type));
+                throw new UnexpectedValueException(sprintf('%s não é um tipo de endereço válido', $type));
                 break;
         }
 
@@ -76,7 +81,7 @@ class Customer extends MoipResource
         $httpResponse = $httpConnection->execute('/v2/customers', HTTPRequest::POST);
 
         if ($httpResponse->getStatusCode() != 201) {
-            throw new \RuntimeException($httpResponse->getStatusMessage(), $httpResponse->getStatusCode());
+            throw new RuntimeException($httpResponse->getStatusMessage(), $httpResponse->getStatusCode());
         }
 
         return $this->populate(json_decode($httpResponse->getContent()));
@@ -97,7 +102,7 @@ class Customer extends MoipResource
         $httpResponse = $httpConnection->execute('/v2/customers/'.$id, HTTPRequest::GET);
 
         if ($httpResponse->getStatusCode() != 200) {
-            throw new \RuntimeException($httpResponse->getStatusMessage(), $httpResponse->getStatusCode());
+            throw new RuntimeException($httpResponse->getStatusMessage(), $httpResponse->getStatusCode());
         }
 
         return $this->populate(json_decode($httpResponse->getContent()));
@@ -362,7 +367,7 @@ class Customer extends MoipResource
      * @param insteger      $expirationYear  Year card expiration.
      * @param insteger      $number          Card number.
      * @param insteger      $cvc             Card Security Code.
-     * @param Customer|null $holder          Cardholder.
+     * @param \Moip\Resource\Customer|null $holder          Cardholder.
      *
      * @return $this
      */

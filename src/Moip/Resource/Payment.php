@@ -2,8 +2,15 @@
 
 namespace Moip\Resource;
 
+use Moip\Resource\Orders;
+use Moip\Http\HTTPRequest;
+use Moip\Resource\Customer;
+use Moip\Resource\MoipResource;
+use Moip\Resource\Multiorders;
+
 use stdClass;
-use Moip\Http\HttpRequest;
+use RuntimeException;
+use UnexpectedValueException;
 
 class Payment extends MoipResource
 {
@@ -50,13 +57,13 @@ class Payment extends MoipResource
         $httpResponse = $httpConnection->execute($path, HTTPRequest::POST);
 
         if ($httpResponse->getStatusCode() != 200 && $httpResponse->getStatusCode() != 201) {
-            throw new \RuntimeException($httpResponse->getStatusMessage(), $httpResponse->getStatusCode());
+            throw new RuntimeException($httpResponse->getStatusMessage(), $httpResponse->getStatusCode());
         }
 
         $response = json_decode($httpResponse->getContent());
 
         if (!is_object($response)) {
-            throw new \UnexpectedValueException('O servidor enviou uma resposta inesperada');
+            throw new UnexpectedValueException('O servidor enviou uma resposta inesperada');
         }
 
         return $this->populate(json_decode($httpResponse->getContent()));
@@ -83,7 +90,7 @@ class Payment extends MoipResource
         $httpResponse = $httpConnection->execute('/v2/payments/'.$id, HTTPRequest::GET);
 
         if ($httpResponse->getStatusCode() != 200) {
-            throw new \RuntimeException($httpResponse->getStatusMessage(), $httpResponse->getStatusCode());
+            throw new RuntimeException($httpResponse->getStatusMessage(), $httpResponse->getStatusCode());
         }
 
         return $this->populate(json_decode($httpResponse->getContent()));

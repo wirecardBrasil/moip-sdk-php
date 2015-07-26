@@ -2,8 +2,17 @@
 
 namespace Moip\Resource;
 
-use stdClass;
+use Moip\Resource\Entry;
+use Moip\Resource\Event;
+use Moip\Resource\Refund;
 use Moip\Http\HTTPRequest;
+use Moip\Resource\Payment;
+use Moip\Resource\Customer;
+use Moip\Resource\MoipResource;
+
+use stdClass;
+use ArrayIterator;
+use RuntimeException;
 
 class Orders extends MoipResource
 {
@@ -163,7 +172,7 @@ class Orders extends MoipResource
         $httpResponse = $httpConnection->execute('/v2/orders', HTTPRequest::POST);
 
         if ($httpResponse->getStatusCode() != 201) {
-            throw new \RuntimeException($httpResponse->getStatusMessage(), $httpResponse->getStatusCode());
+            throw new RuntimeException($httpResponse->getStatusMessage(), $httpResponse->getStatusCode());
         }
 
         return $this->populate(json_decode($httpResponse->getContent()));
@@ -188,7 +197,7 @@ class Orders extends MoipResource
         $httpResponse = $httpConnection->execute('/v2/orders/'.$id, HTTPRequest::GET);
 
         if ($httpResponse->getStatusCode() != 200) {
-            throw new \RuntimeException($httpResponse->getStatusMessage(), $httpResponse->getStatusCode());
+            throw new RuntimeException($httpResponse->getStatusMessage(), $httpResponse->getStatusCode());
         }
 
         return $this->populate(json_decode($httpResponse->getContent()));
@@ -329,7 +338,7 @@ class Orders extends MoipResource
      */
     public function getItemIterator()
     {
-        return new \ArrayIterator($this->data->items);
+        return new ArrayIterator($this->data->items);
     }
 
     /**
@@ -349,7 +358,7 @@ class Orders extends MoipResource
      */
     public function getPaymentIterator()
     {
-        return new \ArrayIterator($this->data->payments);
+        return new ArrayIterator($this->data->payments);
     }
 
     /**
@@ -359,7 +368,7 @@ class Orders extends MoipResource
      */
     public function getReceiverIterator()
     {
-        return new \ArrayIterator($this->data->receivers);
+        return new ArrayIterator($this->data->receivers);
     }
 
     /**
@@ -369,7 +378,7 @@ class Orders extends MoipResource
      */
     public function getEventIterator()
     {
-        return new \ArrayIterator($this->data->events);
+        return new ArrayIterator($this->data->events);
     }
 
     /**
@@ -379,7 +388,7 @@ class Orders extends MoipResource
      */
     public function getRefundIterator()
     {
-        return new \ArrayIterator($this->data->refunds);
+        return new ArrayIterator($this->data->refunds);
     }
 
     /**

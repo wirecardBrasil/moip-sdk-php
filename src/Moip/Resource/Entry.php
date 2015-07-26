@@ -2,8 +2,12 @@
 
 namespace Moip\Resource;
 
-use stdClass;
 use Moip\Http\HTTPRequest;
+use Moip\Resource\Payment;
+use Moip\Resource\MoipResource;
+
+use stdClass;
+use RuntimeException;
 
 class Entry extends MoipResource
 {
@@ -69,7 +73,7 @@ class Entry extends MoipResource
         $httpResponse = $httpConnection->execute('/v2/entries/'.$id, HTTPRequest::GET);
 
         if ($httpResponse->getStatusCode() != 200) {
-            throw new \RuntimeException($httpResponse->getStatusMessage(), $httpResponse->getStatusCode());
+            throw new RuntimeException($httpResponse->getStatusMessage(), $httpResponse->getStatusCode());
         }
 
         return $this->populate(json_decode($httpResponse->getContent()));

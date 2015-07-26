@@ -3,6 +3,7 @@
 namespace Moip\Resource;
 
 use Moip\Moip;
+
 use stdClass;
 use JsonSerializable;
 
@@ -35,7 +36,7 @@ abstract class MoipResource implements JsonSerializable
     /**
      * Create a new instance.
      * 
-     * @param Moip\Moip $moip
+     * @param \Moip\Moip $moip
      */
     public function __construct(Moip $moip)
     {
@@ -47,7 +48,7 @@ abstract class MoipResource implements JsonSerializable
     /**
      * Create a new connecttion.
      * 
-     * @return Moip\Moip
+     * @return \Moip\Moip
      */
     protected function createConnection()
     {
