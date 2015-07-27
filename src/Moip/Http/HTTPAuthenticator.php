@@ -10,7 +10,7 @@ interface HTTPAuthenticator
     /**
      * Autentica uma requisição HTTP.
      *
-     * @param HTTPRequest $httpRequest
+     * @param \Moip\Http\HTTPRequest $httpRequest
      */
     public function authenticate(HTTPRequest $httpRequest);
 }

@@ -7,7 +7,7 @@ use stdClass;
 class Event extends MoipResource
 {
     /**
-     * Initialize a new instance
+     * Initialize a new instance.
      */
     public function initialize()
     {
@@ -18,7 +18,7 @@ class Event extends MoipResource
     }
 
     /**
-     * Get event Type
+     * Get event Type.
      * 
      * @return strign ORDER.CREATED, ORDER.WAITING, ORDER.PAID, ORDER.NOT_PAID or ORDER.REVERTED
      */
@@ -38,7 +38,7 @@ class Event extends MoipResource
     }
 
     /**
-     * Get event Description
+     * Get event Description.
      * 
      * @return string
      */
@@ -48,8 +48,10 @@ class Event extends MoipResource
     }
 
     /**
-     * Populate Event
-     * @param  \stdClass $response
+     * Populate Event.
+     *
+     * @param \stdClass $response
+     *
      * @return \stdClass
      */
     protected function populate(stdClass $response)

@@ -80,8 +80,7 @@ class HTTPResponse
     /**
      * Verifica se existe um cabeçalho de resposta HTTP.
      *
-     * @param string $name
-     *                     Nome do cabeçalho
+     * @param string $name Nome do cabeçalho
      *
      * @return bool
      */
@@ -93,8 +92,7 @@ class HTTPResponse
     /**
      * Recupera o valor um campo de cabeçalho da resposta HTTP.
      *
-     * @param string $name
-     *                     Nome do campo de cabeçalho.
+     * @param string $name Nome do campo de cabeçalho.
      *
      * @return string O valor do campo ou NULL se não estiver existir.
      */
@@ -123,8 +121,7 @@ class HTTPResponse
     /**
      * Recupera um valor como inteiro de um campo de cabeçalho da resposta HTTP.
      *
-     * @param string $name
-     *                     Nome do campo de cabeçalho.
+     * @param string $name Nome do campo de cabeçalho.
      *
      * @return int
      */
@@ -134,12 +131,9 @@ class HTTPResponse
     }
 
     /**
-     * Recupera um valor como unix timestamp de um campo de cabeçalho da
-     * resposta
-     * HTTP.
+     * Recupera um valor como unix timestamp de um campo de cabeçalho da resposta HTTP.
      *
-     * @param string $name
-     *                     Nome do campo de cabeçalho.
+     * @param string $name Nome do campo de cabeçalho.
      *
      * @return int UNIX Timestamp ou NULL se não estiver definido.
      */
@@ -154,12 +148,11 @@ class HTTPResponse
 
     /**
      * Define a resposta da requisição HTTP.
-     *
-     * @param string $response
-     *                         Toda a resposta da requisição
+     * 
+     * @param string                        $response      Toda a resposta da requisição
+     * @param \Moip\Http\CookieManager|null $cookieManager
      */
-    public function setRawResponse($response,
-                                CookieManager $cookieManager = null)
+    public function setRawResponse($response, CookieManager $cookieManager = null)
     {
         $parts = explode("\r\n\r\n", $response);
 

@@ -18,12 +18,14 @@ class CURL extends AbstractHTTPRequest
     private $curlResource;
 
     /**
-     * @var HTTPConnection
+     * @var \Moip\Http\HTTPConnection
      */
     private $httpConnection;
 
     /**
-     * @see HTTPRequest::close()
+     * Fecha a requisição.
+     * 
+     * @see \Moip\Http\HTTPRequest::close()
      */
     public function close()
     {
@@ -34,7 +36,16 @@ class CURL extends AbstractHTTPRequest
     }
 
     /**
-     * @see HTTPRequest::execute()
+     * Executa a requisição HTTP em um caminho utilizando um método específico.
+     *
+     * @param string $method Método da requisição.
+     * @param string $path   Alvo da requisição.
+     *
+     * @return string Resposta HTTP.
+     *
+     * @throws \BadMethodCallException Se não houver uma conexão inicializada.
+     * 
+     * @see \Moip\Http\HTTPRequest::execute()
      */
     public function execute($path = '/', $method = HTTPRequest::GET)
     {
@@ -109,22 +120,20 @@ class CURL extends AbstractHTTPRequest
         return $statusCode < 400;
     }
 
-    /**
-     * @see HTTPRequest::open()
+/**
+     * Abre a requisição.
+     *
+     * @param \Moip\Http\HTTPConnection $httpConnection Conexão HTTP relacionada com essa requisição
+     * 
+     * @see \Moip\Http\HTTPRequest::open()
      */
     public function open(HTTPConnection $httpConnection)
     {
         if (function_exists('curl_init')) {
-            /*
-             * Fechamos uma conexão existente antes de abrir uma nova
-             */
             $this->close();
 
             $curl = curl_init();
 
-            /*
-             * Verificamos se o recurso CURL foi criado com êxito
-             */
             if (is_resource($curl)) {
                 curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false); // FIXME
                 curl_setopt($curl, CURLOPT_HEADER, true);

@@ -110,17 +110,11 @@ class HTTPConnection
     /**
      * Adiciona um campo de cabeçalho para ser enviado com a requisição.
      *
-     * @param string $name
-     *                         Nome do campo de cabeçalho.
-     * @param string $value
-     *                         Valor do campo de cabeçalho.
-     * @param bool   $override
-     *                         Indica se o campo deverá ser sobrescrito caso
-     *                         já tenha sido definido.
+     * @param string $name     Nome do campo de cabeçalho.
+     * @param string $value    Valor do campo de cabeçalho.
+     * @param bool   $override Indica se o campo deverá ser sobrescrito caso já tenha sido definido.
      *
-     * @throws InvalidArgumentException Se o nome ou o valor do campo não forem
-     *                                  valores scalar.
-     * @FIXME
+     * @throws \InvalidArgumentException Se o nome ou o valor do campo não forem valores scalar.
      */
     public function addHeader($name, $value, $override = true)
     {
@@ -144,8 +138,8 @@ class HTTPConnection
     /**
      * Limpa os campos de cabeçalho e de requisição definidos anteriormente.
      *
-     * @see HTTPConnection::clearHeaders()
-     * @see HTTPConnection::clearParameters()
+     * @see \Moip\Http\HTTPConnection::clearHeaders()
+     * @see \Moip\Http\HTTPConnection::clearParameters()
      */
     public function clear()
     {
@@ -172,7 +166,7 @@ class HTTPConnection
     /**
      * Fecha a conexão.
      *
-     * @throws BadMethodCallException Se não houver uma conexão inicializada.
+     * @throws \BadMethodCallException Se não houver uma conexão inicializada.
      */
     public function close()
     {
@@ -183,15 +177,12 @@ class HTTPConnection
      * Executa a requisição a requisição HTTP em um caminho utilizando um
      * método específico.
      *
-     * @param string $path
-     *                       Caminho da requisição.
-     * @param string $method
-     *                       Método da requisição.
+     * @param string $path   Caminho da requisição.
+     * @param string $method Método da requisição.
      *
      * @return paypal\http\HTTPResponse Resposta HTTP.
      *
-     * @throws BadMethodCallException Se não houver uma conexão inicializada ou
-     *                                se o objeto de requisição não for válido.
+     * @throws \BadMethodCallException Se não houver uma conexão inicializada ou se o objeto de requisição não for válido.
      */
     public function execute($path = '/', $method = HTTPRequest::GET)
     {
@@ -290,7 +281,7 @@ class HTTPConnection
     /**
      * Recupera o gerenciador de Cookies.
      *
-     * @return paypal\http\CookieManager
+     * @return \Moip\Http\CookieManager
      */
     public function getCookieManager()
     {
@@ -302,7 +293,7 @@ class HTTPConnection
      *
      * @return string
      *
-     * @throws BadMethodCallException Se a conexão não tiver sido inicializada.
+     * @throws \BadMethodCallException Se a conexão não tiver sido inicializada.
      */
     public function getHost()
     {
@@ -325,7 +316,7 @@ class HTTPConnection
      *
      * @return string
      *
-     * @throws BadMethodCallException Se não houver uma conexão inicializada.
+     * @throws \BadMethodCallException Se não houver uma conexão inicializada.
      */
     public function getHostName()
     {
@@ -341,7 +332,7 @@ class HTTPConnection
      *
      * @return int
      *
-     * @throws BadMethodCallException Se não houver uma conexão inicializada.
+     * @throws \BadMethodCallException Se não houver uma conexão inicializada.
      */
     public function getPort()
     {
@@ -367,7 +358,7 @@ class HTTPConnection
      *
      * @return string
      *
-     * @throws BadMethodCallException Se não houver uma conexão inicializada.
+     * @throws \BadMethodCallException Se não houver uma conexão inicializada.
      */
     public function getURI()
     {
@@ -382,16 +373,11 @@ class HTTPConnection
     /**
      * Inicializa a conexão HTTP.
      *
-     * @param string $hostname
-     *                                  Servidor que receberá a requisição.
-     * @param bool   $secure
-     *                                  Indica se a conexão será segura (https).
-     * @param int    $port
-     *                                  Porta da requisição.
-     * @param int    $connectionTimeout
-     *                                  Timeout de conexão em segundos.
-     * @param int    $timeout
-     *                                  Timeout de espera em segundos.
+     * @param string $hostname          Servidor que receberá a requisição.
+     * @param bool   $secure            Indica se a conexão será segura (https).
+     * @param int    $port              Porta da requisição.
+     * @param int    $connectionTimeout Timeout de conexão em segundos.
+     * @param int    $timeout           Timeout de espera em segundos.
      */
     public function initialize($hostname, $secure = false,
                             $port = self::HTTP_PORT, $connectionTimeout = 0, $timeout = 0)
@@ -427,17 +413,17 @@ class HTTPConnection
     /**
      * Cria uma instância de um objeto de requisição HTTP.
      *
-     * @return paypal\http\HTTPRequest
+     * @return \Moip\Http\HTTPRequest
      */
     public function newRequest()
     {
-        return new CURL(); // FIXME: desacoplar esse participante
+        return new CURL();
     }
 
     /**
      * Define um autenticador HTTP.
      *
-     * @param HTTPAuthenticator $httpAuthenticator
+     * @param \Moip\Http\HTTPAuthenticator $httpAuthenticator
      */
     public function setAuthenticator(HTTPAuthenticator $httpAuthenticator)
     {
@@ -449,8 +435,7 @@ class HTTPConnection
      *
      * @param int $connectionTimeout
      *
-     * @throws InvalidArgumentException Se $connectionTimeout não for um
-     *                                  inteiro.
+     * @throws \InvalidArgumentException Se $connectionTimeout não for um inteiro.
      */
     public function setConnectionTimeout($connectionTimeout)
     {
@@ -465,7 +450,7 @@ class HTTPConnection
     /**
      * Define um gerenciador de cookies para essa conexão.
      *
-     * @param CookieManager $cookieManager
+     * @param \Moip\Http\CookieManager $cookieManager
      */
     public function setCookieManager(CookieManager $cookieManager)
     {
@@ -476,13 +461,10 @@ class HTTPConnection
      * Define um parâmetro que será enviado com a requisição, um parâmetro é um
      * par nome-valor que será enviado como uma query string.
      *
-     * @param string $name
-     *                      Nome do parâmetro.
-     * @param string $value
-     *                      Valor do parâmetro.
+     * @param string $name  Nome do parâmetro.
+     * @param string $value Valor do parâmetro.
      *
-     * @throws InvalidArgumentException Se o nome ou o valor do campo não forem
-     *                                  valores scalar.
+     * @throws \InvalidArgumentException Se o nome ou o valor do campo não forem valores scalar.
      */
     public function setParam($name, $value = null)
     {
@@ -508,7 +490,7 @@ class HTTPConnection
      *
      * @param int $timeout
      *
-     * @throws InvalidArgumentException Se $timeout não for um inteiro.
+     * @throws \InvalidArgumentException Se $timeout não for um inteiro.
      */
     public function setTimeout($timeout)
     {

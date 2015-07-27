@@ -12,35 +12,28 @@ interface CookieManager extends Serializable
     /**
      * Adiciona um cookie para ser armazenado pelo gerenciador.
      *
-     * @param Cookie $cookie
+     * @param \Moip\Http\Cookie $cookie
      */
     public function addCookie(Cookie $cookie);
 
     /**
      * Recupera os cookies armazenados para um determinado domínio.
      *
-     * @param string $domain
-     *                       Domínio dos cookies.
-     * @param bool   $secure
-     *                       Indica ambiente seguro (https).
-     * @param string $path
-     *                       Caminho dos cookies.
+     * @param string $domain Domínio dos cookies.
+     * @param bool   $secure Indica ambiente seguro (https).
+     * @param string $path   Caminho dos cookies.
      *
      * @return string O valor retornado segue o padrão especificado pela
-     *                RFC 2965 para ser utilizado diretamente no campo de cabeçalho
-     *                Cookie.
+     *                RFC 2965 para ser utilizado diretamente no campo de cabeçalho Cookie.
      */
     public function getCookie($domain, $secure, $path);
 
     /**
      * Recupera uma lista com os cookies gerenciados.
      *
-     * @param string $domain
-     *                       Domínio dos cookies.
-     * @param bool   $secure
-     *                       Indica ambiente seguro.
-     * @param string $path
-     *                       Caminho dos cookies.
+     * @param string $domain Domínio dos cookies.
+     * @param bool   $secure Indica ambiente seguro.
+     * @param string $path   Caminho dos cookies.
      *
      * @return Iterator
      */
