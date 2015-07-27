@@ -31,8 +31,6 @@ class Customer extends MoipResource
      * @param string $country
      * 
      * @return $this;
-     *
-     * @deprecated Use setBillingAddress or setShippingAddress methods instead
      */
     public function addAddress($type, $street, $number, $district, $city, $state, $zip, $complement = null, $country = 'BRA')
     {
@@ -261,70 +259,6 @@ class Customer extends MoipResource
     public function setOwnId($ownId)
     {
         $this->data->ownId = $ownId;
-
-        return $this;
-    }
-
-    /**
-     * Add a new billing address to the customer.
-     * 
-     * @param string $type       Type of values: SHIPPING and BILLING.
-     * @param string $street
-     * @param string $number
-     * @param string $district
-     * @param string $city
-     * @param string $state
-     * @param string $zip
-     * @param string $complement
-     * @param string $country
-     *
-     * @return $this;
-     *
-     * @deprecated
-     */
-    public function setBillingAddress($street, $number, $district, $city, $state, $zip, $complement = null, $country = 'BRA')
-    {
-        $this->data->billingAddress = new stdClass();
-        $this->data->billingAddress->street = $street;
-        $this->data->billingAddress->streetNumber = $number;
-        $this->data->billingAddress->complement = $complement;
-        $this->data->billingAddress->district = $district;
-        $this->data->billingAddress->city = $city;
-        $this->data->billingAddress->state = $state;
-        $this->data->billingAddress->country = $country;
-        $this->data->billingAddress->zipCode = $zip;
-
-        return $this;
-    }
-
-    /**
-     * Add a new shipping address to the customer.
-     * 
-     * @param string $type       Type of values: SHIPPING and BILLING.
-     * @param string $street
-     * @param string $number
-     * @param string $district
-     * @param string $city
-     * @param string $state
-     * @param string $zip
-     * @param string $complement
-     * @param string $country
-     *
-     * @return $this;
-     *
-     * @deprecated
-     */
-    public function setShippingAddress($street, $number, $district, $city, $state, $zip, $complement = null, $country = 'BRA')
-    {
-        $this->data->shippingAddress = new stdClass();
-        $this->data->shippingAddress->street = $street;
-        $this->data->shippingAddress->streetNumber = $number;
-        $this->data->shippingAddress->complement = $complement;
-        $this->data->shippingAddress->district = $district;
-        $this->data->shippingAddress->city = $city;
-        $this->data->shippingAddress->state = $state;
-        $this->data->shippingAddress->country = $country;
-        $this->data->shippingAddress->zipCode = $zip;
 
         return $this;
     }
