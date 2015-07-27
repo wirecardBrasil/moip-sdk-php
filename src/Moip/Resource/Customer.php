@@ -53,7 +53,6 @@ class Customer extends MoipResource
                 break;
             default:
                 throw new UnexpectedValueException(sprintf('%s não é um tipo de endereço válido', $type));
-                break;
         }
 
         return $this;
