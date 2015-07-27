@@ -50,17 +50,18 @@ Execute:
 ```php
 require 'vendor/autoload.php';
 
-use Moip\Moip;
-use Moip\MoipBasicAuth;
+$endpoint = 'test.moip.com.br';
+$token = '01010101010101010101010101010101';
+$key = 'ABABABABABABABABABABABABABABABABABABABAB';
 
-$moip = new Moip(new MoipBasicAuth('api-token', 'api-key'));
+$moip = new Moip(new MoipBasicAuth($token, $key), $endpoint);
 ```
 
 ## Criando um pedido
 Nesse exemplo será criado um pedido com dados do cliente.
 
 ```php
-$customer = $moip->customers()->setOwnId('meu_id_de_cliente')
+$customer = $moip->customers()->setOwnId(uniqid())
                              ->setFullname('Fulano de Tal')
                              ->setEmail('fulano@email.com')
                              ->setBirthDate('1988-12-30')
@@ -72,7 +73,7 @@ $customer = $moip->customers()->setOwnId('meu_id_de_cliente')
                                           '01234567', 8);
 ```
 ```php
-$order = $moip->orders()->setOwnId('id_proprio')
+$order = $moip->orders()->setOwnId(uniqid())
                         ->addItem('Bicicleta Specialized Tarmac 26 Shimano Alivio', 1, 'uma linda bicicleta', 10000)
                         ->setCustomer($customer)
                         ->create();
