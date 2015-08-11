@@ -8,7 +8,7 @@ use InvalidArgumentException;
  * Base para facilitar a implementação da interface HTTPRequest para uma
  * requisição HTTP que utiliza cURL.
  */
-abstract class AbstractHTTPRequest implements HTTPRequest
+abstract class AbstractHTTPRequest extends AbstractHttp implements HTTPRequest
 {
     /**
      * @var string
@@ -50,27 +50,15 @@ abstract class AbstractHTTPRequest implements HTTPRequest
      * @param string $value    Valor do campo de cabeçalho.
      * @param bool   $override Indica se o campo deverá ser sobrescrito caso já tenha sido definido.
      *
+     * @return Moip\Http\AbstractHttp
+     *
      * @throws \InvalidArgumentException Se o nome ou o valor do campo não forem valores scalar.
      * 
      * @see \Moip\Http\HTTPRequest::addRequestHeader()
      */
     public function addRequestHeader($name, $value, $override = true)
     {
-        if (is_scalar($name) && is_scalar($value)) {
-            $key = strtolower($name);
-
-            if ($override === true || !isset($this->requestHeader[$key])) {
-                $this->requestHeader[$key] = array('name' => $name,
-                    'value' => $value,
-                );
-
-                return true;
-            }
-
-            return false;
-        } else {
-            throw new InvalidArgumentException('Name and value must be scalar');
-        }
+        return $this->addHeaderRequest($name, $value, $override);
     }
 
     /**

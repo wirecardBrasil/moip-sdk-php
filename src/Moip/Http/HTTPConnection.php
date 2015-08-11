@@ -8,7 +8,7 @@ use InvalidArgumentException;
 /**
  * Implementação de um conector HTTP.
  */
-class HTTPConnection
+class HTTPConnection extends AbstractHttp
 {
     /**
      * Porta padrão de uma conexão HTTP não segura.
@@ -62,12 +62,12 @@ class HTTPConnection
     /**
      * @var array
      */
-    protected $requestHeader;
+    protected $requestHeader = array();
 
     /**
      * @var array
      */
-    protected $requestParameter;
+    protected $requestParameter = array();
 
     /**
      * @var bool
@@ -102,9 +102,6 @@ class HTTPConnection
                                            $client, PHP_SAPI, PHP_VERSION, PHP_OS, $locale);
             }
         }
-
-        $this->requestHeader = array();
-        $this->requestParameter = array();
     }
 
     /**
@@ -114,25 +111,15 @@ class HTTPConnection
      * @param string $value    Valor do campo de cabeçalho.
      * @param bool   $override Indica se o campo deverá ser sobrescrito caso já tenha sido definido.
      *
+     * @return Moip\Http\AbstractHttp
+     *
      * @throws \InvalidArgumentException Se o nome ou o valor do campo não forem valores scalar.
+     * 
+     * @see \Moip\Http\HTTPRequest::addRequestHeader()
      */
     public function addHeader($name, $value, $override = true)
     {
-        if (is_scalar($name) && is_scalar($value)) {
-            $key = strtolower($name);
-
-            if ($override === true || !isset($this->requestHeader[$key])) {
-                $this->requestHeader[$key] = array('name' => $name,
-                    'value' => $value,
-                );
-
-                return true;
-            }
-
-            return false;
-        }
-
-        throw new InvalidArgumentException('Name and value MUST be scalar');
+        return $this->addHeaderRequest($name, $value, $override);
     }
 
     /**
