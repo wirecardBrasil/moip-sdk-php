@@ -84,6 +84,13 @@ abstract class MoipResource implements JsonSerializable
         return $this->data;
     }
 
+    /**
+     * Find by path
+     * 
+     * @param  string $path
+     * 
+     * @return Moip\Resource\MoipResource
+     */
     public function getByPath($path = '/')
     {
         $httpConnection = $this->createConnection();
@@ -92,6 +99,31 @@ abstract class MoipResource implements JsonSerializable
         $httpResponse = $httpConnection->execute($path, HTTPRequest::GET);
 
         if ($httpResponse->getStatusCode() != 200) {
+            throw new RuntimeException($httpResponse->getStatusMessage(), $httpResponse->getStatusCode());
+        }
+
+        return $this->populate(json_decode($httpResponse->getContent()));
+    }
+
+    /**
+     * Create a new item in Moip.
+     * 
+     * @param  string $path 
+     * 
+     * @return Moip\Resource
+     */
+    public function createResource($path = '/')
+    {
+        $body = json_encode($this, JSON_UNESCAPED_SLASHES);
+
+        $httpConnection = $this->createConnection();
+        $httpConnection->addHeader('Content-Type', 'application/json');
+        $httpConnection->addHeader('Content-Length', strlen($body));
+        $httpConnection->setRequestBody($body);
+
+        $httpResponse = $httpConnection->execute($path, HTTPRequest::POST);
+
+        if ($httpResponse->getStatusCode() != 201) {
             throw new RuntimeException($httpResponse->getStatusMessage(), $httpResponse->getStatusCode());
         }
 

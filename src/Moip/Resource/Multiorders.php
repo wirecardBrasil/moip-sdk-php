@@ -33,24 +33,11 @@ class Multiorders extends MoipResource
     /**
      * Create a new multiorder in MoIP.
      * 
-     * @return \Moip\Resource\Multiorder
+     * @return \Moip\Resource\MoipResource
      */
     public function create()
     {
-        $body = json_encode($this, JSON_UNESCAPED_SLASHES);
-
-        $httpConnection = $this->createConnection();
-        $httpConnection->addHeader('Content-Type', 'application/json');
-        $httpConnection->addHeader('Content-Length', strlen($body));
-        $httpConnection->setRequestBody($body);
-
-        $httpResponse = $httpConnection->execute('/v2/multiorders', HTTPRequest::POST);
-
-        if ($httpResponse->getStatusCode() != 201) {
-            throw new RuntimeException($httpResponse->getStatusMessage(), $httpResponse->getStatusCode());
-        }
-
-        return $this->populate(json_decode($httpResponse->getContent()));
+        return $this->createResource('/v2/multiorders');
     }
 
     /**
