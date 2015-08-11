@@ -50,6 +50,9 @@ Execute:
 ```php
 require 'vendor/autoload.php';
 
+use Moip\Moip;
+use Moip\MoipBasicAuth;
+
 $endpoint = 'test.moip.com.br';
 $token = '01010101010101010101010101010101';
 $key = 'ABABABABABABABABABABABABABABABABABABABAB';
