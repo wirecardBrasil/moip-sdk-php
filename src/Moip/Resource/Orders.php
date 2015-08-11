@@ -180,12 +180,8 @@ class Orders extends MoipResource
      */
     public function get($id)
     {
-        $body = '{}';
-
         $httpConnection = $this->createConnection();
         $httpConnection->addHeader('Content-Type', 'application/json');
-        $httpConnection->addHeader('Content-Length', strlen($body));
-        $httpConnection->setRequestBody($body);
 
         $httpResponse = $httpConnection->execute('/v2/orders/'.$id, HTTPRequest::GET);
 
