@@ -143,6 +143,7 @@ class Orders extends MoipResource
         $orders->data->items = $response->items;
         $orders->data->receivers = $response->receivers;
         $orders->data->createdAt = $response->createdAt;
+        $orders->data->status = $response->status;
         $orders->data->_links = $response->_links;
 
         return $orders;
