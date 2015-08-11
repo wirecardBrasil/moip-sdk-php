@@ -73,22 +73,7 @@ class Payment extends MoipResource
      */
     public function get($id)
     {
-        $httpConnection = $this->createConnection();
-        $httpConnection->addHeader('Content-Type', 'application/json');
-
-        if ($this->order !== null) {
-            $path = sprintf('/v2/payments/%s', $this->order->getId());
-        } else {
-            $path = sprintf('/v2/multipayments/%s', $this->multiorder->getId());
-        }
-
-        $httpResponse = $httpConnection->execute('/v2/payments/'.$id, HTTPRequest::GET);
-
-        if ($httpResponse->getStatusCode() != 200) {
-            throw new RuntimeException($httpResponse->getStatusMessage(), $httpResponse->getStatusCode());
-        }
-
-        return $this->populate(json_decode($httpResponse->getContent()));
+        return $this->getByPath('/v2/payments/'.$id);
     }
 
     /**

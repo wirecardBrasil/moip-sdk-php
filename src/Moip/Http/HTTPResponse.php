@@ -150,9 +150,9 @@ class HTTPResponse
      * Define a resposta da requisição HTTP.
      * 
      * @param string                        $response      Toda a resposta da requisição
-     * @param \Moip\Http\CookieManager|null $cookieManager
+     * @param \Moip\Http\CookieManager
      */
-    public function setRawResponse($response, CookieManager $cookieManager = null)
+    public function setRawResponse($response)
     {
         $parts = explode("\r\n\r\n", $response);
 
