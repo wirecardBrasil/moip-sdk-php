@@ -2,9 +2,10 @@
 
 namespace Moip\Resource;
 
+use JsonSerializable;
+use Moip\Http\HTTPRequest;
 use Moip\Moip;
 use stdClass;
-use JsonSerializable;
 
 abstract class MoipResource implements JsonSerializable
 {
@@ -81,5 +82,19 @@ abstract class MoipResource implements JsonSerializable
     public function jsonSerialize()
     {
         return $this->data;
+    }
+
+    public function getByPath($path = '/')
+    {
+        $httpConnection = $this->createConnection();
+        $httpConnection->addHeader('Content-Type', 'application/json');
+
+        $httpResponse = $httpConnection->execute($path, HTTPRequest::GET);
+
+        if ($httpResponse->getStatusCode() != 200) {
+            throw new RuntimeException($httpResponse->getStatusMessage(), $httpResponse->getStatusCode());
+        }
+
+        return $this->populate(json_decode($httpResponse->getContent()));
     }
 }

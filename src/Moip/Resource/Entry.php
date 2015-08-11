@@ -64,16 +64,7 @@ class Entry extends MoipResource
      */
     public function get($id)
     {
-        $httpConnection = $this->createConnection();
-        $httpConnection->addHeader('Content-Type', 'application/json');
-
-        $httpResponse = $httpConnection->execute('/v2/entries/'.$id, HTTPRequest::GET);
-
-        if ($httpResponse->getStatusCode() != 200) {
-            throw new RuntimeException($httpResponse->getStatusMessage(), $httpResponse->getStatusCode());
-        }
-
-        return $this->populate(json_decode($httpResponse->getContent()));
+        return $this->getByPath('/v2/entries/'.$id);
     }
 
     /**
