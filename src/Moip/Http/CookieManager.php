@@ -35,7 +35,7 @@ interface CookieManager extends Serializable
      * @param bool   $secure Indica ambiente seguro.
      * @param string $path   Caminho dos cookies.
      *
-     * @return Iterator
+     * @return ArrayIterator
      */
     public function getCookieIterator($domain, $secure, $path);
 
