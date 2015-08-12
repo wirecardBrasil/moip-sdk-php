@@ -2,10 +2,8 @@
 
 namespace Moip\Resource;
 
-use Moip\Http\HTTPRequest;
 use stdClass;
 use ArrayIterator;
-use RuntimeException;
 
 class Multiorders extends MoipResource
 {
@@ -33,7 +31,7 @@ class Multiorders extends MoipResource
     /**
      * Create a new multiorder in MoIP.
      * 
-     * @return \Moip\Resource\MoipResource
+     * @return stdClass
      */
     public function create()
     {
@@ -45,7 +43,7 @@ class Multiorders extends MoipResource
      * 
      * @param string $id Id MoIP order id
      *
-     * @return \Moip\Resource\Multiorder
+     * @return stdClass
      */
     public function get($id)
     {
@@ -151,7 +149,7 @@ class Multiorders extends MoipResource
      * 
      * @param \stdClass $response
      *
-     * @return \stdClass
+     * @return Multiorders
      */
     protected function populate(stdClass $response)
     {

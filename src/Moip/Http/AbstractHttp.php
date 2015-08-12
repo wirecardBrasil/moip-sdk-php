@@ -15,8 +15,8 @@ abstract class AbstractHttp
      *
      * @throws \InvalidArgumentException Se o nome ou o valor do campo não forem valores scalar.
      */
-	public function addHeaderRequest($name, $value, $override = true)
-	{
+    public function addHeaderRequest($name, $value, $override = true)
+    {
         if (is_scalar($name) && is_scalar($value)) {
             $key = strtolower($name);
 
@@ -32,5 +32,5 @@ abstract class AbstractHttp
         }
 
         throw new InvalidArgumentException('Name and value MUST be scalar');
-	}
+    }
 }

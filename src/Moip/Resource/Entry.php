@@ -2,9 +2,7 @@
 
 namespace Moip\Resource;
 
-use Moip\Http\HTTPRequest;
 use stdClass;
-use RuntimeException;
 
 class Entry extends MoipResource
 {
@@ -24,7 +22,7 @@ class Entry extends MoipResource
      * 
      * @param \stdClass $response
      *
-     * @return \stdClass Entry information.
+     * @return Entry Entry information.
      */
     protected function populate(stdClass $response)
     {
@@ -60,7 +58,7 @@ class Entry extends MoipResource
      * 
      * @param string $id Event ID that generated the launch.
      *
-     * @return \Moip\Resource\Entry
+     * @return stdClass
      */
     public function get($id)
     {

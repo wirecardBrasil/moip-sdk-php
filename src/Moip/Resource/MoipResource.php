@@ -48,7 +48,7 @@ abstract class MoipResource implements JsonSerializable
     /**
      * Create a new connecttion.
      * 
-     * @return \Moip\Moip
+     * @return \Moip\Http\HTTPConnection
      */
     protected function createConnection()
     {
@@ -89,7 +89,7 @@ abstract class MoipResource implements JsonSerializable
      * 
      * @param  string $path
      * 
-     * @return Moip\Resource\MoipResource
+     * @return stdClass
      */
     public function getByPath($path = '/')
     {
@@ -110,7 +110,7 @@ abstract class MoipResource implements JsonSerializable
      * 
      * @param  string $path 
      * 
-     * @return Moip\Resource
+     * @return stdClass
      */
     public function createResource($path = '/')
     {

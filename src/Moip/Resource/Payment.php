@@ -69,7 +69,7 @@ class Payment extends MoipResource
      * 
      * @param string $id Id MoIP payment
      *
-     * @return \Moip\Resource\Payment
+     * @return stdClass
      */
     public function get($id)
     {
@@ -79,7 +79,6 @@ class Payment extends MoipResource
     /**
      * Get id MoIP payment.
      * 
-     * @param string $id
      *
      * @return \Moip\Resource\Payment
      */
@@ -116,7 +115,7 @@ class Payment extends MoipResource
     /**
      * Refunds.
      * 
-     * @return Moip\Resource\Refund
+     * @return Refund
      */
     public function refunds()
     {
