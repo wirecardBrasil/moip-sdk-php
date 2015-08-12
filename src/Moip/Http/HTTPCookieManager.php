@@ -145,22 +145,22 @@ class HTTPCookieManager implements CookieManager
                 foreach ($matches as $key => $value) {
                     if (!empty($value)) {
                         switch ($key) {
-                            case 'name' :
+                            case 'name':
                                 $cookieName = $value;
                                 break;
-                            case 'value' :
+                            case 'value':
                                 $cookieValue = $value;
                                 break;
-                            case 'expires' :
+                            case 'expires':
                                 $cookieExpires = strtotime($value);
                                 break;
-                            case 'path' :
+                            case 'path':
                                 $cookiePath = $value;
                                 break;
-                            case 'domain' :
+                            case 'domain':
                                 $cookieDomain = $value;
                                 break;
-                            case 'secure' :
+                            case 'secure':
                                 $cookieSecure = true;
                                 break;
                         }
