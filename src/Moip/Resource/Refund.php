@@ -100,6 +100,11 @@ class Refund extends MoipResource
         return $this->populate(json_decode($httpResponse->getContent()));
     }
 
+    /**
+     * Checks path that will be the request.
+     * 
+     * @return string
+     */
     private function getPath()
     {
         if ($this->order !== null) {
