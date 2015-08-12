@@ -90,7 +90,7 @@ class HTTPCookieManager implements CookieManager
 
     /**
      * @param string $domain
-     * @param boolean $secure
+     * @param bool   $secure
      * @param string $path
      */
     private function getCookieArray($domain, $secure, $path)

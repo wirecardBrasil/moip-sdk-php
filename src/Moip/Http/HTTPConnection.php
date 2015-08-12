@@ -86,6 +86,7 @@ class HTTPConnection extends AbstractHttp
 
     /**
      * Constroi o objeto de conexão HTTP.
+     *
      * @param string $client
      */
     public function __construct($client)
@@ -112,7 +113,7 @@ class HTTPConnection extends AbstractHttp
      * @param string $value    Valor do campo de cabeçalho.
      * @param bool   $override Indica se o campo deverá ser sobrescrito caso já tenha sido definido.
      *
-     * @return boolean
+     * @return bool
      *
      * @throws \InvalidArgumentException Se o nome ou o valor do campo não forem valores scalar.
      * 
@@ -162,9 +163,9 @@ class HTTPConnection extends AbstractHttp
     }
 
     /**
-     * Verifica se existe um header e retorna o seu valor
+     * Verifica se existe um header e retorna o seu valor.
      * 
-     * @param  string $key
+     * @param string $key
      * 
      * @return string
      */

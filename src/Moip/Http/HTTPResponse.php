@@ -149,7 +149,7 @@ class HTTPResponse
     /**
      * Define a resposta da requisição HTTP.
      * 
-     * @param string                        $response      Toda a resposta da requisição
+     * @param string $response Toda a resposta da requisição
      * @param \Moip\Http\CookieManager
      */
     public function setRawResponse($response)
