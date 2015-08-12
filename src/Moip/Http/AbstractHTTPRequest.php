@@ -2,8 +2,6 @@
 
 namespace Moip\Http;
 
-use InvalidArgumentException;
-
 /**
  * Base para facilitar a implementação da interface HTTPRequest para uma
  * requisição HTTP que utiliza cURL.
@@ -50,7 +48,7 @@ abstract class AbstractHTTPRequest extends AbstractHttp implements HTTPRequest
      * @param string $value    Valor do campo de cabeçalho.
      * @param bool   $override Indica se o campo deverá ser sobrescrito caso já tenha sido definido.
      *
-     * @return boolean
+     * @return bool
      *
      * @throws \InvalidArgumentException Se o nome ou o valor do campo não forem valores scalar.
      * 
@@ -102,6 +100,7 @@ abstract class AbstractHTTPRequest extends AbstractHttp implements HTTPRequest
 
     /**
      * @see \Moip\Http\HTTPRequest::setRequestBody()
+     *
      * @param string $requestBody
      */
     public function setRequestBody($requestBody)

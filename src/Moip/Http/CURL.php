@@ -41,7 +41,7 @@ class CURL extends AbstractHTTPRequest
      * @param string $method Método da requisição.
      * @param string $path   Alvo da requisição.
      *
-     * @return boolean Resposta HTTP.
+     * @return bool Resposta HTTP.
      *
      * @throws \BadMethodCallException Se não houver uma conexão inicializada.
      * 
@@ -120,13 +120,13 @@ class CURL extends AbstractHTTPRequest
         return $statusCode < 400;
     }
 
-/**
- * Abre a requisição.
- *
- * @param \Moip\Http\HTTPConnection $httpConnection Conexão HTTP relacionada com essa requisição
- * 
- * @see \Moip\Http\HTTPRequest::open()
- */
+    /**
+     * Abre a requisição.
+     *
+     * @param \Moip\Http\HTTPConnection $httpConnection Conexão HTTP relacionada com essa requisição
+     * 
+     * @see \Moip\Http\HTTPRequest::open()
+     */
     public function open(HTTPConnection $httpConnection)
     {
         if (function_exists('curl_init')) {

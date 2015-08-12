@@ -85,9 +85,9 @@ abstract class MoipResource implements JsonSerializable
     }
 
     /**
-     * Find by path
+     * Find by path.
      * 
-     * @param  string $path
+     * @param string $path
      * 
      * @return stdClass
      */
@@ -108,7 +108,7 @@ abstract class MoipResource implements JsonSerializable
     /**
      * Create a new item in Moip.
      * 
-     * @param  string $path 
+     * @param string $path
      * 
      * @return stdClass
      */
