@@ -161,6 +161,32 @@ class HTTPConnection extends AbstractHttp
     }
 
     /**
+     * Verifica se existe um header e retorna o seu valor
+     * 
+     * @param  string $key
+     * 
+     * @return mixed
+     */
+    private function getHeader($key)
+    {
+        if (isset($this->requestHeader[$key])) {
+            $header = $this->requestHeader[$key]['value'];
+
+            unset($this->requestHeader[$key]);
+        } else {
+            if ($key === 'host') {
+                $header = $this->getHost();
+            } elseif ($key === 'accept') {
+                $header = '*/*';
+            } elseif ($key === 'user-agent') {
+                $header = self::$userAgent;
+            }
+        }
+
+        return $header;
+    }
+
+    /**
      * Executa a requisição a requisição HTTP em um caminho utilizando um
      * método específico.
      *
@@ -176,31 +202,9 @@ class HTTPConnection extends AbstractHttp
         $request = $this->newRequest();
 
         if ($request instanceof HTTPRequest) {
-            $host = $this->getHost();
-            $accept = '*/*';
-            $userAgent = self::$userAgent;
-
-            if (isset($this->requestHeader['Host'])) {
-                $host = $this->requestHeader['host']['value'];
-
-                unset($this->requestHeader['host']);
-            }
-
-            if (isset($this->requestHeader['accept'])) {
-                $accept = $this->requestHeader['accept']['value'];
-
-                unset($this->requestHeader['accept']);
-            }
-
-            if (isset($this->requestHeader['user-agent'])) {
-                $userAgent = $this->requestHeader['user-agent']['value'];
-
-                unset($this->requestHeader['user-agent']);
-            }
-
-            $request->addRequestHeader('Host', $host);
-            $request->addRequestHeader('Accept', $accept);
-            $request->addRequestHeader('User-Agent', $userAgent);
+            $request->addRequestHeader('Host', $this->getHeader('host'));
+            $request->addRequestHeader('Accept', $this->getHeader('accept'));
+            $request->addRequestHeader('User-Agent', $this->getHeader('user-agent'));
 
             if ($this->httpAuthenticator != null) {
                 $request->authenticate($this->httpAuthenticator);
