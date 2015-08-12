@@ -162,7 +162,7 @@ class HTTPResponse
 
             if (preg_match_all(
                 '/(HTTP\/[1-9]\.[0-9]\s+(?<statusCode>\d+)\s+(?<statusMessage>.*)'.
-                     "|(?<headerName>[^:]+)\\s*:\\s*(?<headerValue>.*))\r\n/m",
+                        "|(?<headerName>[^:]+)\\s*:\\s*(?<headerValue>.*))\r\n/m",
                     $parts[0], $matches)) {
                 foreach ($matches['statusCode'] as $offset => $match) {
                     if (!empty($match)) {

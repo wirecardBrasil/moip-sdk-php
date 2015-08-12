@@ -88,6 +88,11 @@ class HTTPCookieManager implements CookieManager
         return implode('; ', $this->getCookieArray($domain, $secure, $path));
     }
 
+    /**
+     * @param string $domain
+     * @param boolean $secure
+     * @param string $path
+     */
     private function getCookieArray($domain, $secure, $path)
     {
         $cookies = array();
@@ -126,9 +131,9 @@ class HTTPCookieManager implements CookieManager
 
             if (preg_match(
                 '/(?<name>[^\=]+)\=(?<value>[^;]+)'.
-                     '(; expires=(?<expires>[^;]+))?'.
-                     '(; path=(?<path>[^;]+))?'.'(; domain=(?<domain>[^;]+))?'.
-                     '(; (?<secure>secure))?'.'(; (?<httponly>httponly))?/',
+                        '(; expires=(?<expires>[^;]+))?'.
+                        '(; path=(?<path>[^;]+))?'.'(; domain=(?<domain>[^;]+))?'.
+                        '(; (?<secure>secure))?'.'(; (?<httponly>httponly))?/',
                     $setCookie, $matches)) {
                 $cookieName = null;
                 $cookieValue = null;

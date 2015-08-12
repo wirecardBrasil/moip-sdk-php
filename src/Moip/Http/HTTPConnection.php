@@ -86,6 +86,7 @@ class HTTPConnection extends AbstractHttp
 
     /**
      * Constroi o objeto de conexão HTTP.
+     * @param string $client
      */
     public function __construct($client)
     {
@@ -96,10 +97,10 @@ class HTTPConnection extends AbstractHttp
                 $uname = posix_uname();
 
                 self::$userAgent = sprintf('Mozilla/4.0 (compatible; %s; PHP/%s %s; %s; %s; %s)',
-                                           $client, PHP_SAPI, PHP_VERSION, $uname['sysname'], $uname['machine'], $locale);
+                                            $client, PHP_SAPI, PHP_VERSION, $uname['sysname'], $uname['machine'], $locale);
             } else {
                 self::$userAgent = sprintf('Mozilla/4.0 (compatible; %s; PHP/%s %s; %s; %s)',
-                                           $client, PHP_SAPI, PHP_VERSION, PHP_OS, $locale);
+                                            $client, PHP_SAPI, PHP_VERSION, PHP_OS, $locale);
             }
         }
     }
@@ -111,7 +112,7 @@ class HTTPConnection extends AbstractHttp
      * @param string $value    Valor do campo de cabeçalho.
      * @param bool   $override Indica se o campo deverá ser sobrescrito caso já tenha sido definido.
      *
-     * @return Moip\Http\AbstractHttp
+     * @return boolean
      *
      * @throws \InvalidArgumentException Se o nome ou o valor do campo não forem valores scalar.
      * 
@@ -165,7 +166,7 @@ class HTTPConnection extends AbstractHttp
      * 
      * @param  string $key
      * 
-     * @return mixed
+     * @return string
      */
     private function getHeader($key)
     {
@@ -193,7 +194,7 @@ class HTTPConnection extends AbstractHttp
      * @param string $path   Caminho da requisição.
      * @param string $method Método da requisição.
      *
-     * @return paypal\http\HTTPResponse Resposta HTTP.
+     * @return string Resposta HTTP.
      *
      * @throws \BadMethodCallException Se não houver uma conexão inicializada ou se o objeto de requisição não for válido.
      */
@@ -222,7 +223,7 @@ class HTTPConnection extends AbstractHttp
 
                 if (isset($this->requestHeader['cookie'])) {
                     $buffer = $this->requestHeader['cookie']['value'].'; '.
-                         $cookies;
+                            $cookies;
                 } else {
                     $buffer = $cookies;
                 }

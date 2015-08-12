@@ -50,7 +50,7 @@ abstract class AbstractHTTPRequest extends AbstractHttp implements HTTPRequest
      * @param string $value    Valor do campo de cabeçalho.
      * @param bool   $override Indica se o campo deverá ser sobrescrito caso já tenha sido definido.
      *
-     * @return Moip\Http\AbstractHttp
+     * @return boolean
      *
      * @throws \InvalidArgumentException Se o nome ou o valor do campo não forem valores scalar.
      * 
@@ -76,7 +76,6 @@ abstract class AbstractHTTPRequest extends AbstractHttp implements HTTPRequest
     /**
      * Abre a requisição.
      *
-     * @param \Moip\Http\HTTPConnection $httpConnection Conexão HTTP relacionada com essa requisição
      * 
      * @see \Moip\Http\HTTPRequest::getResponse()
      */
@@ -103,6 +102,7 @@ abstract class AbstractHTTPRequest extends AbstractHttp implements HTTPRequest
 
     /**
      * @see \Moip\Http\HTTPRequest::setRequestBody()
+     * @param string $requestBody
      */
     public function setRequestBody($requestBody)
     {

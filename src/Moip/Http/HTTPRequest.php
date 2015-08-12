@@ -73,6 +73,7 @@ interface HTTPRequest
      * @param bool   $override Indica se o campo deverá ser sobrescrito caso já tenha sido definido.
      *
      * @throws \InvalidArgumentException Se o nome ou o valor do campo não forem valores scalar.
+     * @return boolean
      */
     public function addRequestHeader($name, $value, $override = true);
 
@@ -80,6 +81,7 @@ interface HTTPRequest
      * Autentica uma requisição HTTP.
      *
      * @param \Moip\Http\HTTPAuthenticator $authenticator
+     * @return void
      */
     public function authenticate(HTTPAuthenticator $authenticator);
 
@@ -122,13 +124,14 @@ interface HTTPRequest
      * @param string $value Valor do parâmetro.
      *
      * @throws \InvalidArgumentException Se o nome ou o valor do campo não forem valores scalar.
+     * @return void
      */
     public function setParameter($name, $value);
 
     /**
      * Corpo da requisição HTTP.
      *
-     * @param string $contentBody
+     * @return void
      */
     public function setRequestBody($requestBody);
 }
