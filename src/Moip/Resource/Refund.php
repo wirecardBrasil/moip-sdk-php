@@ -89,11 +89,7 @@ class Refund extends MoipResource
         $httpConnection->addHeader('Content-Length', strlen($body));
         $httpConnection->setRequestBody($body);
 
-        if ($this->order !== null) {
-            $path = sprintf('/v2/orders/%s/refunds', $this->order->getId());
-        } else {
-            $path = sprintf('/v2/payments/%s/refunds', $this->payment->getId());
-        }
+        $path = $this->getPath();
 
         $httpResponse = $httpConnection->execute($path, HTTPRequest::POST);
 
@@ -102,6 +98,15 @@ class Refund extends MoipResource
         }
 
         return $this->populate(json_decode($httpResponse->getContent()));
+    }
+
+    private function getPath()
+    {
+        if ($this->order !== null) {
+            return sprintf('/v2/orders/%s/refunds', $this->order->getId());
+        }
+
+        return sprintf('/v2/payments/%s/refunds', $this->payment->getId());
     }
 
     /**
@@ -213,11 +218,7 @@ class Refund extends MoipResource
         $httpConnection = $this->createConnection();
         $httpConnection->addHeader('Content-Type', 'application/json');
 
-        if ($this->order !== null) {
-            $path = sprintf('/v2/orders/%s/refunds', $this->order->getId());
-        } else {
-            $path = sprintf('/v2/payments/%s/refunds', $this->payment->getId());
-        }
+        $path = $this->getPath();
 
         $httpResponse = $httpConnection->execute($path, HTTPRequest::GET);
 
