@@ -2,9 +2,7 @@
 
 namespace Moip\Resource;
 
-use Moip\Http\HTTPRequest;
 use stdClass;
-use RuntimeException;
 use UnexpectedValueException;
 
 class Customer extends MoipResource
@@ -61,7 +59,7 @@ class Customer extends MoipResource
     /**
      * Create a new customer.
      * 
-     * @return \Moip\Resource\MoipResource
+     * @return stdClass
      */
     public function create()
     {
@@ -73,7 +71,7 @@ class Customer extends MoipResource
      * 
      * @param string $id
      *
-     * @return \Moip\Resource\Customer
+     * @return stdClass
      */
     public function get($id)
     {
@@ -195,7 +193,7 @@ class Customer extends MoipResource
      * 
      * @param \stdClass $response
      *
-     * @return \stdClass Customer information.
+     * @return Customer Customer information.
      */
     protected function populate(stdClass $response)
     {

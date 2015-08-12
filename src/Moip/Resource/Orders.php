@@ -2,10 +2,8 @@
 
 namespace Moip\Resource;
 
-use Moip\Http\HTTPRequest;
 use stdClass;
 use ArrayIterator;
-use RuntimeException;
 
 class Orders extends MoipResource
 {
@@ -80,7 +78,7 @@ class Orders extends MoipResource
      * 
      * @param \stdClass $response
      *
-     * @return \stdClass Response order.
+     * @return Orders Response order.
      */
     protected function populate(stdClass $response)
     {
@@ -152,7 +150,7 @@ class Orders extends MoipResource
     /**
      * Create a new order in MoIP.
      * 
-     * @return \Moip\Resource\MoipResource
+     * @return stdClass
      */
     public function create()
     {
@@ -164,7 +162,7 @@ class Orders extends MoipResource
      * 
      * @param string $id Id MoIP order id
      *
-     * @return \Moip\Resource\Order
+     * @return stdClass
      */
     public function get($id)
     {
@@ -322,7 +320,7 @@ class Orders extends MoipResource
     /**
      * Get payments associated with the request.
      * 
-     * @return \Moip\Resource\Payment
+     * @return ArrayIterator
      */
     public function getPaymentIterator()
     {
@@ -332,7 +330,7 @@ class Orders extends MoipResource
     /**
      * Get recipient structure of payments.
      * 
-     * @return \Moip\Resource\
+     * @return ArrayIterator
      */
     public function getReceiverIterator()
     {
@@ -342,7 +340,7 @@ class Orders extends MoipResource
     /**
      * Get releases associated with the request.
      * 
-     * @return \stdClass
+     * @return ArrayIterator
      */
     public function getEventIterator()
     {
@@ -352,7 +350,7 @@ class Orders extends MoipResource
     /**
      * Get repayments associated with the request.
      * 
-     * @return \Moip\Resource\Refund
+     * @return ArrayIterator
      */
     public function getRefundIterator()
     {

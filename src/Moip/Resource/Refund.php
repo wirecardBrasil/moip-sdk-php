@@ -153,7 +153,7 @@ class Refund extends MoipResource
      * @param int                     $accountCheckNumber Digit account checker.
      * @param \Moip\Resource\Customer $holder
      *
-     * @return \stdClass
+     * @return Refund
      */
     public function bankAccountFull($type, $bankNumber, $agencyNumber, $agencyCheckNumber, $accountNumber, $accountCheckNumber, Customer $holder)
     {
@@ -173,7 +173,7 @@ class Refund extends MoipResource
      * @param int                     $accountCheckNumber Digit account checker.
      * @param \Moip\Resource\Customer $holder
      *
-     * @return \stdClass
+     * @return Refund
      */
     public function bankAccountPartial($amount, $type, $bankNumber, $agencyNumber, $agencyCheckNumber, $accountNumber, $accountCheckNumber, Customer $holder)
     {
