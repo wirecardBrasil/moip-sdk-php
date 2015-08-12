@@ -26,14 +26,14 @@ class HTTPCookieManager implements CookieManager
     /**
      * Constroi o gerenciador de cookies que grava as informações em um arquivo.
      *
-     * @param string $dirname
+     * @param string|null $dirname
      *                        Diretório onde os cookies serão gravados, caso
      *                        não informado o diretório temporário do sistema será
      *                        utilizado.
      */
     public function __construct($dirname = null)
     {
-        if ($dirname == null) {
+        if ($dirname === null) {
             $dirname = sys_get_temp_dir();
         }
 
@@ -198,17 +198,24 @@ class HTTPCookieManager implements CookieManager
 
             foreach ($cookies as $domain => $domainCookies) {
                 foreach ($domainCookies as $cookie) {
-                    if ($cookie instanceof Cookie) {
-                        if ($cookie->getExpires() > $now) {
-                            if (!isset($this->cookies[$domain])) {
-                                $this->cookies[$domain] = array();
-                            }
-
-                            $this->cookies[$domain][] = $cookie;
-                        }
-                    }
+                    $this->unserializeCookie($cookie, $domain);        
                 }
             }
+        }
+    }
+
+    /**
+     * @param  Moip\Http\Cookie $cookie
+     * @param  string|int $domain
+     */
+    public function unserializeCookie($cookie, $domain)
+    {
+        if ($cookie instanceof Cookie && $cookie->getExpires() > $now) {
+            if (!isset($this->cookies[$domain])) {
+                $this->cookies[$domain] = array();
+            }
+
+            $this->cookies[$domain][] = $cookie;
         }
     }
 }
