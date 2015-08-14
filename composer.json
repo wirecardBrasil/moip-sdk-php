@@ -6,12 +6,6 @@
     "require": {
         "php": ">=5.4"
     },
-	"require-dev": {
-        "phpunit/phpunit": "@stable",
-		"sebastian/phpcpd": "@stable",
-		"phpmd/phpmd": "@stable",
-		"pdepend/pdepend": "@stable"
-	},
     "autoload": {
         "psr-0": {
             "": ["src/", "tests/"]
