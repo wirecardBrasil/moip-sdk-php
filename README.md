@@ -38,7 +38,7 @@ Adicione o trecho abaixo em seu arquivo `composer.json`:
 
     {
         "require" : {
-            "moip/moip-sdk-php" : "dev-master"
+            "moip/moip-sdk-php" : "1.0.x-dev"
         }
     }
     
