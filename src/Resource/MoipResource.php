@@ -29,7 +29,7 @@ abstract class MoipResource implements JsonSerializable
      * 
      * @param \stdClass $response
      *
-     * @return \stdClass
+     * @return mixed
      */
     abstract protected function populate(stdClass $response);
 
