@@ -28,7 +28,7 @@ class Customer extends MoipResource
      * @param string $complement
      * @param string $country
      * 
-     * @return $this;
+     * @return $this
      */
     public function addAddress($type, $street, $number, $district, $city, $state, $zip, $complement = null, $country = 'BRA')
     {
