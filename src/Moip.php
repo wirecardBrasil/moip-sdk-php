@@ -42,8 +42,8 @@ class Moip
     /**
      * Create a new aurhentication with the endpoint.
      *
-     * @param \Moip\MoipAuthentication        $moipAuthentication
-     * @param \Moip\Moip::PRODUCTION_ENDPOINT $endpoint
+     * @param \Moip\MoipAuthentication               $moipAuthentication
+     * @param \Moip\Moip::PRODUCTION_ENDPOINT|string $endpoint
      */
     public function __construct(MoipAuthentication $moipAuthentication, $endpoint = self::PRODUCTION_ENDPOINT)
     {
