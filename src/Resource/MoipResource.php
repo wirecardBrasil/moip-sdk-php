@@ -61,7 +61,7 @@ abstract class MoipResource implements JsonSerializable
      * @param string         $key
      * @param \stdClass|null $data
      *
-     * @return \stdClass|string|null
+     * @return mixed
      */
     protected function getIfSet($key, stdClass $data = null)
     {
