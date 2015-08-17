@@ -19,6 +19,7 @@ O jeito mais simples e rápido de integrar o Moip a sua aplicação PHP
 [![Total Downloads](https://poser.pugx.org/moip/moip-sdk-php/downloads)](https://packagist.org/packages/moip/moip-sdk-php)
 [![Monthly Downloads](https://poser.pugx.org/moip/moip-sdk-php/d/monthly)](https://packagist.org/packages/moip/moip-sdk-php)
 [![Daily Downloads](https://poser.pugx.org/moip/moip-sdk-php/d/daily)](https://packagist.org/packages/moip/moip-sdk-php)
+![Repo Size](https://reposs.herokuapp.com/?path=Moip/moip-sdk-php)
 
 > Versãoes
 
