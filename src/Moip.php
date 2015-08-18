@@ -16,14 +16,7 @@ class Moip
      *
      * @const string
      */
-    const PRODUCTION_ENDPOINT = 'moip.com.br';
-
-    /**
-     * endpoint of sandbox.
-     *
-     * @const string
-     */
-    const SANDBOX_ENDPOINT = 'test.moip.com.br';
+    const ENDPOINT = 'moip.com.br';
 
     /**
      * Authentication that will be added to the header of request.
@@ -35,17 +28,17 @@ class Moip
     /**
      * Endpoint of request.
      *
-     * @var \Moip\Moip::PRODUCTION_ENDPOINT
+     * @var \Moip\Moip::ENDPOINT|string
      */
-    private $endpoint = self::PRODUCTION_ENDPOINT;
+    private $endpoint = self::ENDPOINT;
 
     /**
      * Create a new aurhentication with the endpoint.
      *
      * @param \Moip\MoipAuthentication               $moipAuthentication
-     * @param \Moip\Moip::PRODUCTION_ENDPOINT|string $endpoint
+     * @param \Moip\Moip::ENDPOINT|string $endpoint
      */
-    public function __construct(MoipAuthentication $moipAuthentication, $endpoint = self::PRODUCTION_ENDPOINT)
+    public function __construct(MoipAuthentication $moipAuthentication, $endpoint = self::ENDPOINT)
     {
         $this->moipAuthentication = $moipAuthentication;
         $this->endpoint = $endpoint;
