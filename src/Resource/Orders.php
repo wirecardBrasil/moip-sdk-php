@@ -90,8 +90,8 @@ class Orders extends MoipResource
         $orders->data->amount->liquid = $response->amount->liquid;
         $orders->data->amount->otherReceivers = $response->amount->otherReceivers;
         $orders->data->amount->subtotals = $response->amount->subtotals;
-        $orders->data->customer = new Customer($orders->moip);
-        $orders->data->customer->populate($response->customer);
+        $customer = new Customer($this->moip);
+        $customer->populate($response->customer);
 
         if (isset($response->payments)) {
             $orders->data->payments = array();
