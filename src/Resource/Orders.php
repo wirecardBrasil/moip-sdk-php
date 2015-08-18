@@ -8,6 +8,11 @@ use ArrayIterator;
 class Orders extends MoipResource
 {
     /**
+     * @var string
+     **/
+    private $orders;
+
+    /**
      * Adds a new item to order.
      * 
      * @param string  $product  Name of the product.
@@ -82,29 +87,29 @@ class Orders extends MoipResource
      */
     protected function populate(stdClass $response)
     {
-        $orders = clone $this;
-        $orders->data->id = $response->id;
-        $orders->data->amount->total = $response->amount->total;
-        $orders->data->amount->fees = $response->amount->fees;
-        $orders->data->amount->refunds = $response->amount->refunds;
-        $orders->data->amount->liquid = $response->amount->liquid;
-        $orders->data->amount->otherReceivers = $response->amount->otherReceivers;
-        $orders->data->amount->subtotals = $response->amount->subtotals;
+        $this->orders = clone $this;
+        $this->orders->data->id = $response->id;
+        $this->orders->data->amount->total = $response->amount->total;
+        $this->orders->data->amount->fees = $response->amount->fees;
+        $this->orders->data->amount->refunds = $response->amount->refunds;
+        $this->orders->data->amount->liquid = $response->amount->liquid;
+        $this->orders->data->amount->otherReceivers = $response->amount->otherReceivers;
+        $this->orders->data->amount->subtotals = $response->amount->subtotals;
         $customer = new Customer($this->moip);
         $customer->populate($response->customer);
 
-        $this->structurePayment($response, $orders);
-        $this->structureRefund($response, $orders);
-        $this->structureEntry($response, $orders);
-        $this->structureEvent($response, $orders);
+        $this->orders->data->payments = $this->structurePayment($response);
+        $this->orders->data->refunds = $this->structureRefund($response);
+        $this->orders->data->entries = $this->structureEntry($response);
+        $this->orders->data->events = $this->structureEvent($response);
 
-        $orders->data->items = $response->items;
-        $orders->data->receivers = $response->receivers;
-        $orders->data->createdAt = $response->createdAt;
-        $orders->data->status = $response->status;
-        $orders->data->_links = $response->_links;
+        $this->orders->data->items = $response->items;
+        $this->orders->data->receivers = $response->receivers;
+        $this->orders->data->createdAt = $response->createdAt;
+        $this->orders->data->status = $response->status;
+        $this->orders->data->_links = $response->_links;
 
-        return $orders;
+        return $this->orders;
     }
 
     /**
@@ -114,14 +119,14 @@ class Orders extends MoipResource
      * 
      * @return array
      */
-    private function structureEntry(stdClass $response, Orders $orders)
+    private function structureEntry(stdClass $response)
     {
         $entries = [];
 
         if (isset($response->entries)) {
 
             foreach ($response->entries as $responseEntry) {
-                $entry = new Entry($orders->moip);
+                $entry = new Entry($this->orders->moip);
                 $entry->populate($responseEntry);
 
                 $entries[] = $entry;
@@ -139,13 +144,13 @@ class Orders extends MoipResource
      * 
      * @return array
      */
-    private function structureRefund(stdClass $response, Orders $orders)
+    private function structureRefund(stdClass $response)
     {
         $refunds = [];
 
         if (isset($response->refunds)) {
             foreach ($response->refunds as $responseRefund) {
-                $refund = new Refund($orders->moip);
+                $refund = new Refund($this->orders->moip);
                 $refund->populate($responseRefund);
 
                 $refunds[] = $refund;
@@ -162,13 +167,13 @@ class Orders extends MoipResource
      * 
      * @return array
      */
-    private function structureEvent(stdClass $response, Orders $orders)
+    private function structureEvent(stdClass $response)
     {
         $events = [];
 
         if (isset($response->events)) {
             foreach ($response->events as $responseEvent) {
-                $event = new Event($orders->moip);
+                $event = new Event($this->orders->moip);
                 $event->populate($responseEvent);
 
                 $events[] = $event;
@@ -185,13 +190,13 @@ class Orders extends MoipResource
      * 
      * @return array
      */
-    private function structurePayment(stdClass $response, Orders $orders)
+    private function structurePayment(stdClass $response)
     {
         $payments = [];
 
         if (isset($response->payments)) {
             foreach ($response->payments as $responsePayment) {
-                $payment = new Payment($orders->moip);
+                $payment = new Payment($this->orders->moip);
                 $payment->populate($responsePayment);
                 $payment->setOrder($this);
 
