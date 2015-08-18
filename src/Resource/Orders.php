@@ -95,18 +95,8 @@ class Orders extends MoipResource
 
         $this->structurePayment($response, $orders);
         $this->structureRefund($response, $orders);
+        $this->structureEntry($response, $orders);
         $this->structureEvent($response, $orders);
-
-        if (isset($response->entries)) {
-            $orders->data->entries = array();
-
-            foreach ($response->entries as $responseEntry) {
-                $entry = new Entry($orders->moip);
-                $entry->populate($responseEntry);
-
-                $orders->data->entries[] = $entry;
-            }
-        }
 
         $orders->data->items = $response->items;
         $orders->data->receivers = $response->receivers;
@@ -116,6 +106,31 @@ class Orders extends MoipResource
 
         return $orders;
     }
+
+    /**
+     * Structure Entry for an order.
+     * 
+     * @param  stdClass $response response of API.
+     * 
+     * @return array
+     */
+    private function structureEntry(stdClass $response, Orders $orders)
+    {
+        $entries = [];
+
+        if (isset($response->entries)) {
+
+            foreach ($response->entries as $responseEntry) {
+                $entry = new Entry($orders->moip);
+                $entry->populate($responseEntry);
+
+                $entries[] = $entry;
+            }
+        }
+
+        return $entries;
+    }
+
 
     /**
      * Structure Refund for an order.
