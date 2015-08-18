@@ -93,7 +93,9 @@ class Orders extends MoipResource
         $customer = new Customer($this->moip);
         $customer->populate($response->customer);
 
-        $this->structurePayment($response);
+        $this->structurePayment($response, $orders);
+        $this->structureEvent($response, $orders);
+        
 
         if (isset($response->refunds)) {
             $orders->data->refunds = array();
@@ -117,17 +119,6 @@ class Orders extends MoipResource
             }
         }
 
-        if (isset($response->events)) {
-            $orders->data->events = array();
-
-            foreach ($response->events as $responseEvent) {
-                $event = new Event($orders->moip);
-                $event->populate($responseEvent);
-
-                $orders->data->events[] = $event;
-            }
-        }
-
         $orders->data->items = $response->items;
         $orders->data->receivers = $response->receivers;
         $orders->data->createdAt = $response->createdAt;
@@ -138,13 +129,38 @@ class Orders extends MoipResource
     }
 
     /**
-     * Structure payment for order.
+     * Structure event for an order.
      * 
      * @param  stdClass $response response of API.
      * 
      * @return array
      */
-    private function structurePayment(stdClass $response)
+    private function structureEvent(stdClass $response, Orders $orders)
+    {
+        $events = [];
+
+        if (isset($response->events)) {
+            $events = array();
+
+            foreach ($response->events as $responseEvent) {
+                $event = new Event($orders->moip);
+                $event->populate($responseEvent);
+
+                $events[] = $event;
+            }
+        }
+
+        return $events;
+    }
+
+    /**
+     * Structure payment for an order.
+     * 
+     * @param  stdClass $response response of API.
+     * 
+     * @return array
+     */
+    private function structurePayment(stdClass $response, Orders $orders)
     {
         $payments = [];
 
