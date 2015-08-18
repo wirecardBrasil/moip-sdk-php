@@ -93,17 +93,7 @@ class Orders extends MoipResource
         $customer = new Customer($this->moip);
         $customer->populate($response->customer);
 
-        if (isset($response->payments)) {
-            $orders->data->payments = array();
-
-            foreach ($response->payments as $responsePayment) {
-                $payment = new Payment($orders->moip);
-                $payment->populate($responsePayment);
-                $payment->setOrder($this);
-
-                $orders->data->payments[] = $payment;
-            }
-        }
+        $this->structurePayment($response);
 
         if (isset($response->refunds)) {
             $orders->data->refunds = array();
@@ -145,6 +135,31 @@ class Orders extends MoipResource
         $orders->data->_links = $response->_links;
 
         return $orders;
+    }
+
+    /**
+     * Structure payment for order.
+     * 
+     * @param  stdClass $response response of API.
+     * 
+     * @return array
+     */
+    private function structurePayment(stdClass $response)
+    {
+        $payments = [];
+
+        if (isset($response->payments)) {
+
+            foreach ($response->payments as $responsePayment) {
+                $payment = new Payment($orders->moip);
+                $payment->populate($responsePayment);
+                $payment->setOrder($this);
+
+                $payments[] = $payment;
+            }
+        }
+
+        return $payments;
     }
 
     /**
