@@ -2,7 +2,7 @@
 
 namespace Moip\Resource;
 
-use Moip\Http\HTTPRequest;
+use Sostheblack\Http\HTTPRequest;
 use stdClass;
 use ArrayIterator;
 use RuntimeException;

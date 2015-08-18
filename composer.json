@@ -16,7 +16,8 @@
         }
     ],
     "require": {
-        "php": ">=5.4"
+        "php": ">=5.4",
+        "sostheblack/moip-http-php" : "1.0.x-dev"
     },
     "autoload": {
         "psr-4": {
