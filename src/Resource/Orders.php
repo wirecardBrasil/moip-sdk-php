@@ -8,7 +8,7 @@ use ArrayIterator;
 class Orders extends MoipResource
 {
     /**
-     * @var string
+     * @var \Moip\Resource\Orders
      **/
     private $orders;
 
@@ -95,13 +95,14 @@ class Orders extends MoipResource
         $this->orders->data->amount->liquid = $response->amount->liquid;
         $this->orders->data->amount->otherReceivers = $response->amount->otherReceivers;
         $this->orders->data->amount->subtotals = $response->amount->subtotals;
+        
         $customer = new Customer($this->moip);
         $customer->populate($response->customer);
 
-        $this->orders->data->payments = $this->structurePayment($response);
-        $this->orders->data->refunds = $this->structureRefund($response);
-        $this->orders->data->entries = $this->structureEntry($response);
-        $this->orders->data->events = $this->structureEvent($response);
+        $this->orders->data->payments = $this->structure($response, 'payments', Payment::class);
+        $this->orders->data->refunds = $this->structure($response, 'refunds', Refund::class);
+        $this->orders->data->entries = $this->structure($response, 'entries', Entry::class);
+        $this->orders->data->events = $this->structure($response, 'events', Event::class);
 
         $this->orders->data->items = $response->items;
         $this->orders->data->receivers = $response->receivers;
@@ -113,98 +114,26 @@ class Orders extends MoipResource
     }
 
     /**
-     * Structure Entry for an order.
+     * Structure resource.
      * 
-     * @param  stdClass $response response of API.
-     * 
-     * @return array
-     */
-    private function structureEntry(stdClass $response)
-    {
-        $entries = [];
-
-        if (isset($response->entries)) {
-
-            foreach ($response->entries as $responseEntry) {
-                $entry = new Entry($this->orders->moip);
-                $entry->populate($responseEntry);
-
-                $entries[] = $entry;
-            }
-        }
-
-        return $entries;
-    }
-
-
-    /**
-     * Structure Refund for an order.
-     * 
-     * @param  stdClass $response response of API.
+     * @param  stdClass $response 
+     * @param  string   $resource 
+     * @param  \Moip\Resource\Payment|\Moip\Resource\Refund|\Moip\Resource\Entry|\Moip\Resource\Event $class    
      * 
      * @return array
      */
-    private function structureRefund(stdClass $response)
+    private function structure(stdClass $response, $resource, $class)
     {
-        $refunds = [];
+        $structures = [];
 
-        if (isset($response->refunds)) {
-            foreach ($response->refunds as $responseRefund) {
-                $refund = new Refund($this->orders->moip);
-                $refund->populate($responseRefund);
+        foreach ($response->$resource as $responseResource) {
+            $structure = new $class($this->orders->moip);
+            $structure->populate($responseResource);
 
-                $refunds[] = $refund;
-            }
+            $structures[] = $structure;
         }
 
-        return $refunds;
-    }
-
-    /**
-     * Structure event for an order.
-     * 
-     * @param  stdClass $response response of API.
-     * 
-     * @return array
-     */
-    private function structureEvent(stdClass $response)
-    {
-        $events = [];
-
-        if (isset($response->events)) {
-            foreach ($response->events as $responseEvent) {
-                $event = new Event($this->orders->moip);
-                $event->populate($responseEvent);
-
-                $events[] = $event;
-            }
-        }
-
-        return $events;
-    }
-
-    /**
-     * Structure payment for an order.
-     * 
-     * @param  stdClass $response response of API.
-     * 
-     * @return array
-     */
-    private function structurePayment(stdClass $response)
-    {
-        $payments = [];
-
-        if (isset($response->payments)) {
-            foreach ($response->payments as $responsePayment) {
-                $payment = new Payment($this->orders->moip);
-                $payment->populate($responsePayment);
-                $payment->setOrder($this);
-
-                $payments[] = $payment;
-            }
-        }
-
-        return $payments;
+        return $structures;
     }
 
     /**
