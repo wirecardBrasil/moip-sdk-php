@@ -2,8 +2,8 @@
 
 namespace Moip\Resource;
 
-use stdClass;
 use ArrayIterator;
+use stdClass;
 
 class Multiorders extends MoipResource
 {
@@ -14,7 +14,7 @@ class Multiorders extends MoipResource
     {
         $this->data = new stdClass();
         $this->data->ownId = null;
-        $this->data->orders = array();
+        $this->data->orders = [];
     }
     /**
      * Structure of order.
@@ -35,7 +35,7 @@ class Multiorders extends MoipResource
      */
     public function create()
     {
-        return $this->createResource('/' . MoipResource::VERSION . '/multiorders');
+        return $this->createResource('/'.MoipResource::VERSION.'/multiorders');
     }
 
     /**
@@ -47,7 +47,7 @@ class Multiorders extends MoipResource
      */
     public function get($id)
     {
-        return $this->getByPath('/' . MoipResource::VERSION . '/entries/'.$id);
+        return $this->getByPath('/'.MoipResource::VERSION.'/entries/'.$id);
     }
 
     /**
@@ -161,7 +161,7 @@ class Multiorders extends MoipResource
         $multiorders->data->amount = new stdClass();
         $multiorders->data->amount->total = $response->amount->total;
         $multiorders->data->amount->currency = $response->amount->currency;
-        $multiorders->data->orders = array();
+        $multiorders->data->orders = [];
 
         foreach ($response->orders as $responseOrder) {
             $order = new Orders($multiorders->moip);

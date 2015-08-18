@@ -2,9 +2,9 @@
 
 namespace Moip\Resource;
 
+use RuntimeException;
 use Sostheblack\Http\HTTPRequest;
 use stdClass;
-use RuntimeException;
 use UnexpectedValueException;
 
 class Payment extends MoipResource
@@ -44,9 +44,9 @@ class Payment extends MoipResource
         $httpConnection->setRequestBody($body);
 
         if ($this->order !== null) {
-            $path = sprintf('/' . MoipResource::VERSION . '/orders/%s/payments', $this->order->getId());
+            $path = sprintf('/'.MoipResource::VERSION.'/orders/%s/payments', $this->order->getId());
         } else {
-            $path = sprintf('/' . MoipResource::VERSION . '/multiorders/%s/multipayments', $this->multiorder->getId());
+            $path = sprintf('/'.MoipResource::VERSION.'/multiorders/%s/multipayments', $this->multiorder->getId());
         }
 
         $httpResponse = $httpConnection->execute($path, HTTPRequest::POST);
@@ -73,7 +73,7 @@ class Payment extends MoipResource
      */
     public function get($id)
     {
-        return $this->getByPath('/' . MoipResource::VERSION . '/payments/'.$id);
+        return $this->getByPath('/'.MoipResource::VERSION.'/payments/'.$id);
     }
 
     /**
@@ -150,7 +150,7 @@ class Payment extends MoipResource
      */
     public function setBoleto($expirationDate, $logoUri, array $instructionLines = [])
     {
-        $keys = array('first', 'second', 'third');
+        $keys = ['first', 'second', 'third'];
 
         $this->data->fundingInstrument->method = 'BOLETO';
         $this->data->fundingInstrument->boleto = new stdClass();

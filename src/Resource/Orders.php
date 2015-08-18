@@ -2,8 +2,8 @@
 
 namespace Moip\Resource;
 
-use stdClass;
 use ArrayIterator;
+use stdClass;
 
 class Orders extends MoipResource
 {
@@ -64,8 +64,8 @@ class Orders extends MoipResource
         $this->data->ownId = null;
         $this->data->amount = new stdClass();
         $this->data->amount->currency = 'BRL';
-        $this->data->items = array();
-        $this->data->receivers = array();
+        $this->data->items = [];
+        $this->data->receivers = [];
     }
 
     /**
@@ -95,7 +95,7 @@ class Orders extends MoipResource
         $this->orders->data->amount->liquid = $response->amount->liquid;
         $this->orders->data->amount->otherReceivers = $response->amount->otherReceivers;
         $this->orders->data->amount->subtotals = $response->amount->subtotals;
-        
+
         $customer = new Customer($this->moip);
         $customer->populate($response->customer);
 
@@ -116,9 +116,9 @@ class Orders extends MoipResource
     /**
      * Structure resource.
      * 
-     * @param  stdClass $response 
-     * @param  string   $resource 
-     * @param  \Moip\Resource\Payment|\Moip\Resource\Refund|\Moip\Resource\Entry|\Moip\Resource\Event $class    
+     * @param stdClass                                                                               $response
+     * @param string                                                                                 $resource
+     * @param \Moip\Resource\Payment|\Moip\Resource\Refund|\Moip\Resource\Entry|\Moip\Resource\Event $class
      * 
      * @return array
      */
@@ -143,7 +143,7 @@ class Orders extends MoipResource
      */
     public function create()
     {
-        return $this->createResource('/' . MoipResource::VERSION . '/orders');
+        return $this->createResource('/'.MoipResource::VERSION.'/orders');
     }
 
     /**
@@ -155,7 +155,7 @@ class Orders extends MoipResource
      */
     public function get($id)
     {
-        return $this->getByPath('/' . MoipResource::VERSION . '/orders/'.$id);
+        return $this->getByPath('/'.MoipResource::VERSION.'/orders/'.$id);
     }
 
     /**

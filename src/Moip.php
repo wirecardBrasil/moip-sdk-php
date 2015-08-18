@@ -2,12 +2,12 @@
 
 namespace Moip;
 
+use Moip\Resource\Customer;
 use Moip\Resource\Entry;
+use Moip\Resource\Multiorders;
 use Moip\Resource\Orders;
 use Moip\Resource\Payment;
-use Moip\Resource\Customer;
 use Sostheblack\Http\HTTPConnection;
-use Moip\Resource\Multiorders;
 
 class Moip
 {

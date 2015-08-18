@@ -3,10 +3,10 @@
 namespace Moip\Resource;
 
 use JsonSerializable;
-use Sostheblack\Http\HTTPRequest;
 use Moip\Moip;
-use stdClass;
 use RuntimeException;
+use Sostheblack\Http\HTTPRequest;
+use stdClass;
 
 abstract class MoipResource implements JsonSerializable
 {
