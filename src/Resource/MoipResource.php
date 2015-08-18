@@ -6,6 +6,7 @@ use JsonSerializable;
 use Sostheblack\Http\HTTPRequest;
 use Moip\Moip;
 use stdClass;
+use RuntimeException;
 
 abstract class MoipResource implements JsonSerializable
 {
@@ -18,6 +19,8 @@ abstract class MoipResource implements JsonSerializable
      * @var \stdClass
      */
     protected $data;
+
+    const VERSION = 'v2';
 
     /**
      * Initialize a new instance.

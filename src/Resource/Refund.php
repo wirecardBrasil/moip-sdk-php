@@ -108,10 +108,10 @@ class Refund extends MoipResource
     private function getPath()
     {
         if ($this->order !== null) {
-            return sprintf('/v2/orders/%s/refunds', $this->order->getId());
+            return sprintf('/' . MoipResource::VERSION . '/orders/%s/refunds', $this->order->getId());
         }
 
-        return sprintf('/v2/payments/%s/refunds', $this->payment->getId());
+        return sprintf('/' . MoipResource::VERSION . '/payments/%s/refunds', $this->payment->getId());
     }
 
     /**

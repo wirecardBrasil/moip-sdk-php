@@ -143,7 +143,7 @@ class Orders extends MoipResource
      */
     public function create()
     {
-        return $this->createResource('/v2/orders');
+        return $this->createResource('/' . MoipResource::VERSION . '/orders');
     }
 
     /**
@@ -155,7 +155,7 @@ class Orders extends MoipResource
      */
     public function get($id)
     {
-        return $this->getByPath('/v2/orders/'.$id);
+        return $this->getByPath('/' . MoipResource::VERSION . '/orders/'.$id);
     }
 
     /**

@@ -35,7 +35,7 @@ class Multiorders extends MoipResource
      */
     public function create()
     {
-        return $this->createResource('/v2/multiorders');
+        return $this->createResource('/' . MoipResource::VERSION . '/multiorders');
     }
 
     /**
@@ -47,7 +47,7 @@ class Multiorders extends MoipResource
      */
     public function get($id)
     {
-        return $this->getByPath('/v2/entries/'.$id);
+        return $this->getByPath('/' . MoipResource::VERSION . '/entries/'.$id);
     }
 
     /**

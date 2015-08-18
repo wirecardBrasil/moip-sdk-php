@@ -63,7 +63,7 @@ class Customer extends MoipResource
      */
     public function create()
     {
-        return $this->createResource('/v2/customers');
+        return $this->createResource('/' . MoipResource::VERSION . '/customers');
     }
 
     /**
@@ -75,7 +75,7 @@ class Customer extends MoipResource
      */
     public function get($id)
     {
-        return $this->getByPath('/v2/customers/'.$id);
+        return $this->getByPath('/' . MoipResource::VERSION . '/customers/'.$id);
     }
 
     /**

@@ -44,9 +44,9 @@ class Payment extends MoipResource
         $httpConnection->setRequestBody($body);
 
         if ($this->order !== null) {
-            $path = sprintf('/v2/orders/%s/payments', $this->order->getId());
+            $path = sprintf('/' . MoipResource::VERSION . '/orders/%s/payments', $this->order->getId());
         } else {
-            $path = sprintf('/v2/multiorders/%s/multipayments', $this->multiorder->getId());
+            $path = sprintf('/' . MoipResource::VERSION . '/multiorders/%s/multipayments', $this->multiorder->getId());
         }
 
         $httpResponse = $httpConnection->execute($path, HTTPRequest::POST);
@@ -73,7 +73,7 @@ class Payment extends MoipResource
      */
     public function get($id)
     {
-        return $this->getByPath('/v2/payments/'.$id);
+        return $this->getByPath('/' . MoipResource::VERSION . '/payments/'.$id);
     }
 
     /**
