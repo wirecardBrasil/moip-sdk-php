@@ -94,19 +94,8 @@ class Orders extends MoipResource
         $customer->populate($response->customer);
 
         $this->structurePayment($response, $orders);
+        $this->structureRefund($response, $orders);
         $this->structureEvent($response, $orders);
-        
-
-        if (isset($response->refunds)) {
-            $orders->data->refunds = array();
-
-            foreach ($response->refunds as $responseRefund) {
-                $refund = new Refund($orders->moip);
-                $refund->populate($responseRefund);
-
-                $orders->data->refunds[] = $refund;
-            }
-        }
 
         if (isset($response->entries)) {
             $orders->data->entries = array();
@@ -129,6 +118,29 @@ class Orders extends MoipResource
     }
 
     /**
+     * Structure Refund for an order.
+     * 
+     * @param  stdClass $response response of API.
+     * 
+     * @return array
+     */
+    private function structureRefund(stdClass $response, Orders $orders)
+    {
+        $refunds = [];
+
+        if (isset($response->refunds)) {
+            foreach ($response->refunds as $responseRefund) {
+                $refund = new Refund($orders->moip);
+                $refund->populate($responseRefund);
+
+                $refunds[] = $refund;
+            }
+        }
+
+        return $refunds;
+    }
+
+    /**
      * Structure event for an order.
      * 
      * @param  stdClass $response response of API.
@@ -140,8 +152,6 @@ class Orders extends MoipResource
         $events = [];
 
         if (isset($response->events)) {
-            $events = array();
-
             foreach ($response->events as $responseEvent) {
                 $event = new Event($orders->moip);
                 $event->populate($responseEvent);
@@ -165,7 +175,6 @@ class Orders extends MoipResource
         $payments = [];
 
         if (isset($response->payments)) {
-
             foreach ($response->payments as $responsePayment) {
                 $payment = new Payment($orders->moip);
                 $payment->populate($responsePayment);
