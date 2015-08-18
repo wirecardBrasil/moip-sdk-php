@@ -62,7 +62,7 @@ class Entry extends MoipResource
      */
     public function get($id)
     {
-        return $this->getByPath('/' . MoipResource::VERSION . '/entries/'.$id);
+        return $this->getByPath('/'.MoipResource::VERSION.'/entries/'.$id);
     }
 
     /**

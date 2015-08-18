@@ -2,10 +2,10 @@
 
 namespace Moip\Resource;
 
-use Sostheblack\Http\HTTPRequest;
-use stdClass;
 use ArrayIterator;
 use RuntimeException;
+use Sostheblack\Http\HTTPRequest;
+use stdClass;
 
 class Refund extends MoipResource
 {
@@ -108,10 +108,10 @@ class Refund extends MoipResource
     private function getPath()
     {
         if ($this->order !== null) {
-            return sprintf('/' . MoipResource::VERSION . '/orders/%s/refunds', $this->order->getId());
+            return sprintf('/'.MoipResource::VERSION.'/orders/%s/refunds', $this->order->getId());
         }
 
-        return sprintf('/' . MoipResource::VERSION . '/payments/%s/refunds', $this->payment->getId());
+        return sprintf('/'.MoipResource::VERSION.'/payments/%s/refunds', $this->payment->getId());
     }
 
     /**
@@ -232,7 +232,7 @@ class Refund extends MoipResource
         }
 
         $response = json_decode($httpResponse->getContent());
-        $refunds = array();
+        $refunds = [];
 
         foreach ($response->refunds as $refund) {
             $refunds[] = $this->populate($refund);

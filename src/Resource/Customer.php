@@ -63,7 +63,7 @@ class Customer extends MoipResource
      */
     public function create()
     {
-        return $this->createResource('/' . MoipResource::VERSION . '/customers');
+        return $this->createResource('/'.MoipResource::VERSION.'/customers');
     }
 
     /**
@@ -75,7 +75,7 @@ class Customer extends MoipResource
      */
     public function get($id)
     {
-        return $this->getByPath('/' . MoipResource::VERSION . '/customers/'.$id);
+        return $this->getByPath('/'.MoipResource::VERSION.'/customers/'.$id);
     }
 
     /**
@@ -214,7 +214,7 @@ class Customer extends MoipResource
         $customer->data->taxDocument = new stdClass();
         $customer->data->taxDocument->type = $this->getIfSet('type', $response->taxDocument);
         $customer->data->taxDocument->number = $this->getIfSet('number', $response->taxDocument);
-        $customer->data->addresses = array();
+        $customer->data->addresses = [];
         $customer->data->shippingAddress = $this->getIfSet('shippingAddress', $response);
         $customer->data->billingAddress = $this->getIfSet('billingAddress', $response);
         $customer->data->fundingInstrument = $this->getIfSet('fundingInstrument', $response);
