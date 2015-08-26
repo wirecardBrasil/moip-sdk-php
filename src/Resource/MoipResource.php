@@ -5,7 +5,7 @@ namespace Moip\Resource;
 use JsonSerializable;
 use Moip\Moip;
 use RuntimeException;
-use Sostheblack\Http\HTTPRequest;
+use Moip\Http\HTTPRequest;
 use stdClass;
 
 abstract class MoipResource implements JsonSerializable
@@ -56,7 +56,7 @@ abstract class MoipResource implements JsonSerializable
     /**
      * Create a new connecttion.
      * 
-     * @return \Sostheblack\Http\HTTPConnection
+     * @return \Moip\Http\HTTPConnection
      */
     protected function createConnection()
     {

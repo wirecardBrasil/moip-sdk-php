@@ -2,7 +2,7 @@
 
 namespace Moip;
 
-use Sostheblack\Http\HTTPRequest;
+use Moip\Http\HTTPRequest;
 
 class MoipOAuth implements MoipAuthentication
 {
@@ -26,7 +26,7 @@ class MoipOAuth implements MoipAuthentication
     /**
      * Authentication of a HTTP request.
      *
-     * @param \Sostheblack\Http\HTTPRequest $httpRequest
+     * @param \Moip\Http\HTTPRequest $httpRequest
      */
     public function authenticate(HTTPRequest $httpRequest)
     {

@@ -7,7 +7,7 @@ use Moip\Resource\Entry;
 use Moip\Resource\Multiorders;
 use Moip\Resource\Orders;
 use Moip\Resource\Payment;
-use Sostheblack\Http\HTTPConnection;
+use Moip\Http\HTTPConnection;
 
 class Moip
 {
@@ -60,7 +60,7 @@ class Moip
     /**
      * Create a new api connection instance.
      *
-     * @return \Sostheblack\Http\HTTPConnection
+     * @return \Moip\Http\HTTPConnection
      */
     public function createConnection()
     {

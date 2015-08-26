@@ -3,7 +3,7 @@
 namespace Moip\Resource;
 
 use RuntimeException;
-use Sostheblack\Http\HTTPRequest;
+use Moip\Http\HTTPRequest;
 use stdClass;
 use UnexpectedValueException;
 

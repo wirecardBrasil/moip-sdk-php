@@ -2,7 +2,7 @@
 
 namespace Moip;
 
-use Sostheblack\Http\HTTPAuthenticator;
+use Moip\Http\HTTPAuthenticator;
 
 interface MoipAuthentication extends HTTPAuthenticator
 {
