@@ -59,11 +59,10 @@ require 'vendor/autoload.php';
 use Moip\Moip;
 use Moip\MoipBasicAuth;
 
-$endpoint = 'test.moip.com.br';
 $token = '01010101010101010101010101010101';
 $key = 'ABABABABABABABABABABABABABABABABABABABAB';
 
-$moip = new Moip(new MoipBasicAuth($token, $key), $endpoint);
+$moip = new Moip(new MoipBasicAuth($token, $key), Moip::ENDPOINT_SANDBOX);
 ```
 
 ## Criando um pedido

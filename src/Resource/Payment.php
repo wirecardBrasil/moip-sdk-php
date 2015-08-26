@@ -10,6 +10,46 @@ use UnexpectedValueException;
 class Payment extends MoipResource
 {
     /**
+     * @const strign
+     */
+    const PATH = 'payments';
+
+    /**
+     * Payment means.
+     * 
+     * @const string
+     */
+    const METHOD_CREDIT_CARD = 'CREDIT_CARD';
+
+    /**
+     * Payment means.
+     * 
+     * @const string
+     */
+    const METHOD_BOLETO = 'BOLETO';
+
+    /**
+     * Payment means.
+     * 
+     * @const string
+     */
+    const METHOD_ONLINE_DEBIT = 'ONLINE_DEBIT';
+
+    /**
+     * Payment means.
+     * 
+     * @const string
+     */
+    const METHOD_WALLET = 'WALLET';
+
+    /**
+     * Payment means.
+     * 
+     * @const string
+     */
+    const METHOD_ONLINE_BANK_DEBIT = 'ONLINE_BANK_DEBIT';
+    
+    /**
      * @var \Moip\Resource\Orders
      */
     private $order;
@@ -44,9 +84,9 @@ class Payment extends MoipResource
         $httpConnection->setRequestBody($body);
 
         if ($this->order !== null) {
-            $path = sprintf('/'.MoipResource::VERSION.'/orders/%s/payments', $this->order->getId());
+            $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, Orders::PATH, $this->order->getId(), Payment::PATH);
         } else {
-            $path = sprintf('/'.MoipResource::VERSION.'/multiorders/%s/multipayments', $this->multiorder->getId());
+            $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, Multiorders::PATH, $this->multiorder->getId(), Multiorders::PATH);
         }
 
         $httpResponse = $httpConnection->execute($path, HTTPRequest::POST);
@@ -73,7 +113,7 @@ class Payment extends MoipResource
      */
     public function get($id)
     {
-        return $this->getByPath('/'.MoipResource::VERSION.'/payments/'.$id);
+        return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, Payment::PATH, $id));
     }
 
     /**
@@ -152,7 +192,7 @@ class Payment extends MoipResource
     {
         $keys = ['first', 'second', 'third'];
 
-        $this->data->fundingInstrument->method = 'BOLETO';
+        $this->data->fundingInstrument->method = self::METHOD_BOLETO;
         $this->data->fundingInstrument->boleto = new stdClass();
         $this->data->fundingInstrument->boleto->expirationDate = $expirationDate;
         $this->data->fundingInstrument->boleto->instructionLines = array_combine($keys, $instructionLines);
@@ -190,7 +230,7 @@ class Payment extends MoipResource
      */
     public function setCreditCardHash($hash, Customer $holder)
     {
-        $this->data->fundingInstrument->method = 'CREDIT_CARD';
+        $this->data->fundingInstrument->method = self::METHOD_CREDIT_CARD;
         $this->data->fundingInstrument->creditCard = new stdClass();
         $this->data->fundingInstrument->creditCard->hash = $hash;
         $this->setCreditCardHolder($holder);
@@ -213,7 +253,7 @@ class Payment extends MoipResource
      */
     public function setCreditCard($expirationMonth, $expirationYear, $number, $cvc, Customer $holder)
     {
-        $this->data->fundingInstrument->method = 'CREDIT_CARD';
+        $this->data->fundingInstrument->method = self::METHOD_CREDIT_CARD;
         $this->data->fundingInstrument->creditCard = new stdClass();
         $this->data->fundingInstrument->creditCard->expirationMonth = $expirationMonth;
         $this->data->fundingInstrument->creditCard->expirationYear = $expirationYear;
@@ -245,7 +285,7 @@ class Payment extends MoipResource
      */
     public function setOnlineBankDebit($bankNumber, $expirationDate, $returnUri)
     {
-        $this->data->fundingInstrument->method = 'ONLINE_BANK_DEBIT';
+        $this->data->fundingInstrument->method = self::METHOD_ONLINE_BANK_DEBIT;
         $this->data->fundingInstrument->onlineBankDebit = new stdClass();
         $this->data->fundingInstrument->onlineBankDebit->bankNumber = $bankNumber;
         $this->data->fundingInstrument->onlineBankDebit->expirationDate = $expirationDate;

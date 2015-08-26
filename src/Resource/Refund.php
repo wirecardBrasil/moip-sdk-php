@@ -1,5 +1,4 @@
 <?php
-
 namespace Moip\Resource;
 
 use ArrayIterator;
@@ -9,6 +8,32 @@ use stdClass;
 
 class Refund extends MoipResource
 {
+    /**
+     * @const strign
+     */
+    const PATH = 'refunds';
+
+    /**
+     * Refunds means.
+     * 
+     * @const string
+     */
+    const METHOD_CREDIT_CARD = 'CREDIT_CARD';
+
+    /**
+     * Refunds means.
+     * 
+     * @const string
+     */
+    const METHOD_BANK_ACCOUNT = 'BANK_ACCOUNT';
+
+    /**
+     * Refunds means.
+     * 
+     * @const string
+     */
+    const METHOD_MONEY_ORDER = 'MONEY_ORDER';
+
     /**
      * @var \Moip\Resource\Orders
      */
@@ -108,10 +133,10 @@ class Refund extends MoipResource
     private function getPath()
     {
         if ($this->order !== null) {
-            return sprintf('/'.MoipResource::VERSION.'/orders/%s/refunds', $this->order->getId());
+            return sprintf('/%s/%s/%s/%s', MoipResource::VERSION, Orders::PATH, $this->order->getId(), Refund::PATH);
         }
 
-        return sprintf('/'.MoipResource::VERSION.'/payments/%s/refunds', $this->payment->getId());
+        return sprintf('/%s/%s/%s/%s', MoipResource::VERSION, Payment::PATH, $this->payment->getId(), Refund::PATH);
     }
 
     /**
@@ -130,7 +155,7 @@ class Refund extends MoipResource
     private function bankAccount($type, $bankNumber, $agencyNumber, $agencyCheckNumber, $accountNumber, $accountCheckNumber, Customer $holder)
     {
         $data = new stdClass();
-        $data->refundingInstrument = 'BANK_ACCOUNT';
+        $data->refundingInstrument = self::METHOD_BANK_ACCOUNT;
         $data->bankAccount = new stdClass();
         $data->bankAccount->type = $type;
         $data->bankAccount->bankNumber = $bankNumber;

@@ -6,6 +6,7 @@ use stdClass;
 
 class Event extends MoipResource
 {
+    const PATH = 'events';
     /**
      * Initialize a new instance.
      */
@@ -20,7 +21,29 @@ class Event extends MoipResource
     /**
      * Get event Type.
      * 
-     * @return strign ORDER.CREATED, ORDER.WAITING, ORDER.PAID, ORDER.NOT_PAID or ORDER.REVERTED
+     * @return strign possible values:
+     * ORDER.CREATED
+     * ORDER.PAID
+     * ORDER.NOT_PAID
+     * ORDER.PAID
+     * ORDER.REVERTED
+     * PAYMENT.AUTHORIZED
+     * PAYMENT.IN_ANALYSIS
+     * PAYMENT.CANCELLED
+     * ENTRY.SETTLED
+     * PLAN.CREATED
+     * PLAN.UPDATED
+     * PLAN.ACTIVATED
+     * PLAN.INACTIVATED
+     * CUSTOMER.CREATED
+     * CUSTOMER.UPDATED
+     * SUBSCRIPTION.CREATED
+     * SUBSCRIPTION.UPDATE
+     * SUBSCRIPTION.ACTIVATED
+     * SUBSCRIPTION.SUSPENDED
+     * SUBSCRIPTION.CANCELED
+     * INVOICE.CREATED
+     * INVOICE.UPDATED
      */
     public function getType()
     {
@@ -30,7 +53,7 @@ class Event extends MoipResource
     /**
      * Get creation date of the event.
      * 
-     * @return strign
+     * @return datetime 
      */
     public function getCreatedAt()
     {

@@ -16,7 +16,20 @@ class Moip
      *
      * @const string
      */
-    const ENDPOINT = 'moip.com.br';
+    const ENDPOINT_PRODUCTION = 'moip.com.br';
+    /**
+     * endpoint of sandbox.
+     *
+     * @const string
+     */
+    const ENDPOINT_SANDBOX = 'test.moip.com.br';
+
+    /**
+     * Client name.
+     * 
+     * @const string
+     **/
+    const CLIENT = 'Moip SDK';
 
     /**
      * Authentication that will be added to the header of request.
@@ -28,17 +41,17 @@ class Moip
     /**
      * Endpoint of request.
      *
-     * @var \Moip\Moip::ENDPOINT|string
+     * @var string
      */
-    private $endpoint = self::ENDPOINT;
+    private $endpoint;
 
     /**
      * Create a new aurhentication with the endpoint.
      *
      * @param \Moip\MoipAuthentication               $moipAuthentication
-     * @param \Moip\Moip::ENDPOINT|string $endpoint
+     * @param \Moip\Moip::ENDPOINT_PRODUCTION|string $endpoint
      */
-    public function __construct(MoipAuthentication $moipAuthentication, $endpoint = self::ENDPOINT)
+    public function __construct(MoipAuthentication $moipAuthentication, $endpoint = self::ENDPOINT_PRODUCTION)
     {
         $this->moipAuthentication = $moipAuthentication;
         $this->endpoint = $endpoint;
@@ -51,7 +64,7 @@ class Moip
      */
     public function createConnection()
     {
-        $httpConnection = new HTTPConnection('Moip SDK');
+        $httpConnection = new HTTPConnection(self::CLIENT);
         $httpConnection->initialize($this->endpoint, true);
         $httpConnection->addHeader('Accept', 'application/json');
         $httpConnection->setAuthenticator($this->moipAuthentication);

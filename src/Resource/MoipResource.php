@@ -9,7 +9,14 @@ use Sostheblack\Http\HTTPRequest;
 use stdClass;
 
 abstract class MoipResource implements JsonSerializable
-{
+{    
+    /**
+     * Version of API
+     * 
+     * @const string
+     */
+    const VERSION = 'v2';
+
     /**
      * @var \Moip\Moip
      */
@@ -19,8 +26,6 @@ abstract class MoipResource implements JsonSerializable
      * @var \stdClass
      */
     protected $data;
-
-    const VERSION = 'v2';
 
     /**
      * Initialize a new instance.
@@ -94,7 +99,7 @@ abstract class MoipResource implements JsonSerializable
      * 
      * @return stdClass
      */
-    public function getByPath($path = '/')
+    public function getByPath($path)
     {
         $httpConnection = $this->createConnection();
         $httpConnection->addHeader('Content-Type', 'application/json');
@@ -115,7 +120,7 @@ abstract class MoipResource implements JsonSerializable
      * 
      * @return stdClass
      */
-    public function createResource($path = '/')
+    public function createResource($path)
     {
         $body = json_encode($this, JSON_UNESCAPED_SLASHES);
 

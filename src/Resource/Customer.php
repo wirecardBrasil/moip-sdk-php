@@ -8,6 +8,39 @@ use UnexpectedValueException;
 class Customer extends MoipResource
 {
     /**
+     * @const strign
+     */
+    const PATH = 'customers';
+
+    /**
+     * Address Type.
+     * 
+     * @const string
+     */
+    const ADDRESS_BILLING = 'BILLING';
+
+    /**
+     * Address Type.
+     * 
+     * @const string
+     */
+    const ADDRESS_SHIPPING = 'SHIPPING';
+
+    /**
+     * Standard country .
+     * 
+     * @const string
+     */
+    const ADDRESS_COUNTRY = 'BRA';
+
+    /**
+     * Standard document type.
+     * 
+     * @const string
+     */
+    const TAX_DOCUMENT = 'CPF';
+
+    /**
      * Initialize a new instance.
      */
     public function initialize()
@@ -30,7 +63,7 @@ class Customer extends MoipResource
      * 
      * @return $this
      */
-    public function addAddress($type, $street, $number, $district, $city, $state, $zip, $complement = null, $country = 'BRA')
+    public function addAddress($type, $street, $number, $district, $city, $state, $zip, $complement = null, $country = self::ADDRESS_COUNTRY)
     {
         $address = new stdClass();
         $address->street = $street;
@@ -43,10 +76,10 @@ class Customer extends MoipResource
         $address->zipCode = $zip;
 
         switch ($type) {
-            case 'BILLING':
+            case self::ADDRESS_BILLING:
                 $this->data->billingAddress = $address;
                 break;
-            case 'SHIPPING':
+            case self::ADDRESS_SHIPPING:
                 $this->data->shippingAddress = $address;
                 break;
             default:
@@ -63,7 +96,7 @@ class Customer extends MoipResource
      */
     public function create()
     {
-        return $this->createResource('/'.MoipResource::VERSION.'/customers');
+        return $this->createResource(sprintf('/%s/%s/', MoipResource::VERSION, Customer::PATH));
     }
 
     /**
@@ -75,7 +108,7 @@ class Customer extends MoipResource
      */
     public function get($id)
     {
-        return $this->getByPath('/'.MoipResource::VERSION.'/customers/'.$id);
+        return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, Customer::PATH, $id));
     }
 
     /**
@@ -284,7 +317,7 @@ class Customer extends MoipResource
         }
 
         $this->data->fundingInstrument = new stdClass();
-        $this->data->fundingInstrument->method = 'CREDIT_CARD';
+        $this->data->fundingInstrument->method = Payment::METHOD_CREDIT_CARD;
         $this->data->fundingInstrument->creditCard = new stdClass();
         $this->data->fundingInstrument->creditCard->expirationMonth = $expirationMonth;
         $this->data->fundingInstrument->creditCard->expirationYear = $expirationYear;
@@ -326,7 +359,7 @@ class Customer extends MoipResource
      *
      * @return $this
      */
-    public function setTaxDocument($number, $type = 'CPF')
+    public function setTaxDocument($number, $type = self::TAX_DOCUMENT)
     {
         $this->data->taxDocument = new stdClass();
         $this->data->taxDocument->type = $type;

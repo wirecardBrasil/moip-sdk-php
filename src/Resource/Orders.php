@@ -8,6 +8,32 @@ use stdClass;
 class Orders extends MoipResource
 {
     /**
+     * @const strign
+     */
+    const PATH = 'orders';
+
+    /**
+     * Defines what kind of payee as pripmary.
+     * 
+     * @const strign
+     */
+    const RECEIVER_TYPE_PRIMARY = 'PRIMARY';
+
+    /**
+     * Defines what kind of payee as secundary.
+     * 
+     * @const strign
+     */
+    const RECEIVER_TYPE_SECONDARY = 'SECONDARY';
+
+    /**
+     * Currency used in the application.
+     * 
+     * @const strign
+     */
+    const AMOUNT_CURRENCY = 'BRL';
+
+    /**
      * @var \Moip\Resource\Orders
      **/
     private $orders;
@@ -43,7 +69,7 @@ class Orders extends MoipResource
      *
      * @return $this
      */
-    public function addReceiver($moipAccount, $type = 'PRIMARY')
+    public function addReceiver($moipAccount, $type = self::RECEIVER_TYPE_PRIMARY)
     {
         $receiver = new stdClass();
         $receiver->moipAccount = new stdClass();
@@ -55,6 +81,7 @@ class Orders extends MoipResource
         return $this;
     }
 
+
     /**
      * Initialize necessary used in some functions.
      */
@@ -63,7 +90,7 @@ class Orders extends MoipResource
         $this->data = new stdClass();
         $this->data->ownId = null;
         $this->data->amount = new stdClass();
-        $this->data->amount->currency = 'BRL';
+        $this->data->amount->currency = self::AMOUNT_CURRENCY;
         $this->data->items = [];
         $this->data->receivers = [];
     }
@@ -99,10 +126,10 @@ class Orders extends MoipResource
         $customer = new Customer($this->moip);
         $customer->populate($response->customer);
 
-        $this->orders->data->payments = $this->structure($response, 'payments', Payment::class);
-        $this->orders->data->refunds = $this->structure($response, 'refunds', Refund::class);
-        $this->orders->data->entries = $this->structure($response, 'entries', Entry::class);
-        $this->orders->data->events = $this->structure($response, 'events', Event::class);
+        $this->orders->data->payments = $this->structure($response, Payment::PATH, Payment::class);
+        $this->orders->data->refunds = $this->structure($response, Refund::PATH, Refund::class);
+        $this->orders->data->entries = $this->structure($response, Entry::PATH, Entry::class);
+        $this->orders->data->events = $this->structure($response, Event::PATH, Event::class);
 
         $this->orders->data->items = $response->items;
         $this->orders->data->receivers = $response->receivers;
@@ -143,7 +170,7 @@ class Orders extends MoipResource
      */
     public function create()
     {
-        return $this->createResource('/'.MoipResource::VERSION.'/orders');
+        return $this->createResource(sprintf('/%s/%s', MoipResource::VERSION, Orders::PATH));
     }
 
     /**
@@ -155,7 +182,7 @@ class Orders extends MoipResource
      */
     public function get($id)
     {
-        return $this->getByPath('/'.MoipResource::VERSION.'/orders/'.$id);
+        return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, Orders::PATH, $id));
     }
 
     /**

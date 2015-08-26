@@ -8,6 +8,10 @@ use stdClass;
 class Multiorders extends MoipResource
 {
     /**
+     * @const strign
+     */
+    const PATH = 'multiorders';
+    /**
      * Initializes new instances.
      */
     public function initialize()
@@ -35,7 +39,7 @@ class Multiorders extends MoipResource
      */
     public function create()
     {
-        return $this->createResource('/'.MoipResource::VERSION.'/multiorders');
+        return $this->createResource(sprintf('/%s/%s', MoipResource::VERSION, Multiorders::PATH) );
     }
 
     /**
@@ -47,7 +51,7 @@ class Multiorders extends MoipResource
      */
     public function get($id)
     {
-        return $this->getByPath('/'.MoipResource::VERSION.'/entries/'.$id);
+        return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, Entry::PATH, $id));
     }
 
     /**

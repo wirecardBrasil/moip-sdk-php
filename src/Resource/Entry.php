@@ -7,6 +7,11 @@ use stdClass;
 class Entry extends MoipResource
 {
     /**
+     * @const strign
+     */
+    const PATH = 'entries';
+
+    /**
      * Initializes new instances.
      */
     protected function initialize()
@@ -62,7 +67,7 @@ class Entry extends MoipResource
      */
     public function get($id)
     {
-        return $this->getByPath('/'.MoipResource::VERSION.'/entries/'.$id);
+        return $this->getByPath(sprintf('/%s/%s/%s/', MoipResource::VERSION, Entry::PATH, $id));
     }
 
     /**
