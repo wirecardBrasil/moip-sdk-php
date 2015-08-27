@@ -34,7 +34,7 @@ O jeito mais simples e rápido de integrar o Moip a sua aplicação PHP
 
 ## Dependências
 
-* PHP >= 5.4
+* PHP >= 5.5.9
 
 ## Instalação
 
