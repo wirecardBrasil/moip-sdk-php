@@ -3,8 +3,8 @@
 namespace Moip\Resource;
 
 use ArrayIterator;
-use RuntimeException;
 use Moip\Http\HTTPRequest;
+use RuntimeException;
 use stdClass;
 
 class Refund extends MoipResource
