@@ -3,9 +3,9 @@
 namespace Moip\Resource;
 
 use JsonSerializable;
+use Moip\Http\HTTPRequest;
 use Moip\Moip;
 use RuntimeException;
-use Moip\Http\HTTPRequest;
 use stdClass;
 
 abstract class MoipResource implements JsonSerializable

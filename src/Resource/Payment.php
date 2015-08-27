@@ -2,8 +2,8 @@
 
 namespace Moip\Resource;
 
-use RuntimeException;
 use Moip\Http\HTTPRequest;
+use RuntimeException;
 use stdClass;
 use UnexpectedValueException;
 
