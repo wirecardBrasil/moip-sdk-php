@@ -48,7 +48,7 @@ class Payment extends MoipResource
      * @const string
      */
     const METHOD_ONLINE_BANK_DEBIT = 'ONLINE_BANK_DEBIT';
-    
+
     /**
      * @var \Moip\Resource\Orders
      */
@@ -84,7 +84,7 @@ class Payment extends MoipResource
         $httpConnection->setRequestBody($body);
 
         if ($this->order !== null) {
-            $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, Orders::PATH, $this->order->getId(), Payment::PATH);
+            $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, Orders::PATH, $this->order->getId(), self::PATH);
         } else {
             $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, Multiorders::PATH, $this->multiorder->getId(), Multiorders::PATH);
         }
@@ -113,7 +113,7 @@ class Payment extends MoipResource
      */
     public function get($id)
     {
-        return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, Payment::PATH, $id));
+        return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, self::PATH, $id));
     }
 
     /**

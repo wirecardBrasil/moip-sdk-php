@@ -81,7 +81,6 @@ class Orders extends MoipResource
         return $this;
     }
 
-
     /**
      * Initialize necessary used in some functions.
      */
@@ -170,7 +169,7 @@ class Orders extends MoipResource
      */
     public function create()
     {
-        return $this->createResource(sprintf('/%s/%s', MoipResource::VERSION, Orders::PATH));
+        return $this->createResource(sprintf('/%s/%s', MoipResource::VERSION, self::PATH));
     }
 
     /**
@@ -182,7 +181,7 @@ class Orders extends MoipResource
      */
     public function get($id)
     {
-        return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, Orders::PATH, $id));
+        return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, self::PATH, $id));
     }
 
     /**

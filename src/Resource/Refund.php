@@ -1,4 +1,5 @@
 <?php
+
 namespace Moip\Resource;
 
 use ArrayIterator;
@@ -133,10 +134,10 @@ class Refund extends MoipResource
     private function getPath()
     {
         if ($this->order !== null) {
-            return sprintf('/%s/%s/%s/%s', MoipResource::VERSION, Orders::PATH, $this->order->getId(), Refund::PATH);
+            return sprintf('/%s/%s/%s/%s', MoipResource::VERSION, Orders::PATH, $this->order->getId(), self::PATH);
         }
 
-        return sprintf('/%s/%s/%s/%s', MoipResource::VERSION, Payment::PATH, $this->payment->getId(), Refund::PATH);
+        return sprintf('/%s/%s/%s/%s', MoipResource::VERSION, Payment::PATH, $this->payment->getId(), self::PATH);
     }
 
     /**

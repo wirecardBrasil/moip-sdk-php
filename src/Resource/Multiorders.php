@@ -39,7 +39,7 @@ class Multiorders extends MoipResource
      */
     public function create()
     {
-        return $this->createResource(sprintf('/%s/%s', MoipResource::VERSION, Multiorders::PATH) );
+        return $this->createResource(sprintf('/%s/%s', MoipResource::VERSION, self::PATH));
     }
 
     /**

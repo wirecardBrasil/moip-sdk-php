@@ -9,9 +9,9 @@ use Moip\Http\HTTPRequest;
 use stdClass;
 
 abstract class MoipResource implements JsonSerializable
-{    
+{
     /**
-     * Version of API
+     * Version of API.
      * 
      * @const string
      */

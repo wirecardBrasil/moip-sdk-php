@@ -22,28 +22,28 @@ class Event extends MoipResource
      * Get event Type.
      * 
      * @return strign possible values:
-     * ORDER.CREATED
-     * ORDER.PAID
-     * ORDER.NOT_PAID
-     * ORDER.PAID
-     * ORDER.REVERTED
-     * PAYMENT.AUTHORIZED
-     * PAYMENT.IN_ANALYSIS
-     * PAYMENT.CANCELLED
-     * ENTRY.SETTLED
-     * PLAN.CREATED
-     * PLAN.UPDATED
-     * PLAN.ACTIVATED
-     * PLAN.INACTIVATED
-     * CUSTOMER.CREATED
-     * CUSTOMER.UPDATED
-     * SUBSCRIPTION.CREATED
-     * SUBSCRIPTION.UPDATE
-     * SUBSCRIPTION.ACTIVATED
-     * SUBSCRIPTION.SUSPENDED
-     * SUBSCRIPTION.CANCELED
-     * INVOICE.CREATED
-     * INVOICE.UPDATED
+     *                ORDER.CREATED
+     *                ORDER.PAID
+     *                ORDER.NOT_PAID
+     *                ORDER.PAID
+     *                ORDER.REVERTED
+     *                PAYMENT.AUTHORIZED
+     *                PAYMENT.IN_ANALYSIS
+     *                PAYMENT.CANCELLED
+     *                ENTRY.SETTLED
+     *                PLAN.CREATED
+     *                PLAN.UPDATED
+     *                PLAN.ACTIVATED
+     *                PLAN.INACTIVATED
+     *                CUSTOMER.CREATED
+     *                CUSTOMER.UPDATED
+     *                SUBSCRIPTION.CREATED
+     *                SUBSCRIPTION.UPDATE
+     *                SUBSCRIPTION.ACTIVATED
+     *                SUBSCRIPTION.SUSPENDED
+     *                SUBSCRIPTION.CANCELED
+     *                INVOICE.CREATED
+     *                INVOICE.UPDATED
      */
     public function getType()
     {
@@ -53,7 +53,7 @@ class Event extends MoipResource
     /**
      * Get creation date of the event.
      * 
-     * @return datetime 
+     * @return datetime
      */
     public function getCreatedAt()
     {

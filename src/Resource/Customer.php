@@ -96,7 +96,7 @@ class Customer extends MoipResource
      */
     public function create()
     {
-        return $this->createResource(sprintf('/%s/%s/', MoipResource::VERSION, Customer::PATH));
+        return $this->createResource(sprintf('/%s/%s/', MoipResource::VERSION, self::PATH));
     }
 
     /**
@@ -108,7 +108,7 @@ class Customer extends MoipResource
      */
     public function get($id)
     {
-        return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, Customer::PATH, $id));
+        return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, self::PATH, $id));
     }
 
     /**

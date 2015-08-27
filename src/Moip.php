@@ -41,7 +41,7 @@ class Moip
     /**
      * Endpoint of request.
      *
-     * @var string
+     * @var Moip\Moip::ENDPOINT_PRODUCTION|Moip\Moip::ENDPOINT_SANDBOX
      */
     private $endpoint;
 
