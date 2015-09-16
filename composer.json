@@ -17,7 +17,7 @@
     ],
     "require": {
         "php": ">=5.5.9",
-        "moip/moip-http-php" : "1.0.x-dev"
+        "moip/moip-http-php" : "1.@stable"
     },
     "autoload": {
         "psr-4": {
