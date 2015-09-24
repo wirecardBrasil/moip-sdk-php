@@ -16,7 +16,7 @@ class Moip
      *
      * @const string
      */
-    const ENDPOINT_PRODUCTION = 'moip.com.br';
+    const ENDPOINT_PRODUCTION = 'api.moip.com.br';
     /**
      * endpoint of sandbox.
      *
