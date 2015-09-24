@@ -22,7 +22,7 @@ class Moip
      *
      * @const string
      */
-    const ENDPOINT_SANDBOX = 'test.moip.com.br';
+    const ENDPOINT_SANDBOX = 'sandbox.moip.com.br';
 
     /**
      * Client name.
