@@ -18,32 +18,6 @@ use PHPUnit_Framework_TestCase as TestCase;
 */
 class MoipTest extends TestCase
 {
-	/**
-	 * Instance of \Moip\Moip.
-	 *
-	 * @var \Moip\Moip
-	 **/
-	private $moip;
-
-    /**
-     * Sets up the fixture, for example, open a network connection.
-     * This method is called before a test is executed.
-     */
-    public function setUp()
-    {
-    	$this->moip = $this->getMoipIntance();
-    }
-
-    /**
-     * Create a new \Moip\Moip instance.
-     * 
-     * @return \Moip\Moip
-     */
-	private function getMoipIntance()
-	{
-		return new Moip(m::mock(MoipAuthentication::Class));
-	}
-
     /**
      * Tears down the fixture, for example, close a network connection.
      * This method is called after a test is executed.
@@ -58,7 +32,10 @@ class MoipTest extends TestCase
      */
 	public function testShouldConstEndpoinProductionIsValid()
 	{
-		$this->assertEquals('api.moip.com.br', constant('\Moip\Moip::ENDPOINT_PRODUCTION'));
+		$const_endpoint_production = Moip::ENDPOINT_PRODUCTION;
+		$endpoint_production = 'api.moip.com.br';
+
+		$this->assertEquals($endpoint_production, $const_endpoint_production);
 	}
 
     /**
@@ -66,7 +43,10 @@ class MoipTest extends TestCase
      */
 	public function testShouldConstEndpoinSandboxIsValid()
 	{
-		$this->assertEquals('sandbox.moip.com.br', constant('\Moip\Moip::ENDPOINT_SANDBOX'));
+		$const_endpoint_sandbox = Moip::ENDPOINT_SANDBOX;
+		$endpoint_sandbox = 'sandbox.moip.com.br';
+
+		$this->assertEquals($endpoint_sandbox, $const_endpoint_sandbox);
 	}
 
     /**
@@ -74,6 +54,9 @@ class MoipTest extends TestCase
      */
 	public function testShouldConstClientIsValid()
 	{
+		$const_client = Moip::CLIENT;
+		$client = 'Moip SDK';
+
 		$this->assertEquals('Moip SDK', constant('\Moip\Moip::CLIENT'));
 	}
 
@@ -82,7 +65,10 @@ class MoipTest extends TestCase
 	 */
 	public function testShouldCustomersIsValid()
 	{
-		$this->assertEquals(new Customer($this->moip), $this->moip->customers());	
+		$moip = new Moip(m::mock(MoipAuthentication::Class));
+		$customer = new Customer($moip);
+
+		$this->assertEquals($customer, $moip->customers());	
 	}
 
 	/**
@@ -90,7 +76,10 @@ class MoipTest extends TestCase
 	 */
 	public function testShouldEntrysIsValid()
 	{
-		$this->assertEquals(new Entry($this->moip), $this->moip->entries());	
+		$moip = new Moip(m::mock(MoipAuthentication::Class));
+		$entry = new Entry($moip);
+
+		$this->assertEquals($entry, $moip->entries());
 	}
 
 	/**
@@ -98,7 +87,10 @@ class MoipTest extends TestCase
 	 */
 	public function testShouldOrdersIsValid()
 	{
-		$this->assertEquals(new Orders($this->moip), $this->moip->orders());	
+		$moip = new Moip(m::mock(MoipAuthentication::Class));
+		$orders = new Orders($moip);
+
+		$this->assertEquals($orders, $moip->orders());
 	}
 
 	/**
@@ -106,7 +98,10 @@ class MoipTest extends TestCase
 	 */
 	public function testShouldPaymentsIsValid()
 	{
-		$this->assertEquals(new Payment($this->moip), $this->moip->payments());	
+		$moip = new Moip(m::mock(MoipAuthentication::Class));
+		$payment = new Payment($moip);
+
+		$this->assertEquals($payment, $moip->payments());
 	}
 
 	/**
@@ -114,6 +109,9 @@ class MoipTest extends TestCase
 	 */
 	public function testShouldMultiordersIsValid()
 	{
-		$this->assertEquals(new Multiorders($this->moip), $this->moip->multiorders());	
+		$moip = new Moip(m::mock(MoipAuthentication::Class));
+		$multiorders = new Multiorders($moip);
+
+		$this->assertEquals($multiorders, $moip->multiorders());
 	}
 }
