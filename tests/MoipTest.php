@@ -81,4 +81,14 @@ class MoipTest extends MoipTestCase
 
 		$this->assertEquals($payment, $this->moip->payments());
 	}
+
+	/**
+	 * Test should return instance of \Moip\Resource\Multiorders.
+	 */
+	public function testShouldReceiveInstanceOfMultiorders()
+	{
+		$multiorders = new \Moip\Resource\Multiorders($this->moip);
+
+		$this->assertEquals($multiorders, $this->moip->multiorders());
+	}
 }
