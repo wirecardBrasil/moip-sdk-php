@@ -30,4 +30,15 @@ class CustomerTest extends MoipTestCase
 
 		$this->assertEquals($address_billing, $const_address_billing);
 	}
+
+	/**
+	 * Test if const \Moip\Resource\Customer::ADDRESS_SHIPPING is valid.
+	 */
+	public function testShouldReceiveConstAddressShippingIsValid()
+	{
+		$address_shipping = 'SHIPPING';
+		$const_address_shipping = constant('\Moip\Resource\Customer::ADDRESS_SHIPPING');
+
+		$this->assertEquals($address_shipping, $const_address_shipping);
+	}
 }
