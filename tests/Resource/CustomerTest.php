@@ -19,4 +19,15 @@ class CustomerTest extends MoipTestCase
 
 		$this->assertEquals($path, $const_path);
 	}
+
+	/**
+	 * Test if const \Moip\Resource\Customer::ADDRESS_BILLING is valid.
+	 */
+	public function testShouldReceiveConstAddressBillingIsValid()
+	{
+		$address_billing = 'BILLING';
+		$const_address_billing = constant('\Moip\Resource\Customer::ADDRESS_BILLING');
+
+		$this->assertEquals($address_billing, $const_address_billing);
+	}
 }
