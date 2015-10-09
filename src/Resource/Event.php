@@ -7,6 +7,7 @@ use stdClass;
 class Event extends MoipResource
 {
     const PATH = 'events';
+
     /**
      * Initialize a new instance.
      */

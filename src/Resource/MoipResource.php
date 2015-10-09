@@ -61,7 +61,7 @@ abstract class MoipResource implements JsonSerializable
      */
     protected function createConnection()
     {
-        return $this->moip->createConnection(new HTTPConnection);
+        return $this->moip->createConnection(new HTTPConnection());
     }
 
     /**
