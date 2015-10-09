@@ -51,4 +51,14 @@ class MoipTest extends MoipTestCase
 
 		$this->assertEquals($customer, $this->moip->customers());
 	}
+
+	/**
+	 * Test should return instance of \Moip\Resource\Entry.
+	 */
+	public function testShouldReceiveInstanceOfEntry()
+	{
+		$entry = new \Moip\Resource\Entry($this->moip);
+
+		$this->assertEquals($entry, $this->moip->entries());
+	}
 }
