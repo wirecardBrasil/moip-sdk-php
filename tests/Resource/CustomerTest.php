@@ -52,4 +52,15 @@ class CustomerTest extends MoipTestCase
 
 		$this->assertEquals($address_country, $const_address_country);
 	}
+
+	/**
+	 * Test if const \Moip\Resource\Customer::TAX_DOCUMENT is valid.
+	 */
+	public function testShouldReceiveConstTaxDocumentIsValid()
+	{
+		$tax_document = 'CPF';
+		$const_tax_document = constant('\Moip\Resource\Customer::TAX_DOCUMENT');
+
+		$this->assertEquals($tax_document, $const_tax_document);
+	}
 }
