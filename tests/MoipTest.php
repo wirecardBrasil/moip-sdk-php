@@ -61,4 +61,14 @@ class MoipTest extends MoipTestCase
 
 		$this->assertEquals($entry, $this->moip->entries());
 	}
+
+	/**
+	 * Test should return instance of \Moip\Resource\Orders.
+	 */
+	public function testShouldReceiveInstanceOfOrders()
+	{
+		$orders = new \Moip\Resource\Orders($this->moip);
+
+		$this->assertEquals($orders, $this->moip->orders());
+	}
 }
