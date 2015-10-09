@@ -11,6 +11,7 @@ class Multiorders extends MoipResource
      * @const strign
      */
     const PATH = 'multiorders';
+
     /**
      * Initializes new instances.
      */
@@ -20,6 +21,7 @@ class Multiorders extends MoipResource
         $this->data->ownId = null;
         $this->data->orders = [];
     }
+
     /**
      * Structure of order.
      * 
