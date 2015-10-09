@@ -41,4 +41,15 @@ class CustomerTest extends MoipTestCase
 
 		$this->assertEquals($address_shipping, $const_address_shipping);
 	}
+
+	/**
+	 * Test if const \Moip\Resource\Customer::ADDRESS_COUNTRY is valid.
+	 */
+	public function testShouldReceiveConstCountryIsValid()
+	{
+		$address_country = 'BRA';
+		$const_address_country = constant('\Moip\Resource\Customer::ADDRESS_COUNTRY');
+
+		$this->assertEquals($address_country, $const_address_country);
+	}
 }
