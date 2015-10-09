@@ -3,6 +3,7 @@
 namespace Moip\Resource;
 
 use JsonSerializable;
+use Moip\Http\HTTPConnection;
 use Moip\Http\HTTPRequest;
 use Moip\Moip;
 use RuntimeException;
@@ -60,7 +61,7 @@ abstract class MoipResource implements JsonSerializable
      */
     protected function createConnection()
     {
-        return $this->moip->createConnection();
+        return $this->moip->createConnection(new HTTPConnection);
     }
 
     /**

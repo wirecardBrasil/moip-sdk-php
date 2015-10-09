@@ -28,6 +28,8 @@ class Moip
      * Client name.
      * 
      * @const string
+     * 
+     * @deprecated
      **/
     const CLIENT = 'Moip SDK';
 
@@ -62,14 +64,14 @@ class Moip
      *
      * @return \Moip\Http\HTTPConnection
      */
-    public function createConnection()
+    public function createConnection(HTTPConnection $http_connection)
     {
-        $httpConnection = new HTTPConnection(self::CLIENT);
-        $httpConnection->initialize($this->endpoint, true);
-        $httpConnection->addHeader('Accept', 'application/json');
-        $httpConnection->setAuthenticator($this->moipAuthentication);
+        $http_connection = $http_connection;
+        $http_connection->initialize($this->endpoint, true);
+        $http_connection->addHeader('Accept', 'application/json');
+        $http_connection->setAuthenticator($this->moipAuthentication);
 
-        return $httpConnection;
+        return $http_connection;
     }
 
     /**
