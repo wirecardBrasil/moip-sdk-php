@@ -28,6 +28,11 @@
             "Moip\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Moip\\Tests\\": "tests/"
+        }
+    },
     "extra": {
         "branch-alias": {
             "dev-master": "1.x-dev"
