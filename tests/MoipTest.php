@@ -41,4 +41,14 @@ class MoipTest extends MoipTestCase
 
 		$this->assertEquals($client, $const_client);
 	}
+
+	/**
+	 * Test should return instance of \Moip\Resource\Customer.
+	 */
+	public function testShouldReceiveInstanceOfCustomer()
+	{
+		$customer = new \Moip\Resource\Customer($this->moip);
+
+		$this->assertEquals($customer, $this->moip->customers());
+	}
 }
