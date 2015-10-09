@@ -41,7 +41,7 @@ class Moip
     /**
      * Endpoint of request.
      *
-     * @var Moip\Moip::ENDPOINT_PRODUCTION|Moip\Moip::ENDPOINT_SANDBOX
+     * @var \Moip\Moip::ENDPOINT_PRODUCTION|\Moip\Moip::ENDPOINT_SANDBOX
      */
     private $endpoint;
 
@@ -120,5 +120,15 @@ class Moip
     public function multiorders()
     {
         return new Multiorders($this);
+    }
+
+    /**
+     * Get the endpoint.
+     * 
+     * @return \Moip\Moip::ENDPOINT_PRODUCTION|\Moip\Moip::ENDPOINT_SANDBOX
+     */
+    public function getEndpoint()
+    {
+        return $this->endpoint;
     }
 }
