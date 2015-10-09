@@ -3,6 +3,7 @@
 namespace Moip\Tests;
 
 use Moip\Tests\MoipTestCase;
+use Mockery as m;
 
 /**
 * class MoipTest
@@ -40,6 +41,32 @@ class MoipTest extends MoipTestCase
 		$const_client = constant('\Moip\Moip::CLIENT');
 
 		$this->assertEquals($client, $const_client);
+	}
+
+	/**
+	 * test create connection
+	 */
+	public function testCreateConnection()
+	{
+		$http_connection = m::mock('\Moip\Http\HTTPConnection');
+		$http_header_name = 'Accept';
+		$http_header_value = 'application/json';
+
+		$http_connection->shouldReceive('initialize')
+			->withArgs([$this->moip->getEndpoint(), true])
+			->once()
+			->andReturnNull();
+
+		$http_connection->shouldReceive('addHeader')
+			->withArgs([$http_header_name, $http_header_value])
+			->once()
+			->andReturn(true);
+
+		$http_connection->shouldReceive('setAuthenticator')
+			->once()
+			->andReturnNull();
+
+		$this->assertEquals($http_connection, $this->moip->createConnection($http_connection));
 	}
 
 	/**
