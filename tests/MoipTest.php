@@ -30,4 +30,15 @@ class MoipTest extends MoipTestCase
 
 		$this->assertEquals($endpoint_sandbox, $const_endpoint_sandbox);
 	}
+
+	/**
+	 * Test if const CLIENT is valid.
+	 */
+	public function testShouldReceiveClientIsValid()
+	{
+		$client = 'Moip SDK';
+		$const_client = constant('\Moip\Moip::CLIENT');
+
+		$this->assertEquals($client, $const_client);
+	}
 }
