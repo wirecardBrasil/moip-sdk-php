@@ -35,5 +35,6 @@ abstract class MoipTestCase extends TestCase
     public function tearDown()
     {
         m::close();
+        $this->moip = null;
     }
 }
