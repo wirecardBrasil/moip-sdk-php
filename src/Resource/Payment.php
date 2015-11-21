@@ -10,9 +10,14 @@ use UnexpectedValueException;
 class Payment extends MoipResource
 {
     /**
-     * @const strign
+     * @const string
      */
     const PATH = 'payments';
+
+    /**
+     * @const string
+     */
+    const MULTI_PAYMENTS_PATH = 'multipayments';
 
     /**
      * Payment means.
@@ -86,12 +91,13 @@ class Payment extends MoipResource
         if ($this->order !== null) {
             $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, Orders::PATH, $this->order->getId(), self::PATH);
         } else {
-            $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, Multiorders::PATH, $this->multiorder->getId(), Multiorders::PATH);
+            $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, Multiorders::PATH, $this->multiorder->getId(), self::MULTI_PAYMENTS_PATH);
         }
 
         $httpResponse = $httpConnection->execute($path, HTTPRequest::POST);
 
-        if ($httpResponse->getStatusCode() != 200 && $httpResponse->getStatusCode() != 201) {
+        if ($httpResponse->getStatusCode() != 200 &&
+            $httpResponse->getStatusCode() != 201) {
             throw new RuntimeException($httpResponse->getStatusMessage(), $httpResponse->getStatusCode());
         }
 
