@@ -8,7 +8,7 @@ use UnexpectedValueException;
 class Customer extends MoipResource
 {
     /**
-     * @const strign
+     * @const string
      */
     const PATH = 'customers';
 
@@ -114,7 +114,7 @@ class Customer extends MoipResource
     /**
      * Get customer id.
      * 
-     * @return strign The buyer id.
+     * @return string The buyer id.
      */
     public function getId()
     {
@@ -260,7 +260,7 @@ class Customer extends MoipResource
     /**
      * Set Own id from customer.
      * 
-     * @param strign $ownId Customer's own id. external reference.
+     * @param string $ownId Customer's own id. external reference.
      *
      * @return $this
      */
