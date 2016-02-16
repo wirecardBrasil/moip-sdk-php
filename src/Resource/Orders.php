@@ -390,7 +390,7 @@ class Orders extends MoipResource
      */
     public function getCreatedAt()
     {
-        return $this->getIfSet('createdAt');
+        return $this->getIfSetDateTime('createdAt');
     }
 
     /**
@@ -400,7 +400,7 @@ class Orders extends MoipResource
      */
     public function getUpdatedAt()
     {
-        return $this->getIfSet('updatedAt');
+        return $this->getIfSetDateTime('updatedAt');
     }
 
     /**
