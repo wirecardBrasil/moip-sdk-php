@@ -62,7 +62,8 @@ class Moip
     /**
      * Create a new api connection instance.
      *
-     * @return \Moip\Http\HTTPConnection
+     * @param HTTPConnection $http_connection
+     * @return HTTPConnection
      */
     public function createConnection(HTTPConnection $http_connection)
     {

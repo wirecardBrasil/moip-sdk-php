@@ -164,7 +164,7 @@ class Customer extends MoipResource
     /**
      * Get birth date from customer.
      * 
-     * @return date Date of birth of the credit card holder.
+     * @return \DateTime Date of birth of the credit card holder.
      */
     public function getBirthDate()
     {
@@ -174,7 +174,7 @@ class Customer extends MoipResource
     /**
      * Get phone area code from customer.
      * 
-     * @return insteger DDD telephone.
+     * @return integer DDD telephone.
      */
     public function getPhoneAreaCode()
     {
@@ -302,10 +302,10 @@ class Customer extends MoipResource
     /**
      * Set credit card from customer.
      * 
-     * @param insteger                     $expirationMonth Card expiration month.
-     * @param insteger                     $expirationYear  Year card expiration.
-     * @param insteger                     $number          Card number.
-     * @param insteger                     $cvc             Card Security Code.
+     * @param integer                     $expirationMonth Card expiration month.
+     * @param integer                     $expirationYear  Year card expiration.
+     * @param integer                     $number          Card number.
+     * @param integer                     $cvc             Card Security Code.
      * @param \Moip\Resource\Customer|null $holder          Cardholder.
      *
      * @return $this
@@ -340,7 +340,7 @@ class Customer extends MoipResource
     /**
      * Set birth date from customer.
      * 
-     * @param date $birthDate Date of birth of the credit card holder.
+     * @param \DateTime $birthDate Date of birth of the credit card holder.
      *
      * @return $this
      */

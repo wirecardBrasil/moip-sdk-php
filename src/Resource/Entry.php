@@ -7,7 +7,7 @@ use stdClass;
 class Entry extends MoipResource
 {
     /**
-     * @const strign
+     * @const string
      */
     const PATH = 'entries';
 
@@ -73,7 +73,7 @@ class Entry extends MoipResource
     /**
      * Get id from entry.
      * 
-     * @return strign Event ID that generated the launch.
+     * @return string Event ID that generated the launch.
      */
     public function getId()
     {

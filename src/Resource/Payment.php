@@ -272,6 +272,8 @@ class Payment extends MoipResource
 
     /**
      * Set installment count.
+     * @param int $installmentCount
+     * @return $this
      */
     public function setInstallmentCount($installmentCount)
     {
