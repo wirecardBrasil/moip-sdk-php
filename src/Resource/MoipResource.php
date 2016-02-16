@@ -13,7 +13,7 @@ abstract class MoipResource implements JsonSerializable
 {
     /**
      * Version of API.
-     * 
+     *
      * @const string
      */
     const VERSION = 'v2';
@@ -35,7 +35,7 @@ abstract class MoipResource implements JsonSerializable
 
     /**
      * Mount information of a determined object.
-     * 
+     *
      * @param \stdClass $response
      *
      * @return mixed
@@ -44,7 +44,7 @@ abstract class MoipResource implements JsonSerializable
 
     /**
      * Create a new instance.
-     * 
+     *
      * @param \Moip\Moip $moip
      */
     public function __construct(Moip $moip)
@@ -56,7 +56,7 @@ abstract class MoipResource implements JsonSerializable
 
     /**
      * Create a new connecttion.
-     * 
+     *
      * @return \Moip\Http\HTTPConnection
      */
     protected function createConnection()
@@ -66,7 +66,7 @@ abstract class MoipResource implements JsonSerializable
 
     /**
      * Get a key of an object if he exist.
-     * 
+     *
      * @param string         $key
      * @param \stdClass|null $data
      *
@@ -84,8 +84,39 @@ abstract class MoipResource implements JsonSerializable
     }
 
     /**
+     * Get a key, representing a date (Y-m-d), of an object if it exists.
+     * @param string $key
+     * @param stdClass|null $data
+     * @return \DateTime|null
+     */
+    protected function getIfSetDate($key, stdClass $data = null){
+
+        $val = $this->getIfSet($key, $data);
+        if(!empty($val)){
+            return \DateTime::createFromFormat('Y-m-d', $val);
+        }
+        return null;
+
+    }
+
+    /**
+     * Get a key representing a datetime (\Datetime::ATOM), of an object if it exists.
+     * @param string $key
+     * @param stdClass|null $data
+     * @return \DateTime|null
+     */
+
+    protected function getIfSetDateTime($key, stdClass $data = null){
+        $val = $this->getIfSet($key, $data);
+        if(!empty($val)){
+            return \DateTime::createFromFormat(\DateTime::ATOM, $val);
+        }
+        return null;
+    }
+
+    /**
      * Specify data which should be serialized to JSON.
-     * 
+     *
      * @return \stdClass
      */
     public function jsonSerialize()
@@ -95,9 +126,9 @@ abstract class MoipResource implements JsonSerializable
 
     /**
      * Find by path.
-     * 
+     *
      * @param string $path
-     * 
+     *
      * @return stdClass
      */
     public function getByPath($path)
@@ -116,9 +147,9 @@ abstract class MoipResource implements JsonSerializable
 
     /**
      * Create a new item in Moip.
-     * 
+     *
      * @param string $path
-     * 
+     *
      * @return stdClass
      */
     public function createResource($path)

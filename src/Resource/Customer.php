@@ -164,10 +164,14 @@ class Customer extends MoipResource
     /**
      * Get birth date from customer.
      * 
-     * @return \DateTime Date of birth of the credit card holder.
+     * @return \DateTime|null Date of birth of the credit card holder.
      */
     public function getBirthDate()
     {
+        $date_string = $this->getIfSet('birthDate');
+        if($date_string){
+            return \DateTime::createFromFormat('Y-m-d', $date_string);
+        }
         return $this->getIfSet('birthDate');
     }
 
@@ -346,6 +350,12 @@ class Customer extends MoipResource
      */
     public function setBirthDate($birthDate)
     {
+
+        if($birthDate instanceof \DateTime){
+            $birthDate = $birthDate->format('Y-m-d');
+
+        }
+
         $this->data->birthDate = $birthDate;
 
         return $this;
