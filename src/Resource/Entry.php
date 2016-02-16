@@ -162,7 +162,7 @@ class Entry extends MoipResource
      */
     public function getScheduledFor()
     {
-        return $this->getIfSet('scheduledFor');
+        return $this->getIfSetDateTime('scheduledFor');
     }
 
     /**
@@ -172,7 +172,7 @@ class Entry extends MoipResource
      */
     public function getSettledAt()
     {
-        return $this->getIfSet('settledAt');
+        return $this->getIfSetDateTime('settledAt');
     }
 
     /**
@@ -182,7 +182,7 @@ class Entry extends MoipResource
      */
     public function getUpdatedAt()
     {
-        return $this->getIfSet('updatedAt');
+        return $this->getIfSetDateTime('updatedAt');
     }
 
     /**
@@ -192,6 +192,6 @@ class Entry extends MoipResource
      */
     public function getCreatedAt()
     {
-        return $this->getIfSet('createdAt');
+        return $this->getIfSetDateTime('createdAt');
     }
 }
