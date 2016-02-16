@@ -168,11 +168,7 @@ class Customer extends MoipResource
      */
     public function getBirthDate()
     {
-        $date_string = $this->getIfSet('birthDate');
-        if($date_string){
-            return \DateTime::createFromFormat('Y-m-d', $date_string);
-        }
-        return $this->getIfSet('birthDate');
+        return $this->getIfSetDate('birthDate');
     }
 
     /**
