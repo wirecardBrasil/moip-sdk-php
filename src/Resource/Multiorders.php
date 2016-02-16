@@ -115,7 +115,8 @@ class Multiorders extends MoipResource
      */
     public function getCreatedAt()
     {
-        return $this->getIfSet('createdAt');
+        // todo: didn't find createdAt type on documentation, assuming datetime. Have to confirm
+        return $this->getIfSetDateTime('createdAt');
     }
 
     /**
@@ -125,7 +126,7 @@ class Multiorders extends MoipResource
      */
     public function getUpdatedAt()
     {
-        return $this->getIfSet('updatedAt');
+        return $this->getIfSetDateTime('updatedAt');
     }
 
     /**
