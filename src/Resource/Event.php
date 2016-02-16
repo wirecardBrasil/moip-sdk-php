@@ -58,7 +58,8 @@ class Event extends MoipResource
      */
     public function getCreatedAt()
     {
-        return $this->data->createdAt;
+        // todo: didn't find Events on documentation but i'm assuming it's a datetime, have to confirm it
+        return $this->getIfSetDateTime('createdAt');
     }
 
     /**
