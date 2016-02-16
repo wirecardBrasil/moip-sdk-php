@@ -5,8 +5,7 @@ namespace Moip\Resource;
 use stdClass;
 use UnexpectedValueException;
 
-class Customer extends MoipResource
-{
+class Customer extends MoipResource {
     /**
      * @const string
      */
@@ -14,28 +13,28 @@ class Customer extends MoipResource
 
     /**
      * Address Type.
-     * 
+     *
      * @const string
      */
     const ADDRESS_BILLING = 'BILLING';
 
     /**
      * Address Type.
-     * 
+     *
      * @const string
      */
     const ADDRESS_SHIPPING = 'SHIPPING';
 
     /**
      * Standard country .
-     * 
+     *
      * @const string
      */
     const ADDRESS_COUNTRY = 'BRA';
 
     /**
      * Standard document type.
-     * 
+     *
      * @const string
      */
     const TAX_DOCUMENT = 'CPF';
@@ -43,15 +42,14 @@ class Customer extends MoipResource
     /**
      * Initialize a new instance.
      */
-    public function initialize()
-    {
+    public function initialize() {
         $this->data = new stdClass();
     }
 
     /**
      * Add a new address to the customer.
-     * 
-     * @param string $type       Type of values: SHIPPING and BILLING.
+     *
+     * @param string $type Type of values: SHIPPING and BILLING.
      * @param string $street
      * @param string $number
      * @param string $district
@@ -60,11 +58,10 @@ class Customer extends MoipResource
      * @param string $zip
      * @param string $complement
      * @param string $country
-     * 
+     *
      * @return $this
      */
-    public function addAddress($type, $street, $number, $district, $city, $state, $zip, $complement = null, $country = self::ADDRESS_COUNTRY)
-    {
+    public function addAddress($type, $street, $number, $district, $city, $state, $zip, $complement = null, $country = self::ADDRESS_COUNTRY) {
         $address = new stdClass();
         $address->street = $street;
         $address->streetNumber = $number;
@@ -91,145 +88,131 @@ class Customer extends MoipResource
 
     /**
      * Create a new customer.
-     * 
+     *
      * @return stdClass
      */
-    public function create()
-    {
+    public function create() {
         return $this->createResource(sprintf('/%s/%s/', MoipResource::VERSION, self::PATH));
     }
 
     /**
      * Find a customer.
-     * 
+     *
      * @param string $id
      *
      * @return stdClass
      */
-    public function get($id)
-    {
+    public function get($id) {
         return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, self::PATH, $id));
     }
 
     /**
      * Get customer id.
-     * 
+     *
      * @return string The buyer id.
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->getIfSet('id');
     }
 
     /**
      * Get customer address.
-     * 
+     *
      * @return string Customer's address.
      */
-    public function getBillingAddress()
-    {
+    public function getBillingAddress() {
         return $this->getIfSet('billingAddress');
     }
 
     /**
      * Get customer address.
-     * 
+     *
      * @return string Customer's address.
      */
-    public function getShippingAddress()
-    {
+    public function getShippingAddress() {
         return $this->getIfSet('shippingAddress');
     }
 
     /**
      * Get customer fullname.
-     * 
+     *
      * @return string Customer's full name.
      */
-    public function getFullname()
-    {
+    public function getFullname() {
         return $this->getIfSet('fullname');
     }
 
     /**
      * Get funding instrument from customer.
-     * 
+     *
      * @return \stdClass Structure that is the means of payment.
      */
-    public function getFundingInstrument()
-    {
+    public function getFundingInstrument() {
         return $this->getIfSet('fundingInstrument');
     }
 
     /**
      * Get birth date from customer.
-     * 
+     *
      * @return \DateTime|null Date of birth of the credit card holder.
      */
-    public function getBirthDate()
-    {
+    public function getBirthDate() {
         return $this->getIfSetDate('birthDate');
     }
 
     /**
      * Get phone area code from customer.
-     * 
+     *
      * @return integer DDD telephone.
      */
-    public function getPhoneAreaCode()
-    {
+    public function getPhoneAreaCode() {
         return $this->getIfSet('areaCode', $this->data->phone);
     }
 
     /**
      * Get phone country code from customer.
-     * 
+     *
      * @return int Country code.
      */
-    public function getPhoneCountryCode()
-    {
+    public function getPhoneCountryCode() {
         return $this->getIfSet('countryCode', $this->data->phone);
     }
 
     /**
      * Get phone number from customer.
-     * 
+     *
      * @return int Telephone number.
      */
-    public function getPhoneNumber()
-    {
+    public function getPhoneNumber() {
         return $this->getIfSet('number', $this->data->phone);
     }
 
     /**
      * Get tax document type from customer.
-     * 
+     *
      * @return string Type of value: CPF and CNPJ
      */
-    public function getTaxDocumentType()
-    {
+    public function getTaxDocumentType() {
         return $this->getIfSet('type', $this->data->taxDocument);
     }
 
     /**
      * Get tax document number from customer.
-     * 
+     *
      * @return string Document Number.
      */
-    public function getTaxDocumentNumber()
-    {
+    public function getTaxDocumentNumber() {
         return $this->getIfSet('number', $this->data->taxDocument);
     }
 
     /**
      * Mount the buyer structure from customer.
-     * 
+     *
      * @param \stdClass $response
      *
      * @return Customer Customer information.
      */
-    protected function populate(stdClass $response)
-    {
+    protected function populate(stdClass $response) {
         $customer = clone $this;
         $customer->data = new stdClass();
         $customer->data->id = $this->getIfSet('id', $response);
@@ -259,13 +242,12 @@ class Customer extends MoipResource
 
     /**
      * Set Own id from customer.
-     * 
+     *
      * @param string $ownId Customer's own id. external reference.
      *
      * @return $this
      */
-    public function setOwnId($ownId)
-    {
+    public function setOwnId($ownId) {
         $this->data->ownId = $ownId;
 
         return $this;
@@ -273,13 +255,12 @@ class Customer extends MoipResource
 
     /**
      * Set fullname from customer.
-     * 
+     *
      * @param string $fullname Customer's full name.
      *
      * @return $this
      */
-    public function setFullname($fullname)
-    {
+    public function setFullname($fullname) {
         $this->data->fullname = $fullname;
 
         return $this;
@@ -287,13 +268,12 @@ class Customer extends MoipResource
 
     /**
      * Set e-mail from customer.
-     * 
+     *
      * @param string $email Email customer.
      *
      * @return $this
      */
-    public function setEmail($email)
-    {
+    public function setEmail($email) {
         $this->data->email = $email;
 
         return $this;
@@ -301,17 +281,16 @@ class Customer extends MoipResource
 
     /**
      * Set credit card from customer.
-     * 
-     * @param integer                     $expirationMonth Card expiration month.
-     * @param integer                     $expirationYear  Year card expiration.
-     * @param integer                     $number          Card number.
-     * @param integer                     $cvc             Card Security Code.
-     * @param \Moip\Resource\Customer|null $holder          Cardholder.
+     *
+     * @param integer $expirationMonth Card expiration month.
+     * @param integer $expirationYear Year card expiration.
+     * @param integer $number Card number.
+     * @param integer $cvc Card Security Code.
+     * @param \Moip\Resource\Customer|null $holder Cardholder.
      *
      * @return $this
      */
-    public function setCreditCard($expirationMonth, $expirationYear, $number, $cvc, Customer $holder = null)
-    {
+    public function setCreditCard($expirationMonth, $expirationYear, $number, $cvc, Customer $holder = null) {
         if ($holder === null) {
             $holder = $this;
         }
@@ -339,15 +318,14 @@ class Customer extends MoipResource
 
     /**
      * Set birth date from customer.
-     * 
+     *
      * @param \DateTime|string $birthDate Date of birth of the credit card holder.
      *
      * @return $this
      */
-    public function setBirthDate($birthDate)
-    {
+    public function setBirthDate($birthDate) {
 
-        if($birthDate instanceof \DateTime){
+        if ($birthDate instanceof \DateTime) {
             $birthDate = $birthDate->format('Y-m-d');
 
         }
@@ -359,14 +337,13 @@ class Customer extends MoipResource
 
     /**
      * Set tax document from customer.
-     * 
-     * @param int    $number Document number.
-     * @param string $type   Document type.
+     *
+     * @param int $number Document number.
+     * @param string $type Document type.
      *
      * @return $this
      */
-    public function setTaxDocument($number, $type = self::TAX_DOCUMENT)
-    {
+    public function setTaxDocument($number, $type = self::TAX_DOCUMENT) {
         $this->data->taxDocument = new stdClass();
         $this->data->taxDocument->type = $type;
         $this->data->taxDocument->number = $number;
@@ -376,15 +353,14 @@ class Customer extends MoipResource
 
     /**
      * Set phone from customer.
-     * 
-     * @param int $areaCode    DDD telephone.
-     * @param int $number      Telephone number.
+     *
+     * @param int $areaCode DDD telephone.
+     * @param int $number Telephone number.
      * @param int $countryCode Country code.
      *
      * @return $this
      */
-    public function setPhone($areaCode, $number, $countryCode = 55)
-    {
+    public function setPhone($areaCode, $number, $countryCode = 55) {
         $this->data->phone = new stdClass();
         $this->data->phone->countryCode = $countryCode;
         $this->data->phone->areaCode = $areaCode;

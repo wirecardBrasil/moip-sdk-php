@@ -7,8 +7,7 @@ use RuntimeException;
 use stdClass;
 use UnexpectedValueException;
 
-class Payment extends MoipResource
-{
+class Payment extends MoipResource {
     /**
      * @const string
      */
@@ -67,8 +66,7 @@ class Payment extends MoipResource
     /**
      * Initializes new instances.
      */
-    protected function initialize()
-    {
+    protected function initialize() {
         $this->data = new stdClass();
         $this->data->installmentCount = 1;
         $this->data->fundingInstrument = new stdClass();
@@ -79,8 +77,7 @@ class Payment extends MoipResource
      *
      * @return $this
      */
-    public function execute()
-    {
+    public function execute() {
         $body = json_encode($this, JSON_UNESCAPED_SLASHES);
 
         $httpConnection = $this->createConnection();
@@ -97,7 +94,8 @@ class Payment extends MoipResource
         $httpResponse = $httpConnection->execute($path, HTTPRequest::POST);
 
         if ($httpResponse->getStatusCode() != 200 &&
-            $httpResponse->getStatusCode() != 201) {
+            $httpResponse->getStatusCode() != 201
+        ) {
             throw new RuntimeException($httpResponse->getStatusMessage(), $httpResponse->getStatusCode());
         }
 
@@ -117,8 +115,7 @@ class Payment extends MoipResource
      *
      * @return stdClass
      */
-    public function get($id)
-    {
+    public function get($id) {
         return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, self::PATH, $id));
     }
 
@@ -128,8 +125,7 @@ class Payment extends MoipResource
      *
      * @return \Moip\Resource\Payment
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->getIfSet('id');
     }
 
@@ -140,8 +136,7 @@ class Payment extends MoipResource
      *
      * @return $this
      */
-    protected function populate(stdClass $response)
-    {
+    protected function populate(stdClass $response) {
         $payment = clone $this;
 
         $payment->data->id = $this->getIfSet('id', $response);
@@ -163,8 +158,7 @@ class Payment extends MoipResource
      *
      * @return Refund
      */
-    public function refunds()
-    {
+    public function refunds() {
         $refund = new Refund($this->moip);
         $refund->setPayment($this);
 
@@ -178,8 +172,7 @@ class Payment extends MoipResource
      *
      * @return $this
      */
-    public function setFundingInstrument(stdClass $fundingInstrument)
-    {
+    public function setFundingInstrument(stdClass $fundingInstrument) {
         $this->data->fundingInstrument = $fundingInstrument;
 
         return $this;
@@ -188,22 +181,21 @@ class Payment extends MoipResource
     /**
      * Set boleto.
      *
-     * @param \DateTime|string $expirationDate   Expiration date of a billet.
-     * @param string    $logoUri          Logo of billet.
-     * @param array     $instructionLines Instructions billet.
+     * @param \DateTime|string $expirationDate Expiration date of a billet.
+     * @param string $logoUri Logo of billet.
+     * @param array $instructionLines Instructions billet.
      *
      * @return $this
      */
-    public function setBoleto($expirationDate, $logoUri, array $instructionLines = [])
-    {
+    public function setBoleto($expirationDate, $logoUri, array $instructionLines = []) {
         $keys = ['first', 'second', 'third'];
 
-        if(empty($instructionLines)){
+        if (empty($instructionLines)) {
             //Avoid warning in array_combine
             $instructionLines = ['', '', ''];
         }
 
-        if($expirationDate instanceof \DateTime){
+        if ($expirationDate instanceof \DateTime) {
             $expirationDate = $expirationDate->format('Y-m-d');
 
         }
@@ -222,8 +214,7 @@ class Payment extends MoipResource
      *
      * @param \Moip\Resource\Customer $holder
      */
-    private function setCreditCardHolder(Customer $holder)
-    {
+    private function setCreditCardHolder(Customer $holder) {
         $this->data->fundingInstrument->creditCard->holder = new stdClass();
         $this->data->fundingInstrument->creditCard->holder->fullname = $holder->getFullname();
         $this->data->fundingInstrument->creditCard->holder->birthdate = $holder->getBirthDate();
@@ -239,13 +230,12 @@ class Payment extends MoipResource
     /**
      * Set credit cardHash.
      *
-     * @param string                  $hash   [description]
+     * @param string $hash [description]
      * @param \Moip\Resource\Customer $holder
      *
      * @return $this
      */
-    public function setCreditCardHash($hash, Customer $holder)
-    {
+    public function setCreditCardHash($hash, Customer $holder) {
         $this->data->fundingInstrument->method = self::METHOD_CREDIT_CARD;
         $this->data->fundingInstrument->creditCard = new stdClass();
         $this->data->fundingInstrument->creditCard->hash = $hash;
@@ -259,16 +249,15 @@ class Payment extends MoipResource
      * Credit card used in a payment.
      * The card when returned within a parent resource is presented in its minimum representation.
      *
-     * @param int                     $expirationMonth Card expiration month
-     * @param int                     $expirationYear  Year of card expiration.
-     * @param int                     $number          Card number.
-     * @param int                     $cvc             Card Security Code.
+     * @param int $expirationMonth Card expiration month
+     * @param int $expirationYear Year of card expiration.
+     * @param int $number Card number.
+     * @param int $cvc Card Security Code.
      * @param \Moip\Resource\Customer $holder
      *
      * @return $this
      */
-    public function setCreditCard($expirationMonth, $expirationYear, $number, $cvc, Customer $holder)
-    {
+    public function setCreditCard($expirationMonth, $expirationYear, $number, $cvc, Customer $holder) {
         $this->data->fundingInstrument->method = self::METHOD_CREDIT_CARD;
         $this->data->fundingInstrument->creditCard = new stdClass();
         $this->data->fundingInstrument->creditCard->expirationMonth = $expirationMonth;
@@ -285,8 +274,7 @@ class Payment extends MoipResource
      * @param int $installmentCount
      * @return $this
      */
-    public function setInstallmentCount($installmentCount)
-    {
+    public function setInstallmentCount($installmentCount) {
         $this->data->installmentCount = $installmentCount;
 
         return $this;
@@ -295,16 +283,15 @@ class Payment extends MoipResource
     /**
      * Set payment means made available by banks.
      *
-     * @param string    $bankNumber     Bank number. Possible values: 001, 237, 341, 041.
+     * @param string $bankNumber Bank number. Possible values: 001, 237, 341, 041.
      * @param \DateTime|string $expirationDate Date of expiration debit.
-     * @param string    $returnUri      Return Uri.
+     * @param string $returnUri Return Uri.
      *
      * @return $this
      */
-    public function setOnlineBankDebit($bankNumber, $expirationDate, $returnUri)
-    {
+    public function setOnlineBankDebit($bankNumber, $expirationDate, $returnUri) {
 
-        if($expirationDate instanceof \DateTime){
+        if ($expirationDate instanceof \DateTime) {
             $expirationDate = $expirationDate->format('Y-m-d');
 
         }
@@ -322,8 +309,7 @@ class Payment extends MoipResource
      *
      * @param \Moip\Resource\Multiorders $multiorder
      */
-    public function setMultiorder(Multiorders $multiorder)
-    {
+    public function setMultiorder(Multiorders $multiorder) {
         $this->multiorder = $multiorder;
     }
 
@@ -334,8 +320,7 @@ class Payment extends MoipResource
      *
      * @return $this
      */
-    public function setOrder(Orders $order)
-    {
+    public function setOrder(Orders $order) {
         $this->order = $order;
 
         return $this;
