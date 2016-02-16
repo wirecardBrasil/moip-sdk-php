@@ -90,6 +90,7 @@ class Orders extends MoipResource
         $this->data->ownId = null;
         $this->data->amount = new stdClass();
         $this->data->amount->currency = self::AMOUNT_CURRENCY;
+        $this->data->amount->subtotals = new stdClass();
         $this->data->items = [];
         $this->data->receivers = [];
     }
@@ -467,13 +468,27 @@ class Orders extends MoipResource
 
     /**
      * Set discounted value of the item will be subtracted from the total value of the items.
-     *
+     * @param int|float $value discounted value.
+     * @return $this
+     */
+    public function setDiscount($value){
+
+        $this->data->amount->subtotals->discount = (float) $value;
+
+        return $this;
+
+
+    }
+
+    /**
+     * Set discounted value of the item will be subtracted from the total value of the items.
+     * @deprecated
      * @param int|float $value discounted value.
      * @return $this
      */
     public function setDiscont($value)
     {
-        $this->data->subtotals->discont = (float) $value;
+        $this->data->amount->subtotals->discount = (float) $value;
 
         return $this;
     }
@@ -500,10 +515,6 @@ class Orders extends MoipResource
      */
     public function setShippingAmount($value)
     {
-        if (!isset($this->data->amount->subtotals)) {
-            $this->data->amount->subtotals = new stdClass();
-        }
-
         $this->data->amount->subtotals->shipping = (float) $value;
 
         return $this;
