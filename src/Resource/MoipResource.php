@@ -70,13 +70,16 @@ abstract class MoipResource implements JsonSerializable {
      * @return mixed
      */
     protected function getIfSet($key, stdClass $data = null) {
-        if ($data == null) {
+
+        if(empty($data)){
             $data = $this->data;
         }
 
         if (isset($data->$key)) {
             return $data->$key;
         }
+
+        return null;
     }
 
     protected function getIfSetDateFmt($key, $fmt, stdClass $data=null){
