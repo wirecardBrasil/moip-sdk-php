@@ -198,6 +198,11 @@ class Payment extends MoipResource
     {
         $keys = ['first', 'second', 'third'];
 
+        if(empty($instructionLines)){
+            //Avoid warning in array_combine
+            $instructionLines = ['', '', ''];
+        }
+
         if($expirationDate instanceof \DateTime){
             $expirationDate = $expirationDate->format('Y-m-d');
 
