@@ -21,35 +21,35 @@ class Payment extends MoipResource
 
     /**
      * Payment means.
-     * 
+     *
      * @const string
      */
     const METHOD_CREDIT_CARD = 'CREDIT_CARD';
 
     /**
      * Payment means.
-     * 
+     *
      * @const string
      */
     const METHOD_BOLETO = 'BOLETO';
 
     /**
      * Payment means.
-     * 
+     *
      * @const string
      */
     const METHOD_ONLINE_DEBIT = 'ONLINE_DEBIT';
 
     /**
      * Payment means.
-     * 
+     *
      * @const string
      */
     const METHOD_WALLET = 'WALLET';
 
     /**
      * Payment means.
-     * 
+     *
      * @const string
      */
     const METHOD_ONLINE_BANK_DEBIT = 'ONLINE_BANK_DEBIT';
@@ -76,7 +76,7 @@ class Payment extends MoipResource
 
     /**
      * Create a new payment in api MoIP.
-     * 
+     *
      * @return $this
      */
     public function execute()
@@ -112,7 +112,7 @@ class Payment extends MoipResource
 
     /**
      * Get an payment in MoIP.
-     * 
+     *
      * @param string $id Id MoIP payment
      *
      * @return stdClass
@@ -124,7 +124,7 @@ class Payment extends MoipResource
 
     /**
      * Get id MoIP payment.
-     * 
+     *
      *
      * @return \Moip\Resource\Payment
      */
@@ -135,7 +135,7 @@ class Payment extends MoipResource
 
     /**
      * Mount payment structure.
-     * 
+     *
      * @param \stdClass $response
      *
      * @return $this
@@ -160,7 +160,7 @@ class Payment extends MoipResource
 
     /**
      * Refunds.
-     * 
+     *
      * @return Refund
      */
     public function refunds()
@@ -173,7 +173,7 @@ class Payment extends MoipResource
 
     /**
      * Set means of payment.
-     * 
+     *
      * @param \stdClass $fundingInstrument
      *
      * @return $this
@@ -187,8 +187,8 @@ class Payment extends MoipResource
 
     /**
      * Set boleto.
-     * 
-     * @param \DateTime $expirationDate   Expiration date of a billet.
+     *
+     * @param \DateTime|string $expirationDate   Expiration date of a billet.
      * @param string    $logoUri          Logo of billet.
      * @param array     $instructionLines Instructions billet.
      *
@@ -197,6 +197,11 @@ class Payment extends MoipResource
     public function setBoleto($expirationDate, $logoUri, array $instructionLines = [])
     {
         $keys = ['first', 'second', 'third'];
+
+        if($expirationDate instanceof \DateTime){
+            $expirationDate = $expirationDate->format('Y-m-d');
+
+        }
 
         $this->data->fundingInstrument->method = self::METHOD_BOLETO;
         $this->data->fundingInstrument->boleto = new stdClass();
@@ -209,7 +214,7 @@ class Payment extends MoipResource
 
     /**
      * Set credit card holder.
-     * 
+     *
      * @param \Moip\Resource\Customer $holder
      */
     private function setCreditCardHolder(Customer $holder)
@@ -246,9 +251,9 @@ class Payment extends MoipResource
 
     /**
      * Set credit card
-     * Credit card used in a payment. 
+     * Credit card used in a payment.
      * The card when returned within a parent resource is presented in its minimum representation.
-     * 
+     *
      * @param int                     $expirationMonth Card expiration month
      * @param int                     $expirationYear  Year of card expiration.
      * @param int                     $number          Card number.
@@ -272,6 +277,8 @@ class Payment extends MoipResource
 
     /**
      * Set installment count.
+     * @param int $installmentCount
+     * @return $this
      */
     public function setInstallmentCount($installmentCount)
     {
@@ -282,15 +289,20 @@ class Payment extends MoipResource
 
     /**
      * Set payment means made available by banks.
-     * 
+     *
      * @param string    $bankNumber     Bank number. Possible values: 001, 237, 341, 041.
-     * @param \DateTime $expirationDate Date of expiration debit.
+     * @param \DateTime|string $expirationDate Date of expiration debit.
      * @param string    $returnUri      Return Uri.
      *
      * @return $this
      */
     public function setOnlineBankDebit($bankNumber, $expirationDate, $returnUri)
     {
+
+        if($expirationDate instanceof \DateTime){
+            $expirationDate = $expirationDate->format('Y-m-d');
+
+        }
         $this->data->fundingInstrument->method = self::METHOD_ONLINE_BANK_DEBIT;
         $this->data->fundingInstrument->onlineBankDebit = new stdClass();
         $this->data->fundingInstrument->onlineBankDebit->bankNumber = $bankNumber;
@@ -302,7 +314,7 @@ class Payment extends MoipResource
 
     /**
      * Set Multiorders.
-     * 
+     *
      * @param \Moip\Resource\Multiorders $multiorder
      */
     public function setMultiorder(Multiorders $multiorder)
@@ -312,7 +324,7 @@ class Payment extends MoipResource
 
     /**
      * Set order.
-     * 
+     *
      * @param \Moip\Resource\Orders $order
      *
      * @return $this

@@ -7,7 +7,7 @@ use stdClass;
 class Entry extends MoipResource
 {
     /**
-     * @const strign
+     * @const string
      */
     const PATH = 'entries';
 
@@ -73,7 +73,7 @@ class Entry extends MoipResource
     /**
      * Get id from entry.
      * 
-     * @return strign Event ID that generated the launch.
+     * @return string Event ID that generated the launch.
      */
     public function getId()
     {
@@ -162,7 +162,7 @@ class Entry extends MoipResource
      */
     public function getScheduledFor()
     {
-        return $this->getIfSet('scheduledFor');
+        return $this->getIfSetDateTime('scheduledFor');
     }
 
     /**
@@ -172,7 +172,7 @@ class Entry extends MoipResource
      */
     public function getSettledAt()
     {
-        return $this->getIfSet('settledAt');
+        return $this->getIfSetDateTime('settledAt');
     }
 
     /**
@@ -182,7 +182,7 @@ class Entry extends MoipResource
      */
     public function getUpdatedAt()
     {
-        return $this->getIfSet('updatedAt');
+        return $this->getIfSetDateTime('updatedAt');
     }
 
     /**
@@ -192,6 +192,6 @@ class Entry extends MoipResource
      */
     public function getCreatedAt()
     {
-        return $this->getIfSet('createdAt');
+        return $this->getIfSetDateTime('createdAt');
     }
 }

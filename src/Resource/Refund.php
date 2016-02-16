@@ -10,7 +10,7 @@ use stdClass;
 class Refund extends MoipResource
 {
     /**
-     * @const strign
+     * @const string
      */
     const PATH = 'refunds';
 

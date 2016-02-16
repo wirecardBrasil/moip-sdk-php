@@ -8,28 +8,28 @@ use stdClass;
 class Orders extends MoipResource
 {
     /**
-     * @const strign
+     * @const string
      */
     const PATH = 'orders';
 
     /**
      * Defines what kind of payee as pripmary.
      * 
-     * @const strign
+     * @const string
      */
     const RECEIVER_TYPE_PRIMARY = 'PRIMARY';
 
     /**
      * Defines what kind of payee as secundary.
      * 
-     * @const strign
+     * @const string
      */
     const RECEIVER_TYPE_SECONDARY = 'SECONDARY';
 
     /**
      * Currency used in the application.
      * 
-     * @const strign
+     * @const string
      */
     const AMOUNT_CURRENCY = 'BRL';
 
@@ -42,9 +42,9 @@ class Orders extends MoipResource
      * Adds a new item to order.
      * 
      * @param string  $product  Name of the product.
-     * @param int     $quantity Product Quantity.
+     * @param integer     $quantity Product Quantity.
      * @param string  $detail   Additional product description.
-     * @param intefer $price    Initial value of the item.
+     * @param integer $price    Initial value of the item.
      *
      * @return $this
      */
@@ -187,7 +187,7 @@ class Orders extends MoipResource
     /**
      * Get MoIP order id.
      * 
-     * @return strign
+     * @return string
      */
     public function getId()
     {
@@ -390,7 +390,7 @@ class Orders extends MoipResource
      */
     public function getCreatedAt()
     {
-        return $this->getIfSet('createdAt');
+        return $this->getIfSetDateTime('createdAt');
     }
 
     /**
@@ -400,7 +400,7 @@ class Orders extends MoipResource
      */
     public function getUpdatedAt()
     {
-        return $this->getIfSet('updatedAt');
+        return $this->getIfSetDateTime('updatedAt');
     }
 
     /**
@@ -441,8 +441,9 @@ class Orders extends MoipResource
 
     /**
      * Set additional value to the item will be added to the value of the items.
-     * 
+     *
      * @param int|float $value additional value to the item.
+     * @return $this
      */
     public function setAddition($value)
     {
@@ -453,8 +454,9 @@ class Orders extends MoipResource
 
     /**
      * Set customer associated with the order.
-     * 
+     *
      * @param \Moip\Resource\Customer $customer customer associated with the request.
+     * @return $this
      */
     public function setCustomer(Customer $customer)
     {
@@ -465,8 +467,9 @@ class Orders extends MoipResource
 
     /**
      * Set discounted value of the item will be subtracted from the total value of the items.
-     * 
+     *
      * @param int|float $value discounted value.
+     * @return $this
      */
     public function setDiscont($value)
     {
@@ -477,8 +480,9 @@ class Orders extends MoipResource
 
     /**
      * Set own request id. external reference.
-     * 
+     *
      * @param string $ownId external reference.
+     * @return $this
      */
     public function setOwnId($ownId)
     {

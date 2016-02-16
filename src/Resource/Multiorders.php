@@ -8,7 +8,7 @@ use stdClass;
 class Multiorders extends MoipResource
 {
     /**
-     * @const strign
+     * @const string
      */
     const PATH = 'multiorders';
 
@@ -24,7 +24,8 @@ class Multiorders extends MoipResource
 
     /**
      * Structure of order.
-     * 
+     *
+     * @param Orders $order
      * @return $this
      */
     public function addOrder(Orders $order)
@@ -59,7 +60,7 @@ class Multiorders extends MoipResource
     /**
      * Get MoIP order id.
      * 
-     * @return strign
+     * @return string
      */
     public function getId()
     {
@@ -114,7 +115,8 @@ class Multiorders extends MoipResource
      */
     public function getCreatedAt()
     {
-        return $this->getIfSet('createdAt');
+        // todo: didn't find createdAt type on documentation, assuming datetime. Have to confirm
+        return $this->getIfSetDateTime('createdAt');
     }
 
     /**
@@ -124,7 +126,7 @@ class Multiorders extends MoipResource
      */
     public function getUpdatedAt()
     {
-        return $this->getIfSet('updatedAt');
+        return $this->getIfSetDateTime('updatedAt');
     }
 
     /**
@@ -185,8 +187,9 @@ class Multiorders extends MoipResource
 
     /**
      * Set own request id. External reference.
-     * 
-     * @param $this
+     *
+     * @param string $ownId
+     * @return $this
      */
     public function setOwnId($ownId)
     {
