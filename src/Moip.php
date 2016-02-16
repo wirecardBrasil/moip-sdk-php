@@ -67,7 +67,6 @@ class Moip
      */
     public function createConnection(HTTPConnection $http_connection)
     {
-        $http_connection = $http_connection;
         $http_connection->initialize($this->endpoint, true);
         $http_connection->addHeader('Accept', 'application/json');
         $http_connection->setAuthenticator($this->moipAuthentication);
