@@ -340,7 +340,7 @@ class Customer extends MoipResource
     /**
      * Set birth date from customer.
      * 
-     * @param \DateTime $birthDate Date of birth of the credit card holder.
+     * @param \DateTime|string $birthDate Date of birth of the credit card holder.
      *
      * @return $this
      */
