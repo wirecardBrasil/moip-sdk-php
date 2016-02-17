@@ -202,9 +202,13 @@ class Payment extends MoipResource
      */
     private function setCreditCardHolder(Customer $holder)
     {
+        $birthdate = $holder->getBirthDate();
+        if ($birthdate instanceof \DateTime) {
+            $birthdate = $birthdate->format('Y-m-d');
+        }
         $this->data->fundingInstrument->creditCard->holder = new stdClass();
         $this->data->fundingInstrument->creditCard->holder->fullname = $holder->getFullname();
-        $this->data->fundingInstrument->creditCard->holder->birthdate = $holder->getBirthDate();
+        $this->data->fundingInstrument->creditCard->holder->birthdate = $birthdate;
         $this->data->fundingInstrument->creditCard->holder->taxDocument = new stdClass();
         $this->data->fundingInstrument->creditCard->holder->taxDocument->type = $holder->getTaxDocumentType();
         $this->data->fundingInstrument->creditCard->holder->taxDocument->number = $holder->getTaxDocumentNumber();
@@ -217,7 +221,7 @@ class Payment extends MoipResource
     /**
      * Set credit cardHash.
      *
-     * @param string                  $hash   Credit card hash encripted using Moip.js
+     * @param string                  $hash Credit card hash encripted using Moip.js
      * @param \Moip\Resource\Customer $holder
      *
      * @return $this

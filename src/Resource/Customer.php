@@ -51,7 +51,7 @@ class Customer extends MoipResource
     /**
      * Add a new address to the customer.
      *
-     * @param string $type       Type of values: SHIPPING and BILLING.
+     * @param string $type Type of values: SHIPPING and BILLING.
      * @param string $street
      * @param string $number
      * @param string $district
@@ -315,6 +315,10 @@ class Customer extends MoipResource
         if ($holder === null) {
             $holder = $this;
         }
+        $birthdate = $holder->getBirthDate();
+        if ($birthdate instanceof \DateTime) {
+            $birthdate = $birthdate->format('Y-m-d');
+        }
 
         $this->data->fundingInstrument = new stdClass();
         $this->data->fundingInstrument->method = Payment::METHOD_CREDIT_CARD;
@@ -325,7 +329,7 @@ class Customer extends MoipResource
         $this->data->fundingInstrument->creditCard->cvc = $cvc;
         $this->data->fundingInstrument->creditCard->holder = new stdClass();
         $this->data->fundingInstrument->creditCard->holder->fullname = $holder->getFullname();
-        $this->data->fundingInstrument->creditCard->holder->birthdate = $holder->getBirthDate();
+        $this->data->fundingInstrument->creditCard->holder->birthdate = $birthdate;
         $this->data->fundingInstrument->creditCard->holder->taxDocument = new stdClass();
         $this->data->fundingInstrument->creditCard->holder->taxDocument->type = $holder->getTaxDocumentType();
         $this->data->fundingInstrument->creditCard->holder->taxDocument->number = $holder->getTaxDocumentNumber();
