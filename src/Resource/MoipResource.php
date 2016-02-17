@@ -6,6 +6,7 @@ use JsonSerializable;
 use Moip\Http\HTTPConnection;
 use Moip\Http\HTTPRequest;
 use Moip\Moip;
+use Moip\Exceptions;
 use RuntimeException;
 use stdClass;
 
@@ -131,6 +132,62 @@ abstract class MoipResource implements JsonSerializable
     public function jsonSerialize()
     {
         return $this->data;
+    }
+
+    /**
+     *
+     * Execute a http request. If payload == null no body will be sent. Empty body ('{}') is supported by sending a
+     * empty stdClass
+     *
+     * @param               $path
+     * @param               $method
+     * @param mixed|null    $payload
+     *
+     * @throws Exceptions\ValidationException  if the API returns a 4xx http status code. Usually means invalid data was sent.
+     * @throws Exceptions\UnautorizedException if the API returns a 401 http status code. Check API token and key
+     * @throws Exceptions\UnexpectedException  if the API returns a 500 http status code, this is not suppose to happen. Please report the error to moip
+     *
+     * @return stdClass
+     */
+    protected function httpRequest($path, $method, $payload = null)
+    {
+        $httpConnection = $this->createConnection();
+        $httpConnection->addHeader('Content-Type', 'application/json');
+        if ($payload !== null) {
+            // if it's json serializable
+            $body = json_encode($payload, JSON_UNESCAPED_SLASHES);
+            if ($body) {
+                $httpConnection->addHeader('Content-Length', strlen($body));
+                $httpConnection->setRequestBody($body);
+            }
+        }
+
+        /**
+         * @var \Moip\Http\HTTPResponse $http_response
+         */
+        $http_response = $httpConnection->execute($path, $method);
+
+        $code = $http_response->getStatusCode();
+
+        if ($code >= 200 && $code < 299) {
+            return json_decode($http_response->getContent());
+        } elseif ($code == 401) {
+            throw new Exceptions\UnautorizedException();
+        } elseif ($code >= 400 && $code <= 499) {
+            $error_obj = json_decode($http_response->getContent());
+            $errors = [];
+            if ($error_obj && isset($error_obj->errors)) { // just in case
+                foreach ($error_obj->errors as $error) {
+                    $errors[] = new Exceptions\Error($error->code, $error->path, $error->description);
+                }
+                throw new Exceptions\ValidationException($code, $http_response->getStatusMessage(), $errors);
+            } else {
+                throw new Exceptions\UnexpectedException();
+
+            }
+        } else {
+            throw new Exceptions\UnexpectedException();
+        }
     }
 
     /**
