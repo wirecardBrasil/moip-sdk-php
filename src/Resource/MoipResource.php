@@ -95,7 +95,6 @@ abstract class MoipResource implements JsonSerializable
         }
 
         return;
-
     }
 
     /**
