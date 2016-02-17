@@ -196,7 +196,7 @@ abstract class MoipResource implements JsonSerializable
      */
     public function getByPath($path)
     {
-        $response = $this->httpRequest($path,HTTPRequest::GET);
+        $response = $this->httpRequest($path, HTTPRequest::GET);
 
         return $this->populate($response);
     }

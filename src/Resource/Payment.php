@@ -86,6 +86,7 @@ class Payment extends MoipResource
                 self::MULTI_PAYMENTS_PATH);
         }
         $response = $this->httpRequest($path, HTTPRequest::POST, $this);
+
         return $this->populate($response);
     }
 
