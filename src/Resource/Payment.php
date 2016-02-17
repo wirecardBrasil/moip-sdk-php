@@ -207,7 +207,6 @@ class Payment extends MoipResource
 
         if ($expirationDate instanceof \DateTime) {
             $expirationDate = $expirationDate->format('Y-m-d');
-
         }
 
         $this->data->fundingInstrument->method = self::METHOD_BOLETO;
@@ -241,7 +240,7 @@ class Payment extends MoipResource
     /**
      * Set credit cardHash.
      *
-     * @param string                  $hash [description]
+     * @param string                  $hash   Credit card hash encripted using Moip.js
      * @param \Moip\Resource\Customer $holder
      *
      * @return $this
@@ -307,10 +306,8 @@ class Payment extends MoipResource
      */
     public function setOnlineBankDebit($bankNumber, $expirationDate, $returnUri)
     {
-
         if ($expirationDate instanceof \DateTime) {
             $expirationDate = $expirationDate->format('Y-m-d');
-
         }
         $this->data->fundingInstrument->method = self::METHOD_ONLINE_BANK_DEBIT;
         $this->data->fundingInstrument->onlineBankDebit = new stdClass();

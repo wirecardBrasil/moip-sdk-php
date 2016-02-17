@@ -74,7 +74,6 @@ abstract class MoipResource implements JsonSerializable
      */
     protected function getIfSet($key, stdClass $data = null)
     {
-
         if (empty($data)) {
             $data = $this->data;
         }
@@ -91,8 +90,10 @@ abstract class MoipResource implements JsonSerializable
         $val = $this->getIfSet($key, $data);
         if (!empty($val)) {
             $dt = \DateTime::createFromFormat($fmt, $val);
+
             return $dt ? $dt : null;
         }
+
         return;
 
     }
@@ -107,9 +108,7 @@ abstract class MoipResource implements JsonSerializable
      */
     protected function getIfSetDate($key, stdClass $data = null)
     {
-
         return $this->getIfSetDateFmt($key, 'Y-m-d', $data);
-
     }
 
     /**
@@ -120,7 +119,6 @@ abstract class MoipResource implements JsonSerializable
      *
      * @return \DateTime|null
      */
-
     protected function getIfSetDateTime($key, stdClass $data = null)
     {
         return $this->getIfSetDateFmt($key, \DateTime::ATOM, $data);

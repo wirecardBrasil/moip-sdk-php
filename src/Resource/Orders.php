@@ -41,10 +41,10 @@ class Orders extends MoipResource
     /**
      * Adds a new item to order.
      *
-     * @param string  $product  Name of the product.
-     * @param int $quantity Product Quantity.
-     * @param string  $detail   Additional product description.
-     * @param int $price    Initial value of the item.
+     * @param string $product  Name of the product.
+     * @param int    $quantity Product Quantity.
+     * @param string $detail   Additional product description.
+     * @param int    $price    Initial value of the item.
      *
      * @return $this
      */
@@ -449,7 +449,7 @@ class Orders extends MoipResource
      */
     public function setAddition($value)
     {
-        $this->data->subtotals->addition = (float)$value;
+        $this->data->subtotals->addition = (float) $value;
 
         return $this;
     }
@@ -477,12 +477,9 @@ class Orders extends MoipResource
      */
     public function setDiscount($value)
     {
-
-        $this->data->amount->subtotals->discount = (float)$value;
+        $this->data->amount->subtotals->discount = (float) $value;
 
         return $this;
-
-
     }
 
     /**
@@ -524,7 +521,7 @@ class Orders extends MoipResource
      */
     public function setShippingAmount($value)
     {
-        $this->data->amount->subtotals->shipping = (float)$value;
+        $this->data->amount->subtotals->shipping = (float) $value;
 
         return $this;
     }

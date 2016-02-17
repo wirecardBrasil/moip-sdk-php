@@ -51,7 +51,7 @@ class Customer extends MoipResource
     /**
      * Add a new address to the customer.
      *
-     * @param string $type       Type of values: SHIPPING and BILLING.
+     * @param string $type Type of values: SHIPPING and BILLING.
      * @param string $street
      * @param string $number
      * @param string $district
@@ -302,10 +302,10 @@ class Customer extends MoipResource
     /**
      * Set credit card from customer.
      *
-     * @param int                      $expirationMonth Card expiration month.
-     * @param int                      $expirationYear  Year card expiration.
-     * @param int                      $number          Card number.
-     * @param int                      $cvc             Card Security Code.
+     * @param int                          $expirationMonth Card expiration month.
+     * @param int                          $expirationYear  Year card expiration.
+     * @param int                          $number          Card number.
+     * @param int                          $cvc             Card Security Code.
      * @param \Moip\Resource\Customer|null $holder          Cardholder.
      *
      * @return $this
@@ -346,10 +346,8 @@ class Customer extends MoipResource
      */
     public function setBirthDate($birthDate)
     {
-
         if ($birthDate instanceof \DateTime) {
             $birthDate = $birthDate->format('Y-m-d');
-
         }
 
         $this->data->birthDate = $birthDate;
