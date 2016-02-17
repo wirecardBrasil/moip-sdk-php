@@ -5,7 +5,8 @@ namespace Moip\Resource;
 use ArrayIterator;
 use stdClass;
 
-class Orders extends MoipResource {
+class Orders extends MoipResource
+{
     /**
      * @const string
      */
@@ -40,14 +41,15 @@ class Orders extends MoipResource {
     /**
      * Adds a new item to order.
      *
-     * @param string $product Name of the product.
-     * @param integer $quantity Product Quantity.
-     * @param string $detail Additional product description.
-     * @param integer $price Initial value of the item.
+     * @param string  $product  Name of the product.
+     * @param int $quantity Product Quantity.
+     * @param string  $detail   Additional product description.
+     * @param int $price    Initial value of the item.
      *
      * @return $this
      */
-    public function addItem($product, $quantity, $detail, $price) {
+    public function addItem($product, $quantity, $detail, $price)
+    {
         $item = new stdClass();
         $item->product = $product;
         $item->quantity = $quantity;
@@ -63,11 +65,12 @@ class Orders extends MoipResource {
      *  Adds a new receiver to order.
      *
      * @param string $moipAccount Id MoIP MoIP account that will receive payment values.
-     * @param string $type Define qual o tipo de recebedor do pagamento, valores possíveis: PRIMARY, SECONDARY.
+     * @param string $type        Define qual o tipo de recebedor do pagamento, valores possíveis: PRIMARY, SECONDARY.
      *
      * @return $this
      */
-    public function addReceiver($moipAccount, $type = self::RECEIVER_TYPE_PRIMARY) {
+    public function addReceiver($moipAccount, $type = self::RECEIVER_TYPE_PRIMARY)
+    {
         $receiver = new stdClass();
         $receiver->moipAccount = new stdClass();
         $receiver->moipAccount->id = $moipAccount;
@@ -81,7 +84,8 @@ class Orders extends MoipResource {
     /**
      * Initialize necessary used in some functions.
      */
-    protected function initialize() {
+    protected function initialize()
+    {
         $this->data = new stdClass();
         $this->data->ownId = null;
         $this->data->amount = new stdClass();
@@ -94,7 +98,8 @@ class Orders extends MoipResource {
     /**
      * Initialize necessary used in some functions.
      */
-    private function initializeSubtotals() {
+    private function initializeSubtotals()
+    {
         if (!isset($this->data->subtotals)) {
             $this->data->subtotals = new stdClass();
         }
@@ -107,7 +112,8 @@ class Orders extends MoipResource {
      *
      * @return Orders Response order.
      */
-    protected function populate(stdClass $response) {
+    protected function populate(stdClass $response)
+    {
         $this->orders = clone $this;
         $this->orders->data->id = $response->id;
         $this->orders->data->amount->total = $response->amount->total;
@@ -137,13 +143,14 @@ class Orders extends MoipResource {
     /**
      * Structure resource.
      *
-     * @param stdClass $response
-     * @param string $resource
+     * @param stdClass                                                                               $response
+     * @param string                                                                                 $resource
      * @param \Moip\Resource\Payment|\Moip\Resource\Refund|\Moip\Resource\Entry|\Moip\Resource\Event $class
      *
      * @return array
      */
-    private function structure(stdClass $response, $resource, $class) {
+    private function structure(stdClass $response, $resource, $class)
+    {
         $structures = [];
 
         foreach ($response->$resource as $responseResource) {
@@ -161,7 +168,8 @@ class Orders extends MoipResource {
      *
      * @return stdClass
      */
-    public function create() {
+    public function create()
+    {
         return $this->createResource(sprintf('/%s/%s', MoipResource::VERSION, self::PATH));
     }
 
@@ -172,7 +180,8 @@ class Orders extends MoipResource {
      *
      * @return stdClass
      */
-    public function get($id) {
+    public function get($id)
+    {
         return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, self::PATH, $id));
     }
 
@@ -181,7 +190,8 @@ class Orders extends MoipResource {
      *
      * @return string
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->getIfSet('id');
     }
 
@@ -190,7 +200,8 @@ class Orders extends MoipResource {
      *
      * @return string
      */
-    public function getOwnId() {
+    public function getOwnId()
+    {
         return $this->getIfSet('ownId');
     }
 
@@ -199,7 +210,8 @@ class Orders extends MoipResource {
      *
      * @return int|float
      */
-    public function getAmountTotal() {
+    public function getAmountTotal()
+    {
         return $this->getIfSet('total', $this->data->amount);
     }
 
@@ -208,7 +220,8 @@ class Orders extends MoipResource {
      *
      * @return int|float
      */
-    public function getAmountFees() {
+    public function getAmountFees()
+    {
         return $this->getIfSet('feed', $this->data->amount);
     }
 
@@ -217,7 +230,8 @@ class Orders extends MoipResource {
      *
      * @return int|float
      */
-    public function getAmountRefunds() {
+    public function getAmountRefunds()
+    {
         return $this->getIfSet('refunds', $this->data->amount);
     }
 
@@ -226,7 +240,8 @@ class Orders extends MoipResource {
      *
      * @return int|float
      */
-    public function getAmountLiquid() {
+    public function getAmountLiquid()
+    {
         return $this->getIfSet('liquid', $this->data->amount);
     }
 
@@ -235,7 +250,8 @@ class Orders extends MoipResource {
      *
      * @return int|float
      */
-    public function getAmountOtherReceivers() {
+    public function getAmountOtherReceivers()
+    {
         return $this->getIfSet('otherReceivers', $this->data->amount);
     }
 
@@ -244,7 +260,8 @@ class Orders extends MoipResource {
      *
      * @return string
      */
-    public function getCurrenty() {
+    public function getCurrenty()
+    {
         return $this->getIfSet('currency', $this->data->amount);
     }
 
@@ -253,7 +270,8 @@ class Orders extends MoipResource {
      *
      * @return int|float
      */
-    public function getSubtotalShipping() {
+    public function getSubtotalShipping()
+    {
         $this->initializeSubtotals();
 
         return $this->getIfSet('shipping', $this->data->amount->subtotals);
@@ -264,7 +282,8 @@ class Orders extends MoipResource {
      *
      * @return int|float
      */
-    public function getSubtotalAddition() {
+    public function getSubtotalAddition()
+    {
         $this->initializeSubtotals();
 
         return $this->getIfSet('addition', $this->data->amount->subtotals);
@@ -275,7 +294,8 @@ class Orders extends MoipResource {
      *
      * @return int|float
      */
-    public function getSubtotalDiscount() {
+    public function getSubtotalDiscount()
+    {
         $this->initializeSubtotals();
 
         return $this->getIfSet('discount', $this->data->amount->subtotals);
@@ -286,7 +306,8 @@ class Orders extends MoipResource {
      *
      * @return int|float
      */
-    public function getSubtotalItems() {
+    public function getSubtotalItems()
+    {
         $this->initializeSubtotals();
 
         return $this->getIfSet('items', $this->data->amount->subtotals);
@@ -297,7 +318,8 @@ class Orders extends MoipResource {
      *
      * @return \ArrayIterator
      */
-    public function getItemIterator() {
+    public function getItemIterator()
+    {
         return new ArrayIterator($this->data->items);
     }
 
@@ -306,7 +328,8 @@ class Orders extends MoipResource {
      *
      * @return \Moip\Resource\Customer
      */
-    public function getCustomer() {
+    public function getCustomer()
+    {
         return $this->data->customer;
     }
 
@@ -315,7 +338,8 @@ class Orders extends MoipResource {
      *
      * @return ArrayIterator
      */
-    public function getPaymentIterator() {
+    public function getPaymentIterator()
+    {
         return new ArrayIterator($this->data->payments);
     }
 
@@ -324,7 +348,8 @@ class Orders extends MoipResource {
      *
      * @return ArrayIterator
      */
-    public function getReceiverIterator() {
+    public function getReceiverIterator()
+    {
         return new ArrayIterator($this->data->receivers);
     }
 
@@ -333,7 +358,8 @@ class Orders extends MoipResource {
      *
      * @return ArrayIterator
      */
-    public function getEventIterator() {
+    public function getEventIterator()
+    {
         return new ArrayIterator($this->data->events);
     }
 
@@ -342,7 +368,8 @@ class Orders extends MoipResource {
      *
      * @return ArrayIterator
      */
-    public function getRefundIterator() {
+    public function getRefundIterator()
+    {
         return new ArrayIterator($this->data->refunds);
     }
 
@@ -352,7 +379,8 @@ class Orders extends MoipResource {
      *
      * @return string
      */
-    public function getStatus() {
+    public function getStatus()
+    {
         return $this->getIfSet('status');
     }
 
@@ -361,7 +389,8 @@ class Orders extends MoipResource {
      *
      * @return \DateTime
      */
-    public function getCreatedAt() {
+    public function getCreatedAt()
+    {
         return $this->getIfSetDateTime('createdAt');
     }
 
@@ -370,7 +399,8 @@ class Orders extends MoipResource {
      *
      * @return \DateTime
      */
-    public function getUpdatedAt() {
+    public function getUpdatedAt()
+    {
         return $this->getIfSetDateTime('updatedAt');
     }
 
@@ -379,7 +409,8 @@ class Orders extends MoipResource {
      *
      * @return \stdClass
      */
-    public function getLinks() {
+    public function getLinks()
+    {
         return $this->getIfSet('_links');
     }
 
@@ -388,7 +419,8 @@ class Orders extends MoipResource {
      *
      * @return \Moip\Resource\Payment
      */
-    public function payments() {
+    public function payments()
+    {
         $payment = new Payment($this->moip);
         $payment->setOrder($this);
 
@@ -400,7 +432,8 @@ class Orders extends MoipResource {
      *
      * @return \Moip\Resource\Refund
      */
-    public function refunds() {
+    public function refunds()
+    {
         $refund = new Refund($this->moip);
         $refund->setOrder($this);
 
@@ -411,9 +444,11 @@ class Orders extends MoipResource {
      * Set additional value to the item will be added to the value of the items.
      *
      * @param int|float $value additional value to the item.
+     *
      * @return $this
      */
-    public function setAddition($value) {
+    public function setAddition($value)
+    {
         $this->data->subtotals->addition = (float)$value;
 
         return $this;
@@ -423,9 +458,11 @@ class Orders extends MoipResource {
      * Set customer associated with the order.
      *
      * @param \Moip\Resource\Customer $customer customer associated with the request.
+     *
      * @return $this
      */
-    public function setCustomer(Customer $customer) {
+    public function setCustomer(Customer $customer)
+    {
         $this->data->customer = $customer;
 
         return $this;
@@ -433,10 +470,13 @@ class Orders extends MoipResource {
 
     /**
      * Set discounted value of the item will be subtracted from the total value of the items.
+     *
      * @param int|float $value discounted value.
+     *
      * @return $this
      */
-    public function setDiscount($value) {
+    public function setDiscount($value)
+    {
 
         $this->data->amount->subtotals->discount = (float)$value;
 
@@ -447,11 +487,15 @@ class Orders extends MoipResource {
 
     /**
      * Set discounted value of the item will be subtracted from the total value of the items.
+     *
      * @deprecated
+     *
      * @param int|float $value discounted value.
+     *
      * @return $this
      */
-    public function setDiscont($value) {
+    public function setDiscont($value)
+    {
         $this->setDiscount($value);
 
         return $this;
@@ -461,9 +505,11 @@ class Orders extends MoipResource {
      * Set own request id. external reference.
      *
      * @param string $ownId external reference.
+     *
      * @return $this
      */
-    public function setOwnId($ownId) {
+    public function setOwnId($ownId)
+    {
         $this->data->ownId = $ownId;
 
         return $this;
@@ -476,7 +522,8 @@ class Orders extends MoipResource {
      *
      * @return $this
      */
-    public function setShippingAmount($value) {
+    public function setShippingAmount($value)
+    {
         $this->data->amount->subtotals->shipping = (float)$value;
 
         return $this;
