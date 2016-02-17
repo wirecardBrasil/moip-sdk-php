@@ -111,6 +111,7 @@ class Refund extends MoipResource
     {
         $body = empty($data) ? new stdClass() : $data;
         $response = $this->httpRequest($this->getPath(), HTTPRequest::POST, $body);
+
         return $this->populate($response);
     }
 

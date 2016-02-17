@@ -3,10 +3,10 @@
 namespace Moip\Resource;
 
 use JsonSerializable;
+use Moip\Exceptions;
 use Moip\Http\HTTPConnection;
 use Moip\Http\HTTPRequest;
 use Moip\Moip;
-use Moip\Exceptions;
 use stdClass;
 
 abstract class MoipResource implements JsonSerializable
@@ -134,13 +134,12 @@ abstract class MoipResource implements JsonSerializable
     }
 
     /**
-     *
      * Execute a http request. If payload == null no body will be sent. Empty body ('{}') is supported by sending a
-     * empty stdClass
+     * empty stdClass.
      *
-     * @param               $path
-     * @param               $method
-     * @param mixed|null    $payload
+     * @param            $path
+     * @param            $method
+     * @param mixed|null $payload
      *
      * @throws Exceptions\ValidationException  if the API returns a 4xx http status code. Usually means invalid data was sent.
      * @throws Exceptions\UnautorizedException if the API returns a 401 http status code. Check API token and key
@@ -162,7 +161,7 @@ abstract class MoipResource implements JsonSerializable
         }
 
         /**
-         * @var \Moip\Http\HTTPResponse $http_response
+         * @var \Moip\Http\HTTPResponse
          */
         $http_response = $httpConnection->execute($path, $method);
 
@@ -182,7 +181,6 @@ abstract class MoipResource implements JsonSerializable
                 throw new Exceptions\ValidationException($code, $http_response->getStatusMessage(), $errors);
             } else {
                 throw new Exceptions\UnexpectedException();
-
             }
         } else {
             throw new Exceptions\UnexpectedException();
@@ -212,6 +210,7 @@ abstract class MoipResource implements JsonSerializable
     public function createResource($path)
     {
         $response = $this->httpRequest($path, HTTPRequest::POST, $this);
+
         return $this->populate($response);
     }
 }

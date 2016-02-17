@@ -2,7 +2,6 @@
 
 namespace Moip\Exceptions;
 
-
 class ValidationException extends \RuntimeException
 {
     /**
@@ -29,7 +28,6 @@ class ValidationException extends \RuntimeException
      * @param string  $statusCode
      * @param int     $statusMessage
      * @param Error[] $errors
-     *
      */
     public function __construct($statusCode, $statusMessage, $errors)
     {
@@ -39,7 +37,6 @@ class ValidationException extends \RuntimeException
     }
 
     /**
-     *
      * Returns the http status code ie.: 400.
      *
      * @return int
@@ -50,7 +47,6 @@ class ValidationException extends \RuntimeException
     }
 
     /**
-     *
      * Returns the http status code description: ie.: 'Bad Request'.
      *
      * @return string
@@ -61,7 +57,6 @@ class ValidationException extends \RuntimeException
     }
 
     /**
-     *
      * Returns the list of errors returned by the API.
      *
      * @return Error[]
@@ -77,7 +72,7 @@ class ValidationException extends \RuntimeException
     {
         $template = "[$this->statusMessage] The following errors ocurred:\n%s";
         $temp_list = "";
-        foreach($this->errors as $error){
+        foreach ($this->errors as $error){
             $path = $error->getPath();
             $desc = $error->getDescription();
 
@@ -86,6 +81,4 @@ class ValidationException extends \RuntimeException
 
         return sprintf($template, $temp_list);
     }
-
-
 }

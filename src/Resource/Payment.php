@@ -221,7 +221,7 @@ class Payment extends MoipResource
     /**
      * Set credit cardHash.
      *
-     * @param string                  $hash Credit card hash encripted using Moip.js
+     * @param string                  $hash   Credit card hash encripted using Moip.js
      * @param \Moip\Resource\Customer $holder
      *
      * @return $this

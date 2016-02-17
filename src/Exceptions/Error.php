@@ -2,13 +2,10 @@
 
 namespace Moip\Exceptions;
 
-
 /**
  * Class Error.
  *
  * Represents an error returned by the API.
- *
- * @package Moip\Exceptions
  */
 class Error
 {
@@ -46,7 +43,7 @@ class Error
 
     /**
      *
-     * Returns the unique alphanumeric identifier of the error, ie.: "API-1"
+     * Returns the unique alphanumeric identifier of the error, ie.: "API-1".
      *
      * @return string
      */
@@ -57,7 +54,7 @@ class Error
 
     /**
      *
-     * Returns the dotted string representing the field where the error ocurred, ie.: "customer.birthDate"
+     * Returns the dotted string representing the field where the error ocurred, ie.: "customer.birthDate".
      *
      * @return string
      */
@@ -67,7 +64,6 @@ class Error
     }
 
     /**
-     *
      * Returns the error description.
      *
      * @return string
@@ -76,6 +72,4 @@ class Error
     {
         return $this->description;
     }
-
-
 }

@@ -51,7 +51,7 @@ class Customer extends MoipResource
     /**
      * Add a new address to the customer.
      *
-     * @param string $type Type of values: SHIPPING and BILLING.
+     * @param string $type       Type of values: SHIPPING and BILLING.
      * @param string $street
      * @param string $number
      * @param string $district
