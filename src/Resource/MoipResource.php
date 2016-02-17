@@ -160,7 +160,7 @@ abstract class MoipResource implements JsonSerializable
             }
         }
 
-        /**
+        /*
          * @var \Moip\Http\HTTPResponse
          */
         $http_response = $httpConnection->execute($path, $method);
@@ -197,6 +197,7 @@ abstract class MoipResource implements JsonSerializable
     public function getByPath($path)
     {
         $response = $this->httpRequest($path,HTTPRequest::GET);
+
         return $this->populate($response);
     }
 

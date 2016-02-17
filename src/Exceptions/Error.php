@@ -9,7 +9,6 @@ namespace Moip\Exceptions;
  */
 class Error
 {
-
     /**
      * @var string
      */
@@ -42,7 +41,6 @@ class Error
     }
 
     /**
-     *
      * Returns the unique alphanumeric identifier of the error, ie.: "API-1".
      *
      * @return string
@@ -53,7 +51,6 @@ class Error
     }
 
     /**
-     *
      * Returns the dotted string representing the field where the error ocurred, ie.: "customer.birthDate".
      *
      * @return string
