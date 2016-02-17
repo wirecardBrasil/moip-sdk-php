@@ -5,7 +5,8 @@ namespace Moip\Resource;
 use ArrayIterator;
 use stdClass;
 
-class Multiorders extends MoipResource {
+class Multiorders extends MoipResource
+{
     /**
      * @const string
      */
@@ -14,7 +15,8 @@ class Multiorders extends MoipResource {
     /**
      * Initializes new instances.
      */
-    public function initialize() {
+    public function initialize()
+    {
         $this->data = new stdClass();
         $this->data->ownId = null;
         $this->data->orders = [];
@@ -24,9 +26,11 @@ class Multiorders extends MoipResource {
      * Structure of order.
      *
      * @param Orders $order
+     *
      * @return $this
      */
-    public function addOrder(Orders $order) {
+    public function addOrder(Orders $order)
+    {
         $this->data->orders[] = $order;
 
         return $this;
@@ -37,7 +41,8 @@ class Multiorders extends MoipResource {
      *
      * @return stdClass
      */
-    public function create() {
+    public function create()
+    {
         return $this->createResource(sprintf('/%s/%s', MoipResource::VERSION, self::PATH));
     }
 
@@ -48,7 +53,8 @@ class Multiorders extends MoipResource {
      *
      * @return stdClass
      */
-    public function get($id) {
+    public function get($id)
+    {
         return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, Entry::PATH, $id));
     }
 
@@ -57,7 +63,8 @@ class Multiorders extends MoipResource {
      *
      * @return string
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->getIfSet('id');
     }
 
@@ -66,7 +73,8 @@ class Multiorders extends MoipResource {
      *
      * @return string
      */
-    public function getOwnId() {
+    public function getOwnId()
+    {
         return $this->getIfSet('ownId');
     }
 
@@ -76,7 +84,8 @@ class Multiorders extends MoipResource {
      *
      * @return string
      */
-    public function getStatus() {
+    public function getStatus()
+    {
         return $this->getIfSet('status');
     }
 
@@ -85,7 +94,8 @@ class Multiorders extends MoipResource {
      *
      * @return int|float
      */
-    public function getAmountTotal() {
+    public function getAmountTotal()
+    {
         return $this->getIfSet('total', $this->data->amount);
     }
 
@@ -94,7 +104,8 @@ class Multiorders extends MoipResource {
      *
      * @return string
      */
-    public function getAmountCurrency() {
+    public function getAmountCurrency()
+    {
         return $this->getIfSet('currency', $this->data->amount);
     }
 
@@ -103,7 +114,8 @@ class Multiorders extends MoipResource {
      *
      * @return \DateTime
      */
-    public function getCreatedAt() {
+    public function getCreatedAt()
+    {
         // todo: didn't find createdAt type on documentation, assuming datetime. Have to confirm
         return $this->getIfSetDateTime('createdAt');
     }
@@ -113,7 +125,8 @@ class Multiorders extends MoipResource {
      *
      * @return \DateTime
      */
-    public function getUpdatedAt() {
+    public function getUpdatedAt()
+    {
         return $this->getIfSetDateTime('updatedAt');
     }
 
@@ -122,7 +135,8 @@ class Multiorders extends MoipResource {
      *
      * @return \ArrayIterator
      */
-    public function getOrderIterator() {
+    public function getOrderIterator()
+    {
         return new ArrayIterator($this->getIfSet('orders'));
     }
 
@@ -131,7 +145,8 @@ class Multiorders extends MoipResource {
      *
      * @return \Moip\Resource\Payment
      */
-    public function multipayments() {
+    public function multipayments()
+    {
         $payments = new Payment($this->moip);
         $payments->setMultiorder($this);
 
@@ -145,7 +160,8 @@ class Multiorders extends MoipResource {
      *
      * @return Multiorders
      */
-    protected function populate(stdClass $response) {
+    protected function populate(stdClass $response)
+    {
         $multiorders = clone $this;
 
         $multiorders->data->id = $response->id;
@@ -174,9 +190,11 @@ class Multiorders extends MoipResource {
      * Set own request id. External reference.
      *
      * @param string $ownId
+     *
      * @return $this
      */
-    public function setOwnId($ownId) {
+    public function setOwnId($ownId)
+    {
         $this->data->ownId = $ownId;
 
         return $this;
