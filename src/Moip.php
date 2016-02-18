@@ -64,7 +64,8 @@ class Moip
     }
 
     /**
-     * Creates a new Request_Session (one is created at construction).
+     * Creates a new Request_Session with all the default values.
+     * A Session is created at construction.
      *
      * @param float $timeout         How long should we wait for a response?(seconds with a millisecond precision, default: 30, example: 0.01).
      * @param float $connect_timeout How long should we wait while trying to connect? (seconds with a millisecond precision, default: 10, example: 0.01)
@@ -96,6 +97,16 @@ class Moip
     public function getSession()
     {
         return $this->session;
+    }
+
+    /**
+     * Replace the http session by a custom one.
+     *
+     * @param Requests_Session $session
+     */
+    public function setSession($session)
+    {
+        $this->session = $session;
     }
 
     /**
