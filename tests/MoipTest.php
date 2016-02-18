@@ -3,6 +3,7 @@
 namespace Moip\Tests;
 
 use Moip\Exceptions;
+use Moip\Moip;
 use Requests_Exception;
 
 /**
@@ -123,5 +124,20 @@ class MoipTest extends MoipTestCase
             return;
         }
         $this->fail('Exception was not thrown');
+    }
+
+    /**
+     * Test if we can connect to the API endpoints.
+     * This is primarily to make user we are using HTTPS urls and the certification verification is ok.
+     */
+    public function testConnectEndPoints()
+    {
+        // create a valid session
+        $this->moip->createNewSession();
+        $sess = $this->moip->getSession();
+        $requests = [['url' => Moip::ENDPOINT_PRODUCTION], ['url' => Moip::ENDPOINT_SANDBOX]];
+        $resps = $sess->request_multiple($requests);
+        $this->assertEquals('WELCOME', $resps[0]->body);
+        $this->assertEquals('WELCOME', $resps[1]->body);
     }
 }
