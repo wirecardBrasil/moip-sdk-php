@@ -7,6 +7,7 @@ use Moip\Exceptions;
 use Moip\Http\HTTPConnection;
 use Moip\Http\HTTPRequest;
 use Moip\Moip;
+use Requests_Exception;
 use stdClass;
 
 abstract class MoipResource implements JsonSerializable
@@ -137,48 +138,49 @@ abstract class MoipResource implements JsonSerializable
      * Execute a http request. If payload == null no body will be sent. Empty body ('{}') is supported by sending a
      * empty stdClass.
      *
-     * @param            $path
-     * @param            $method
+     * @param string     $path
+     * @param string     $method
      * @param mixed|null $payload
      *
      * @throws Exceptions\ValidationException  if the API returns a 4xx http status code. Usually means invalid data was sent.
-     * @throws Exceptions\UnautorizedException if the API returns a 401 http status code. Check API token and key
-     * @throws Exceptions\UnexpectedException  if the API returns a 500 http status code, this is not suppose to happen. Please report the error to moip
+     * @throws Exceptions\UnautorizedException if the API returns a 401 http status code. Check API token and key.
+     * @throws Exceptions\UnexpectedException  if the API returns a 500 http status code or something unexpected happens (ie.: Network error).
      *
      * @return stdClass
      */
     protected function httpRequest($path, $method, $payload = null)
     {
-        $httpConnection = $this->createConnection();
-        $httpConnection->addHeader('Content-Type', 'application/json');
+        $http_sess = $this->moip->getSession();
+        $headers = [];
+        $body = null;
         if ($payload !== null) {
-            // if it's json serializable
             $body = json_encode($payload, JSON_UNESCAPED_SLASHES);
-            if ($body) {
-                $httpConnection->addHeader('Content-Length', strlen($body));
-                $httpConnection->setRequestBody($body);
+            if ($body) {// if it's json serializable
+                $headers['Content-Type'] = 'application/json';
+            } else {
+                $body = null;
             }
         }
 
-        /*
-         * @var \Moip\Http\HTTPResponse
-         */
-        $http_response = $httpConnection->execute($path, $method);
+        try {
+            $http_response = $http_sess->request($path, $headers, $body, $method);
+        } catch (Requests_Exception $e) {
+            throw new Exceptions\UnexpectedException($e);
+        }
+        $code = $http_response->status_code;
 
-        $code = $http_response->getStatusCode();
-
-        if ($code >= 200 && $code < 299) {
-            return json_decode($http_response->getContent());
+        if ($code >= 200 && $code < 300) {
+            return json_decode($http_response->body);
         } elseif ($code == 401) {
             throw new Exceptions\UnautorizedException();
         } elseif ($code >= 400 && $code <= 499) {
-            $error_obj = json_decode($http_response->getContent());
+            $error_obj = json_decode($http_response->body);
             $errors = [];
             if ($error_obj && isset($error_obj->errors)) { // just in case
                 foreach ($error_obj->errors as $error) {
                     $errors[] = new Exceptions\Error($error->code, $error->path, $error->description);
                 }
-                throw new Exceptions\ValidationException($code, $http_response->getStatusMessage(), $errors);
+                throw new Exceptions\ValidationException($code, $errors);
             } else {
                 throw new Exceptions\UnexpectedException();
             }
