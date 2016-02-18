@@ -2,7 +2,6 @@
 
 namespace Moip\Tests;
 
-use Mockery as m;
 use Moip\Exceptions;
 use Requests_Exception;
 

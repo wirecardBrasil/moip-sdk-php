@@ -2,7 +2,6 @@
 
 namespace Moip\Tests;
 
-use Mockery as m;
 use Moip\Moip;
 use PHPUnit_Framework_TestCase as TestCase;
 use Requests_Response;
@@ -48,7 +47,6 @@ abstract class MoipTestCase extends TestCase
      */
     public function tearDown()
     {
-        m::close();
         $this->moip = null;
     }
 }
