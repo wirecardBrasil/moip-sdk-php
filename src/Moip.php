@@ -8,6 +8,7 @@ use Moip\Resource\Entry;
 use Moip\Resource\Multiorders;
 use Moip\Resource\Orders;
 use Moip\Resource\Payment;
+use Requests_Session;
 
 class Moip
 {
@@ -28,8 +29,6 @@ class Moip
      * Client name.
      *
      * @const string
-     *
-     * @deprecated
      **/
     const CLIENT = 'Moip SDK';
 
@@ -48,6 +47,11 @@ class Moip
     private $endpoint;
 
     /**
+     * @var Requests_Session HTTP session configured to use the moip API.
+     */
+    private $session;
+
+    /**
      * Create a new aurhentication with the endpoint.
      *
      * @param \Moip\MoipAuthentication               $moipAuthentication
@@ -57,6 +61,7 @@ class Moip
     {
         $this->moipAuthentication = $moipAuthentication;
         $this->endpoint = $endpoint;
+        $this->createNewSession();
     }
 
     /**
@@ -73,6 +78,41 @@ class Moip
         $http_connection->setAuthenticator($this->moipAuthentication);
 
         return $http_connection;
+    }
+
+    /**
+     * Creates a new Request_Session (one is created at construction).
+     *
+     * @param float $timeout         How long should we wait for a response?(seconds with a millisecond precision, default: 30, example: 0.01).
+     * @param float $connect_timeout How long should we wait while trying to connect? (seconds with a millisecond precision, default: 10, example: 0.01)
+     */
+    public function createNewSession($timeout = 30.0, $connect_timeout = 30.0)
+    {
+        $locale = setlocale(LC_ALL, null);
+        if (function_exists('posix_uname')) {
+            $uname = posix_uname();
+            $user_agent = sprintf('Mozilla/4.0 (compatible; %s; PHP/%s %s; %s; %s; %s)',
+                self::CLIENT, PHP_SAPI, PHP_VERSION, $uname['sysname'], $uname['machine'], $locale);
+        } else {
+            $user_agent = sprintf('Mozilla/4.0 (compatible; %s; PHP/%s %s; %s; %s)',
+                self::CLIENT, PHP_SAPI, PHP_VERSION, PHP_OS, $locale);
+        }
+        $sess = new Requests_Session($this->endpoint);
+        $sess->options['auth'] = $this->moipAuthentication;
+        $sess->options['timeout'] = $timeout;
+        $sess->options['connect_timeout'] = $connect_timeout;
+        $sess->options['useragent'] = $user_agent;
+        $this->session = $sess;
+    }
+
+    /**
+     * Returns the http session created.
+     *
+     * @return Requests_Session
+     */
+    public function getSession()
+    {
+        return $this->session;
     }
 
     /**

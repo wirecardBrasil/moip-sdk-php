@@ -2,7 +2,7 @@
 
 namespace Moip;
 
-use Moip\Http\HTTPRequest;
+use Requests_Hooks;
 
 class MoipOAuth implements MoipAuthentication
 {
@@ -24,12 +24,32 @@ class MoipOAuth implements MoipAuthentication
     }
 
     /**
-     * Authentication of a HTTP request.
+     * Register hooks as needed
      *
-     * @param \Moip\Http\HTTPRequest $httpRequest
+     * This method is called in {@see Requests::request} when the user has set
+     * an instance as the 'auth' option. Use this callback to register all the
+     * hooks you'll need.
+     *
+     * @see Requests_Hooks::register
+     *
+     * @param Requests_Hooks $hooks Hook system
      */
-    public function authenticate(HTTPRequest $httpRequest)
+    public function register(Requests_Hooks &$hooks)
     {
-        $httpRequest->addRequestHeader('Authorization', 'OAuth '.$this->accessToken);
+        $hooks->register('requests.before_request', array(&$this, 'before_request'));
+    }
+
+    /**
+     * Sets the authentication header.
+     *
+     * @param string       $url
+     * @param array        $headers
+     * @param array|string $data
+     * @param string       $type
+     * @param array        $options
+     */
+    public function before_request(&$url, &$headers, &$data, &$type, &$options)
+    {
+        $headers['Authorization'] = 'OAuth ' . $this->accessToken;
     }
 }
