@@ -2,7 +2,7 @@
 
 namespace Moip\Resource;
 
-use Moip\Http\HTTPRequest;
+use Requests;
 use stdClass;
 
 class Payment extends MoipResource
@@ -85,7 +85,7 @@ class Payment extends MoipResource
             $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, Multiorders::PATH, $this->multiorder->getId(),
                 self::MULTI_PAYMENTS_PATH);
         }
-        $response = $this->httpRequest($path, HTTPRequest::POST, $this);
+        $response = $this->httpRequest($path, Requests::POST, $this);
 
         return $this->populate($response);
     }

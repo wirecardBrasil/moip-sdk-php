@@ -2,7 +2,6 @@
 
 namespace Moip;
 
-use Moip\Http\HTTPConnection;
 use Moip\Resource\Customer;
 use Moip\Resource\Entry;
 use Moip\Resource\Multiorders;
@@ -62,22 +61,6 @@ class Moip
         $this->moipAuthentication = $moipAuthentication;
         $this->endpoint = $endpoint;
         $this->createNewSession();
-    }
-
-    /**
-     * Create a new api connection instance.
-     *
-     * @param HTTPConnection $http_connection
-     *
-     * @return HTTPConnection
-     */
-    public function createConnection(HTTPConnection $http_connection)
-    {
-        $http_connection->initialize($this->endpoint, true);
-        $http_connection->addHeader('Accept', 'application/json');
-        $http_connection->setAuthenticator($this->moipAuthentication);
-
-        return $http_connection;
     }
 
     /**

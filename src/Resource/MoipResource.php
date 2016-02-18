@@ -4,9 +4,8 @@ namespace Moip\Resource;
 
 use JsonSerializable;
 use Moip\Exceptions;
-use Moip\Http\HTTPConnection;
-use Moip\Http\HTTPRequest;
 use Moip\Moip;
+use Requests;
 use Requests_Exception;
 use stdClass;
 
@@ -53,16 +52,6 @@ abstract class MoipResource implements JsonSerializable
         $this->moip = $moip;
         $this->data = new stdClass();
         $this->initialize();
-    }
-
-    /**
-     * Create a new connecttion.
-     *
-     * @return \Moip\Http\HTTPConnection
-     */
-    protected function createConnection()
-    {
-        return $this->moip->createConnection(new HTTPConnection());
     }
 
     /**
@@ -198,7 +187,7 @@ abstract class MoipResource implements JsonSerializable
      */
     public function getByPath($path)
     {
-        $response = $this->httpRequest($path, HTTPRequest::GET);
+        $response = $this->httpRequest($path, Requests::GET);
 
         return $this->populate($response);
     }
@@ -212,7 +201,7 @@ abstract class MoipResource implements JsonSerializable
      */
     public function createResource($path)
     {
-        $response = $this->httpRequest($path, HTTPRequest::POST, $this);
+        $response = $this->httpRequest($path, Requests::POST, $this);
 
         return $this->populate($response);
     }

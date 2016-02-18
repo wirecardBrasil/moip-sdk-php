@@ -2,8 +2,8 @@
 
 namespace Moip\Resource;
 
+use Requests;
 use ArrayIterator;
-use Moip\Http\HTTPRequest;
 use stdClass;
 
 class Refund extends MoipResource
@@ -110,7 +110,7 @@ class Refund extends MoipResource
     private function execute(stdClass $data = null)
     {
         $body = empty($data) ? new stdClass() : $data;
-        $response = $this->httpRequest($this->getPath(), HTTPRequest::POST, $body);
+        $response = $this->httpRequest($this->getPath(), Requests::POST, $body);
 
         return $this->populate($response);
     }
@@ -236,7 +236,7 @@ class Refund extends MoipResource
     public function getIterator()
     {
         $refunds = [];
-        $response = $this->httpRequest($this->getPath(), HTTPRequest::GET);
+        $response = $this->httpRequest($this->getPath(), Requests::GET);
         foreach ($response->refunds as $refund) {
             $refunds[] = $this->populate($refund);
         }
