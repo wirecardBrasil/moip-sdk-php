@@ -16,13 +16,13 @@ class Moip
      *
      * @const string
      */
-    const ENDPOINT_PRODUCTION = 'api.moip.com.br';
+    const ENDPOINT_PRODUCTION = 'https://api.moip.com.br';
     /**
      * endpoint of sandbox.
      *
      * @const string
      */
-    const ENDPOINT_SANDBOX = 'sandbox.moip.com.br';
+    const ENDPOINT_SANDBOX = 'https://sandbox.moip.com.br';
 
     /**
      * Client name.
