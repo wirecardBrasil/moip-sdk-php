@@ -17,7 +17,8 @@
     ],
     "require": {
         "php": ">=5.5.9",
-        "moip/moip-http-php" : "~1.0"
+        "moip/moip-http-php" : "~1.0",
+        "rmccue/requests": ">=1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.0",
@@ -26,7 +27,8 @@
     "autoload": {
         "psr-4": {
             "Moip\\": "src/"
-        }
+        },
+        "psr-0": {"Requests": "library/"}
     },
     "autoload-dev": {
         "psr-4": {
