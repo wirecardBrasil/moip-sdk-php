@@ -3,10 +3,10 @@
 namespace Moip\Resource;
 
 use JsonSerializable;
+use Moip\Exceptions;
 use Moip\Http\HTTPConnection;
 use Moip\Http\HTTPRequest;
 use Moip\Moip;
-use RuntimeException;
 use stdClass;
 
 abstract class MoipResource implements JsonSerializable
@@ -134,6 +134,52 @@ abstract class MoipResource implements JsonSerializable
     }
 
     /**
+     * Execute a http request. If payload == null no body will be sent. Empty body ('{}') is supported by sending a
+     * empty stdClass.
+     *
+     * @param            $path
+     * @param            $method
+     * @param mixed|null $payload
+     *
+     * @throws Exceptions\ValidationException  if the API returns a 4xx http status code. Usually means invalid data was sent.
+     * @throws Exceptions\UnautorizedException if the API returns a 401 http status code. Check API token and key
+     * @throws Exceptions\UnexpectedException  if the API returns a 500 http status code, this is not suppose to happen. Please report the error to moip
+     *
+     * @return stdClass
+     */
+    protected function httpRequest($path, $method, $payload = null)
+    {
+        $httpConnection = $this->createConnection();
+        $httpConnection->addHeader('Content-Type', 'application/json');
+        if ($payload !== null) {
+            // if it's json serializable
+            $body = json_encode($payload, JSON_UNESCAPED_SLASHES);
+            if ($body) {
+                $httpConnection->addHeader('Content-Length', strlen($body));
+                $httpConnection->setRequestBody($body);
+            }
+        }
+
+        /*
+         * @var \Moip\Http\HTTPResponse
+         */
+        $http_response = $httpConnection->execute($path, $method);
+
+        $code = $http_response->getStatusCode();
+
+        $response_body = $http_response->getContent();
+        if ($code >= 200 && $code < 299) {
+            return json_decode($response_body);
+        } elseif ($code == 401) {
+            throw new Exceptions\UnautorizedException();
+        } elseif ($code >= 400 && $code <= 499) {
+            $errors = Exceptions\Error::parseErrors($response_body);
+            throw new Exceptions\ValidationException($code, $http_response->getStatusMessage(), $errors);
+        }
+        throw new Exceptions\UnexpectedException();
+    }
+
+    /**
      * Find by path.
      *
      * @param string $path
@@ -142,16 +188,9 @@ abstract class MoipResource implements JsonSerializable
      */
     public function getByPath($path)
     {
-        $httpConnection = $this->createConnection();
-        $httpConnection->addHeader('Content-Type', 'application/json');
+        $response = $this->httpRequest($path, HTTPRequest::GET);
 
-        $httpResponse = $httpConnection->execute($path, HTTPRequest::GET);
-
-        if ($httpResponse->getStatusCode() != 200) {
-            throw new RuntimeException($httpResponse->getStatusMessage(), $httpResponse->getStatusCode());
-        }
-
-        return $this->populate(json_decode($httpResponse->getContent()));
+        return $this->populate($response);
     }
 
     /**
@@ -163,19 +202,8 @@ abstract class MoipResource implements JsonSerializable
      */
     public function createResource($path)
     {
-        $body = json_encode($this, JSON_UNESCAPED_SLASHES);
+        $response = $this->httpRequest($path, HTTPRequest::POST, $this);
 
-        $httpConnection = $this->createConnection();
-        $httpConnection->addHeader('Content-Type', 'application/json');
-        $httpConnection->addHeader('Content-Length', strlen($body));
-        $httpConnection->setRequestBody($body);
-
-        $httpResponse = $httpConnection->execute($path, HTTPRequest::POST);
-
-        if ($httpResponse->getStatusCode() != 201) {
-            throw new RuntimeException($httpResponse->getStatusMessage(), $httpResponse->getStatusCode());
-        }
-
-        return $this->populate(json_decode($httpResponse->getContent()));
+        return $this->populate($response);
     }
 }

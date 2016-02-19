@@ -61,13 +61,13 @@ class Entry extends MoipResource
     /**
      * Get entry in api by id.
      * 
-     * @param string $id Event ID that generated the launch.
+     * @param string $id_moip Event ID that generated the launch.
      *
      * @return stdClass
      */
-    public function get($id)
+    public function get($id_moip)
     {
-        return $this->getByPath(sprintf('/%s/%s/%s/', MoipResource::VERSION, self::PATH, $id));
+        return $this->getByPath(sprintf('/%s/%s/%s/', MoipResource::VERSION, self::PATH, $id_moip));
     }
 
     /**
