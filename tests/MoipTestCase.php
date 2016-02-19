@@ -63,6 +63,7 @@ abstract class MoipTestCase extends TestCase
 
     /**
      * @var string same as `$last_cus_id` but for orders.
+     *
      * @see $last_cus_id
      */
     protected $last_ord_id = 'meu_id_pedido';
