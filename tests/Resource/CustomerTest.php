@@ -25,10 +25,10 @@ class CustomerTest extends MoipTestCase
      */
     public function testShouldReceiveConstAddressBillingIsValid()
     {
-        $address_billing = 'BILLING';
-        $const_address_billing = constant('\Moip\Resource\Customer::ADDRESS_BILLING');
+        $expected = 'BILLING';
+        $actual = constant('\Moip\Resource\Customer::ADDRESS_BILLING');
 
-        $this->assertEquals($address_billing, $const_address_billing);
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -36,10 +36,10 @@ class CustomerTest extends MoipTestCase
      */
     public function testShouldReceiveConstAddressShippingIsValid()
     {
-        $address_shipping = 'SHIPPING';
-        $const_address_shipping = constant('\Moip\Resource\Customer::ADDRESS_SHIPPING');
+        $expected = 'SHIPPING';
+        $actual = constant('\Moip\Resource\Customer::ADDRESS_SHIPPING');
 
-        $this->assertEquals($address_shipping, $const_address_shipping);
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -47,10 +47,10 @@ class CustomerTest extends MoipTestCase
      */
     public function testShouldReceiveConstCountryIsValid()
     {
-        $address_country = 'BRA';
-        $const_address_country = constant('\Moip\Resource\Customer::ADDRESS_COUNTRY');
+        $expected = 'BRA';
+        $actual = constant('\Moip\Resource\Customer::ADDRESS_COUNTRY');
 
-        $this->assertEquals($address_country, $const_address_country);
+        $this->assertEquals($expected, $actual);
     }
 
     /**

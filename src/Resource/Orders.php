@@ -176,13 +176,13 @@ class Orders extends MoipResource
     /**
      * Get an order in MoIP.
      *
-     * @param string $id Id MoIP order id
+     * @param string $id_moip Id MoIP order id
      *
      * @return stdClass
      */
-    public function get($id)
+    public function get($id_moip)
     {
-        return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, self::PATH, $id));
+        return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, self::PATH, $id_moip));
     }
 
     /**
