@@ -15,6 +15,11 @@ use Requests_Response;
 abstract class MoipTestCase extends TestCase
 {
 
+    /**
+     * Variables representing the test modes. On MOCK mode no http request will be made.
+     * In SANDBOX mode HTTP requests will be made to the Moip::SANDBOX_ENDPOINT, the authentication information
+     * is retrieved from the MOIP_TOKEN and MOIP_KEY environment variables
+     */
     const MOCK = 'mock';
     const SANDBOX = 'sandbox';
 
@@ -47,8 +52,15 @@ abstract class MoipTestCase extends TestCase
      */
     protected $body_order = '{"id":"ORD-HG479ZEIB7LV","ownId":"meu_id_pedido","status":"CREATED","createdAt":"2016-02-19T12:24:55.849-02","updatedAt":"2016-02-19T12:24:55.849-02","amount":{"total":102470,"fees":0,"refunds":0,"liquid":0,"otherReceivers":0,"currency":"BRL","subtotals":{"shipping":1490,"addition":0,"discount":1000,"items":101980}},"items":[{"price":100000,"detail":"Mais info...","quantity":1,"product":"Nome do produto"},{"price":990,"detail":"Abacaxi de terra de areia","quantity":2,"product":"abacaxi"}],"customer":{"id":"CUS-7U5K9KWG8DBZ","ownId":"meu_id_saasdadadsnasdasddboxssssssssss","fullname":"Jose Silva","createdAt":"2016-02-18T20:03:28.000-02","birthDate":"1989-06-01T00:00:00.000-03","email":"jose_silva0@email.com","phone":{"countryCode":"55","areaCode":"11","number":"66778899"},"taxDocument":{"type":"CPF","number":"22222222222"},"shippingAddress":{"zipCode":"01234000","street":"Avenida Faria Lima","streetNumber":"2927","complement":"8","city":"Sao Paulo","district":"Itaim","state":"SP","country":"BRA"},"_links":{"self":{"href":"https://sandbox.moip.com.br/v2/customers/CUS-7U5K9KWG8DBZ"}}},"payments":[],"refunds":[],"entries":[],"events":[{"type":"ORDER.CREATED","createdAt":"2016-02-19T12:24:55.849-02","description":""}],"receivers":[{"moipAccount":{"id":"MPA-7ED9D2D0BC81","login":"ev@traca.com.br","fullname":"Carmen Elisabete de Menezes ME"},"type":"PRIMARY","amount":{"total":102470,"fees":0,"refunds":0}}],"shippingAddress":{"zipCode":"01234000","street":"Avenida Faria Lima","streetNumber":"2927","complement":"8","city":"Sao Paulo","district":"Itaim","state":"SP","country":"BRA"},"_links":{"self":{"href":"https://sandbox.moip.com.br/v2/orders/ORD-HG479ZEIB7LV"},"checkout":{"payOnlineBankDebitItau":{"redirectHref":"https://checkout-sandbox.moip.com.br/debit/itau/ORD-HG479ZEIB7LV"},"payCreditCard":{"redirectHref":"https://checkout-sandbox.moip.com.br/creditcard/ORD-HG479ZEIB7LV"},"payBoleto":{"redirectHref":"https://checkout-sandbox.moip.com.br/boleto/ORD-HG479ZEIB7LV"}}}}';
 
+    /**
+     * @var string $last_cus_id holds the last generated customer ownId. In mock mode it'll be always the default, but it changes on sandbox mode.
+     */
     protected $last_cus_id = 'meu_id_customer';
 
+    /**
+     * @var string same as $last_cus_id but for orders.
+     * @see $last_cus_id
+     */
     protected $last_ord_id = 'meu_id_pedido';
 
     protected $sandbox_mock = self::MOCK;
@@ -74,7 +86,7 @@ abstract class MoipTestCase extends TestCase
     }
 
     /**
-     * Mock a http request.
+     * If in MOCK mode returns a mocked Requests_Sessesion if in SANDBOX mode, creates a new session.
      *
      * @param string $body        what the request will return
      * @param int    $status_code what http code the request will return
