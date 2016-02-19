@@ -11,9 +11,10 @@ class PaymentTest extends MoipTestCase
      */
     public function testCreditCardPCI()
     {
-        $this->mockHttpSession($this->body_cc_pay_pci);
+        $this->mockHttpSession($this->body_order);
         $order = $this->createOrder()->create();
-        $cc = '555666677778884';
+        $this->mockHttpSession($this->body_cc_pay_pci);
+        $cc = '5555666677778884';
         $payment = $order->payments()->setCreditCard(5, 2018, $cc, 123, $this->createCustomer())->execute();
         $this->assertNotEmpty($payment->getFundingInstrument()->creditCard);
         $first6 = $payment->getFundingInstrument()->creditCard->first6;
