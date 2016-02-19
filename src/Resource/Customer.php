@@ -134,7 +134,7 @@ class Customer extends MoipResource
     /**
      * Get customer address.
      *
-     * @return string Customer's address.
+     * @return \stdClass Customer's address.
      */
     public function getShippingAddress()
     {
