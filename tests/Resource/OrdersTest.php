@@ -35,7 +35,7 @@ class OrdersTest extends MoipTestCase
     {
         $order_created = $this->executeOrder();
 
-        $this->assertEquals('ORD-HG479ZEIB7LV', $order_created->getId());
+        $this->assertEquals($this->last_ord_id, $order_created->getOwnId());
         $this->assertEquals('CREATED', $order_created->getStatus());
     }
 

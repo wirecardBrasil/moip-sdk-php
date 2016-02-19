@@ -67,20 +67,23 @@ class MoipTest extends MoipTestCase
      */
     public function testShouldRaiseValidationException()
     {
-        $body = '{"errors":[{"code":"API-1","path":"customer.birthDate","description":"O valor deve ser uma string"}]}';
+        $body = '{"errors":[{"code":"CUS-007","path":"customer.birthDate","description":"O valor deve ser uma string"}]}';
         $model = json_decode($body);
         $error_model = $model->errors[0];
         $this->mockHttpSession($body, 400);
         try {
-            $this->moip->orders()->get('ORD-1AWC30TWYZMX'); //the id doesn't matter because this will return the mocked body
+            $this->moip->customers()->setOwnId(uniqid())
+                ->setFullname("Fulano teste")
+                ->setEmail('teste@teste.com.br')
+                ->setBirthDate("1111111")//invalid
+                ->create();
         } catch (Exceptions\ValidationException $e) {
             $errors = $e->getErrors();
             $this->assertCount(1, $errors);
             $error = $errors[0];
             $this->assertEquals($error_model->code, $error->getCode(), 'getCode didn\'t returned the expected value');
             $this->assertEquals($error_model->path, $error->getPath(), 'getPath didn\'t returned the expected value');
-            $this->assertEquals($error_model->description, $error->getDescription(),
-                'getDescription didn\'t returned the expected value');
+
             return;
         }
         $this->fail('Exception testShouldRaiseValidationException not thrown');
@@ -91,6 +94,10 @@ class MoipTest extends MoipTestCase
      */
     public function testShouldRaiseUnautorizedException()
     {
+        if ($this->sandbox_mock == self::SANDBOX) {
+            $this->markTestSkipped('Only testable in Mock mode');
+            return;
+        }
         $this->setExpectedException('\Moip\Exceptions\UnautorizedException');
         $body = '{ "ERROR" : "Token or Key are invalids" }'; // the body is not processed in any way, i'm putting this for completeness
         $this->mockHttpSession($body, 401);
@@ -102,6 +109,10 @@ class MoipTest extends MoipTestCase
      */
     public function testShouldRaiseUnexpectedException500()
     {
+        if ($this->sandbox_mock == self::SANDBOX) {
+            $this->markTestSkipped('Only testable in Mock mode');
+            return;
+        }
         $this->setExpectedException('\Moip\Exceptions\UnexpectedException');
         $this->mockHttpSession('error', 500); // the body isn't processed
         $this->moip->orders()->get('ORD-1AWC30TWYZMX');
@@ -112,6 +123,10 @@ class MoipTest extends MoipTestCase
      */
     public function testShouldRaiseUnexpectedExceptionNetworkError()
     {
+        if ($this->sandbox_mock == self::SANDBOX) {
+            $this->markTestSkipped('Only testable in Mock mode');
+            return;
+        }
         $sess = $this->getMock('\Requests_Session');
         $sess->expects($this->once())->method('request')->willThrowException(new Requests_Exception('test error',
             'test'));
