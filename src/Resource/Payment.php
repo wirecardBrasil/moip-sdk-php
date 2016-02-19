@@ -93,13 +93,13 @@ class Payment extends MoipResource
     /**
      * Get an payment in MoIP.
      *
-     * @param string $id Id MoIP payment
+     * @param string $id_moip Id MoIP payment
      *
      * @return stdClass
      */
-    public function get($id)
+    public function get($id_moip)
     {
-        return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, self::PATH, $id));
+        return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, self::PATH, $id_moip));
     }
 
     /**

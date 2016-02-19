@@ -102,13 +102,13 @@ class Customer extends MoipResource
     /**
      * Find a customer.
      *
-     * @param string $id
+     * @param string $id_moip
      *
      * @return stdClass
      */
-    public function get($id)
+    public function get($id_moip)
     {
-        return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, self::PATH, $id));
+        return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, self::PATH, $id_moip));
     }
 
     /**

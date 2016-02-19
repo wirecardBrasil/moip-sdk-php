@@ -49,13 +49,13 @@ class Multiorders extends MoipResource
     /**
      * Get an multiorder in MoIP.
      *
-     * @param string $id Id MoIP order id
+     * @param string $id_moip Id MoIP order id
      *
      * @return stdClass
      */
-    public function get($id)
+    public function get($id_moip)
     {
-        return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, Entry::PATH, $id));
+        return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, Entry::PATH, $id_moip));
     }
 
     /**
