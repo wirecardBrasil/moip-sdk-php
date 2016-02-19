@@ -1,11 +1,11 @@
 <?php
+
 namespace Moip\Tests\Resource;
 
 use Moip\Tests\MoipTestCase;
 
 class PaymentTest extends MoipTestCase
 {
-
     //todo: test boleto and credit card hash
 
     /**

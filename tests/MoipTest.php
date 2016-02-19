@@ -11,7 +11,6 @@ use Requests_Exception;
  */
 class MoipTest extends MoipTestCase
 {
-
     /**
      * Test should return instance of \Moip\Resource\Customer.
      */
