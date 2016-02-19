@@ -67,6 +67,12 @@ class MoipTest extends MoipTestCase
      */
     public function testShouldRaiseValidationException()
     {
+        /*
+         * WARNING FIXME:
+         * The api has a bug right now it's return 'birthdateMatchesPattern' but thats wrong, it's supposed to return
+         * customer.birthDate. I talked to the moip support team, they're aware of the bug and WILL be fixing this bug
+         * wich means this test will eventually fail.
+         */
         $body = '{"errors":[{"code":"CUS-007","path":"birthdateMatchesPattern","description":"O valor deve ser uma string"}]}';
         $model = json_decode($body);
         $error_model = $model->errors[0];
