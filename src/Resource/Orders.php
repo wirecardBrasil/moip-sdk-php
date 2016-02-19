@@ -166,7 +166,7 @@ class Orders extends MoipResource
     /**
      * Create a new order in MoIP.
      *
-     * @return stdClass
+     * @return Orders
      */
     public function create()
     {
