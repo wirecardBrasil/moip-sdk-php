@@ -51,7 +51,7 @@ class OrdersTest extends MoipTestCase
     }
 
     /**
-     *Test if the total is correct
+     *Test if the total is correct.
      */
     public function testTotal()
     {
@@ -59,5 +59,18 @@ class OrdersTest extends MoipTestCase
 
         $total = $order->getSubtotalItems() + $order->getSubtotalShipping() + $order->getSubtotalAddition() - $order->getSubtotalDiscount();
         $this->assertEquals($total, $order->getAmountTotal());
+    }
+
+    /**
+     * Test if the total is equal to the expected total.
+     */
+    public function testTotalConstant()
+    {
+        $order = $this->executeOrder();
+        $expected = (100000 + 2 * 990 + 1490) - 1000;
+        $total_calculated = $total = $order->getSubtotalItems() + $order->getSubtotalShipping() + $order->getSubtotalAddition() - $order->getSubtotalDiscount();
+
+        $this->assertEquals($expected, $total_calculated);
+        $this->assertEquals($expected, $order->getAmountTotal());
     }
 }
