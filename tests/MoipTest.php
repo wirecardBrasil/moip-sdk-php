@@ -67,7 +67,7 @@ class MoipTest extends MoipTestCase
      */
     public function testShouldRaiseValidationException()
     {
-        $body = '{"errors":[{"code":"CUS-007","path":"customer.birthDate","description":"O valor deve ser uma string"}]}';
+        $body = '{"errors":[{"code":"CUS-007","path":"birthdateMatchesPattern","description":"O valor deve ser uma string"}]}';
         $model = json_decode($body);
         $error_model = $model->errors[0];
         $this->mockHttpSession($body, 400);
