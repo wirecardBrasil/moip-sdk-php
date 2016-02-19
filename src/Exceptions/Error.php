@@ -69,4 +69,23 @@ class Error
     {
         return $this->description;
     }
+
+    /**
+     * Creates an Error array from a json string.
+     *
+     * @param string $json_string string returned by the Moip API
+     *
+     * @return Error[]
+     */
+    public static function parseErrors($json_string)
+    {
+        $error_obj = json_decode($json_string);
+        $errors = [];
+        if (!empty($error_obj->errors)) {
+            foreach ($error_obj->errors as $error) {
+                $errors[] = new self($error->code, $error->path, $error->description);
+            }
+        }
+        return $errors;
+    }
 }

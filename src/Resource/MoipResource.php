@@ -156,22 +156,16 @@ abstract class MoipResource implements JsonSerializable
         } catch (Requests_Exception $e) {
             throw new Exceptions\UnexpectedException($e);
         }
-        $code = $http_response->status_code;
 
+        $code = $http_response->status_code;
+        $response_body = $http_response->body;
         if ($code >= 200 && $code < 300) {
-            return json_decode($http_response->body);
+            return json_decode($response_body);
         } elseif ($code == 401) {
             throw new Exceptions\UnautorizedException();
         } elseif ($code >= 400 && $code <= 499) {
-            $error_obj = json_decode($http_response->body);
-            if (isset($error_obj->errors)) { // just in case
-                $errors = [];
-                foreach ($error_obj->errors as $error) {
-                    $errors[] = new Exceptions\Error($error->code, $error->path, $error->description);
-                }
-                throw new Exceptions\ValidationException($code, $errors);
-            }
-            throw new Exceptions\UnexpectedException();
+            $errors = Exceptions\Error::parseErrors($response_body);
+            throw new Exceptions\ValidationException($code, $errors);
         }
         throw new Exceptions\UnexpectedException();
     }
