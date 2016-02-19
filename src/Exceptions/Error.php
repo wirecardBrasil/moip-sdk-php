@@ -77,7 +77,8 @@ class Error
      *
      * @return Error[]
      */
-    static public function parseErrors($json_string){
+    public static function parseErrors($json_string)
+    {
         $error_obj = json_decode($json_string);
         $errors = [];
         if (!empty($error_obj->errors)) {
@@ -85,7 +86,7 @@ class Error
                 $errors[] = new self($error->code, $error->path, $error->description);
             }
         }
-        
+
         return $errors;
     }
 }
