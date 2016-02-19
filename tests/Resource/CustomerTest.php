@@ -50,14 +50,14 @@ class CustomerTest extends MoipTestCase
     }
 
     /**
-     * Test customer shipping address
+     * Test customer shipping address.
      */
     public function testShippingAddress()
     {
         $this->mockHttpSession($this->body_client);
         $customer_original = $this->createCustomer();
         $customer = $customer_original->create();
-        /** @var Customer $customer */
+        /* @var Customer $customer */
         $this->assertEquals($customer_original->getShippingAddress()->street, $customer->getShippingAddress()->street);
         $this->assertEquals($customer_original->getShippingAddress()->streetNumber, $customer->getShippingAddress()->streetNumber);
         $this->assertEquals($customer_original->getShippingAddress()->complement, $customer->getShippingAddress()->complement);

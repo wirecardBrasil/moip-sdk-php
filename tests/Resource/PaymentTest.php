@@ -5,7 +5,9 @@ use Moip\Tests\MoipTestCase;
 
 class PaymentTest extends MoipTestCase
 {
+
     //todo: test boleto and credit card hash
+
     /**
      * Test creating a credit card payment, passing all credit card data.
      */

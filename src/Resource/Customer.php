@@ -362,7 +362,7 @@ class Customer extends MoipResource
     /**
      * Set tax document from customer.
      *
-     * @param string    $number Document number.
+     * @param string $number Document number.
      * @param string $type   Document type.
      *
      * @return $this

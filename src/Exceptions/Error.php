@@ -86,6 +86,7 @@ class Error
                 $errors[] = new self($error->code, $error->path, $error->description);
             }
         }
+
         return $errors;
     }
 }

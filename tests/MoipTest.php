@@ -79,9 +79,9 @@ class MoipTest extends MoipTestCase
         $this->mockHttpSession($body, 400);
         try {
             $this->moip->customers()->setOwnId(uniqid())
-                ->setFullname("Fulano teste")
+                ->setFullname('Fulano teste')
                 ->setEmail('teste@teste.com.br')
-                ->setBirthDate("1111111")//invalid
+                ->setBirthDate('1111111')//invalid
                 ->create();
         } catch (Exceptions\ValidationException $e) {
             $errors = $e->getErrors();
@@ -102,6 +102,7 @@ class MoipTest extends MoipTestCase
     {
         if ($this->sandbox_mock == self::SANDBOX) {
             $this->markTestSkipped('Only testable in Mock mode');
+
             return;
         }
         $this->setExpectedException('\Moip\Exceptions\UnautorizedException');
@@ -117,6 +118,7 @@ class MoipTest extends MoipTestCase
     {
         if ($this->sandbox_mock == self::SANDBOX) {
             $this->markTestSkipped('Only testable in Mock mode');
+
             return;
         }
         $this->setExpectedException('\Moip\Exceptions\UnexpectedException');
@@ -131,6 +133,7 @@ class MoipTest extends MoipTestCase
     {
         if ($this->sandbox_mock == self::SANDBOX) {
             $this->markTestSkipped('Only testable in Mock mode');
+
             return;
         }
         $sess = $this->getMock('\Requests_Session');
@@ -142,6 +145,7 @@ class MoipTest extends MoipTestCase
         } catch (Exceptions\UnexpectedException $e) {
             // test exception chaining
             $this->assertInstanceOf('Requests_Exception', $e->getPrevious());
+
             return;
         }
         $this->fail('Exception was not thrown');

@@ -2,8 +2,8 @@
 
 namespace Moip\Tests\Resource;
 
-use Moip\Tests\MoipTestCase;
 use Moip\Resource\Orders;
+use Moip\Tests\MoipTestCase;
 
 class OrdersTest extends MoipTestCase
 {

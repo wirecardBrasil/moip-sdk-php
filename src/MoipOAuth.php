@@ -36,7 +36,7 @@ class MoipOAuth implements MoipAuthentication
      */
     public function register(Requests_Hooks &$hooks)
     {
-        $hooks->register('requests.before_request', array(&$this, 'before_request'));
+        $hooks->register('requests.before_request', [&$this, 'before_request']);
     }
 
     /**
@@ -50,6 +50,6 @@ class MoipOAuth implements MoipAuthentication
      */
     public function before_request(&$url, &$headers, &$data, &$type, &$options)
     {
-        $headers['Authorization'] = 'OAuth ' . $this->accessToken;
+        $headers['Authorization'] = 'OAuth '.$this->accessToken;
     }
 }

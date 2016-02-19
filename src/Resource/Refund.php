@@ -2,8 +2,8 @@
 
 namespace Moip\Resource;
 
-use Requests;
 use ArrayIterator;
+use Requests;
 use stdClass;
 
 class Refund extends MoipResource

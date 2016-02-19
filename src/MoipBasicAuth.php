@@ -45,7 +45,7 @@ class MoipBasicAuth implements MoipAuthentication
      */
     public function register(Requests_Hooks &$hooks)
     {
-        $hooks->register('requests.before_request', array(&$this, 'before_request'));
+        $hooks->register('requests.before_request', [&$this, 'before_request']);
     }
 
     /**
