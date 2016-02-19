@@ -118,7 +118,7 @@ class Payment extends MoipResource
      *
      * @param \stdClass $response
      *
-     * @return $this
+     * @return Payment
      */
     protected function populate(stdClass $response)
     {
@@ -134,6 +134,8 @@ class Payment extends MoipResource
         $payment->data->fees = $this->getIfSet('fees', $response);
         $payment->data->refunds = $this->getIfSet('refunds', $response);
         $payment->data->_links = $this->getIfSet('_links', $response);
+        $payment->data->createdAt = $this->getIfSetDateTime('createdAt', $response);
+        $payment->data->updatedAt = $this->getIfSetDateTime('updatedAt', $response);
 
         return $payment;
     }
@@ -149,6 +151,37 @@ class Payment extends MoipResource
         $refund->setPayment($this);
 
         return $refund;
+    }
+
+    /**
+     * get creation time.
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->data->createdAt;
+    }
+
+    /**
+     * Returns when the last update occurred.
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->data->updatedAt;
+    }
+
+    /**
+     * Returns the funding instrument.
+     *
+     * @return stdClass
+     */
+    public function getFundingInstrument()
+    {
+        //todo: return a funding instrument object
+        return $this->data->fundingInstrument;
     }
 
     /**
@@ -244,7 +277,7 @@ class Payment extends MoipResource
      *
      * @param int                     $expirationMonth Card expiration month
      * @param int                     $expirationYear  Year of card expiration.
-     * @param int                     $number          Card number.
+     * @param string                  $number          Card number.
      * @param int                     $cvc             Card Security Code.
      * @param \Moip\Resource\Customer $holder
      *
