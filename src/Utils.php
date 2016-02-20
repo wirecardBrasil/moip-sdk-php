@@ -6,7 +6,9 @@ class Utils
     /**
      * convert a money amount (represented by a float or string (based on locale) ie.: R$ 5,00) to cents (represented by an int).
      *
-     * @param float|string $amount
+     * @param float $amount
+     *
+     * @throws \UnexpectedValueException
      *
      * @return int
      */
@@ -18,8 +20,9 @@ class Utils
          * todo: search for a better way
          */
 
-        if (is_float($amount)) {
-            $amount = "$amount";
+        if (!is_float($amount)) {
+            $type = gettype($amount);
+            throw new \UnexpectedValueException("Needs a float! not $type");
         }
 
         //handle locales
@@ -27,9 +30,6 @@ class Utils
 
         $amount = str_replace($locale['mon_thousands_sep'], '', $amount);
         $amount = str_replace($locale['mon_decimal_poin'], '.', $amount);
-
-        //clean the rest
-        $amount = preg_replace("/([^0-9\\.])/i", "", $amount);
 
         $parts = explode(".", "$amount");
 
