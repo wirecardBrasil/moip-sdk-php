@@ -29,7 +29,8 @@ class Utils
         $locale = localeconv();
 
         $amount = str_replace($locale['mon_thousands_sep'], '', $amount);
-        $amount = str_replace($locale['mon_decimal_poin'], '.', $amount);
+        $amount = str_replace($locale['mon_decimal_point'], '.', $amount);
+        $amount = str_replace($locale['decimal_point'], '.', $amount);
 
         $parts = explode(".", "$amount");
 
