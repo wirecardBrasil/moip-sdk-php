@@ -4,25 +4,37 @@ namespace Moip;
 class Utils
 {
     /**
-     * convert a money amount (represented by a float) to cents (represented by an int).
+     * convert a money amount (represented by a float or string (based on locale) ie.: R$ 5,00) to cents (represented by an int).
      *
-     * @param float $amount
+     * @param float|string $amount
      *
      * @return int
      */
     public static function toCents($amount)
     {
-
         /*
          * There's probably a better way, but this is what i could come up with
          * to avoid rounding errors
-         * todo: find a better way
+         * todo: search for a better way
          */
+
+        if (is_float($amount)) {
+            $amount = "$amount";
+        }
+
+        //handle locales
+        $locale = localeconv();
+
+        $amount = str_replace($locale['mon_thousands_sep'], '', $amount);
+        $amount = str_replace($locale['mon_decimal_poin'], '.', $amount);
+
+        //clean the rest
+        $amount = preg_replace("/([^0-9\\.])/i", "", $amount);
+
         $parts = explode(".", "$amount");
 
         // handle the case where $amount has a .0 fraction part
         if (count($parts) == 1) {
-            var_dump($parts);
             $parts[] = '00';
         }
 
