@@ -227,7 +227,7 @@ class Payment extends MoipResource
     {
         $this->data->fundingInstrument->creditCard->holder = new stdClass();
         $this->data->fundingInstrument->creditCard->holder->fullname = $holder->getFullname();
-        $this->data->fundingInstrument->creditCard->holder->birthdate = $holder->getBirthDate();
+        $this->data->fundingInstrument->creditCard->holder->birthdate = $holder->getBirthDate()->format('Y-m-d'); //#BUG-FIX
         $this->data->fundingInstrument->creditCard->holder->taxDocument = new stdClass();
         $this->data->fundingInstrument->creditCard->holder->taxDocument->type = $holder->getTaxDocumentType();
         $this->data->fundingInstrument->creditCard->holder->taxDocument->number = $holder->getTaxDocumentNumber();
