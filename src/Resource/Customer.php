@@ -346,6 +346,7 @@ class Customer extends MoipResource
      */
     public function setBirthDate($birthDate)
     {
+        var_dump($birthDate instanceof \DateTime);
         if ($birthDate instanceof \DateTime) {
             $birthDate = $birthDate->format('Y-m-d');
         }
