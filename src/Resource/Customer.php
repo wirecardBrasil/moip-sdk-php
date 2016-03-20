@@ -102,13 +102,13 @@ class Customer extends MoipResource
     /**
      * Find a customer.
      *
-     * @param string $id
+     * @param string $id_moip
      *
      * @return stdClass
      */
-    public function get($id)
+    public function get($id_moip)
     {
-        return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, self::PATH, $id));
+        return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, self::PATH, $id_moip));
     }
 
     /**
@@ -315,6 +315,10 @@ class Customer extends MoipResource
         if ($holder === null) {
             $holder = $this;
         }
+        $birthdate = $holder->getBirthDate();
+        if ($birthdate instanceof \DateTime) {
+            $birthdate = $birthdate->format('Y-m-d');
+        }
 
         $this->data->fundingInstrument = new stdClass();
         $this->data->fundingInstrument->method = Payment::METHOD_CREDIT_CARD;
@@ -325,7 +329,7 @@ class Customer extends MoipResource
         $this->data->fundingInstrument->creditCard->cvc = $cvc;
         $this->data->fundingInstrument->creditCard->holder = new stdClass();
         $this->data->fundingInstrument->creditCard->holder->fullname = $holder->getFullname();
-        $this->data->fundingInstrument->creditCard->holder->birthdate = $holder->getBirthDate();
+        $this->data->fundingInstrument->creditCard->holder->birthdate = $birthdate;
         $this->data->fundingInstrument->creditCard->holder->taxDocument = new stdClass();
         $this->data->fundingInstrument->creditCard->holder->taxDocument->type = $holder->getTaxDocumentType();
         $this->data->fundingInstrument->creditCard->holder->taxDocument->number = $holder->getTaxDocumentNumber();

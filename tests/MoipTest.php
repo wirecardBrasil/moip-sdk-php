@@ -14,10 +14,10 @@ class MoipTest extends MoipTestCase
      */
     public function testShouldReceiveEndpointProductionIsValid()
     {
-        $endpoint_production = 'api.moip.com.br';
-        $const_endpoint_production = constant('\Moip\Moip::ENDPOINT_PRODUCTION');
+        $expected = 'api.moip.com.br';
+        $actual = constant('\Moip\Moip::ENDPOINT_PRODUCTION');
 
-        $this->assertEquals($endpoint_production, $const_endpoint_production);
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -25,10 +25,10 @@ class MoipTest extends MoipTestCase
      */
     public function testShouldReceiveSandboxProductionIsValid()
     {
-        $endpoint_sandbox = 'sandbox.moip.com.br';
-        $const_endpoint_sandbox = constant('\Moip\Moip::ENDPOINT_SANDBOX');
+        $expected = 'sandbox.moip.com.br';
+        $actual = constant('\Moip\Moip::ENDPOINT_SANDBOX');
 
-        $this->assertEquals($endpoint_sandbox, $const_endpoint_sandbox);
+        $this->assertEquals($expected, $actual);
     }
 
     /**

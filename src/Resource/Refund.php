@@ -4,7 +4,6 @@ namespace Moip\Resource;
 
 use ArrayIterator;
 use Moip\Http\HTTPRequest;
-use RuntimeException;
 use stdClass;
 
 class Refund extends MoipResource
@@ -103,27 +102,17 @@ class Refund extends MoipResource
 
     /**
      * Create a new refund in api MoIP.
-     * 
+     *
+     * @param stdClass $data
+     *
      * @return $this
      */
     private function execute(stdClass $data = null)
     {
-        $body = $data == null ? '{}' : json_encode($data, JSON_UNESCAPED_SLASHES);
+        $body = empty($data) ? new stdClass() : $data;
+        $response = $this->httpRequest($this->getPath(), HTTPRequest::POST, $body);
 
-        $httpConnection = $this->createConnection();
-        $httpConnection->addHeader('Content-Type', 'application/json');
-        $httpConnection->addHeader('Content-Length', strlen($body));
-        $httpConnection->setRequestBody($body);
-
-        $path = $this->getPath();
-
-        $httpResponse = $httpConnection->execute($path, HTTPRequest::POST);
-
-        if ($httpResponse->getStatusCode() != 200) {
-            throw new RuntimeException($httpResponse->getStatusMessage(), $httpResponse->getStatusCode());
-        }
-
-        return $this->populate(json_decode($httpResponse->getContent()));
+        return $this->populate($response);
     }
 
     /**
@@ -246,20 +235,8 @@ class Refund extends MoipResource
      */
     public function getIterator()
     {
-        $httpConnection = $this->createConnection();
-        $httpConnection->addHeader('Content-Type', 'application/json');
-
-        $path = $this->getPath();
-
-        $httpResponse = $httpConnection->execute($path, HTTPRequest::GET);
-
-        if ($httpResponse->getStatusCode() != 200) {
-            throw new RuntimeException($httpResponse->getStatusMessage(), $httpResponse->getStatusCode());
-        }
-
-        $response = json_decode($httpResponse->getContent());
         $refunds = [];
-
+        $response = $this->httpRequest($this->getPath(), HTTPRequest::GET);
         foreach ($response->refunds as $refund) {
             $refunds[] = $this->populate($refund);
         }
