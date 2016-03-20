@@ -117,4 +117,11 @@ class MoipTest extends MoipTestCase
 
         $this->assertEquals($multiorders, $this->moip->multiorders());
     }
+
+    public function testShouldGetEndpoint()
+    {
+        $expected = constant('\Moip\Moip::ENDPOINT_SANDBOX');
+
+        $this->assertEquals($expected, $this->moip->getEndpoint());
+    }
 }

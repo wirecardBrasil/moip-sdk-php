@@ -25,7 +25,7 @@ abstract class MoipTestCase extends TestCase
      */
     public function setUp()
     {
-        $this->moip = new Moip(m::mock(MoipAuthentication::class));
+        $this->moip = new Moip(m::mock(MoipAuthentication::class), constant('\Moip\Moip::ENDPOINT_SANDBOX'));
     }
 
     /**
