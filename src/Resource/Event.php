@@ -21,7 +21,7 @@ class Event extends MoipResource
 
     /**
      * Get event Type.
-     * 
+     *
      * @return string possible values:
      *                ORDER.CREATED
      *                ORDER.PAID
@@ -53,7 +53,7 @@ class Event extends MoipResource
 
     /**
      * Get creation date of the event.
-     * 
+     *
      * @return \DateTime
      */
     public function getCreatedAt()
@@ -64,7 +64,7 @@ class Event extends MoipResource
 
     /**
      * Get event Description.
-     * 
+     *
      * @return string
      */
     public function getDescription()

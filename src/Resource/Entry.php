@@ -24,7 +24,7 @@ class Entry extends MoipResource
 
     /**
      * Mount the entry.
-     * 
+     *
      * @param \stdClass $response
      *
      * @return Entry Entry information.
@@ -60,7 +60,7 @@ class Entry extends MoipResource
 
     /**
      * Get entry in api by id.
-     * 
+     *
      * @param string $id_moip Event ID that generated the launch.
      *
      * @return stdClass
@@ -72,7 +72,7 @@ class Entry extends MoipResource
 
     /**
      * Get id from entry.
-     * 
+     *
      * @return string Event ID that generated the launch.
      */
     public function getId()
@@ -82,7 +82,7 @@ class Entry extends MoipResource
 
     /**
      * Get status from entry.
-     * 
+     *
      * @return string Launch status. Possible values: SCHEDULED, SETTLED.
      */
     public function getStatus()
@@ -97,7 +97,7 @@ class Entry extends MoipResource
 
     /**
      * Get total value of order.
-     * 
+     *
      * @return int|float
      */
     public function getAmountTotal()
@@ -107,7 +107,7 @@ class Entry extends MoipResource
 
     /**
      * Get total value of MoIP rate.
-     * 
+     *
      * @return int|float
      */
     public function getAmountFee()
@@ -117,7 +117,7 @@ class Entry extends MoipResource
 
     /**
      * Get net total value.
-     * 
+     *
      * @return int|float
      */
     public function getAmountLiquid()
@@ -127,7 +127,7 @@ class Entry extends MoipResource
 
     /**
      * Get currency used in the application. Possible values: BRL.
-     * 
+     *
      * @return string
      */
     public function getAmountCurrency()
@@ -137,7 +137,7 @@ class Entry extends MoipResource
 
     /**
      * Get additional description.
-     * 
+     *
      * @return string
      */
     public function getDetails()
@@ -147,7 +147,7 @@ class Entry extends MoipResource
 
     /**
      * Get parant payments.
-     * 
+     *
      * @return string
      */
     public function getParentPayments()
@@ -157,7 +157,7 @@ class Entry extends MoipResource
 
     /**
      * Get expected date of settlement.
-     * 
+     *
      * @return \DateTime
      */
     public function getScheduledFor()
@@ -177,7 +177,7 @@ class Entry extends MoipResource
 
     /**
      * Get date of last update.
-     * 
+     *
      * @return \DateTime
      */
     public function getUpdatedAt()
@@ -187,7 +187,7 @@ class Entry extends MoipResource
 
     /**
      * Get creation date of launch.
-     * 
+     *
      * @return \DateTime
      */
     public function getCreatedAt()
