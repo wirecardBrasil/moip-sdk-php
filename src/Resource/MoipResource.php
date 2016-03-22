@@ -81,8 +81,6 @@ abstract class MoipResource implements JsonSerializable
         if (isset($data->$key)) {
             return $data->$key;
         }
-
-        return;
     }
 
     protected function getIfSetDateFmt($key, $fmt, stdClass $data = null)
@@ -93,8 +91,6 @@ abstract class MoipResource implements JsonSerializable
 
             return $dt ? $dt : null;
         }
-
-        return;
     }
 
     /**
