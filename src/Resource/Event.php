@@ -22,7 +22,7 @@ class Event extends MoipResource
     /**
      * Get event Type.
      * 
-     * @return string possible values:
+     * @return strign possible values:
      *                ORDER.CREATED
      *                ORDER.PAID
      *                ORDER.NOT_PAID
@@ -54,12 +54,11 @@ class Event extends MoipResource
     /**
      * Get creation date of the event.
      * 
-     * @return \DateTime
+     * @return datetime
      */
     public function getCreatedAt()
     {
-        // todo: didn't find Events on documentation but i'm assuming it's a datetime, have to confirm it
-        return $this->getIfSetDateTime('createdAt');
+        return $this->data->createdAt;
     }
 
     /**

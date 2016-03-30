@@ -8,28 +8,28 @@ use stdClass;
 class Orders extends MoipResource
 {
     /**
-     * @const string
+     * @const strign
      */
     const PATH = 'orders';
 
     /**
      * Defines what kind of payee as pripmary.
-     *
-     * @const string
+     * 
+     * @const strign
      */
     const RECEIVER_TYPE_PRIMARY = 'PRIMARY';
 
     /**
      * Defines what kind of payee as secundary.
-     *
-     * @const string
+     * 
+     * @const strign
      */
     const RECEIVER_TYPE_SECONDARY = 'SECONDARY';
 
     /**
      * Currency used in the application.
-     *
-     * @const string
+     * 
+     * @const strign
      */
     const AMOUNT_CURRENCY = 'BRL';
 
@@ -40,11 +40,11 @@ class Orders extends MoipResource
 
     /**
      * Adds a new item to order.
-     *
-     * @param string $product  Name of the product.
-     * @param int    $quantity Product Quantity.
-     * @param string $detail   Additional product description.
-     * @param int    $price    Initial value of the item.
+     * 
+     * @param string  $product  Name of the product.
+     * @param int     $quantity Product Quantity.
+     * @param string  $detail   Additional product description.
+     * @param intefer $price    Initial value of the item.
      *
      * @return $this
      */
@@ -63,7 +63,7 @@ class Orders extends MoipResource
 
     /**
      *  Adds a new receiver to order.
-     *
+     * 
      * @param string $moipAccount Id MoIP MoIP account that will receive payment values.
      * @param string $type        Define qual o tipo de recebedor do pagamento, valores possíveis: PRIMARY, SECONDARY.
      *
@@ -90,7 +90,6 @@ class Orders extends MoipResource
         $this->data->ownId = null;
         $this->data->amount = new stdClass();
         $this->data->amount->currency = self::AMOUNT_CURRENCY;
-        $this->data->amount->subtotals = new stdClass();
         $this->data->items = [];
         $this->data->receivers = [];
     }
@@ -107,7 +106,7 @@ class Orders extends MoipResource
 
     /**
      * Mount the structure of order.
-     *
+     * 
      * @param \stdClass $response
      *
      * @return Orders Response order.
@@ -142,11 +141,11 @@ class Orders extends MoipResource
 
     /**
      * Structure resource.
-     *
+     * 
      * @param stdClass                                                                               $response
      * @param string                                                                                 $resource
      * @param \Moip\Resource\Payment|\Moip\Resource\Refund|\Moip\Resource\Entry|\Moip\Resource\Event $class
-     *
+     * 
      * @return array
      */
     private function structure(stdClass $response, $resource, $class)
@@ -165,7 +164,7 @@ class Orders extends MoipResource
 
     /**
      * Create a new order in MoIP.
-     *
+     * 
      * @return stdClass
      */
     public function create()
@@ -175,7 +174,7 @@ class Orders extends MoipResource
 
     /**
      * Get an order in MoIP.
-     *
+     * 
      * @param string $id Id MoIP order id
      *
      * @return stdClass
@@ -187,8 +186,8 @@ class Orders extends MoipResource
 
     /**
      * Get MoIP order id.
-     *
-     * @return string
+     * 
+     * @return strign
      */
     public function getId()
     {
@@ -197,7 +196,7 @@ class Orders extends MoipResource
 
     /**
      * Get own request id. external reference.
-     *
+     * 
      * @return string
      */
     public function getOwnId()
@@ -207,7 +206,7 @@ class Orders extends MoipResource
 
     /**
      * Get total value of order.
-     *
+     * 
      * @return int|float
      */
     public function getAmountTotal()
@@ -217,7 +216,7 @@ class Orders extends MoipResource
 
     /**
      * Get total value of MoIP rate.
-     *
+     * 
      * @return int|float
      */
     public function getAmountFees()
@@ -227,7 +226,7 @@ class Orders extends MoipResource
 
     /**
      * Get total amount of refunds.
-     *
+     * 
      * @return int|float
      */
     public function getAmountRefunds()
@@ -237,7 +236,7 @@ class Orders extends MoipResource
 
     /**
      * Get net total value.
-     *
+     * 
      * @return int|float
      */
     public function getAmountLiquid()
@@ -247,7 +246,7 @@ class Orders extends MoipResource
 
     /**
      * Get sum of amounts received by other recipients. Used in Marketplaces.
-     *
+     * 
      * @return int|float
      */
     public function getAmountOtherReceivers()
@@ -257,7 +256,7 @@ class Orders extends MoipResource
 
     /**
      * Get currency used in the application. Possible values: BRL.
-     *
+     * 
      * @return string
      */
     public function getCurrenty()
@@ -267,7 +266,7 @@ class Orders extends MoipResource
 
     /**
      * Get greight value of the item will be added to the value of the items.
-     *
+     * 
      * @return int|float
      */
     public function getSubtotalShipping()
@@ -279,7 +278,7 @@ class Orders extends MoipResource
 
     /**
      * Get Additional value to the item will be added to the value of the items.
-     *
+     * 
      * @return int|float
      */
     public function getSubtotalAddition()
@@ -291,7 +290,7 @@ class Orders extends MoipResource
 
     /**
      * Get discounted value of the item will be subtracted from the total value of the items.
-     *
+     * 
      * @return int|float
      */
     public function getSubtotalDiscount()
@@ -303,7 +302,7 @@ class Orders extends MoipResource
 
     /**
      * Get summing the values of all items.
-     *
+     * 
      * @return int|float
      */
     public function getSubtotalItems()
@@ -315,7 +314,7 @@ class Orders extends MoipResource
 
     /**
      * Ger structure item information request.
-     *
+     * 
      * @return \ArrayIterator
      */
     public function getItemIterator()
@@ -325,7 +324,7 @@ class Orders extends MoipResource
 
     /**
      * Get Customer associated with the request.
-     *
+     * 
      * @return \Moip\Resource\Customer
      */
     public function getCustomer()
@@ -335,7 +334,7 @@ class Orders extends MoipResource
 
     /**
      * Get payments associated with the request.
-     *
+     * 
      * @return ArrayIterator
      */
     public function getPaymentIterator()
@@ -345,7 +344,7 @@ class Orders extends MoipResource
 
     /**
      * Get recipient structure of payments.
-     *
+     * 
      * @return ArrayIterator
      */
     public function getReceiverIterator()
@@ -355,7 +354,7 @@ class Orders extends MoipResource
 
     /**
      * Get releases associated with the request.
-     *
+     * 
      * @return ArrayIterator
      */
     public function getEventIterator()
@@ -365,7 +364,7 @@ class Orders extends MoipResource
 
     /**
      * Get repayments associated with the request.
-     *
+     * 
      * @return ArrayIterator
      */
     public function getRefundIterator()
@@ -374,9 +373,9 @@ class Orders extends MoipResource
     }
 
     /**
-     * Get order status.
+     * Get order status. 
      * Possible values: CREATED, WAITING, PAID, NOT_PAID, REVERTED.
-     *
+     * 
      * @return string
      */
     public function getStatus()
@@ -386,27 +385,27 @@ class Orders extends MoipResource
 
     /**
      * Get date of resource creation.
-     *
+     * 
      * @return \DateTime
      */
     public function getCreatedAt()
     {
-        return $this->getIfSetDateTime('createdAt');
+        return $this->getIfSet('createdAt');
     }
 
     /**
      * Get updated resource.
-     *
+     * 
      * @return \DateTime
      */
     public function getUpdatedAt()
     {
-        return $this->getIfSetDateTime('updatedAt');
+        return $this->getIfSet('updatedAt');
     }
 
     /**
      * Get hypermedia link structure (HATEOAS) resource Orders.
-     *
+     * 
      * @return \stdClass
      */
     public function getLinks()
@@ -416,7 +415,7 @@ class Orders extends MoipResource
 
     /**
      * Structure of payment.
-     *
+     * 
      * @return \Moip\Resource\Payment
      */
     public function payments()
@@ -429,7 +428,7 @@ class Orders extends MoipResource
 
     /**
      * Structure of refund.
-     *
+     * 
      * @return \Moip\Resource\Refund
      */
     public function refunds()
@@ -442,27 +441,27 @@ class Orders extends MoipResource
 
     /**
      * Set additional value to the item will be added to the value of the items.
-     *
+     * 
      * @param int|float $value additional value to the item.
-     *
-     * @return $this
      */
     public function setAddition($value)
     {
-        $this->data->subtotals->addition = (float) $value;
+        if (!isset($this->data->amount->subtotals)) {
+            $this->data->amount->subtotals = new stdClass();
+        }
+        $this->data->amount->subtotals->addition = (float) $value;
 
         return $this;
     }
 
     /**
      * Set customer associated with the order.
-     *
+     * 
      * @param \Moip\Resource\Customer $customer customer associated with the request.
-     *
-     * @return $this
      */
     public function setCustomer(Customer $customer)
     {
+
         $this->data->customer = $customer;
 
         return $this;
@@ -470,40 +469,24 @@ class Orders extends MoipResource
 
     /**
      * Set discounted value of the item will be subtracted from the total value of the items.
-     *
+     * 
      * @param int|float $value discounted value.
-     *
-     * @return $this
      */
     public function setDiscount($value)
     {
+
+         if (!isset($this->data->amount->subtotals)) {
+            $this->data->amount->subtotals = new stdClass();
+        }
         $this->data->amount->subtotals->discount = (float) $value;
 
         return $this;
     }
 
     /**
-     * Set discounted value of the item will be subtracted from the total value of the items.
-     *
-     * @deprecated
-     *
-     * @param int|float $value discounted value.
-     *
-     * @return $this
-     */
-    public function setDiscont($value)
-    {
-        $this->setDiscount($value);
-
-        return $this;
-    }
-
-    /**
      * Set own request id. external reference.
-     *
+     * 
      * @param string $ownId external reference.
-     *
-     * @return $this
      */
     public function setOwnId($ownId)
     {
@@ -514,13 +497,17 @@ class Orders extends MoipResource
 
     /**
      * Set shipping Amount.
-     *
+     * 
      * @param float $value shipping Amount.
      *
      * @return $this
      */
     public function setShippingAmount($value)
     {
+        if (!isset($this->data->amount->subtotals)) {
+            $this->data->amount->subtotals = new stdClass();
+        }
+
         $this->data->amount->subtotals->shipping = (float) $value;
 
         return $this;

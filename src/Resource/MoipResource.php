@@ -13,7 +13,7 @@ abstract class MoipResource implements JsonSerializable
 {
     /**
      * Version of API.
-     *
+     * 
      * @const string
      */
     const VERSION = 'v2';
@@ -35,7 +35,7 @@ abstract class MoipResource implements JsonSerializable
 
     /**
      * Mount information of a determined object.
-     *
+     * 
      * @param \stdClass $response
      *
      * @return mixed
@@ -44,7 +44,7 @@ abstract class MoipResource implements JsonSerializable
 
     /**
      * Create a new instance.
-     *
+     * 
      * @param \Moip\Moip $moip
      */
     public function __construct(Moip $moip)
@@ -56,7 +56,7 @@ abstract class MoipResource implements JsonSerializable
 
     /**
      * Create a new connecttion.
-     *
+     * 
      * @return \Moip\Http\HTTPConnection
      */
     protected function createConnection()
@@ -65,8 +65,8 @@ abstract class MoipResource implements JsonSerializable
     }
 
     /**
-     * Get a key of an object if it exists.
-     *
+     * Get a key of an object if he exist.
+     * 
      * @param string         $key
      * @param \stdClass|null $data
      *
@@ -74,58 +74,18 @@ abstract class MoipResource implements JsonSerializable
      */
     protected function getIfSet($key, stdClass $data = null)
     {
-        if (empty($data)) {
+        if ($data == null) {
             $data = $this->data;
         }
 
         if (isset($data->$key)) {
             return $data->$key;
         }
-
-        return;
-    }
-
-    protected function getIfSetDateFmt($key, $fmt, stdClass $data = null)
-    {
-        $val = $this->getIfSet($key, $data);
-        if (!empty($val)) {
-            $dt = \DateTime::createFromFormat($fmt, $val);
-
-            return $dt ? $dt : null;
-        }
-
-        return;
-    }
-
-    /**
-     * Get a key, representing a date (Y-m-d), of an object if it exists.
-     *
-     * @param string        $key
-     * @param stdClass|null $data
-     *
-     * @return \DateTime|null
-     */
-    protected function getIfSetDate($key, stdClass $data = null)
-    {
-        return $this->getIfSetDateFmt($key, 'Y-m-d', $data);
-    }
-
-    /**
-     * Get a key representing a datetime (\Datetime::ATOM), of an object if it exists.
-     *
-     * @param string        $key
-     * @param stdClass|null $data
-     *
-     * @return \DateTime|null
-     */
-    protected function getIfSetDateTime($key, stdClass $data = null)
-    {
-        return $this->getIfSetDateFmt($key, \DateTime::ATOM, $data);
     }
 
     /**
      * Specify data which should be serialized to JSON.
-     *
+     * 
      * @return \stdClass
      */
     public function jsonSerialize()
@@ -135,9 +95,9 @@ abstract class MoipResource implements JsonSerializable
 
     /**
      * Find by path.
-     *
+     * 
      * @param string $path
-     *
+     * 
      * @return stdClass
      */
     public function getByPath($path)
@@ -156,9 +116,9 @@ abstract class MoipResource implements JsonSerializable
 
     /**
      * Create a new item in Moip.
-     *
+     * 
      * @param string $path
-     *
+     * 
      * @return stdClass
      */
     public function createResource($path)

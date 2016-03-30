@@ -10,46 +10,41 @@ use UnexpectedValueException;
 class Payment extends MoipResource
 {
     /**
-     * @const string
+     * @const strign
      */
     const PATH = 'payments';
 
     /**
-     * @const string
-     */
-    const MULTI_PAYMENTS_PATH = 'multipayments';
-
-    /**
      * Payment means.
-     *
+     * 
      * @const string
      */
     const METHOD_CREDIT_CARD = 'CREDIT_CARD';
 
     /**
      * Payment means.
-     *
+     * 
      * @const string
      */
     const METHOD_BOLETO = 'BOLETO';
 
     /**
      * Payment means.
-     *
+     * 
      * @const string
      */
     const METHOD_ONLINE_DEBIT = 'ONLINE_DEBIT';
 
     /**
      * Payment means.
-     *
+     * 
      * @const string
      */
     const METHOD_WALLET = 'WALLET';
 
     /**
      * Payment means.
-     *
+     * 
      * @const string
      */
     const METHOD_ONLINE_BANK_DEBIT = 'ONLINE_BANK_DEBIT';
@@ -76,7 +71,7 @@ class Payment extends MoipResource
 
     /**
      * Create a new payment in api MoIP.
-     *
+     * 
      * @return $this
      */
     public function execute()
@@ -91,16 +86,13 @@ class Payment extends MoipResource
         if ($this->order !== null) {
             $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, Orders::PATH, $this->order->getId(), self::PATH);
         } else {
-            $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, Multiorders::PATH, $this->multiorder->getId(),
-                self::MULTI_PAYMENTS_PATH);
+            $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, Multiorders::PATH, $this->multiorder->getId(), Multiorders::PATH);
         }
 
         $httpResponse = $httpConnection->execute($path, HTTPRequest::POST);
 
-        if ($httpResponse->getStatusCode() != 200 &&
-            $httpResponse->getStatusCode() != 201
-        ) {
-            throw new RuntimeException($httpResponse->getStatusMessage(), $httpResponse->getStatusCode());
+        if ($httpResponse->getStatusCode() != 200 && $httpResponse->getStatusCode() != 201) {
+            throw new RuntimeException($httpResponse->getContentErrorCode(), $httpResponse->getStatusCode());
         }
 
         $response = json_decode($httpResponse->getContent());
@@ -114,7 +106,7 @@ class Payment extends MoipResource
 
     /**
      * Get an payment in MoIP.
-     *
+     * 
      * @param string $id Id MoIP payment
      *
      * @return stdClass
@@ -126,7 +118,7 @@ class Payment extends MoipResource
 
     /**
      * Get id MoIP payment.
-     *
+     * 
      *
      * @return \Moip\Resource\Payment
      */
@@ -137,7 +129,7 @@ class Payment extends MoipResource
 
     /**
      * Mount payment structure.
-     *
+     * 
      * @param \stdClass $response
      *
      * @return $this
@@ -148,6 +140,7 @@ class Payment extends MoipResource
 
         $payment->data->id = $this->getIfSet('id', $response);
         $payment->data->status = $this->getIfSet('status', $response);
+        $payment->data->delayCapture = $this->getIfSet('delayCapture', $response);
         $payment->data->amount = new stdClass();
         $payment->data->amount->total = $this->getIfSet('total', $response->amount);
         $payment->data->amount->currency = $this->getIfSet('currency', $response->amount);
@@ -162,7 +155,7 @@ class Payment extends MoipResource
 
     /**
      * Refunds.
-     *
+     * 
      * @return Refund
      */
     public function refunds()
@@ -175,7 +168,7 @@ class Payment extends MoipResource
 
     /**
      * Set means of payment.
-     *
+     * 
      * @param \stdClass $fundingInstrument
      *
      * @return $this
@@ -188,26 +181,17 @@ class Payment extends MoipResource
     }
 
     /**
-     * Set billet.
-     *
-     * @param \DateTime|string $expirationDate   Expiration date of a billet.
-     * @param string           $logoUri          Logo of billet.
-     * @param array            $instructionLines Instructions billet.
+     * Set boleto.
+     * 
+     * @param \DateTime $expirationDate   Expiration date of a billet.
+     * @param string    $logoUri          Logo of billet.
+     * @param array     $instructionLines Instructions billet.
      *
      * @return $this
      */
     public function setBoleto($expirationDate, $logoUri, array $instructionLines = [])
     {
         $keys = ['first', 'second', 'third'];
-
-        if (empty($instructionLines)) {
-            //Avoid warning in array_combine
-            $instructionLines = ['', '', ''];
-        }
-
-        if ($expirationDate instanceof \DateTime) {
-            $expirationDate = $expirationDate->format('Y-m-d');
-        }
 
         $this->data->fundingInstrument->method = self::METHOD_BOLETO;
         $this->data->fundingInstrument->boleto = new stdClass();
@@ -220,7 +204,7 @@ class Payment extends MoipResource
 
     /**
      * Set credit card holder.
-     *
+     * 
      * @param \Moip\Resource\Customer $holder
      */
     private function setCreditCardHolder(Customer $holder)
@@ -240,7 +224,7 @@ class Payment extends MoipResource
     /**
      * Set credit cardHash.
      *
-     * @param string                  $hash   Credit card hash encripted using Moip.js
+     * @param string                  $hash   [description]
      * @param \Moip\Resource\Customer $holder
      *
      * @return $this
@@ -256,10 +240,23 @@ class Payment extends MoipResource
     }
 
     /**
+     * Set delay capture
+     * @return $this
+     */
+
+    public function setDelayCapture(){
+      
+        
+        $this->data->delayCapture = true;
+
+        return $this;
+    }
+
+    /**
      * Set credit card
-     * Credit card used in a payment.
+     * Credit card used in a payment. 
      * The card when returned within a parent resource is presented in its minimum representation.
-     *
+     * 
      * @param int                     $expirationMonth Card expiration month
      * @param int                     $expirationYear  Year of card expiration.
      * @param int                     $number          Card number.
@@ -268,10 +265,14 @@ class Payment extends MoipResource
      *
      * @return $this
      */
+
     public function setCreditCard($expirationMonth, $expirationYear, $number, $cvc, Customer $holder)
     {
+
         $this->data->fundingInstrument->method = self::METHOD_CREDIT_CARD;
+
         $this->data->fundingInstrument->creditCard = new stdClass();
+
         $this->data->fundingInstrument->creditCard->expirationMonth = $expirationMonth;
         $this->data->fundingInstrument->creditCard->expirationYear = $expirationYear;
         $this->data->fundingInstrument->creditCard->number = $number;
@@ -283,10 +284,6 @@ class Payment extends MoipResource
 
     /**
      * Set installment count.
-     *
-     * @param int $installmentCount
-     *
-     * @return $this
      */
     public function setInstallmentCount($installmentCount)
     {
@@ -297,18 +294,15 @@ class Payment extends MoipResource
 
     /**
      * Set payment means made available by banks.
-     *
-     * @param string           $bankNumber     Bank number. Possible values: 001, 237, 341, 041.
-     * @param \DateTime|string $expirationDate Date of expiration debit.
-     * @param string           $returnUri      Return Uri.
+     * 
+     * @param string    $bankNumber     Bank number. Possible values: 001, 237, 341, 041.
+     * @param \DateTime $expirationDate Date of expiration debit.
+     * @param string    $returnUri      Return Uri.
      *
      * @return $this
      */
     public function setOnlineBankDebit($bankNumber, $expirationDate, $returnUri)
     {
-        if ($expirationDate instanceof \DateTime) {
-            $expirationDate = $expirationDate->format('Y-m-d');
-        }
         $this->data->fundingInstrument->method = self::METHOD_ONLINE_BANK_DEBIT;
         $this->data->fundingInstrument->onlineBankDebit = new stdClass();
         $this->data->fundingInstrument->onlineBankDebit->bankNumber = $bankNumber;
@@ -320,7 +314,7 @@ class Payment extends MoipResource
 
     /**
      * Set Multiorders.
-     *
+     * 
      * @param \Moip\Resource\Multiorders $multiorder
      */
     public function setMultiorder(Multiorders $multiorder)
@@ -330,7 +324,7 @@ class Payment extends MoipResource
 
     /**
      * Set order.
-     *
+     * 
      * @param \Moip\Resource\Orders $order
      *
      * @return $this

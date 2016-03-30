@@ -8,7 +8,7 @@ use stdClass;
 class Multiorders extends MoipResource
 {
     /**
-     * @const string
+     * @const strign
      */
     const PATH = 'multiorders';
 
@@ -24,9 +24,7 @@ class Multiorders extends MoipResource
 
     /**
      * Structure of order.
-     *
-     * @param Orders $order
-     *
+     * 
      * @return $this
      */
     public function addOrder(Orders $order)
@@ -38,7 +36,7 @@ class Multiorders extends MoipResource
 
     /**
      * Create a new multiorder in MoIP.
-     *
+     * 
      * @return stdClass
      */
     public function create()
@@ -48,7 +46,7 @@ class Multiorders extends MoipResource
 
     /**
      * Get an multiorder in MoIP.
-     *
+     * 
      * @param string $id Id MoIP order id
      *
      * @return stdClass
@@ -60,8 +58,8 @@ class Multiorders extends MoipResource
 
     /**
      * Get MoIP order id.
-     *
-     * @return string
+     * 
+     * @return strign
      */
     public function getId()
     {
@@ -70,7 +68,7 @@ class Multiorders extends MoipResource
 
     /**
      * Get own request id. external reference.
-     *
+     * 
      * @return string
      */
     public function getOwnId()
@@ -79,9 +77,9 @@ class Multiorders extends MoipResource
     }
 
     /**
-     * Get order status.
+     * Get order status. 
      * Possible values: CREATED, WAITING, PAID, NOT_PAID, REVERTED.
-     *
+     * 
      * @return string
      */
     public function getStatus()
@@ -91,7 +89,7 @@ class Multiorders extends MoipResource
 
     /**
      * Get total value of order.
-     *
+     * 
      * @return int|float
      */
     public function getAmountTotal()
@@ -101,7 +99,7 @@ class Multiorders extends MoipResource
 
     /**
      * Get currency used in the application. Possible values: BRL.
-     *
+     * 
      * @return string
      */
     public function getAmountCurrency()
@@ -111,28 +109,27 @@ class Multiorders extends MoipResource
 
     /**
      * Get creation date of launch.
-     *
+     * 
      * @return \DateTime
      */
     public function getCreatedAt()
     {
-        // todo: didn't find createdAt type on documentation, assuming datetime. Have to confirm
-        return $this->getIfSetDateTime('createdAt');
+        return $this->getIfSet('createdAt');
     }
 
     /**
      * Get date of last update.
-     *
+     * 
      * @return \DateTime
      */
     public function getUpdatedAt()
     {
-        return $this->getIfSetDateTime('updatedAt');
+        return $this->getIfSet('updatedAt');
     }
 
     /**
      * Get orders.
-     *
+     * 
      * @return \ArrayIterator
      */
     public function getOrderIterator()
@@ -142,7 +139,7 @@ class Multiorders extends MoipResource
 
     /**
      * Structure of multipayments.
-     *
+     * 
      * @return \Moip\Resource\Payment
      */
     public function multipayments()
@@ -155,7 +152,7 @@ class Multiorders extends MoipResource
 
     /**
      * Mount the structure of order.
-     *
+     * 
      * @param \stdClass $response
      *
      * @return Multiorders
@@ -188,10 +185,8 @@ class Multiorders extends MoipResource
 
     /**
      * Set own request id. External reference.
-     *
-     * @param string $ownId
-     *
-     * @return $this
+     * 
+     * @param $this
      */
     public function setOwnId($ownId)
     {

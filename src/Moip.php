@@ -8,6 +8,7 @@ use Moip\Resource\Entry;
 use Moip\Resource\Multiorders;
 use Moip\Resource\Orders;
 use Moip\Resource\Payment;
+use Moip\Resource\Transfers;
 
 class Moip
 {
@@ -26,9 +27,9 @@ class Moip
 
     /**
      * Client name.
-     *
+     * 
      * @const string
-     *
+     * 
      * @deprecated
      **/
     const CLIENT = 'Moip SDK';
@@ -62,12 +63,11 @@ class Moip
     /**
      * Create a new api connection instance.
      *
-     * @param HTTPConnection $http_connection
-     *
-     * @return HTTPConnection
+     * @return \Moip\Http\HTTPConnection
      */
     public function createConnection(HTTPConnection $http_connection)
     {
+        $http_connection = $http_connection;
         $http_connection->initialize($this->endpoint, true);
         $http_connection->addHeader('Accept', 'application/json');
         $http_connection->setAuthenticator($this->moipAuthentication);
@@ -105,6 +105,18 @@ class Moip
         return new Orders($this);
     }
 
+
+    /**
+     * Create a new Account instance.
+     *
+     * @return \Moip\Resource\Account
+     */
+
+     public function transfers()
+    {
+        return new transfers($this);
+    }
+
     /**
      * Create a new Payment instance.
      *
@@ -127,7 +139,7 @@ class Moip
 
     /**
      * Get the endpoint.
-     *
+     * 
      * @return \Moip\Moip::ENDPOINT_PRODUCTION|\Moip\Moip::ENDPOINT_SANDBOX
      */
     public function getEndpoint()

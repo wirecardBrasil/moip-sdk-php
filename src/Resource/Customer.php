@@ -8,34 +8,34 @@ use UnexpectedValueException;
 class Customer extends MoipResource
 {
     /**
-     * @const string
+     * @const strign
      */
     const PATH = 'customers';
 
     /**
      * Address Type.
-     *
+     * 
      * @const string
      */
     const ADDRESS_BILLING = 'BILLING';
 
     /**
      * Address Type.
-     *
+     * 
      * @const string
      */
     const ADDRESS_SHIPPING = 'SHIPPING';
 
     /**
      * Standard country .
-     *
+     * 
      * @const string
      */
     const ADDRESS_COUNTRY = 'BRA';
 
     /**
      * Standard document type.
-     *
+     * 
      * @const string
      */
     const TAX_DOCUMENT = 'CPF';
@@ -50,7 +50,7 @@ class Customer extends MoipResource
 
     /**
      * Add a new address to the customer.
-     *
+     * 
      * @param string $type       Type of values: SHIPPING and BILLING.
      * @param string $street
      * @param string $number
@@ -60,7 +60,7 @@ class Customer extends MoipResource
      * @param string $zip
      * @param string $complement
      * @param string $country
-     *
+     * 
      * @return $this
      */
     public function addAddress($type, $street, $number, $district, $city, $state, $zip, $complement = null, $country = self::ADDRESS_COUNTRY)
@@ -91,7 +91,7 @@ class Customer extends MoipResource
 
     /**
      * Create a new customer.
-     *
+     * 
      * @return stdClass
      */
     public function create()
@@ -101,7 +101,7 @@ class Customer extends MoipResource
 
     /**
      * Find a customer.
-     *
+     * 
      * @param string $id
      *
      * @return stdClass
@@ -113,8 +113,8 @@ class Customer extends MoipResource
 
     /**
      * Get customer id.
-     *
-     * @return string The buyer id.
+     * 
+     * @return strign The buyer id.
      */
     public function getId()
     {
@@ -123,7 +123,7 @@ class Customer extends MoipResource
 
     /**
      * Get customer address.
-     *
+     * 
      * @return string Customer's address.
      */
     public function getBillingAddress()
@@ -133,7 +133,7 @@ class Customer extends MoipResource
 
     /**
      * Get customer address.
-     *
+     * 
      * @return string Customer's address.
      */
     public function getShippingAddress()
@@ -143,7 +143,7 @@ class Customer extends MoipResource
 
     /**
      * Get customer fullname.
-     *
+     * 
      * @return string Customer's full name.
      */
     public function getFullname()
@@ -153,7 +153,7 @@ class Customer extends MoipResource
 
     /**
      * Get funding instrument from customer.
-     *
+     * 
      * @return \stdClass Structure that is the means of payment.
      */
     public function getFundingInstrument()
@@ -163,18 +163,18 @@ class Customer extends MoipResource
 
     /**
      * Get birth date from customer.
-     *
-     * @return \DateTime|null Date of birth of the credit card holder.
+     * 
+     * @return date Date of birth of the credit card holder.
      */
     public function getBirthDate()
     {
-        return $this->getIfSetDate('birthDate');
+        return $this->getIfSet('birthDate');
     }
 
     /**
      * Get phone area code from customer.
-     *
-     * @return int DDD telephone.
+     * 
+     * @return insteger DDD telephone.
      */
     public function getPhoneAreaCode()
     {
@@ -183,7 +183,7 @@ class Customer extends MoipResource
 
     /**
      * Get phone country code from customer.
-     *
+     * 
      * @return int Country code.
      */
     public function getPhoneCountryCode()
@@ -193,7 +193,7 @@ class Customer extends MoipResource
 
     /**
      * Get phone number from customer.
-     *
+     * 
      * @return int Telephone number.
      */
     public function getPhoneNumber()
@@ -203,7 +203,7 @@ class Customer extends MoipResource
 
     /**
      * Get tax document type from customer.
-     *
+     * 
      * @return string Type of value: CPF and CNPJ
      */
     public function getTaxDocumentType()
@@ -213,7 +213,7 @@ class Customer extends MoipResource
 
     /**
      * Get tax document number from customer.
-     *
+     * 
      * @return string Document Number.
      */
     public function getTaxDocumentNumber()
@@ -223,7 +223,7 @@ class Customer extends MoipResource
 
     /**
      * Mount the buyer structure from customer.
-     *
+     * 
      * @param \stdClass $response
      *
      * @return Customer Customer information.
@@ -259,8 +259,8 @@ class Customer extends MoipResource
 
     /**
      * Set Own id from customer.
-     *
-     * @param string $ownId Customer's own id. external reference.
+     * 
+     * @param strign $ownId Customer's own id. external reference.
      *
      * @return $this
      */
@@ -273,7 +273,7 @@ class Customer extends MoipResource
 
     /**
      * Set fullname from customer.
-     *
+     * 
      * @param string $fullname Customer's full name.
      *
      * @return $this
@@ -287,7 +287,7 @@ class Customer extends MoipResource
 
     /**
      * Set e-mail from customer.
-     *
+     * 
      * @param string $email Email customer.
      *
      * @return $this
@@ -301,11 +301,11 @@ class Customer extends MoipResource
 
     /**
      * Set credit card from customer.
-     *
-     * @param int                          $expirationMonth Card expiration month.
-     * @param int                          $expirationYear  Year card expiration.
-     * @param int                          $number          Card number.
-     * @param int                          $cvc             Card Security Code.
+     * 
+     * @param insteger                     $expirationMonth Card expiration month.
+     * @param insteger                     $expirationYear  Year card expiration.
+     * @param insteger                     $number          Card number.
+     * @param insteger                     $cvc             Card Security Code.
      * @param \Moip\Resource\Customer|null $holder          Cardholder.
      *
      * @return $this
@@ -339,17 +339,13 @@ class Customer extends MoipResource
 
     /**
      * Set birth date from customer.
-     *
-     * @param \DateTime|string $birthDate Date of birth of the credit card holder.
+     * 
+     * @param date $birthDate Date of birth of the credit card holder.
      *
      * @return $this
      */
     public function setBirthDate($birthDate)
     {
-        if ($birthDate instanceof \DateTime) {
-            $birthDate = $birthDate->format('Y-m-d');
-        }
-
         $this->data->birthDate = $birthDate;
 
         return $this;
@@ -357,7 +353,7 @@ class Customer extends MoipResource
 
     /**
      * Set tax document from customer.
-     *
+     * 
      * @param int    $number Document number.
      * @param string $type   Document type.
      *
@@ -374,7 +370,7 @@ class Customer extends MoipResource
 
     /**
      * Set phone from customer.
-     *
+     * 
      * @param int $areaCode    DDD telephone.
      * @param int $number      Telephone number.
      * @param int $countryCode Country code.
