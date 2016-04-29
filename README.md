@@ -43,7 +43,7 @@ O jeito mais simples e rápido de integrar o Moip a sua aplicação PHP
 
 Execute:
 
-    composer require moip/moip-sdk-php ~1
+    composer require moip/moip-sdk-php 1.@stable
     
 ## Configurando sua autenticação
 ```php
@@ -59,33 +59,54 @@ $moip = new Moip(new MoipBasicAuth($token, $key), Moip::ENDPOINT_SANDBOX);
 ```
 
 ## Criando um pedido
-Nesse exemplo será criado um pedido com dados do cliente.
+Nesse exemplo será criado um pedido com dados do cliente - Com endereço de entrega e de pagamento.
 
 ```php
-$customer = $moip->customers()->setOwnId(uniqid())
-                             ->setFullname('Fulano de Tal')
-                             ->setEmail('fulano@email.com')
-                             ->setBirthDate('1988-12-30')
-                             ->setTaxDocument('22222222222')
-                             ->setPhone(11, 66778899)
-                             ->addAddress('BILLING',
-                                          'Rua de teste', 123,
-                                          'Bairro', 'Sao Paulo', 'SP',
-                                          '01234567', 8);
+customer = $moip->customers()->setOwnId(uniqid())
+                                 ->setFullname('Fulano de Tal')
+                                 ->setEmail('fulano@email.com')
+                                 ->setBirthDate('1988-12-30')
+                                 ->setTaxDocument('22222222222')
+                                 ->setPhone(11, 66778899)
+                                 ->addAddress('BILLING',
+                                              'Rua de teste', 123,
+                                              'Bairro', 'Sao Paulo', 'SP',
+                                              '01234567', 8)
+                                  ->addAddress('SHIPPING',
+                                              'Rua de teste do SHIPPING', 123,
+                                              'Bairro do SHIPPING', 'Sao Paulo', 'SP',
+                                              '01234567', 8);
+    
 ```
+## Setando produtos e valores de pagamento 
+Nesse exemplo com vários produtos e ainda especificando valor de frete (ShippingAmount), valor adcional (setAddition) e ainda valor de desconto (setDiscount)
+
 ```php
 $order = $moip->orders()->setOwnId(uniqid())
-                        ->addItem('Bicicleta Specialized Tarmac 26 Shimano Alivio', 1, 'uma linda bicicleta', 10000)
-                        ->setCustomer($customer)
-                        ->create();
+                            ->addItem("bicicleta 1",1, "sku", 10000)
+                            ->addItem("bicicleta 2",1, "sku", 10000)
+                            ->addItem("bicicleta 3",1, "sku", 10000)
+                            ->addItem("bicicleta 4",1, "sku", 10000)
+                            ->addItem("bicicleta 5",1, "sku", 10000)
+                            ->addItem("bicicleta 6",1, "sku", 10000)
+                            ->addItem("bicicleta 7",1, "sku", 10000)
+                            ->addItem("bicicleta 8",1, "sku", 10000)
+                            ->addItem("bicicleta 9",1, "sku", 10000)
+                            ->addItem("bicicleta 10",1, "sku", 10000)
+
+                            ->setShippingAmount(3000)->setAddition(100)->setDiscount(500)
+                            ->setCustomer($customer)
+                            ->create();
+    
+    
 ```
 
 ## Criando o pagamento
-Após criar o pedido basta criar um pagamento nesse pedido.
+Após criar o pedido basta criar um pagamento nesse pedido. Usando a opção DelayCapture (caso não queira basta remover a info )
 
 ```php
-$payment = $order->payments()->setCreditCard(12, 15, '4073020000000002', '123', $customer)
-                             ->execute();
+$payment =  $order->payments()->setCreditCard(12, 25, '4073020000000002', '123', $customer)->setDelayCapture()
+            ->execute();
 ```
 ## Documentação
 

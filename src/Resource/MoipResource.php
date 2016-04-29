@@ -131,11 +131,14 @@ abstract class MoipResource implements JsonSerializable
         $httpConnection->setRequestBody($body);
 
         $httpResponse = $httpConnection->execute($path, HTTPRequest::POST);
-
+       
+        #var_dump($httpResponse->getContent());
+      #  die();
+       # var_dump($httpResponse->getContent());
         if ($httpResponse->getStatusCode() != 201) {
             throw new RuntimeException($httpResponse->getStatusMessage(), $httpResponse->getStatusCode());
         }
-
+        
         return $this->populate(json_decode($httpResponse->getContent()));
     }
 }
