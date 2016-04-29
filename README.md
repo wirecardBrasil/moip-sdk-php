@@ -62,7 +62,7 @@ $moip = new Moip(new MoipBasicAuth($token, $key), Moip::ENDPOINT_SANDBOX);
 Nesse exemplo será criado um pedido com dados do cliente - Com endereço de entrega e de pagamento.
 
 ```php
-customer = $moip->customers()->setOwnId(uniqid())
+$customer = $moip->customers()->setOwnId(uniqid())
                                  ->setFullname('Fulano de Tal')
                                  ->setEmail('fulano@email.com')
                                  ->setBirthDate('1988-12-30')
@@ -78,9 +78,8 @@ customer = $moip->customers()->setOwnId(uniqid())
                                               '01234567', 8);
     
 ```
-## Setando produtos e valores de pagamento 
-Nesse exemplo com vários produtos e ainda especificando valor de frete (ShippingAmount), valor adcional (setAddition) e ainda valor de desconto (setDiscount)
-
+## Setando produtos e valores de pagamento
+Nesse exemplo com vários produtos e ainda especificando valor de frete (ShippingAmount) valor adcional (Addtion) e ainda valor de desconto
 ```php
 $order = $moip->orders()->setOwnId(uniqid())
                             ->addItem("bicicleta 1",1, "sku", 10000)
@@ -108,6 +107,15 @@ Após criar o pedido basta criar um pagamento nesse pedido. Usando a opção Del
 $payment =  $order->payments()->setCreditCard(12, 25, '4073020000000002', '123', $customer)->setDelayCapture()
             ->execute();
 ```
+
+## Criando uma solicitação de transferência automática
+Atenção para este processo é necessário usar o Oauth
+
+```php
+    $moip = new Moip(new MoipOAuth($oauth), Moip::ENDPOINT_PRODUCTION);
+    $transfers = $moip->transfers()->setTransfers('500','001','1111','2','9999','8')->setHolder('BRUNO ELISEI', '34057603808')->execute();
+```
+
 ## Documentação
 
 [Documentação oficial](https://moip.com.br/referencia-api/)
