@@ -15,21 +15,21 @@ class Refund extends MoipResource
 
     /**
      * Refunds means.
-     * 
+     *
      * @const string
      */
     const METHOD_CREDIT_CARD = 'CREDIT_CARD';
 
     /**
      * Refunds means.
-     * 
+     *
      * @const string
      */
     const METHOD_BANK_ACCOUNT = 'BANK_ACCOUNT';
 
     /**
      * Refunds means.
-     * 
+     *
      * @const string
      */
     const METHOD_MONEY_ORDER = 'MONEY_ORDER';
@@ -54,7 +54,7 @@ class Refund extends MoipResource
 
     /**
      * Mount refund structure.
-     * 
+     *
      * @param \stdClass $response
      *
      * @return $this
@@ -117,7 +117,7 @@ class Refund extends MoipResource
 
     /**
      * Checks path that will be the request.
-     * 
+     *
      * @return string
      */
     private function getPath()
@@ -131,7 +131,7 @@ class Refund extends MoipResource
 
     /**
      * Bank account is the bank address of a particular vendor or a customer.
-     * 
+     *
      * @param string                  $type               Kind of refund. possible values: FULL, PARTIAL.
      * @param string                  $bankNumber         Bank number. possible values: 001, 237, 341, 041.
      * @param int                     $agencyNumber       Branch number.
@@ -164,7 +164,7 @@ class Refund extends MoipResource
 
     /**
      * Making a full refund to the bank account.
-     * 
+     *
      * @param string                  $type               Kind of refund. possible values: FULL, PARTIAL.
      * @param string                  $bankNumber         Bank number. possible values: 001, 237, 341, 041.
      * @param int                     $agencyNumber       Branch number.
@@ -184,7 +184,7 @@ class Refund extends MoipResource
 
     /**
      * Making a partial refund in the bank account.
-     * 
+     *
      * @param string                  $type               Kind of refund. possible values: FULL, PARTIAL.
      * @param string                  $bankNumber         Bank number. possible values: 001, 237, 341, 041.
      * @param int                     $agencyNumber       Branch number.
@@ -205,7 +205,7 @@ class Refund extends MoipResource
 
     /**
      * Making a full refund in credit card.
-     * 
+     *
      * @return \Moip\Resource\Refund
      */
     public function creditCardFull()
@@ -215,7 +215,7 @@ class Refund extends MoipResource
 
     /**
      * Making a partial refund in credit card.
-     * 
+     *
      * @param int|float $amount value of refund.
      *
      * @return \Moip\Resource\Refund
@@ -230,7 +230,7 @@ class Refund extends MoipResource
 
     /**
      * Get iterator.
-     * 
+     *
      * @return \ArrayIterator
      */
     public function getIterator()
@@ -246,7 +246,7 @@ class Refund extends MoipResource
 
     /**
      * Set order.
-     * 
+     *
      * @param \Moip\Resource\Orders $order
      */
     public function setOrder(Orders $order)
@@ -256,7 +256,7 @@ class Refund extends MoipResource
 
     /**
      * Set payment.
-     * 
+     *
      * @param \Moip\Resource\Payment $payment
      */
     public function setPayment(Payment $payment)

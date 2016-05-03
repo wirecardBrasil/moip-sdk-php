@@ -193,4 +193,11 @@ class MoipTest extends MoipTestCase
             $this->assertEquals($expected, $actual);
         }
     }
+
+    public function testShouldGetEndpoint()
+    {
+        $expected = constant('\Moip\Moip::ENDPOINT_SANDBOX');
+
+        $this->assertEquals($expected, $this->moip->getEndpoint());
+    }
 }
