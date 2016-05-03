@@ -2,8 +2,8 @@
 
 namespace Moip;
 
-use Moip\Http\HTTPAuthenticator;
+use Requests_Auth;
 
-interface MoipAuthentication extends HTTPAuthenticator
+interface MoipAuthentication extends Requests_Auth
 {
 }

@@ -10,11 +10,6 @@ class ValidationException extends \RuntimeException
     private $statusCode;
 
     /**
-     * @var string
-     */
-    private $statusMessage;
-
-    /**
      * @var Error[]
      */
     private $errors;
@@ -26,14 +21,12 @@ class ValidationException extends \RuntimeException
      * Indicates that an invalid value was passed.
      *
      * @param int     $statusCode
-     * @param string  $statusMessage
      * @param Error[] $errors
      */
-    public function __construct($statusCode, $statusMessage, $errors)
+    public function __construct($statusCode, $errors)
     {
         $this->errors = $errors;
         $this->statusCode = $statusCode;
-        $this->statusMessage = $statusMessage;
     }
 
     /**
@@ -44,16 +37,6 @@ class ValidationException extends \RuntimeException
     public function getStatusCode()
     {
         return $this->statusCode;
-    }
-
-    /**
-     * Returns the http status code description: ie.: 'Bad Request'.
-     *
-     * @return string
-     */
-    public function getStatusMessage()
-    {
-        return $this->statusMessage;
     }
 
     /**
@@ -70,7 +53,7 @@ class ValidationException extends \RuntimeException
 
     public function __toString()
     {
-        $template = "[$this->statusMessage] The following errors ocurred:\n%s";
+        $template = "[$this->code] The following errors ocurred:\n%s";
         $temp_list = '';
         foreach ($this->errors as $error) {
             $path = $error->getPath();

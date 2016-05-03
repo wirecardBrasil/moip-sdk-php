@@ -51,7 +51,7 @@ class Customer extends MoipResource
     /**
      * Add a new address to the customer.
      *
-     * @param string $type       Type of values: SHIPPING and BILLING.
+     * @param string $type       Address type: SHIPPING or BILLING.
      * @param string $street
      * @param string $number
      * @param string $district
@@ -134,7 +134,7 @@ class Customer extends MoipResource
     /**
      * Get customer address.
      *
-     * @return string Customer's address.
+     * @return \stdClass Customer's address.
      */
     public function getShippingAddress()
     {
@@ -362,7 +362,7 @@ class Customer extends MoipResource
     /**
      * Set tax document from customer.
      *
-     * @param int    $number Document number.
+     * @param string $number Document number.
      * @param string $type   Document type.
      *
      * @return $this

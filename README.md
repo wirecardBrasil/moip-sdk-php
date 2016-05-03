@@ -22,7 +22,7 @@ O jeito mais simples e rápido de integrar o Moip a sua aplicação PHP
 [![Daily Downloads](https://poser.pugx.org/moip/moip-sdk-php/d/daily)](https://packagist.org/packages/moip/moip-sdk-php)
 ![Repo Size](https://reposs.herokuapp.com/?path=Moip/moip-sdk-php)
 
-> Versãoes
+> Versões
 
 [![Latest Stable Version](https://poser.pugx.org/moip/moip-sdk-php/v/stable)](https://packagist.org/packages/moip/moip-sdk-php)
 [![Latest Unstable Version](https://poser.pugx.org/moip/moip-sdk-php/v/unstable)](https://packagist.org/packages/moip/moip-sdk-php)
@@ -35,7 +35,7 @@ O jeito mais simples e rápido de integrar o Moip a sua aplicação PHP
 
 ## Dependências
 
-* PHP >= 5.5.9
+* PHP >= 5.5
 
 ## Instalação
 
@@ -90,6 +90,21 @@ $payment = $order->payments()->setCreditCard(12, 15, '4073020000000002', '123', 
 ## Documentação
 
 [Documentação oficial](https://moip.com.br/referencia-api/)
+
+## Testes
+Por padrão os testes não fazem nenhuma requisição para a API do Moip. É possível rodar os testes contra 
+o ambiente de [Sandbox](https://conta-sandbox.moip.com.br/) do moip, para isso basta setar as seguintes variáveis de ambiente:
+ - `MOIP_TOKEN` Seu token de acesso a sandbox.
+ - `MOIP_KEY` Sua chave de acesso a sandbox.
+
+[Como obter suas chaves](http://dev.moip.com.br/docs/#obter-chaves-de-acesso).
+
+Exemplo:
+```shell
+export MOIP_TOKEN=01010101010101010101010101010101
+export MOIP_KEY=ABABABABABABABABABABABABABABABABABABABAB
+vendor/bin/phpunit -c .
+```
 
 ## Licença
 
