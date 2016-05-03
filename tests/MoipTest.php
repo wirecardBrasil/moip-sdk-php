@@ -167,11 +167,10 @@ class MoipTest extends MoipTestCase
     }
 
     /**
-     * Test the convertion from money to cents using floats
+     * Test the convertion from money to cents using floats.
      */
     public function testToCents()
     {
-
         $cases = [
             [6.9, 690],
             [6.99, 699],
@@ -183,7 +182,7 @@ class MoipTest extends MoipTestCase
             [10.09, 1009],
             [.1, 10],
             [.01, 1],
-            [9.999, 999]
+            [9.999, 999],
         ];
 
         foreach ($cases as $case) {
