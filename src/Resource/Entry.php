@@ -60,7 +60,7 @@ class Entry extends MoipResource
 
     /**
      * Get entry in api by id.
-     * 
+     *
      * @param string $id_moip Event ID that generated the launch.
      *
      * @return stdClass

@@ -32,7 +32,7 @@ class Utils
         $amount = str_replace($locale['mon_decimal_point'], '.', $amount);
         $amount = str_replace($locale['decimal_point'], '.', $amount);
 
-        $parts = explode(".", "$amount");
+        $parts = explode('.', "$amount");
 
         // handle the case where $amount has a .0 fraction part
         if (count($parts) == 1) {
@@ -49,10 +49,11 @@ class Utils
          */
         $fraction = str_pad(substr($fraction, 0, 2), 2, '0');
 
-        $whole = (int)$whole * 100;
-        $fraction = (int)$fraction;
+        $whole = (int) $whole * 100;
+        $fraction = (int) $fraction;
 
         return $whole + $fraction;
     }
 
+    
 }
