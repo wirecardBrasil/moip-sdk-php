@@ -78,6 +78,8 @@ try {
         ->addItem('Bicicleta Specialized Tarmac 26 Shimano Alivio', 1, 'uma linda bicicleta', 10000)
         ->setCustomer($customer)
         ->create();
+
+    print_r($order);
 } catch (Exception $e) {
     printf("Code: %s - Description: %s - Path: %s", $error->getCode(), $error->getDescription(), $error->getPath());
 }
@@ -88,8 +90,10 @@ Após criar o pedido basta criar um pagamento nesse pedido.
 
 ```php
 try {
-    $payment = $order->payments()->setCreditCard(12, 15, '4073020000000002', '123', $customer)
+    $payment = $order->payments()->setCreditCard(12, 21, '4073020000000002', '123', $customer)
         ->execute();
+
+    print_r($payment);
 } catch (Exception $e) {
     printf("Code: %s - Description: %s - Path: %s", $error->getCode(), $error->getDescription(), $error->getPath());
 }
