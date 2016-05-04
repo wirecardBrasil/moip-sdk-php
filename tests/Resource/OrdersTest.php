@@ -68,7 +68,7 @@ class OrdersTest extends MoipTestCase
     {
         $order = $this->executeOrder();
         $expected = (100000 + 2 * 990 + 1490) - 1000;
-        $total_calculated = $total = $order->getSubtotalItems() + $order->getSubtotalShipping() + $order->getSubtotalAddition() - $order->getSubtotalDiscount();
+        $total_calculated = $order->getSubtotalItems() + $order->getSubtotalShipping() + $order->getSubtotalAddition() - $order->getSubtotalDiscount();
 
         $this->assertEquals($expected, $total_calculated);
         $this->assertEquals($expected, $order->getAmountTotal());
