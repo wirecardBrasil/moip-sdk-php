@@ -5,7 +5,7 @@ O jeito mais simples e rápido de integrar o Moip a sua aplicação PHP
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/moip/moip-sdk-php/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/moip/moip-sdk-php/?branch=master)
 [![Code Climate](https://codeclimate.com/github/moip/moip-sdk-php/badges/gpa.svg)](https://codeclimate.com/github/moip/moip-sdk-php)
-[![Codacy Badge](https://www.codacy.com/project/badge/186f98a92a004554abeef36452850004)](https://www.codacy.com/app/jeancesargarcia/moip-sdk-php)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/9e877cf78f844b9a9e40cec175c3aa5a)](https://www.codacy.com/app/jeancesargarcia/moip-sdk-php?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=moip/moip-sdk-php&amp;utm_campaign=Badge_Grade)
 [![StyleCI](https://styleci.io/repos/19941899/shield)](https://styleci.io/repos/19941899)
 [![Build Status](https://travis-ci.org/moip/moip-sdk-php.svg?branch=master)](https://travis-ci.org/moip/moip-sdk-php)
 
