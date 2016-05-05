@@ -4,6 +4,11 @@ namespace Moip;
 
 use Requests_Hooks;
 
+/**
+ * Class MoipBasicAuth
+ *
+ * @package \Moip
+ */
 class MoipBasicAuth implements MoipAuthentication
 {
     /**
@@ -39,9 +44,9 @@ class MoipBasicAuth implements MoipAuthentication
      * an instance as the 'auth' option. Use this callback to register all the
      * hooks you'll need.
      *
-     * @see Requests_Hooks::register
+     * @see \Requests_Hooks::register
      *
-     * @param Requests_Hooks $hooks Hook system
+     * @param \Requests_Hooks $hooks Hook system
      */
     public function register(Requests_Hooks &$hooks)
     {

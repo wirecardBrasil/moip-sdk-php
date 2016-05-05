@@ -2,14 +2,21 @@
 
 namespace Moip\Exceptions;
 
+use RuntimeException;
+
 /**
  * Class AuthException.
  *
  * This exception is thrown when the Moip API returns a 401 http code.
  * The error message was extracted from the documentation.
+ *
+ * @package \Moip\Exceptions
  */
-class UnautorizedException extends \RuntimeException
+class UnautorizedException extends RuntimeException
 {
+    /**
+     * UnautorizedException constructor.
+     */
     public function __construct()
     {
         // error string is in portuguese because the error descriptions returned by the API are also in portuguese

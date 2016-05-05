@@ -6,20 +6,28 @@ namespace Moip\Exceptions;
  * Class Error.
  *
  * Represents an error returned by the API.
+ *
+ * @package \Moip\Exceptions
  */
 class Error
 {
     /**
-     * @var string
+     * Code of error.
+     *
+     * @var int|string
      */
     private $code;
 
     /**
+     * Path of error.
+     * 
      * @var string
      */
     private $path;
 
     /**
+     * Description of error.
+     * 
      * @var string
      */
     private $description;
@@ -43,7 +51,7 @@ class Error
     /**
      * Returns the unique alphanumeric identifier of the error, ie.: "API-1".
      *
-     * @return string
+     * @return int|string
      */
     public function getCode()
     {
@@ -75,7 +83,7 @@ class Error
      *
      * @param string $json_string string returned by the Moip API
      *
-     * @return Error[]
+     * @return array
      */
     public static function parseErrors($json_string)
     {

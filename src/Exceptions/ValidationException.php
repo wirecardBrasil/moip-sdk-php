@@ -2,7 +2,14 @@
 
 namespace Moip\Exceptions;
 
-class ValidationException extends \RuntimeException
+use RuntimeException;
+
+/**
+ * Class ValidationException
+ *
+ * @package \Moip\Exceptions
+ */
+class ValidationException extends RuntimeException
 {
     /**
      * @var int
@@ -51,6 +58,11 @@ class ValidationException extends \RuntimeException
         return $this->errors;
     }
 
+    /**
+     * Convert error variables in string.
+     *
+     * @return string
+     */
     public function __toString()
     {
         $template = "[$this->code] The following errors ocurred:\n%s";
