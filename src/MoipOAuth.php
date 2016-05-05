@@ -5,9 +5,7 @@ namespace Moip;
 use Requests_Hooks;
 
 /**
- * Class MoipOAuth
- *
- * @package \Moip
+ * Class MoipOAuth.
  */
 class MoipOAuth implements MoipAuthentication
 {

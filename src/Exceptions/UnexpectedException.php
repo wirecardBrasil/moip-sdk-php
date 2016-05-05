@@ -5,9 +5,7 @@ namespace Moip\Exceptions;
 use RuntimeException;
 
 /**
- * Class UnexpectedException
- * 
- * @package \Moip\Exceptions
+ * Class UnexpectedException.
  */
 class UnexpectedException extends RuntimeException
 {
