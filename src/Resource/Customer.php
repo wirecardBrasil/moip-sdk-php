@@ -6,9 +6,7 @@ use stdClass;
 use UnexpectedValueException;
 
 /**
- * Class Customer
- * 
- * @package \Moip\Resource
+ * Class Customer.
  */
 class Customer extends MoipResource
 {
@@ -58,15 +56,15 @@ class Customer extends MoipResource
     /**
      * Add a new address to the customer.
      *
-     * @param string $type          Address type: SHIPPING or BILLING.
-     * @param string $street        Street address.
-     * @param string $number        Number address.
-     * @param string $district      Neighborhood address.
-     * @param string $city          City address.
-     * @param string $state         State address.
-     * @param string $zip           The zip code billing address.
-     * @param string $complement    Address complement.
-     * @param string $country       Country ISO-alpha3 format, BRA example.
+     * @param string $type       Address type: SHIPPING or BILLING.
+     * @param string $street     Street address.
+     * @param string $number     Number address.
+     * @param string $district   Neighborhood address.
+     * @param string $city       City address.
+     * @param string $state      State address.
+     * @param string $zip        The zip code billing address.
+     * @param string $complement Address complement.
+     * @param string $country    Country ISO-alpha3 format, BRA example.
      *
      * @return $this
      */
@@ -101,6 +99,7 @@ class Customer extends MoipResource
      *
      * @return \stdClass
      */
+
     /**
      * @return stdClass
      */

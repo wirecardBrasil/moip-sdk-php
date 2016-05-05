@@ -3,9 +3,7 @@
 namespace Moip;
 
 /**
- * Class Utils
- *
- * @package \Moip
+ * Class Utils.
  */
 class Utils
 {

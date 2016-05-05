@@ -5,9 +5,7 @@ namespace Moip;
 use Requests_Auth;
 
 /**
- * Interface MoipAuthentication
- *
- * @package \Moip
+ * Interface MoipAuthentication.
  */
 interface MoipAuthentication extends Requests_Auth
 {

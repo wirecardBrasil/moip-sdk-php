@@ -6,8 +6,6 @@ namespace Moip\Exceptions;
  * Class Error.
  *
  * Represents an error returned by the API.
- *
- * @package \Moip\Exceptions
  */
 class Error
 {
@@ -20,14 +18,14 @@ class Error
 
     /**
      * Path of error.
-     * 
+     *
      * @var string
      */
     private $path;
 
     /**
      * Description of error.
-     * 
+     *
      * @var string
      */
     private $description;

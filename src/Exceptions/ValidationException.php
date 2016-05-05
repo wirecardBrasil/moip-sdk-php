@@ -5,9 +5,7 @@ namespace Moip\Exceptions;
 use RuntimeException;
 
 /**
- * Class ValidationException
- *
- * @package \Moip\Exceptions
+ * Class ValidationException.
  */
 class ValidationException extends RuntimeException
 {

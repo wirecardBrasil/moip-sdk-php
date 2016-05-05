@@ -10,9 +10,7 @@ use Moip\Resource\Payment;
 use Requests_Session;
 
 /**
- * Class Moip
- *
- * @package \Moip
+ * Class Moip.
  */
 class Moip
 {
@@ -59,7 +57,7 @@ class Moip
     /**
      * Create a new aurhentication with the endpoint.
      *
-     * @param \Moip\MoipAuthentication               $moipAuthentication
+     * @param \Moip\MoipAuthentication                                     $moipAuthentication
      * @param \Moip\Moip::ENDPOINT_PRODUCTION|\Moip\Moip::ENDPOINT_SANDBOX $endpoint
      */
     public function __construct(MoipAuthentication $moipAuthentication, $endpoint = self::ENDPOINT_PRODUCTION)
