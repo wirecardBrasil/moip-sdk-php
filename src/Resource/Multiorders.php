@@ -55,7 +55,19 @@ class Multiorders extends MoipResource
      */
     public function get($id_moip)
     {
-        return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, Entry::PATH, $id_moip));
+        return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, Self::PATH, $id_moip));
+    }
+
+
+    /**
+     * Get own request id. external reference.
+     * 
+     * @return string
+     */
+
+    public function getMor()
+    {
+        return $this->getIfSet('id');
     }
 
     /**
@@ -171,13 +183,6 @@ class Multiorders extends MoipResource
         $multiorders->data->amount->total = $response->amount->total;
         $multiorders->data->amount->currency = $response->amount->currency;
         $multiorders->data->orders = [];
-
-        foreach ($response->orders as $responseOrder) {
-            $order = new Orders($multiorders->moip);
-            $order->populate($responseOrder);
-
-            $multiorders->data->orders[] = $order;
-        }
 
         $multiorders->data->createdAt = $response->createdAt;
         $multiorders->data->updatedAt = $response->updatedAt;

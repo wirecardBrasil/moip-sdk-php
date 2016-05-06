@@ -11,6 +11,10 @@
             "email": "jeancesargarcia@gmail.com"
         },
         {
+            "name": "Bruno Elisei",
+            "email": "brunoelisei@o2ti.com"
+        },
+        {
             "name": "Joao Batista Neto",
             "email": "neto.joaobatista@gmail.com"
         }
@@ -25,7 +29,8 @@
     "autoload": {
         "psr-4": {
             "Moip\\": "src/"
-        }
+        },
+        "psr-0": {"Requests": "library/"}
     },
     "autoload-dev": {
         "psr-4": {

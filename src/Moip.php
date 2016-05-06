@@ -7,11 +7,9 @@ use Moip\Resource\Entry;
 use Moip\Resource\Multiorders;
 use Moip\Resource\Orders;
 use Moip\Resource\Payment;
+use Moip\Resource\Transfers;
 use Requests_Session;
 
-/**
- * Class Moip.
- */
 class Moip
 {
     /**
@@ -20,7 +18,6 @@ class Moip
      * @const string
      */
     const ENDPOINT_PRODUCTION = 'https://api.moip.com.br';
-
     /**
      * endpoint of sandbox.
      *
@@ -57,8 +54,8 @@ class Moip
     /**
      * Create a new aurhentication with the endpoint.
      *
-     * @param \Moip\MoipAuthentication                                     $moipAuthentication
-     * @param string|\Moip\Moip::ENDPOINT_PRODUCTION|\Moip\Moip::ENDPOINT_SANDBOX $endpoint
+     * @param \Moip\MoipAuthentication               $moipAuthentication
+     * @param \Moip\Moip::ENDPOINT_PRODUCTION|string $endpoint
      */
     public function __construct(MoipAuthentication $moipAuthentication, $endpoint = self::ENDPOINT_PRODUCTION)
     {
@@ -161,6 +158,18 @@ class Moip
     {
         return new Multiorders($this);
     }
+
+    /**
+     * Create a new Transfers.
+     *
+     * @return \Moip\Resource\Transfers
+     */
+
+     public function transfers()
+    {
+        return new transfers($this);
+    }
+
 
     /**
      * Get the endpoint.

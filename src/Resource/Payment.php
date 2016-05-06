@@ -82,8 +82,7 @@ class Payment extends MoipResource
         if ($this->order !== null) {
             $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, Orders::PATH, $this->order->getId(), self::PATH);
         } else {
-            $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, Multiorders::PATH, $this->multiorder->getId(),
-                self::MULTI_PAYMENTS_PATH);
+            $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, Multiorders::PATH, $this->multiorder->getId(), self::MULTI_PAYMENTS_PATH);
         }
         $response = $this->httpRequest($path, Requests::POST, $this);
 
@@ -126,6 +125,7 @@ class Payment extends MoipResource
 
         $payment->data->id = $this->getIfSet('id', $response);
         $payment->data->status = $this->getIfSet('status', $response);
+        $payment->data->delayCapture = $this->getIfSet('delayCapture', $response);
         $payment->data->amount = new stdClass();
         $payment->data->amount->total = $this->getIfSet('total', $response->amount);
         $payment->data->amount->currency = $this->getIfSet('currency', $response->amount);
@@ -333,6 +333,21 @@ class Payment extends MoipResource
         return $this;
     }
 
+
+    /**
+     * Set delay capture
+     * @return $this
+     */
+
+    public function setDelayCapture(){
+      
+        
+        $this->data->delayCapture = true;
+
+        return $this;
+    }
+
+
     /**
      * Set Multiorders.
      *
@@ -341,6 +356,7 @@ class Payment extends MoipResource
     public function setMultiorder(Multiorders $multiorder)
     {
         $this->multiorder = $multiorder;
+        return $this;
     }
 
     /**
