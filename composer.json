@@ -29,8 +29,7 @@
     "autoload": {
         "psr-4": {
             "Moip\\": "src/"
-        },
-        "psr-0": {"Requests": "library/"}
+        }
     },
     "autoload-dev": {
         "psr-4": {
