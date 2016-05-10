@@ -81,7 +81,7 @@ try {
 
     print_r($order);
 } catch (Exception $e) {
-    printf("Code: %s - Description: %s - Path: %s", $error->getCode(), $error->getDescription(), $error->getPath());
+    printf($e->__toString());
 }
 ```
 
@@ -95,7 +95,7 @@ try {
 
     print_r($payment);
 } catch (Exception $e) {
-    printf("Code: %s - Description: %s - Path: %s", $error->getCode(), $error->getDescription(), $error->getPath());
+    printf($e->__toString());
 }
 ```
 ## Documentação
