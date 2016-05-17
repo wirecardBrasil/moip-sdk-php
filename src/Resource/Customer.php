@@ -5,14 +5,9 @@ namespace Moip\Resource;
 use stdClass;
 use UnexpectedValueException;
 
-/**
- * Class Customer.
- */
 class Customer extends MoipResource
 {
     /**
-     * Path customers API.
-     *
      * @const string
      */
     const PATH = 'customers';
@@ -57,14 +52,14 @@ class Customer extends MoipResource
      * Add a new address to the customer.
      *
      * @param string $type       Address type: SHIPPING or BILLING.
-     * @param string $street     Street address.
-     * @param string $number     Number address.
-     * @param string $district   Neighborhood address.
-     * @param string $city       City address.
-     * @param string $state      State address.
-     * @param string $zip        The zip code billing address.
-     * @param string $complement Address complement.
-     * @param string $country    Country ISO-alpha3 format, BRA example.
+     * @param string $street
+     * @param string $number
+     * @param string $district
+     * @param string $city
+     * @param string $state
+     * @param string $zip
+     * @param string $complement
+     * @param string $country
      *
      * @return $this
      */
@@ -97,10 +92,6 @@ class Customer extends MoipResource
     /**
      * Create a new customer.
      *
-     * @return \stdClass
-     */
-
-    /**
      * @return stdClass
      */
     public function create()
@@ -111,13 +102,13 @@ class Customer extends MoipResource
     /**
      * Find a customer.
      *
-     * @param string $moip_id
+     * @param string $id_moip
      *
-     * @return \Moip\Resource\Customer
+     * @return stdClass
      */
-    public function get($moip_id)
+    public function get($id_moip)
     {
-        return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, self::PATH, $moip_id));
+        return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, self::PATH, $id_moip));
     }
 
     /**

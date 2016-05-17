@@ -127,7 +127,6 @@ class Orders extends MoipResource
         $customer->populate($response->customer);
 
         $this->orders->data->payments = $this->structure($response, Payment::PATH, Payment::class);
-        $this->orders->data->multipayments = $this->structure($response, Multiorders::PATH, Multiorders::class);
         $this->orders->data->refunds = $this->structure($response, Refund::PATH, Refund::class);
         $this->orders->data->entries = $this->structure($response, Entry::PATH, Entry::class);
         $this->orders->data->events = $this->structure($response, Event::PATH, Event::class);
@@ -448,7 +447,7 @@ class Orders extends MoipResource
      *
      * @return $this
      */
-    public function setAddition($value)
+     public function setAddition($value)
     {
         if (!isset($this->data->amount->subtotals)) {
             $this->data->amount->subtotals = new stdClass();
@@ -457,6 +456,7 @@ class Orders extends MoipResource
 
         return $this;
     }
+
 
     /**
      * Set customer associated with the order.
@@ -472,32 +472,14 @@ class Orders extends MoipResource
         return $this;
     }
 
-    /**
-     * Set discounted value of the item will be subtracted from the total value of the items.
-     *
-     * @param int|float $value discounted value.
-     *
-     * @return $this
-     */
+ 
     public function setDiscount($value)
     {
+
+         if (!isset($this->data->amount->subtotals)) {
+            $this->data->amount->subtotals = new stdClass();
+        }
         $this->data->amount->subtotals->discount = (float) $value;
-
-        return $this;
-    }
-
-    /**
-     * Set discounted value of the item will be subtracted from the total value of the items.
-     *
-     * @deprecated
-     *
-     * @param int|float $value discounted value.
-     *
-     * @return $this
-     */
-    public function setDiscont($value)
-    {
-        $this->setDiscount($value);
 
         return $this;
     }
