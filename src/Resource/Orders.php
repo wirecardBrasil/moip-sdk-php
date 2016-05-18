@@ -449,7 +449,10 @@ class Orders extends MoipResource
      */
     public function setAddition($value)
     {
-        $this->data->subtotals->addition = (float) $value;
+        if (!isset($this->data->amount->subtotals)) {
+            $this->data->amount->subtotals = new stdClass();
+        }
+        $this->data->amount->subtotals->addition = (float) $value;
 
         return $this;
     }
