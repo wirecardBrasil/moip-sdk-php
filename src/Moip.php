@@ -7,6 +7,7 @@ use Moip\Resource\Entry;
 use Moip\Resource\Multiorders;
 use Moip\Resource\Orders;
 use Moip\Resource\Payment;
+use Moip\Resource\Transfers;
 use Requests_Session;
 
 /**
@@ -160,6 +161,22 @@ class Moip
     public function multiorders()
     {
         return new Multiorders($this);
+    }
+
+    /**
+     * Create a new Transfers.
+     *
+     * @return \Moip\Resource\Transfers
+     */
+
+    /**
+     * Create a new Transfers instance.
+     *
+     * @return Transfers
+     */
+    public function transfers()
+    {
+        return new transfers($this);
     }
 
     /**
