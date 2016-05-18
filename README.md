@@ -8,6 +8,7 @@ O jeito mais simples e rápido de integrar o Moip a sua aplicação PHP
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/9e877cf78f844b9a9e40cec175c3aa5a)](https://www.codacy.com/app/jeancesargarcia/moip-sdk-php?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=moip/moip-sdk-php&amp;utm_campaign=Badge_Grade)
 [![StyleCI](https://styleci.io/repos/19941899/shield)](https://styleci.io/repos/19941899)
 [![Build Status](https://travis-ci.org/moip/moip-sdk-php.svg?branch=master)](https://travis-ci.org/moip/moip-sdk-php)
+[![Coverage Status](https://coveralls.io/repos/github/moip/moip-sdk-php/badge.svg?branch=master)](https://coveralls.io/github/moip/moip-sdk-php?branch=master)
 
 > Informações
 
