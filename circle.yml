@@ -1,6 +1,6 @@
 machine:
   php:
-    version: 5.5
+    version: 5.5.9
     
 dependencies:
   pre:
