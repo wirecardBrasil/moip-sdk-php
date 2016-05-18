@@ -1,15 +1,12 @@
 <?php
 
-
 namespace Moip\Resource;
 
 use Requests;
 use stdClass;
 
 /**
- * Class Transfers
- * 
- * @package Moip\Resource
+ * Class Transfers.
  */
 class Transfers extends MoipResource
 {
@@ -43,7 +40,7 @@ class Transfers extends MoipResource
 
     /**
      * @param stdClass $response
-     * 
+     *
      * @return Transfers
      */
     protected function populate(stdClass $response)
@@ -75,32 +72,32 @@ class Transfers extends MoipResource
     ) {
         $this->data->amount = $amount;
         $this->data->transferInstrument = new stdClass();
-        $this->data->transferInstrument->method =  self::METHOD;
-        $this->data->transferInstrument->bankAccount  = new stdClass();
+        $this->data->transferInstrument->method = self::METHOD;
+        $this->data->transferInstrument->bankAccount = new stdClass();
         $this->data->transferInstrument->bankAccount->type = self::TYPE;
         $this->data->transferInstrument->bankAccount->bankNumber = $bankNumber;
         $this->data->transferInstrument->bankAccount->agencyNumber = $agencyNumber;
         $this->data->transferInstrument->bankAccount->agencyCheckNumber = $agencyCheckNumber;
         $this->data->transferInstrument->bankAccount->accountNumber = $accountNumber;
         $this->data->transferInstrument->bankAccount->accountCheckNumber = $accountCheckNumber;
-        
+
         return $this;
     }
 
     /**
-     *
      * @param $fullname
      * @param $taxDocument
      *
      * @return $this
      */
-    public function setHolder($fullname, $taxDocument){
-
+    public function setHolder($fullname, $taxDocument)
+    {
         $this->data->transferInstrument->bankAccount->holder = new stdClass();
         $this->data->transferInstrument->bankAccount->holder->fullname = $fullname;
         $this->data->transferInstrument->bankAccount->holder->taxDocument = new stdClass();
         $this->data->transferInstrument->bankAccount->holder->taxDocument->type = self::TYPE_HOLD;
         $this->data->transferInstrument->bankAccount->holder->taxDocument->number = $taxDocument;
+
         return $this;
     }
 
