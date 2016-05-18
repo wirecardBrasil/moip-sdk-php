@@ -1,5 +1,5 @@
 {
-    "name": "moip/moip-sdk-php",
+    "name": "moipv2/moip-sdk-php-v2",
     "description": "Cliente em PHP para integração server-side com APIs Moip v2",
     "keywords": ["libraries", "moip", "intermediary", "checkout", "marketplace"],
     "homepage": "https://github.com/moip/moip-sdk-php",
@@ -9,6 +9,10 @@
         {
             "name": "Jean Cesar Garcia",
             "email": "jeancesargarcia@gmail.com"
+        },
+        {
+            "name": "Bruno Elisei",
+            "email": "brunoelisei@o2ti.com"
         },
         {
             "name": "Joao Batista Neto",

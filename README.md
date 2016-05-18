@@ -3,33 +3,33 @@ O jeito mais simples e rápido de integrar o Moip a sua aplicação PHP
 
 > Estado atual do sdk
 
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/moip/moip-sdk-php/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/moip/moip-sdk-php/?branch=master)
-[![Code Climate](https://codeclimate.com/github/moip/moip-sdk-php/badges/gpa.svg)](https://codeclimate.com/github/moip/moip-sdk-php)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/9e877cf78f844b9a9e40cec175c3aa5a)](https://www.codacy.com/app/jeancesargarcia/moip-sdk-php?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=moip/moip-sdk-php&amp;utm_campaign=Badge_Grade)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/moipv2/moip-sdk-php-v2/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/moipv2/moip-sdk-php-v2/?branch=master)
+[![Code Climate](https://codeclimate.com/github/moipv2/moip-sdk-php-v2/badges/gpa.svg)](https://codeclimate.com/github/moipv2/moip-sdk-php-v2)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/9e877cf78f844b9a9e40cec175c3aa5a)](https://www.codacy.com/app/jeancesargarcia/moip-sdk-php?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=moipv2/moip-sdk-php-v2&amp;utm_campaign=Badge_Grade)
 [![StyleCI](https://styleci.io/repos/19941899/shield)](https://styleci.io/repos/19941899)
-[![Build Status](https://travis-ci.org/moip/moip-sdk-php.svg?branch=master)](https://travis-ci.org/moip/moip-sdk-php)
+[![Build Status](https://travis-ci.org/moipv2/moip-sdk-php-v2.svg?branch=master)](https://travis-ci.org/moipv2/moip-sdk-php-v2)
 
 > Informações
 
-[![Dependency Status](https://gemnasium.com/moip/moip-sdk-php.svg)](https://gemnasium.com/moip/moip-sdk-php)
-[![Github Issues](http://githubbadges.herokuapp.com/moip/moip-sdk-php/issues.svg?style=square)](https://github.com/moip/moip-sdk-php/issues)
-[![Github Pulls](http://githubbadges.herokuapp.com/moip/moip-sdk-php/pulls.svg?style=square)](https://github.com/moip/moip-sdk-php/issues)
+[![Dependency Status](https://gemnasium.com/moipv2/moip-sdk-php-v2.svg)](https://gemnasium.com/moipv2/moip-sdk-php-v2)
+[![Github Issues](http://githubbadges.herokuapp.com/moipv2/moip-sdk-php-v2/issues.svg?style=square)](https://github.com/moipv2/moip-sdk-php-v2/issues)
+[![Github Pulls](http://githubbadges.herokuapp.com/moipv2/moip-sdk-php-v2/pulls.svg?style=square)](https://github.com/moipv2/moip-sdk-php-v2/issues)
 
 > Estatísticas
 
-[![Total Downloads](https://poser.pugx.org/moip/moip-sdk-php/downloads)](https://packagist.org/packages/moip/moip-sdk-php)
-[![Monthly Downloads](https://poser.pugx.org/moip/moip-sdk-php/d/monthly)](https://packagist.org/packages/moip/moip-sdk-php)
-[![Daily Downloads](https://poser.pugx.org/moip/moip-sdk-php/d/daily)](https://packagist.org/packages/moip/moip-sdk-php)
-![Repo Size](https://reposs.herokuapp.com/?path=Moip/moip-sdk-php)
+[![Total Downloads](https://poser.pugx.org/moipv2/moip-sdk-php-v2/downloads)](https://packagist.org/packages/moipv2/moip-sdk-php-v2)
+[![Monthly Downloads](https://poser.pugx.org/moipv2/moip-sdk-php-v2/d/monthly)](https://packagist.org/packages/moipv2/moip-sdk-php-v2)
+[![Daily Downloads](https://poser.pugx.org/moipv2/moip-sdk-php-v2/d/daily)](https://packagist.org/packages/moipv2/moip-sdk-php-v2)
+![Repo Size](https://reposs.herokuapp.com/?path=moipv2/moip-sdk-php-v2)
 
 > Versões
 
-[![Latest Stable Version](https://poser.pugx.org/moip/moip-sdk-php/v/stable)](https://packagist.org/packages/moip/moip-sdk-php)
-[![Latest Unstable Version](https://poser.pugx.org/moip/moip-sdk-php/v/unstable)](https://packagist.org/packages/moip/moip-sdk-php)
+[![Latest Stable Version](https://poser.pugx.org/moipv2/moip-sdk-php-v2/v/stable)](https://packagist.org/packages/moipv2/moip-sdk-php-v2)
+[![Latest Unstable Version](https://poser.pugx.org/moipv2/moip-sdk-php-v2/v/unstable)](https://packagist.org/packages/moipv2/moip-sdk-php-v2)
 
 > Licença
 
-[![License](https://poser.pugx.org/moip/moip-sdk-php/license)](https://packagist.org/packages/moip/moip-sdk-php)
+[![License](https://poser.pugx.org/moipv2/moip-sdk-php-v2/license)](https://packagist.org/packages/moipv2/moip-sdk-php-v2)
 
 ---
 
@@ -45,7 +45,7 @@ O jeito mais simples e rápido de integrar o Moip a sua aplicação PHP
 
 Execute em seu shell:
 
-    composer require moip/moip-sdk-php ~1
+    composer require moipv2/moip-sdk-php-v2 ~1
     
 ## Configurando sua autenticação
 ```php

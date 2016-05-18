@@ -447,12 +447,16 @@ class Orders extends MoipResource
      *
      * @return $this
      */
-    public function setAddition($value)
+     public function setAddition($value)
     {
-        $this->data->subtotals->addition = (float) $value;
+        if (!isset($this->data->amount->subtotals)) {
+            $this->data->amount->subtotals = new stdClass();
+        }
+        $this->data->amount->subtotals->addition = (float) $value;
 
         return $this;
     }
+
 
     /**
      * Set customer associated with the order.
@@ -468,32 +472,14 @@ class Orders extends MoipResource
         return $this;
     }
 
-    /**
-     * Set discounted value of the item will be subtracted from the total value of the items.
-     *
-     * @param int|float $value discounted value.
-     *
-     * @return $this
-     */
+ 
     public function setDiscount($value)
     {
+
+         if (!isset($this->data->amount->subtotals)) {
+            $this->data->amount->subtotals = new stdClass();
+        }
         $this->data->amount->subtotals->discount = (float) $value;
-
-        return $this;
-    }
-
-    /**
-     * Set discounted value of the item will be subtracted from the total value of the items.
-     *
-     * @deprecated
-     *
-     * @param int|float $value discounted value.
-     *
-     * @return $this
-     */
-    public function setDiscont($value)
-    {
-        $this->setDiscount($value);
 
         return $this;
     }

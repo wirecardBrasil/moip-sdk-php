@@ -7,6 +7,7 @@ use Moip\Resource\Entry;
 use Moip\Resource\Multiorders;
 use Moip\Resource\Orders;
 use Moip\Resource\Payment;
+use Moip\Resource\Transfers;
 use Requests_Session;
 
 /**
@@ -161,6 +162,18 @@ class Moip
     {
         return new Multiorders($this);
     }
+
+    /**
+     * Create a new Transfers.
+     *
+     * @return \Moip\Resource\Transfers
+     */
+
+     public function transfers()
+    {
+        return new transfers($this);
+    }
+
 
     /**
      * Get the endpoint.
