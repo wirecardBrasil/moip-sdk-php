@@ -34,14 +34,16 @@ O jeito mais simples e rápido de integrar o Moip a sua aplicação PHP
 ---
 
 ## Dependências
-
+#### require
 * PHP >= 5.5
+* rmccue/requests >= 1.0
+
+#### require-dev
+* phpunit/phpunit ~ 4.0
 
 ## Instalação
 
-#### Usando Terminal
-
-Execute:
+Execute em seu shell:
 
     composer require moip/moip-sdk-php ~1
     
@@ -58,9 +60,8 @@ $key = 'ABABABABABABABABABABABABABABABABABABABAB';
 $moip = new Moip(new MoipBasicAuth($token, $key), Moip::ENDPOINT_SANDBOX);
 ```
 
-## Criando um pedido
-Nesse exemplo será criado um pedido com dados do cliente.
-
+## Criando um comprador
+Nesse exemplo será criado um pedido com dados do cliente - Com endereço de entrega e de pagamento.
 ```php
 try {
     $customer = $moip->customers()->setOwnId(uniqid())
@@ -72,10 +73,35 @@ try {
         ->addAddress('BILLING',
             'Rua de teste', 123,
             'Bairro', 'Sao Paulo', 'SP',
-            '01234567', 8);
+            '01234567', 8)
+        ->addAddress('SHIPPING',
+                  'Rua de teste do SHIPPING', 123,
+                  'Bairro do SHIPPING', 'Sao Paulo', 'SP',
+                  '01234567', 8)
+        ->create();
+    print_r($customer);
+} catch (Exception $e) {
+    printf($e->__toString());
+}
+```
 
+## Criando um pedido com o comprador que acabamos de criar
+Nesse exemplo com vários produtos e ainda especificando valor de frete, valor adicional e ainda valor de desconto.
+
+```php
+try {
     $order = $moip->orders()->setOwnId(uniqid())
-        ->addItem('Bicicleta Specialized Tarmac 26 Shimano Alivio', 1, 'uma linda bicicleta', 10000)
+        ->addItem("bicicleta 1",1, "sku1", 10000)
+        ->addItem("bicicleta 2",1, "sku2", 11000)
+        ->addItem("bicicleta 3",1, "sku3", 12000)
+        ->addItem("bicicleta 4",1, "sku4", 13000)
+        ->addItem("bicicleta 5",1, "sku5", 14000)
+        ->addItem("bicicleta 6",1, "sku6", 15000)
+        ->addItem("bicicleta 7",1, "sku7", 16000)
+        ->addItem("bicicleta 8",1, "sku8", 17000)
+        ->addItem("bicicleta 9",1, "sku9", 18000)
+        ->addItem("bicicleta 10",1, "sku10", 19000)
+        ->setShippingAmount(3000)->setAddition(1000)->setDiscount(5000)
         ->setCustomer($customer)
         ->create();
 
@@ -87,6 +113,7 @@ try {
 
 ## Criando o pagamento
 Após criar o pedido basta criar um pagamento nesse pedido.
+Nesse exemplo estamos pagando com Cartão de Crédito.
 
 ```php
 try {
