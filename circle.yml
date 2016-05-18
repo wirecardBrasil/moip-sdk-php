@@ -1,0 +1,19 @@
+machine:
+  php:
+    version: 5.3.10
+    
+dependencies:
+  pre:
+    - curl -s http://getcomposer.org/installer | php
+    - php composer.phar install -n
+    - sed -i 's/^;//' ~/.phpenv/versions/$(phpenv global)/etc/conf.d/xdebug.ini
+    
+test:
+  post:
+    - php vendor/bin/phpunit
+
+deployment:
+  coverage:
+    branch: master
+    commands:
+      - php bin/codacycoverage clover
