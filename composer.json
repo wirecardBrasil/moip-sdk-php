@@ -5,6 +5,10 @@
     "homepage": "http://dev.moip.com.br",
     "license": "MIT",
     "type": "libraries",
+    "support": {
+        "issues": "https://github.com/moip/moip-sdk-php/issues",
+        "source": "https://github.com/moip/moip-sdk-php"
+    },
     "authors": [
         {
             "name": "Jean Cesar Garcia",
