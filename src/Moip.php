@@ -176,7 +176,7 @@ class Moip
      */
     public function transfers()
     {
-        return new transfers($this);
+        return new Transfers($this);
     }
 
     /**
