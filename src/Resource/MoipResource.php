@@ -175,7 +175,7 @@ abstract class MoipResource implements JsonSerializable
     public function getLinks()
     {
         $obj = $this->getIfSet('_links');
-        if( $obj){
+        if ($obj) {
             return new Links($obj);
         }
     }

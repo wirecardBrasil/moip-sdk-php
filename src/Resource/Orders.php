@@ -403,6 +403,7 @@ class Orders extends MoipResource
     {
         return $this->getIfSetDateTime('updatedAt');
     }
+
     
     /**
      * Structure of payment.
