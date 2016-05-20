@@ -180,7 +180,7 @@ class MoipTest extends MoipTestCase
         $this->assertEquals("https://sandbox.moip.com.br/v2/orders/$order_id", $links->getLink('self')->getHref());
         // test nested links
         $this->assertEquals("https://checkout-sandbox.moip.com.br/creditcard/$order_id",
-            $links->getLink("payCreditCard")->getHref());
+            $links->getLink('payCreditCard')->getHref());
     }
 
     /**

@@ -4,8 +4,8 @@ namespace Moip\Resource;
 
 use JsonSerializable;
 use Moip\Exceptions;
-use Moip\Moip;
 use Moip\Links;
+use Moip\Moip;
 use Requests;
 use Requests_Exception;
 use stdClass;
@@ -175,11 +175,9 @@ abstract class MoipResource implements JsonSerializable
     public function getLinks()
     {
         $obj = $this->getIfSet('_links');
-        if($obj){
+        if( $obj){
             return new Links($obj);
         }
-
-        return null;
     }
 
     /**

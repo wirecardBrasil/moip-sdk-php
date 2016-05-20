@@ -4,8 +4,6 @@ namespace Moip;
 
 /**
  * Class Link represents a single link from the resource HATEOAS structure.
- *
- * @package Moip
  */
 class Link
 {
@@ -37,9 +35,8 @@ class Link
         $this->name = $name;
 
         $hasHref = empty($obj->href);
-        
         if ($hasHref && empty($obj->redirectHref)) {
-            throw new \InvalidArgumentException("Link is malformed. No href property");
+            throw new \InvalidArgumentException('Link is malformed. No href property');
         }
 
         $this->href = !$hasHref ? $obj->href : $obj->redirectHref;

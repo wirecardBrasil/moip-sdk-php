@@ -2,7 +2,6 @@
 
 namespace Moip;
 
-
 /**
  * Class that represents the HATEOAS structure of the API resources.
  */
@@ -55,7 +54,7 @@ class Links
     public function getLink($name)
     {
         if (!isset($this->links[$name])) {
-            return null;
+            return;
         }
         return $this->links[$name];
     }
