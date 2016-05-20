@@ -56,6 +56,7 @@ class Links
         if (!isset($this->links[$name])) {
             return;
         }
+
         return $this->links[$name];
     }
 }
