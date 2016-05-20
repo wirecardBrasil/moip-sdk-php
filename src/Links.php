@@ -29,7 +29,7 @@ class Links
     private function parseLinks(\stdClass $links)
     {
         foreach (get_object_vars($links) as $property => $value) {
-            if ($property=="checkout") { // nested links? eg: checkout=>payOnlineBankDebitItau,payCreditCard
+            if ($property == 'checkout') { // nested links? eg: checkout=>payOnlineBankDebitItau,payCreditCard...
                 $this->parseLinks($value);
             } else {
                 $this->links[$property] = new Link($property, $value);

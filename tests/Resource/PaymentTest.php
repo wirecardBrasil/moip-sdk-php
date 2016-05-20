@@ -6,7 +6,7 @@ use Moip\Tests\MoipTestCase;
 
 class PaymentTest extends MoipTestCase
 {
-    //todo: test boleto and credit card hash
+    //todo: credit card hash
 
     /**
      * Test creating a credit card payment, passing all credit card data.
@@ -23,5 +23,21 @@ class PaymentTest extends MoipTestCase
         $last4 = $payment->getFundingInstrument()->creditCard->last4;
         $this->assertEquals($first6, substr($cc, 0, 6));
         $this->assertEquals($last4, substr($cc, -4));
+    }
+
+    /**
+     * Test creating a billet payment.
+     */
+    public function testBillet()
+    {
+        $this->mockHttpSession($this->body_order);
+        $order = $this->createOrder()->create();
+        $this->mockHttpSession($this->body_billet_pay);
+        $payment = $order->payments()->setBoleto(new \DateTime('today +1day'),
+            'http://dev.moip.com.br/images/logo-header-moip.png')->execute();
+        $this->assertNotEmpty($payment->getFundingInstrument()->boleto);
+        $pay_id = $payment->getId();
+        $this->assertEquals($payment->getLinks()->getLink('payBoleto')->getHref(),
+            "https://checkout-sandbox.moip.com.br/boleto/$pay_id");
     }
 }
