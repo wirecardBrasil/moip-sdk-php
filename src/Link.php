@@ -37,7 +37,7 @@ class Link
         $this->name = $name;
 
         $hasHref = empty($obj->href);
-
+        
         if ($hasHref && empty($obj->redirectHref)) {
             throw new \InvalidArgumentException("Link is malformed. No href property");
         }

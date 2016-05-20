@@ -20,8 +20,20 @@ class Links
      */
     public function __construct(\stdClass $links)
     {
+        $this->parseLinks($links);
+    }
+
+    /**
+     * @param \stdClass $links
+     */
+    private function parseLinks(\stdClass $links)
+    {
         foreach (get_object_vars($links) as $property => $value) {
-            $links[$property] = new Link($property, $value);
+            if ($property=="checkout") { // nested links? eg: checkout=>payOnlineBankDebitItau,payCreditCard
+                $this->parseLinks($value);
+            } else {
+                $this->links[$property] = new Link($property, $value);
+            }
         }
     }
 
