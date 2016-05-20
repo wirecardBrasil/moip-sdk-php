@@ -5,6 +5,7 @@ namespace Moip\Resource;
 use JsonSerializable;
 use Moip\Exceptions;
 use Moip\Moip;
+use Moip\Links;
 use Requests;
 use Requests_Exception;
 use stdClass;
@@ -164,6 +165,21 @@ abstract class MoipResource implements JsonSerializable
             throw new Exceptions\ValidationException($code, $errors);
         }
         throw new Exceptions\UnexpectedException();
+    }
+
+    /**
+     * Returns the HATEOAS structure, if any.
+     *
+     * @return null|Links
+     */
+    public function getLinks()
+    {
+        $obj = $this->getIfSet('_links');
+        if($obj){
+            return new Links($obj);
+        }
+
+        return null;
     }
 
     /**

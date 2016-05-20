@@ -403,17 +403,7 @@ class Orders extends MoipResource
     {
         return $this->getIfSetDateTime('updatedAt');
     }
-
-    /**
-     * Get hypermedia link structure (HATEOAS) resource Orders.
-     *
-     * @return \stdClass
-     */
-    public function getLinks()
-    {
-        return $this->getIfSet('_links');
-    }
-
+    
     /**
      * Structure of payment.
      *
