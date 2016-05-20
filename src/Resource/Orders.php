@@ -405,16 +405,6 @@ class Orders extends MoipResource
     }
 
     /**
-     * Get hypermedia link structure (HATEOAS) resource Orders.
-     *
-     * @return \stdClass
-     */
-    public function getLinks()
-    {
-        return $this->getIfSet('_links');
-    }
-
-    /**
      * Structure of payment.
      *
      * @return \Moip\Resource\Payment

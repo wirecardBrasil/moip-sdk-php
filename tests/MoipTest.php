@@ -167,6 +167,23 @@ class MoipTest extends MoipTestCase
     }
 
     /**
+     * Test if parsing of HATEOAS structure works.
+     */
+    public function testLinks()
+    {
+        $order = $this->createOrder();
+        $this->mockHttpSession($this->body_order);
+        $order = $order->create();
+        $order_id = $order->getId();
+        $links = $order->getLinks();
+        $this->assertNotEmpty($links);
+        $this->assertEquals("https://sandbox.moip.com.br/v2/orders/$order_id", $links->getLink('self')->getHref());
+        // test nested links
+        $this->assertEquals("https://checkout-sandbox.moip.com.br/creditcard/$order_id",
+            $links->getLink('payCreditCard')->getHref());
+    }
+
+    /**
      * Test the convertion from money to cents using floats.
      */
     public function testToCents()

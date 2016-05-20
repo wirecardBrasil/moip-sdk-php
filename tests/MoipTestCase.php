@@ -57,6 +57,11 @@ abstract class MoipTestCase extends TestCase
     protected $body_cc_pay_pci = '{"id":"PAY-L6J2NKS9OGYU","status":"IN_ANALYSIS","delayCapture":false,"amount":{"total":102470,"fees":5695,"refunds":0,"liquid":96775,"currency":"BRL"},"installmentCount":1,"fundingInstrument":{"creditCard":{"id":"CRC-2TJ13YB4Y1WU","brand":"MASTERCARD","first6":"555566","last4":"8884","holder":{"birthdate":"1989-06-01","birthDate":"1989-06-01","taxDocument":{"type":"CPF","number":"22222222222"},"fullname":"Jose Silva"}},"method":"CREDIT_CARD"},"fees":[{"type":"TRANSACTION","amount":5695}],"events":[{"type":"PAYMENT.IN_ANALYSIS","createdAt":"2016-02-19T18:18:54.535-02"},{"type":"PAYMENT.CREATED","createdAt":"2016-02-19T18:18:51.946-02"}],"_links":{"order":{"href":"https://sandbox.moip.com.br/v2/orders/ORD-8UDL4K9VRJTB","title":"ORD-8UDL4K9VRJTB"},"self":{"href":"https://sandbox.moip.com.br/v2/payments/PAY-L6J2NKS9OGYU"}},"createdAt":"2016-02-19T18:18:51.944-02","updatedAt":"2016-02-19T18:18:54.535-02"}';
 
     /**
+     * @var string response from moip API.
+     */
+    protected $body_billet_pay = '{"id":"PAY-XNVIBO5MIQ9S","status":"WAITING","delayCapture":false,"amount":{"total":102470,"fees":3645,"refunds":0,"liquid":98825,"currency":"BRL"},"installmentCount":1,"fundingInstrument":{"boleto":{"expirationDate":"2016-05-21","lineCode":"23793.39126 60000.062608 32001.747909 7 68010000102470"},"method":"BOLETO"},"fees":[{"type":"TRANSACTION","amount":3645}],"events":[{"type":"PAYMENT.CREATED","createdAt":"2016-05-20T15:19:47.000-03"},{"type":"PAYMENT.WAITING","createdAt":"2016-05-20T15:19:47.000-03"}],"_links":{"order":{"href":"https://sandbox.moip.com.br/v2/orders/ORD-3KSQDBJSTIF6","title":"ORD-3KSQDBJSTIF6"},"payBoleto":{"redirectHref":"https://checkout-sandbox.moip.com.br/boleto/PAY-XNVIBO5MIQ9S"},"self":{"href":"https://sandbox.moip.com.br/v2/payments/PAY-XNVIBO5MIQ9S"}},"updatedAt":"2016-05-20T15:19:47.000-03","createdAt":"2016-05-20T15:19:47.000-03"}';
+    
+    /**
      * @var string holds the last generated customer ownId. In mock mode it'll be always the default, but it changes on sandbox mode.
      */
     protected $last_cus_id = 'meu_id_customer';

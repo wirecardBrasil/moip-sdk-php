@@ -118,7 +118,7 @@ class Transfers extends MoipResource
     /**
      * Get MoIP Transfers id.
      *
-     * @return strign
+     * @return string
      */
     public function getId()
     {
