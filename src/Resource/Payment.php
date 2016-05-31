@@ -432,6 +432,26 @@ class Payment extends MoipResource
     }
 
     /**
+     * Avoid a pre-authorized amount on a credit card payment.
+     *
+     * @throws \Exception
+     * 
+     * @return Payment
+     */
+    public function avoid()
+    {
+        if ($this->order !== null) {
+            $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, self::PATH, $this->getId(), 'void');
+        } else {
+            throw new \Exception('Sorry, multipayment capture is not available on this version');
+        }
+
+        $response = $this->httpRequest($path, Requests::POST, $this);
+
+        return $this->populate($response);
+    }
+
+    /**
      * Get the payment status.
      *
      * @return string|null
