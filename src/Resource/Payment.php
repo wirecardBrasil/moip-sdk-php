@@ -58,39 +58,39 @@ class Payment extends MoipResource
     private $order;
 
     /**
-     * Just created, but not initialized yet
+     * Just created, but not initialized yet.
      */
     const STATUS_CREATED = 'CREATED';
     /**
-     * Waiting for the payment
+     * Waiting for the payment.
      */
     const STATUS_WAITING = 'WAITING';
     /**
-     * On risk analysis, it may be automatic or manual
+     * On risk analysis, it may be automatic or manual.
      */
     const STATUS_IN_ANALYSIS = 'IN_ANALYSIS';
     /**
-     * The amount was reserved on client credit card, it may be caught or discarded until 5 days
+     * The amount was reserved on client credit card, it may be caught or discarded until 5 days.
      */
     const STATUS_PRE_AUTHORIZED = 'PRE_AUTHORIZED';
     /**
-     * Payment confirmed by the bank institution
+     * Payment confirmed by the bank institution.
      */
     const STATUS_AUTHORIZED = 'AUTHORIZED';
     /**
-     * Payment cancelled
+     * Payment cancelled.
      */
     const STATUS_CANCELLED = 'CANCELLED';
     /**
-     * Payment refunded
+     * Payment refunded.
      */
     const STATUS_REFUNDED = 'REFUNDED';
     /**
-     * Paymend reversed (it means that the payment may was not recognized by the client)
+     * Paymend reversed (it means that the payment may was not recognized by the client).
      */
     const STATUS_REVERSED = 'REVERSED';
     /**
-     * Payment finalized, the amout is on your account
+     * Payment finalized, the amout is on your account.
      */
     const STATUS_SETTLED = 'SETTLED';
 
@@ -431,12 +431,12 @@ class Payment extends MoipResource
     }
 
     /**
-     * Get the payment status
+     * Get the payment status.
      *
      * @return string|null
      */
     public function getStatus()
     {
-        return $this->data?$this->data->status:null;
+        return $this->data ? $this->data->status : null;
     }
 }
