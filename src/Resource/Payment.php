@@ -402,7 +402,7 @@ class Payment extends MoipResource
     }
 
     /**
-     * Turns on a delay on credit card payment capture (pre-authorization)
+     * Turns on a delay on credit card payment capture (pre-authorization).
      *
      * @return void
      */
@@ -414,8 +414,9 @@ class Payment extends MoipResource
     /**
      * Capture a pre-authorized amount on a credit card payment.
      *
-     * @return Payment
      * @throws \Exception
+     *
+     * @return Payment
      */
     public function capture()
     {
