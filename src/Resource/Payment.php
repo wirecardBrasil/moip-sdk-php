@@ -165,6 +165,7 @@ class Payment extends MoipResource
 
         $payment->data->id = $this->getIfSet('id', $response);
         $payment->data->status = $this->getIfSet('status', $response);
+        $payment->data->delayCapture = $this->getIfSet('delayCapture', $response);
         $payment->data->amount = new stdClass();
         $payment->data->amount->total = $this->getIfSet('total', $response->amount);
         $payment->data->amount->currency = $this->getIfSet('currency', $response->amount);
@@ -376,10 +377,14 @@ class Payment extends MoipResource
      * Set Multiorders.
      *
      * @param \Moip\Resource\Multiorders $multiorder
+     *
+     * @return $this
      */
     public function setMultiorder(Multiorders $multiorder)
     {
         $this->multiorder = $multiorder;
+
+        return $this;
     }
 
     /**
