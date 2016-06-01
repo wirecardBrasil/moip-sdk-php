@@ -435,7 +435,7 @@ class Payment extends MoipResource
      * Avoid a pre-authorized amount on a credit card payment.
      *
      * @throws \Exception
-     * 
+     *
      * @return Payment
      */
     public function avoid()
