@@ -46,7 +46,7 @@ O jeito mais simples e rápido de integrar o Moip a sua aplicação PHP
 
 Execute em seu shell:
 
-    composer require moip/moip-sdk-php ~1
+    composer require moip/moip-sdk-php
     
 ## Configurando sua autenticação
 ```php
