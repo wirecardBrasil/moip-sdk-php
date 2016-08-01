@@ -33,6 +33,10 @@ O jeito mais simples e rápido de integrar o Moip a sua aplicação PHP
 [![License](https://poser.pugx.org/moip/moip-sdk-php/license)](https://packagist.org/packages/moip/moip-sdk-php)
 
 ---
+## Packages
+
+* [Laravel 5.x](https://github.com/artesaos/moip)
+* [Laravel 4.x (MoIP API v1)](https://github.com/SOSTheBlack/moip) 
 
 ## Dependências
 #### require
@@ -47,10 +51,6 @@ O jeito mais simples e rápido de integrar o Moip a sua aplicação PHP
 Execute em seu shell:
 
     composer require moip/moip-sdk-php
-
-## Packages
-* [Laravel 5.x](https://github.com/artesaos/moip)
-* [Laravel 4.x (MoIP API v1)](https://github.com/SOSTheBlack/moip) 
 
 ## Configurando sua autenticação
 ```php
