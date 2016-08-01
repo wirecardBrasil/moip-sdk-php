@@ -1,4 +1,4 @@
-# Moip v2 PHP client SDK
+# MoIP v2 PHP client SDK
 O jeito mais simples e rápido de integrar o Moip a sua aplicação PHP
 
 > Estado atual do sdk
@@ -47,7 +47,11 @@ O jeito mais simples e rápido de integrar o Moip a sua aplicação PHP
 Execute em seu shell:
 
     composer require moip/moip-sdk-php
-    
+
+## Packages
+* [Laravel 5.x](https://github.com/artesaos/moip)
+* [Laravel 4.x (MoIP API v1)](https://github.com/SOSTheBlack/moip) 
+
 ## Configurando sua autenticação
 ```php
 require 'vendor/autoload.php';
