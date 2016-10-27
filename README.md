@@ -35,8 +35,8 @@ O jeito mais simples e rápido de integrar o Moip a sua aplicação PHP
 ---
 ## Packages
 
-* [Symfony 2 ou 3](https://github.com/leonnleite/moip-bundle)
 * [Laravel 5.x](https://github.com/artesaos/moip)
+* [Symfony 2 ou 3](https://github.com/leonnleite/moip-bundle)
 * [Laravel 4.x (MoIP API v1)](https://github.com/SOSTheBlack/moip) 
 
 ## Dependências
