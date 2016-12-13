@@ -251,7 +251,7 @@ class Payment extends MoipResource
         $this->data->fundingInstrument->creditCard->holder->phone->countryCode = $holder->getPhoneCountryCode();
         $this->data->fundingInstrument->creditCard->holder->phone->areaCode = $holder->getPhoneAreaCode();
         $this->data->fundingInstrument->creditCard->holder->phone->number = $holder->getPhoneNumber();
-		$this->data->fundingInstrument->creditCard->holder->billingAddress = $holder->getBillingAddress();
+	$this->data->fundingInstrument->creditCard->holder->billingAddress = $holder->getBillingAddress();
     }
 
     /**
