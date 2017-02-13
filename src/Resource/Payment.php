@@ -153,6 +153,16 @@ class Payment extends MoipResource
 
         return $refund;
     }
+	
+	/**
+	 * Get payment status.
+	 *
+	 * @return string Payment status. Possible values CREATED, WAITING, IN_ANALYSIS, PRE_AUTHORIZED, AUTHORIZED, CANCELLED, REFUNDED, REVERSED, SETTLED
+	 */
+	public function getStatus()
+	{
+		return $this->getIfSet('status');
+	}
 
     /**
      * get creation time.
