@@ -69,11 +69,14 @@ class Orders extends MoipResource
      *
      * @return $this
      */
-    public function addReceiver($moipAccount, $type = self::RECEIVER_TYPE_PRIMARY)
+    public function addReceiver($moipAccount, $type = self::RECEIVER_TYPE_PRIMARY, $fixed)
     {
         $receiver = new stdClass();
         $receiver->moipAccount = new stdClass();
         $receiver->moipAccount->id = $moipAccount;
+        if(!empty($fixed)) {
+            $receiver->amount->fixed = $fixed;
+        }
         $receiver->type = $type;
 
         $this->data->receivers[] = $receiver;
