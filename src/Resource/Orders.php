@@ -66,7 +66,8 @@ class Orders extends MoipResource
      *
      * @param string $moipAccount Id MoIP MoIP account that will receive payment values.
      * @param string $type        Define qual o tipo de recebedor do pagamento, valores possíveis: PRIMARY, SECONDARY.
-     * @return int   $fixed       Initial value that the receiver will receive.
+     * @param int   $fixed       Value that the receiver will receive.
+     * @return $this
      */
     public function addReceiver($moipAccount, $type = Orders::RECEIVER_TYPE_PRIMARY, $fixed)
     {
