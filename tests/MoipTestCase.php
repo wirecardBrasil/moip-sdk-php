@@ -140,6 +140,31 @@ abstract class MoipTestCase extends TestCase
 
         return $customer;
     }
+	
+	/**
+	 * Creates a account.
+	 *
+	 * @return Account
+	 */
+	public function createAccount()
+	{
+		$moip = new Moip(new MoipOAuth('1tldio91gi74r34zv30d4saz8yuuws5'), Moip::ENDPOINT_SANDBOX);
+		
+		$uniqEmail = 'fulano' . uniqid('MPA-') . '@detal123.com.br';
+		
+		$account = $moip->accounts()
+			->setEmail($uniqEmail)
+			->setName('Fulano')
+			->setLastName('de Tal')
+			->setBirthDate('1987-11-27')
+			->setTaxDocument('22222222222')
+			->setPhone(11,988888888)
+			->addAddress('Av. Ibirapuera', '2035', 'Moema', 'Sao Paulo', 'SP', '04078010')
+			->setIdentityDocument('411111115', 'SSP', '2000-05-06')
+			->create();
+		
+		return $account;
+	}
 
     /**
      * Creates an order.

@@ -3,6 +3,7 @@
 namespace Moip;
 
 use Moip\Resource\Customer;
+use Moip\Resource\Account;
 use Moip\Resource\Entry;
 use Moip\Resource\Multiorders;
 use Moip\Resource\Orders;
@@ -121,6 +122,16 @@ class Moip
     public function customers()
     {
         return new Customer($this);
+    }
+
+    /**
+     * Create a new Account instance.
+     *
+     * @return \Moip\Resource\Account
+     */
+    public function accounts()
+    {
+        return new Account($this);
     }
 
     /**
