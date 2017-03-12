@@ -217,39 +217,9 @@ class Account extends MoipResource
     	return $this->getIfSet('type', $this->data);
     }
 
+    //Account's company getters
     /**
-     * Add a new address to account's company.
-     *
-     * @param string $street     Street address.
-     * @param string $number     Number address.
-     * @param string $district   Neighborhood address.
-     * @param string $city       City address.
-     * @param string $state      State address.
-     * @param string $zip        The zip code billing address.
-     * @param string $complement Address complement.
-     * @param string $country    Country ISO-alpha3 format, BRA example.
-     *
-     * @return $this
-     */
-    public function addCompanyAddress($street, $number, $district, $city, $state, $zip, $complement = null, $country = self::ADDRESS_COUNTRY)
-    {
-        $address = new stdClass();
-        $address->street = $street;
-        $address->streetNumber = $number;
-        $address->complement = $complement;
-        $address->district = $district;
-        $address->city = $city;
-        $address->state = $state;
-        $address->country = $country;
-        $address->zipCode = $zip;
-        
-        $this->data->company->address = $address;
-
-        return $this;
-    }
-
-    /**
-     * Get account company address.
+     * Get account's company address.
      *
      * @return \stdClass Account's address.
      */
@@ -259,9 +229,9 @@ class Account extends MoipResource
     }
 
     /**
-     * Get account company name.
+     * Get account's company name.
      *
-     * @return \stdClass Account's address.
+     * @return \stdClass Account's company name.
      */
     public function getCompanyName()
     {
@@ -269,9 +239,9 @@ class Account extends MoipResource
     }
 
     /**
-     * Get account company business name.
+     * Get account's company business name.
      *
-     * @return \stdClass Account's address.
+     * @return \stdClass Account's company business name.
      */
     public function getCompanyBusinessName()
     {
@@ -279,9 +249,9 @@ class Account extends MoipResource
     }
 
     /**
-     * Get birth date from account.
+     * Get account's company opening date.
      *
-     * @return \DateTime|null Date of birth of the credit card holder.
+     * @return \DateTime|null Date account's company opening date.
      */
     public function getCompanyOpeningDate()
     {
@@ -289,7 +259,7 @@ class Account extends MoipResource
     }
 
     /**
-     * Get phone area code from account.
+     * Get account's company phone area code.
      *
      * @return int DDD telephone.
      */
@@ -299,7 +269,7 @@ class Account extends MoipResource
     }
 
     /**
-     * Get phone country code from account.
+     * Get account's company phone country code.
      *
      * @return int Country code.
      */
@@ -309,7 +279,7 @@ class Account extends MoipResource
     }
 
     /**
-     * Get phone number from account.
+     * Get account's company phone number.
      *
      * @return int Telephone number.
      */
@@ -319,7 +289,7 @@ class Account extends MoipResource
     }
 
     /**
-     * Get tax document type from account.
+     * Get account's company tax document type.
      *
      * @return string Type of value: CPF and CNPJ
      */
@@ -329,7 +299,7 @@ class Account extends MoipResource
     }
 
     /**
-     * Get tax document number from account.
+     * Get account's company tax document number.
      *
      * @return string Document Number.
      */
@@ -339,9 +309,9 @@ class Account extends MoipResource
     }
 
     /**
-     * Get tax document number from account.
+     * Get CNAE's code from account's company main activity 
      *
-     * @return string Document Number.
+     * @return string CNAE's code - CNAE(Classificação Nacional de Atividades Ecońômicas).
      */
     public function getCompanyMainActivityCNAE()
     {
@@ -349,9 +319,9 @@ class Account extends MoipResource
     }
 
     /**
-     * Get tax document number from account.
+     * Get account's company main activity description.
      *
-     * @return string Document Number.
+     * @return string Main activity description.
      */
     public function getCompanyMainActivityDescription()
     {
@@ -567,9 +537,9 @@ class Account extends MoipResource
 
     //Account's company setters
     /**
-     * Set name from account.
+     * Set account's company name.
      *
-     * @param string $name Account's person name.
+     * @param string $name Account's company name.
      *
      * @return \Moip\Resource\Account
      */
@@ -581,9 +551,9 @@ class Account extends MoipResource
     }
     
     /**
-     * Set name from account.
+     * Set account's company business name.
      *
-     * @param string $name Account's person name.
+     * @param string $businessName Account's company business name.
      *
      * @return \Moip\Resource\Account
      */
@@ -595,7 +565,7 @@ class Account extends MoipResource
     }
 
     /**
-     * Set tax document from account.
+     * Set account's company tax document.
      *
      * @param string $number Document number.
      * @param string $type   Document type.
@@ -612,10 +582,10 @@ class Account extends MoipResource
     }
 
     /**
-     * Set tax document from account.
+     * Set account's company main activity.
      *
-     * @param string $number Document number.
-     * @param string $type   Document type.
+     * @param string $cnae          CNAE's code - CNAE(Classificação Nacional de Atividades Ecońômicas).
+     * @param string $description   Main activity description.
      *
      * @return \Moip\Resource\Account
      */
@@ -629,9 +599,9 @@ class Account extends MoipResource
     }
 
     /**
-     * Set birth date from account.
+     * Set account's company opening date.
      *
-     * @param \DateTime|string $birthDate Date of birth of the credit card holder.
+     * @param \DateTime|string $openingDate Date of account's company opening.
      *
      * @return \Moip\Resource\Account
      */
@@ -647,7 +617,38 @@ class Account extends MoipResource
     }
 
     /**
-     * Set phone from account.
+     * set account's company address.
+     *
+     * @param string $street     Street address.
+     * @param string $number     Number address.
+     * @param string $district   Neighborhood address.
+     * @param string $city       City address.
+     * @param string $state      State address.
+     * @param string $zip        The zip code billing address.
+     * @param string $complement Address complement.
+     * @param string $country    Country ISO-alpha3 format, BRA example.
+     *
+     * @return $this
+     */
+    public function setCompanyAddress($street, $number, $district, $city, $state, $zip, $complement = null, $country = self::ADDRESS_COUNTRY)
+    {
+        $address = new stdClass();
+        $address->street = $street;
+        $address->streetNumber = $number;
+        $address->complement = $complement;
+        $address->district = $district;
+        $address->city = $city;
+        $address->state = $state;
+        $address->country = $country;
+        $address->zipCode = $zip;
+        
+        $this->data->company->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * Set account's company phone.
      *
      * @param int $areaCode    DDD telephone.
      * @param int $number      Telephone number.
