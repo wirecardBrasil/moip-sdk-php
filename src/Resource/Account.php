@@ -42,6 +42,13 @@ class Account extends MoipResource
     const ACCOUNT_TYPE = 'MERCHANT';
 
     /**
+     * Standard document type.
+     *
+     * @const string
+     */
+    const COMPANY_TAX_DOCUMENT = 'CNPJ';
+
+    /**
      * Initialize a new instance.
      */
     public function initialize()
@@ -50,6 +57,7 @@ class Account extends MoipResource
         $this->data->email = new stdClass();
         $this->data->person = new stdClass();
         $this->data->type = self::ACCOUNT_TYPE;
+        $this->data->company = new stdClass();        
     }
 
     /**
@@ -210,6 +218,147 @@ class Account extends MoipResource
     }
 
     /**
+     * Add a new address to account's company.
+     *
+     * @param string $street     Street address.
+     * @param string $number     Number address.
+     * @param string $district   Neighborhood address.
+     * @param string $city       City address.
+     * @param string $state      State address.
+     * @param string $zip        The zip code billing address.
+     * @param string $complement Address complement.
+     * @param string $country    Country ISO-alpha3 format, BRA example.
+     *
+     * @return $this
+     */
+    public function addCompanyAddress($street, $number, $district, $city, $state, $zip, $complement = null, $country = self::ADDRESS_COUNTRY)
+    {
+        $address = new stdClass();
+        $address->street = $street;
+        $address->streetNumber = $number;
+        $address->complement = $complement;
+        $address->district = $district;
+        $address->city = $city;
+        $address->state = $state;
+        $address->country = $country;
+        $address->zipCode = $zip;
+        
+        $this->data->company->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * Get account company address.
+     *
+     * @return \stdClass Account's address.
+     */
+    public function getCompanyAddress()
+    {
+        return $this->getIfSet('address', $this->data->company);
+    }
+
+    /**
+     * Get account company name.
+     *
+     * @return \stdClass Account's address.
+     */
+    public function getCompanyName()
+    {
+        return $this->getIfSet('name', $this->data->company);
+    }
+
+    /**
+     * Get account company business name.
+     *
+     * @return \stdClass Account's address.
+     */
+    public function getCompanyBusinessName()
+    {
+        return $this->getIfSet('businessName', $this->data->company);
+    }
+
+    /**
+     * Get birth date from account.
+     *
+     * @return \DateTime|null Date of birth of the credit card holder.
+     */
+    public function getCompanyOpeningDate()
+    {
+        return $this->getIfSetDate('openingDate', $this->data->company);
+    }
+
+    /**
+     * Get phone area code from account.
+     *
+     * @return int DDD telephone.
+     */
+    public function getCompanyPhoneAreaCode()
+    {
+        return $this->getIfSet('areaCode', $this->data->company->phone);
+    }
+
+    /**
+     * Get phone country code from account.
+     *
+     * @return int Country code.
+     */
+    public function getCompanyPhoneCountryCode()
+    {
+        return $this->getIfSet('countryCode', $this->data->company->phone);
+    }
+
+    /**
+     * Get phone number from account.
+     *
+     * @return int Telephone number.
+     */
+    public function getCompanyPhoneNumber()
+    {
+        return $this->getIfSet('number', $this->data->company->phone);
+    }
+
+    /**
+     * Get tax document type from account.
+     *
+     * @return string Type of value: CPF and CNPJ
+     */
+    public function getCompanyTaxDocumentType()
+    {
+        return $this->getIfSet('type', $this->data->company->taxDocument);
+    }
+
+    /**
+     * Get tax document number from account.
+     *
+     * @return string Document Number.
+     */
+    public function getCompanyTaxDocumentNumber()
+    {
+        return $this->getIfSet('number', $this->data->company->taxDocument);
+    }
+
+    /**
+     * Get tax document number from account.
+     *
+     * @return string Document Number.
+     */
+    public function getCompanyMainActivityCNAE()
+    {
+        return $this->getIfSet('cnae', $this->data->company->mainActivity);
+    }
+
+    /**
+     * Get tax document number from account.
+     *
+     * @return string Document Number.
+     */
+    public function getCompanyMainActivityDescription()
+    {
+        return $this->getIfSet('description', $this->data->company->mainActivity);
+    }
+
+    /**
      * Mount the seller structure from account.
      *
      * @param \stdClass $response
@@ -256,6 +405,31 @@ class Account extends MoipResource
         $account->data->person->address = $this->getIfSet('address', $person);
         $account->data->_links = $this->getIfSet('_links', $response);
         $account->data->type = $this->getIfSet('type', $response);
+
+        //Company
+        $company = $this->getIfSet('company', $response);
+        
+        $account->data->company->name = $this->getIfSet('name', $company);
+        $account->data->company->businessName = $this->getIfSet('businessName', $company);
+
+        $account->data->company->taxDocument = new stdClass();
+        $taxDocument = $this->getIfSet('taxDocument', $company);
+        $account->data->company->taxDocument->type = $this->getIfSet('type', $taxDocument);
+        $account->data->company->taxDocument->number = $this->getIfSet('number', $taxDocument);
+
+        $account->data->company->mainActivity = new stdClass();
+        $mainActivity = $this->getIfSet('mainActivity', $company);
+        $account->data->company->mainActivity->cnae = $this->getIfSet('cnae', $phone);
+        $account->data->company->mainActivity->description = $this->getIfSet('description', $phone);
+        
+        $account->data->company->phone = new stdClass();
+        $phone = $this->getIfSet('phone', $company);
+        $account->data->company->phone->countryCode = $this->getIfSet('countryCode', $phone);
+        $account->data->company->phone->areaCode = $this->getIfSet('areaCode', $phone);
+        $account->data->company->phone->number = $this->getIfSet('number', $phone);
+        
+        $account->data->company->birthDate = $this->getIfSet('birthDate', $company);
+        $account->data->company->address = $this->getIfSet('address', $company);
         
         return $account;
     }
@@ -390,4 +564,105 @@ class Account extends MoipResource
     	
     	return $this;
     }
+
+    //Account's company setters
+    /**
+     * Set name from account.
+     *
+     * @param string $name Account's person name.
+     *
+     * @return \Moip\Resource\Account
+     */
+    public function setCompanyName($name)
+    {
+        $this->data->company->name = $name;
+    
+        return $this;
+    }
+    
+    /**
+     * Set name from account.
+     *
+     * @param string $name Account's person name.
+     *
+     * @return \Moip\Resource\Account
+     */
+    public function setCompanyBusinessName($businessName)
+    {
+        $this->data->company->businessName = $businessName;
+    
+        return $this;
+    }
+
+    /**
+     * Set tax document from account.
+     *
+     * @param string $number Document number.
+     * @param string $type   Document type.
+     *
+     * @return \Moip\Resource\Account
+     */
+    public function setCompanyTaxDocument($number, $type = self::COMPANY_TAX_DOCUMENT)
+    {
+        $this->data->company->taxDocument = new stdClass();
+        $this->data->company->taxDocument->type = $type;
+        $this->data->company->taxDocument->number = $number;
+
+        return $this;
+    }
+
+    /**
+     * Set tax document from account.
+     *
+     * @param string $number Document number.
+     * @param string $type   Document type.
+     *
+     * @return \Moip\Resource\Account
+     */
+    public function setCompanyMainActivity($cnae, $description)
+    {
+        $this->data->company->mainActivity = new stdClass();
+        $this->data->company->mainActivity->cnae = $type;
+        $this->data->company->mainActivity->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Set birth date from account.
+     *
+     * @param \DateTime|string $birthDate Date of birth of the credit card holder.
+     *
+     * @return \Moip\Resource\Account
+     */
+    public function setCompanyOpeningDate($openingDate)
+    {
+        if ($openingDate instanceof \DateTime) {
+            $openingDate = $openingDate->format('Y-m-d');
+        }
+
+        $this->data->company->openingDate = $openingDate;
+
+        return $this;
+    }
+
+    /**
+     * Set phone from account.
+     *
+     * @param int $areaCode    DDD telephone.
+     * @param int $number      Telephone number.
+     * @param int $countryCode Country code.
+     *
+     * @return \Moip\Resource\Account
+     */
+    public function setCompanyPhone($areaCode, $number, $countryCode = 55)
+    {
+        $this->data->company->phone = new stdClass();
+        $this->data->company->phone->countryCode = $countryCode;
+        $this->data->company->phone->areaCode = $areaCode;
+        $this->data->company->phone->number = $number;
+
+        return $this;
+    }
 }
+
