@@ -61,14 +61,14 @@ class Account extends MoipResource
     /**
      * Add a new address to the account.
      *
-     * @param string $street     Street address.
-     * @param string $number_format(number)     Number address.
-     * @param string $district   Neighborhood address.
-     * @param string $city       City address.
-     * @param string $state      State address.
-     * @param string $zip        The zip code billing address.
-     * @param string $complement Address complement.
-     * @param string $country    Country ISO-alpha3 format, BRA example.
+     * @param string $street                Street address.
+     * @param string $number_format(number) Number address.
+     * @param string $district              Neighborhood address.
+     * @param string $city                  City address.
+     * @param string $state                 State address.
+     * @param string $zip                   The zip code billing address.
+     * @param string $complement            Address complement.
+     * @param string $country               Country ISO-alpha3 format, BRA example.
      *
      * @return $this
      */
@@ -216,6 +216,7 @@ class Account extends MoipResource
     }
 
     //Account's company getters
+
     /**
      * Get account's company address.
      *
@@ -368,7 +369,7 @@ class Account extends MoipResource
         $account->data->person->identityDocument->number = $this->getIfSet('number', $identityDocument);
         $account->data->person->identityDocument->issuer = $this->getIfSet('issuer', $identityDocument);
         $account->data->person->identityDocument->issueDate = $this->getIfSet('issueDate', $identityDocument);
-        
+
         $account->data->person->birthDate = $this->getIfSet('birthDate', $person);
         $account->data->person->address = $this->getIfSet('address', $person);
         $account->data->_links = $this->getIfSet('_links', $response);
@@ -376,7 +377,7 @@ class Account extends MoipResource
 
         //Company
         $company = $this->getIfSet('company', $response);
-        
+
         $account->data->company->name = $this->getIfSet('name', $company);
         $account->data->company->businessName = $this->getIfSet('businessName', $company);
 
@@ -389,16 +390,16 @@ class Account extends MoipResource
         $mainActivity = $this->getIfSet('mainActivity', $company);
         $account->data->company->mainActivity->cnae = $this->getIfSet('cnae', $mainActivity);
         $account->data->company->mainActivity->description = $this->getIfSet('description', $mainActivity);
-        
+
         $account->data->company->phone = new stdClass();
         $phone = $this->getIfSet('phone', $company);
         $account->data->company->phone->countryCode = $this->getIfSet('countryCode', $phone);
         $account->data->company->phone->areaCode = $this->getIfSet('areaCode', $phone);
         $account->data->company->phone->number = $this->getIfSet('number', $phone);
-        
+
         $account->data->company->birthDate = $this->getIfSet('birthDate', $company);
         $account->data->company->address = $this->getIfSet('address', $company);
-        
+
         return $account;
     }
 
@@ -429,19 +430,19 @@ class Account extends MoipResource
 
         return $this;
     }
-    
+
     /**
-     * Set name from account.
+     * Set last name from account.
      *
-     * @param string $name Account's person name.
+     * @param string $name Account's person last name.
      *
      * @return \Moip\Resource\Account
      */
     public function setLastName($lastname)
     {
-    	$this->data->person->lastName = $lastname;
-    
-    	return $this;
+        $this->data->person->lastName = $lastname;
+
+        return $this;
     }
 
     /**
@@ -497,11 +498,11 @@ class Account extends MoipResource
 
         return $this;
     }
-    
+
     /**
      * Set identity document from account.
      *
-     * @param string           $number    Número do documento.  
+     * @param string           $number    Número do documento.
      * @param string           $issuer    Emissor do documento.
      * @param \DateTime|string $birthDate $issueDate 	Data de emissão do documento.
      * @param string           $type      Tipo do documento. Valores possíveis: RG.
@@ -514,11 +515,11 @@ class Account extends MoipResource
         $this->data->person->identityDocument->type = $type;
         $this->data->person->identityDocument->number = $number;
         $this->data->person->identityDocument->issuer = $issuer;
-        $this->data->person->identityDocument->issueDate = $issueDate;        	
+        $this->data->person->identityDocument->issueDate = $issueDate;
 
         return $this;
     }
-    
+
     /**
      * Set account type. Possible values: CONSUMER, MERCHANT.
      *
@@ -529,7 +530,7 @@ class Account extends MoipResource
     public function setType($type)
     {
         $this->data->type = $type;
-    	
+
         return $this;
     }
 
@@ -548,7 +549,7 @@ class Account extends MoipResource
 
         return $this;
     }
-    
+
     /**
      * Set account's company business name.
      *
