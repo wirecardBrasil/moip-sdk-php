@@ -153,16 +153,16 @@ class Payment extends MoipResource
 
         return $refund;
     }
-	
-	/**
-	 * Get payment status.
-	 *
-	 * @return string Payment status. Possible values CREATED, WAITING, IN_ANALYSIS, PRE_AUTHORIZED, AUTHORIZED, CANCELLED, REFUNDED, REVERSED, SETTLED
-	 */
-	public function getStatus()
-	{
-		return $this->getIfSet('status');
-	}
+
+    /**
+     * Get payment status.
+     *
+     * @return string Payment status. Possible values CREATED, WAITING, IN_ANALYSIS, PRE_AUTHORIZED, AUTHORIZED, CANCELLED, REFUNDED, REVERSED, SETTLED
+     */
+    public function getStatus()
+    {
+        return $this->getIfSet('status');
+    }
 
     /**
      * get creation time.
@@ -261,7 +261,7 @@ class Payment extends MoipResource
         $this->data->fundingInstrument->creditCard->holder->phone->countryCode = $holder->getPhoneCountryCode();
         $this->data->fundingInstrument->creditCard->holder->phone->areaCode = $holder->getPhoneAreaCode();
         $this->data->fundingInstrument->creditCard->holder->phone->number = $holder->getPhoneNumber();
-	$this->data->fundingInstrument->creditCard->holder->billingAddress = $holder->getBillingAddress();
+        $this->data->fundingInstrument->creditCard->holder->billingAddress = $holder->getBillingAddress();
     }
 
     /**
