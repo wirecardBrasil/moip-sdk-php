@@ -50,6 +50,14 @@ class Orders extends MoipResource
      */
     public function addItem($product, $quantity, $detail, $price)
     {
+        if (!is_int($price)) {
+            throw new \UnexpectedValueException('Informe o valor do item como inteiro');
+        }
+        
+        if (!is_int($quantity) || $quantity < 1){
+            throw new \UnexpectedValueException('A quantidade do item deve ser um valor inteiro maior que 0');
+        }
+        
         $item = new stdClass();
         $item->product = $product;
         $item->quantity = $quantity;
