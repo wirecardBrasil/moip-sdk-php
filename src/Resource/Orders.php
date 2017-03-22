@@ -54,7 +54,7 @@ class Orders extends MoipResource
             throw new \UnexpectedValueException('Informe o valor do item como inteiro');
         }
 
-        if (!is_int($quantity) || $quantity < 1){
+        if (!is_int($quantity) || $quantity < 1) {
             throw new \UnexpectedValueException('A quantidade do item deve ser um valor inteiro maior que 0');
         }
 
