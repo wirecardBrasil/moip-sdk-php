@@ -53,11 +53,11 @@ class Orders extends MoipResource
         if (!is_int($price)) {
             throw new \UnexpectedValueException('Informe o valor do item como inteiro');
         }
-        
+
         if (!is_int($quantity) || $quantity < 1){
             throw new \UnexpectedValueException('A quantidade do item deve ser um valor inteiro maior que 0');
         }
-        
+
         $item = new stdClass();
         $item->product = $product;
         $item->quantity = $quantity;
@@ -74,7 +74,7 @@ class Orders extends MoipResource
      *
      * @param string $moipAccount Id MoIP MoIP account that will receive payment values.
      * @param string $type        Define qual o tipo de recebedor do pagamento, valores possíveis: PRIMARY, SECONDARY.
-     * @param int   $fixed       Value that the receiver will receive.
+     * @param int    $fixed       Value that the receiver will receive.
      * @return $this
      */
     public function addReceiver($moipAccount, $type = Orders::RECEIVER_TYPE_PRIMARY, $fixed)
