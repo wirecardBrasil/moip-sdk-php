@@ -309,6 +309,27 @@ class Payment extends MoipResource
     }
 
     /**
+     * Sets data from a previously saved credit card
+     * Credit card used in a payment.
+     * Used when the credit card was saved with the customer and the payment made in a future date.
+     *
+     * @param string $creditCardId MoIP credit card Id
+     * @param int $cvc The card's cvc
+     *
+     * @return $this
+     */
+    public function setCreditCardSaved($creditCardId, $cvc)
+    {
+        $this->data->fundingInstrument = new stdClass;
+        $this->data->fundingInstrument->method = self::METHOD_CREDIT_CARD;
+        $this->data->fundingInstrument->creditCard = new stdClass;
+        $this->data->fundingInstrument->creditCard->id = $creditCardId;
+        $this->data->fundingInstrument->creditCard->cvc = $cvc;
+
+        return $this;
+    }
+
+    /**
      * Set installment count.
      *
      * @param int $installmentCount
