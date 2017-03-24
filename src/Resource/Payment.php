@@ -313,8 +313,8 @@ class Payment extends MoipResource
      * Credit card used in a payment.
      * Used when the credit card was saved with the customer and the payment made in a future date.
      *
-     * @param string $creditCardId MoIP credit card Id
-     * @param int $cvc The card's cvc
+     * @param string $creditCardId MoIP's Credit Card Id.
+     * @param int    $cvc          Card Security Code.
      *
      * @return $this
      */
