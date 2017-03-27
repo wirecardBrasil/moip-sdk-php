@@ -58,6 +58,44 @@ class Payment extends MoipResource
     private $order;
 
     /**
+     * Just created, but not initialized yet.
+     */
+    const STATUS_CREATED = 'CREATED';
+    /**
+     * Waiting for the payment.
+     */
+    const STATUS_WAITING = 'WAITING';
+    /**
+     * On risk analysis, it may be automatic or manual.
+     */
+    const STATUS_IN_ANALYSIS = 'IN_ANALYSIS';
+    /**
+     * The amount was reserved on client credit card, it may be caught or discarded until 5 days.
+     */
+    const STATUS_PRE_AUTHORIZED = 'PRE_AUTHORIZED';
+    /**
+     * Payment confirmed by the bank institution.
+     */
+    const STATUS_AUTHORIZED = 'AUTHORIZED';
+    /**
+     * Payment cancelled.
+     */
+    const STATUS_CANCELLED = 'CANCELLED';
+    /**
+     * Payment refunded.
+     */
+    const STATUS_REFUNDED = 'REFUNDED';
+    /**
+     * Paymend reversed (it means that the payment may was not recognized by the client).
+     */
+    const STATUS_REVERSED = 'REVERSED';
+    /**
+     * Payment finalized, the amout is on your account.
+     */
+    const STATUS_SETTLED = 'SETTLED';
+
+
+    /**
      * @var \Moip\Resource\Multiorders
      */
     private $multiorder;
@@ -85,6 +123,7 @@ class Payment extends MoipResource
             $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, Multiorders::PATH, $this->multiorder->getId(),
                 self::MULTI_PAYMENTS_PATH);
         }
+
         $response = $this->httpRequest($path, Requests::POST, $this);
 
         return $this->populate($response);
@@ -367,18 +406,6 @@ class Payment extends MoipResource
     }
 
     /**
-     * Set delay capture.
-     *
-     * @return $this
-     */
-    public function setDelayCapture()
-    {
-        $this->data->delayCapture = true;
-
-        return $this;
-    }
-
-    /**
      * Set Multiorders.
      *
      * @param \Moip\Resource\Multiorders $multiorder
@@ -404,5 +431,66 @@ class Payment extends MoipResource
         $this->order = $order;
 
         return $this;
+    }
+
+    /**
+     * Turns on a delay on credit card payment capture (pre-authorization).
+     *
+     * @return $this
+     */
+    public function setDelayCapture()
+    {
+        $this->data->delayCapture = true;
+        return $this;
+    }
+
+    /**
+     * Capture a pre-authorized amount on a credit card payment.
+     *
+     * @throws \Exception
+     *
+     * @return Payment
+     */
+    public function capture()
+    {
+        if ($this->order !== null) {
+            $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, self::PATH, $this->getId(), 'capture');
+        } else {
+            throw new \Exception('Sorry, multipayment capture is not available on this version');
+        }
+
+        $response = $this->httpRequest($path, Requests::POST, $this);
+
+        return $this->populate($response);
+    }
+
+    /**
+     * Avoid a pre-authorized amount on a credit card payment.
+     *
+     * @throws \Exception
+     *
+     * @return Payment
+     */
+    public function avoid()
+    {
+        if ($this->order !== null) {
+            $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, self::PATH, $this->getId(), 'void');
+        } else {
+            throw new \Exception('Sorry, multipayment capture is not available on this version');
+        }
+
+        $response = $this->httpRequest($path, Requests::POST, $this);
+
+        return $this->populate($response);
+    }
+
+    /**
+     * Get the payment status.
+     *
+     * @return string|null
+     */
+    public function getStatus()
+    {
+        return $this->data ? $this->data->status : null;
     }
 }
