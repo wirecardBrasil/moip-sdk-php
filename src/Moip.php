@@ -2,8 +2,8 @@
 
 namespace Moip;
 
-use Moip\Resource\Customer;
 use Moip\Resource\Account;
+use Moip\Resource\Customer;
 use Moip\Resource\Entry;
 use Moip\Resource\Multiorders;
 use Moip\Resource\Orders;
