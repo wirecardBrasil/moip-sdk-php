@@ -3,13 +3,11 @@
 namespace Moip\Resource;
 
 use stdClass;
-use UnexpectedValueException;
 
 /**
  * Class Account.
- * 
+ *
  * @todo Devo acrescentar transparentAccount?
- * 
  */
 class Account extends MoipResource
 {
@@ -19,7 +17,7 @@ class Account extends MoipResource
      * @const string
      */
     const PATH = 'accounts';
-    
+
     /**
      * Standard country .
      *
@@ -33,13 +31,20 @@ class Account extends MoipResource
      * @const string
      */
     const TAX_DOCUMENT = 'CPF';
-    
+
     /**
-     * Default Account Type
-     * 
+     * Default Account Type.
+     *
      * @var string
      */
     const ACCOUNT_TYPE = 'MERCHANT';
+
+    /**
+     * Standard document type.
+     *
+     * @const string
+     */
+    const COMPANY_TAX_DOCUMENT = 'CNPJ';
 
     /**
      * Initialize a new instance.
@@ -50,19 +55,20 @@ class Account extends MoipResource
         $this->data->email = new stdClass();
         $this->data->person = new stdClass();
         $this->data->type = self::ACCOUNT_TYPE;
+        $this->data->company = new stdClass();
     }
 
     /**
      * Add a new address to the account.
      *
-     * @param string $street     Street address.
-     * @param string $number     Number address.
-     * @param string $district   Neighborhood address.
-     * @param string $city       City address.
-     * @param string $state      State address.
-     * @param string $zip        The zip code billing address.
-     * @param string $complement Address complement.
-     * @param string $country    Country ISO-alpha3 format, BRA example.
+     * @param string $street                Street address.
+     * @param string $number_format(number) Number address.
+     * @param string $district              Neighborhood address.
+     * @param string $city                  City address.
+     * @param string $state                 State address.
+     * @param string $zip                   The zip code billing address.
+     * @param string $complement            Address complement.
+     * @param string $country               Country ISO-alpha3 format, BRA example.
      *
      * @return $this
      */
@@ -77,7 +83,7 @@ class Account extends MoipResource
         $address->state = $state;
         $address->country = $country;
         $address->zipCode = $zip;
-        
+
         $this->data->person->address = $address;
 
         return $this;
@@ -136,7 +142,7 @@ class Account extends MoipResource
      */
     public function getFullname()
     {
-        return $this->getIfSet('name', $this->data->person) . ' ' . $this->getIfSet('lastName', $this->data->person);
+        return $this->getIfSet('name', $this->data->person).' '.$this->getIfSet('lastName', $this->data->person);
     }
 
     /**
@@ -198,7 +204,7 @@ class Account extends MoipResource
     {
         return $this->getIfSet('number', $this->data->person->taxDocument);
     }
-    
+
     /**
      * Get account type.
      *
@@ -206,7 +212,119 @@ class Account extends MoipResource
      */
     public function getType()
     {
-    	return $this->getIfSet('type', $this->data);
+        return $this->getIfSet('type', $this->data);
+    }
+
+    //Account's company getters
+
+    /**
+     * Get account's company address.
+     *
+     * @return \stdClass Account's address.
+     */
+    public function getCompanyAddress()
+    {
+        return $this->getIfSet('address', $this->data->company);
+    }
+
+    /**
+     * Get account's company name.
+     *
+     * @return \stdClass Account's company name.
+     */
+    public function getCompanyName()
+    {
+        return $this->getIfSet('name', $this->data->company);
+    }
+
+    /**
+     * Get account's company business name.
+     *
+     * @return \stdClass Account's company business name.
+     */
+    public function getCompanyBusinessName()
+    {
+        return $this->getIfSet('businessName', $this->data->company);
+    }
+
+    /**
+     * Get account's company opening date.
+     *
+     * @return \DateTime|null Date account's company opening date.
+     */
+    public function getCompanyOpeningDate()
+    {
+        return $this->getIfSetDate('openingDate', $this->data->company);
+    }
+
+    /**
+     * Get account's company phone area code.
+     *
+     * @return int DDD telephone.
+     */
+    public function getCompanyPhoneAreaCode()
+    {
+        return $this->getIfSet('areaCode', $this->data->company->phone);
+    }
+
+    /**
+     * Get account's company phone country code.
+     *
+     * @return int Country code.
+     */
+    public function getCompanyPhoneCountryCode()
+    {
+        return $this->getIfSet('countryCode', $this->data->company->phone);
+    }
+
+    /**
+     * Get account's company phone number.
+     *
+     * @return int Telephone number.
+     */
+    public function getCompanyPhoneNumber()
+    {
+        return $this->getIfSet('number', $this->data->company->phone);
+    }
+
+    /**
+     * Get account's company tax document type.
+     *
+     * @return string Type of value: CPF and CNPJ.
+     */
+    public function getCompanyTaxDocumentType()
+    {
+        return $this->getIfSet('type', $this->data->company->taxDocument);
+    }
+
+    /**
+     * Get account's company tax document number.
+     *
+     * @return string Document Number.
+     */
+    public function getCompanyTaxDocumentNumber()
+    {
+        return $this->getIfSet('number', $this->data->company->taxDocument);
+    }
+
+    /**
+     * Get CNAE's code from account's company main activity.
+     *
+     * @return string CNAE's code - CNAE(Classificação Nacional de Atividades Ecońômicas).
+     */
+    public function getCompanyMainActivityCNAE()
+    {
+        return $this->getIfSet('cnae', $this->data->company->mainActivity);
+    }
+
+    /**
+     * Get account's company main activity description.
+     *
+     * @return string Main activity description.
+     */
+    public function getCompanyMainActivityDescription()
+    {
+        return $this->getIfSet('description', $this->data->company->mainActivity);
     }
 
     /**
@@ -220,43 +338,68 @@ class Account extends MoipResource
     {
         $account = clone $this;
         $account->data->email = new stdClass();
-        
+
         $email = $this->getIfSet('email', $response);
-        
+
         $account->data->email->address = $this->getIfSet('address', $email);
         $account->data->person = new stdClass();
-        
+
         $person = $this->getIfSet('person', $response);
-        
+
         $account->data->person->name = $this->getIfSet('name', $person);
         $account->data->person->lastName = $this->getIfSet('lastName', $person);
         $account->data->person->taxDocument = new stdClass();
-        
+
         $taxDocument = $this->getIfSet('taxDocument', $person);
-        
+
         $account->data->person->taxDocument->type = $this->getIfSet('type', $taxDocument);
         $account->data->person->taxDocument->number = $this->getIfSet('number', $taxDocument);
         $account->data->person->phone = new stdClass();
-        
+
         $phone = $this->getIfSet('phone', $person);
-        
+
         $account->data->person->phone->countryCode = $this->getIfSet('countryCode', $phone);
         $account->data->person->phone->areaCode = $this->getIfSet('areaCode', $phone);
         $account->data->person->phone->number = $this->getIfSet('number', $phone);
         $account->data->person->identityDocument = new stdClass();
-        
+
         $identityDocument = $this->getIfSet('identityDocument', $person);
-        
+
         $account->data->person->identityDocument->type = $this->getIfSet('type', $identityDocument);
         $account->data->person->identityDocument->number = $this->getIfSet('number', $identityDocument);
         $account->data->person->identityDocument->issuer = $this->getIfSet('issuer', $identityDocument);
         $account->data->person->identityDocument->issueDate = $this->getIfSet('issueDate', $identityDocument);
-        
+
         $account->data->person->birthDate = $this->getIfSet('birthDate', $person);
         $account->data->person->address = $this->getIfSet('address', $person);
         $account->data->_links = $this->getIfSet('_links', $response);
         $account->data->type = $this->getIfSet('type', $response);
-        
+
+        //Company
+        $company = $this->getIfSet('company', $response);
+
+        $account->data->company->name = $this->getIfSet('name', $company);
+        $account->data->company->businessName = $this->getIfSet('businessName', $company);
+
+        $account->data->company->taxDocument = new stdClass();
+        $taxDocument = $this->getIfSet('taxDocument', $company);
+        $account->data->company->taxDocument->type = $this->getIfSet('type', $taxDocument);
+        $account->data->company->taxDocument->number = $this->getIfSet('number', $taxDocument);
+
+        $account->data->company->mainActivity = new stdClass();
+        $mainActivity = $this->getIfSet('mainActivity', $company);
+        $account->data->company->mainActivity->cnae = $this->getIfSet('cnae', $mainActivity);
+        $account->data->company->mainActivity->description = $this->getIfSet('description', $mainActivity);
+
+        $account->data->company->phone = new stdClass();
+        $phone = $this->getIfSet('phone', $company);
+        $account->data->company->phone->countryCode = $this->getIfSet('countryCode', $phone);
+        $account->data->company->phone->areaCode = $this->getIfSet('areaCode', $phone);
+        $account->data->company->phone->number = $this->getIfSet('number', $phone);
+
+        $account->data->company->birthDate = $this->getIfSet('birthDate', $company);
+        $account->data->company->address = $this->getIfSet('address', $company);
+
         return $account;
     }
 
@@ -273,7 +416,7 @@ class Account extends MoipResource
 
         return $this;
     }
-    
+
     /**
      * Set name from account.
      *
@@ -283,23 +426,23 @@ class Account extends MoipResource
      */
     public function setName($name)
     {
-    	$this->data->person->name = $name;
-    
-    	return $this;
+        $this->data->person->name = $name;
+
+        return $this;
     }
-    
+
     /**
-     * Set name from account.
+     * Set last name from account.
      *
-     * @param string $name Account's person name.
+     * @param string $name Account's person last name.
      *
      * @return \Moip\Resource\Account
      */
     public function setLastName($lastname)
     {
-    	$this->data->person->lastName = $lastname;
-    
-    	return $this;
+        $this->data->person->lastName = $lastname;
+
+        return $this;
     }
 
     /**
@@ -355,39 +498,171 @@ class Account extends MoipResource
 
         return $this;
     }
-    
+
     /**
      * Set identity document from account.
      *
-     * @param string $number    						Número do documento.
-     * @param string $issuer      						Emissor do documento.
+     * @param string           $number    Número do documento.
+     * @param string           $issuer    Emissor do documento.
      * @param \DateTime|string $birthDate $issueDate 	Data de emissão do documento.
-     * @param string $type								Tipo do documento. Valores possíveis: RG.
+     * @param string           $type      Tipo do documento. Valores possíveis: RG.
      *
      * @return \Moip\Resource\Account
      */
     public function setIdentityDocument($number, $issuer, $issueDate, $type = 'RG')
     {
-    	$this->data->person->identityDocument = new stdClass();
-    	$this->data->person->identityDocument->type = $type;
-    	$this->data->person->identityDocument->number = $number;
-    	$this->data->person->identityDocument->issuer = $issuer;
-    	$this->data->person->identityDocument->issueDate = $issueDate;
-    	
-    	return $this;
+        $this->data->person->identityDocument = new stdClass();
+        $this->data->person->identityDocument->type = $type;
+        $this->data->person->identityDocument->number = $number;
+        $this->data->person->identityDocument->issuer = $issuer;
+        $this->data->person->identityDocument->issueDate = $issueDate;
+
+        return $this;
     }
-    
+
     /**
      * Set account type. Possible values: CONSUMER, MERCHANT.
-     * 
+     *
      * @param string $type
-     * 
+     *
      * @return \Moip\Resource\Account
      */
     public function setType($type)
     {
-    	$this->data->type = $type;
-    	
-    	return $this;
+        $this->data->type = $type;
+
+        return $this;
+    }
+
+    //Account's company setters
+
+    /**
+     * Set account's company name.
+     *
+     * @param string $name Account's company name.
+     *
+     * @return \Moip\Resource\Account
+     */
+    public function setCompanyName($name)
+    {
+        $this->data->company->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Set account's company business name.
+     *
+     * @param string $businessName Account's company business name.
+     *
+     * @return \Moip\Resource\Account
+     */
+    public function setCompanyBusinessName($businessName)
+    {
+        $this->data->company->businessName = $businessName;
+
+        return $this;
+    }
+
+    /**
+     * Set account's company tax document.
+     *
+     * @param string $number Document number.
+     * @param string $type   Document type.
+     *
+     * @return \Moip\Resource\Account
+     */
+    public function setCompanyTaxDocument($number, $type = self::COMPANY_TAX_DOCUMENT)
+    {
+        $this->data->company->taxDocument = new stdClass();
+        $this->data->company->taxDocument->type = $type;
+        $this->data->company->taxDocument->number = $number;
+
+        return $this;
+    }
+
+    /**
+     * Set account's company main activity.
+     *
+     * @param string $cnae        CNAE's code - CNAE(Classificação Nacional de Atividades Ecońômicas).
+     * @param string $description Main activity description.
+     *
+     * @return \Moip\Resource\Account
+     */
+    public function setCompanyMainActivity($cnae, $description)
+    {
+        $this->data->company->mainActivity = new stdClass();
+        $this->data->company->mainActivity->cnae = $cnae;
+        $this->data->company->mainActivity->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Set account's company opening date.
+     *
+     * @param \DateTime|string $openingDate Date of account's company opening.
+     *
+     * @return \Moip\Resource\Account
+     */
+    public function setCompanyOpeningDate($openingDate)
+    {
+        if ($openingDate instanceof \DateTime) {
+            $openingDate = $openingDate->format('Y-m-d');
+        }
+
+        $this->data->company->openingDate = $openingDate;
+
+        return $this;
+    }
+
+    /**
+     * set account's company address.
+     *
+     * @param string $street     Street address.
+     * @param string $number     Number address.
+     * @param string $district   Neighborhood address.
+     * @param string $city       City address.
+     * @param string $state      State address.
+     * @param string $zip        The zip code billing address.
+     * @param string $complement Address complement.
+     * @param string $country    Country ISO-alpha3 format, BRA example.
+     *
+     * @return $this
+     */
+    public function setCompanyAddress($street, $number, $district, $city, $state, $zip, $complement = null, $country = self::ADDRESS_COUNTRY)
+    {
+        $address = new stdClass();
+        $address->street = $street;
+        $address->streetNumber = $number;
+        $address->complement = $complement;
+        $address->district = $district;
+        $address->city = $city;
+        $address->state = $state;
+        $address->country = $country;
+        $address->zipCode = $zip;
+
+        $this->data->company->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * Set account's company phone.
+     *
+     * @param int $areaCode    DDD telephone.
+     * @param int $number      Telephone number.
+     * @param int $countryCode Country code.
+     *
+     * @return \Moip\Resource\Account
+     */
+    public function setCompanyPhone($areaCode, $number, $countryCode = 55)
+    {
+        $this->data->company->phone = new stdClass();
+        $this->data->company->phone->countryCode = $countryCode;
+        $this->data->company->phone->areaCode = $areaCode;
+        $this->data->company->phone->number = $number;
+
+        return $this;
     }
 }
