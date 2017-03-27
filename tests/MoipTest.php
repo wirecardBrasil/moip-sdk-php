@@ -21,16 +21,16 @@ class MoipTest extends MoipTestCase
 
         $this->assertEquals($customer, $this->moip->customers());
     }
-	
-	/**
-	 * Test should return instance of \Moip\Resource\Account.
-	 */
-	public function testShouldReceiveInstanceOfAccount()
-	{
-		$account = new \Moip\Resource\Account($this->moip);
-		
-		$this->assertEquals($account, $this->moip->accounts());
-	}
+
+    /**
+     * Test should return instance of \Moip\Resource\Account.
+     */
+    public function testShouldReceiveInstanceOfAccount()
+    {
+        $account = new \Moip\Resource\Account($this->moip);
+
+        $this->assertEquals($account, $this->moip->accounts());
+    }
 
     /**
      * Test should return instance of \Moip\Resource\Entry.
@@ -190,7 +190,7 @@ class MoipTest extends MoipTestCase
         $this->assertEquals("https://sandbox.moip.com.br/v2/orders/$order_id", $links->getLink('self')->getHref());
         // test nested links
         $this->assertEquals("https://checkout-new-sandbox.moip.com.br?id=$order_id&payment-method=credit-card",
-	        preg_replace('/token=[^&]*&/', '', $links->getLink('payCreditCard')->getHref()));
+            preg_replace('/token=[^&]*&/', '', $links->getLink('payCreditCard')->getHref()));
     }
 
     /**

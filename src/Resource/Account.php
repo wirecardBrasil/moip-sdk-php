@@ -3,13 +3,11 @@
 namespace Moip\Resource;
 
 use stdClass;
-use UnexpectedValueException;
 
 /**
  * Class Account.
- * 
+ *
  * @todo Devo acrescentar transparentAccount?
- * 
  */
 class Account extends MoipResource
 {
@@ -19,7 +17,7 @@ class Account extends MoipResource
      * @const string
      */
     const PATH = 'accounts';
-    
+
     /**
      * Standard country .
      *
@@ -33,10 +31,10 @@ class Account extends MoipResource
      * @const string
      */
     const TAX_DOCUMENT = 'CPF';
-    
+
     /**
-     * Default Account Type
-     * 
+     * Default Account Type.
+     *
      * @var string
      */
     const ACCOUNT_TYPE = 'MERCHANT';
@@ -77,7 +75,7 @@ class Account extends MoipResource
         $address->state = $state;
         $address->country = $country;
         $address->zipCode = $zip;
-        
+
         $this->data->person->address = $address;
 
         return $this;
@@ -136,7 +134,7 @@ class Account extends MoipResource
      */
     public function getFullname()
     {
-        return $this->getIfSet('name', $this->data->person) . ' ' . $this->getIfSet('lastName', $this->data->person);
+        return $this->getIfSet('name', $this->data->person).' '.$this->getIfSet('lastName', $this->data->person);
     }
 
     /**
@@ -198,7 +196,7 @@ class Account extends MoipResource
     {
         return $this->getIfSet('number', $this->data->person->taxDocument);
     }
-    
+
     /**
      * Get account type.
      *
@@ -206,7 +204,7 @@ class Account extends MoipResource
      */
     public function getType()
     {
-    	return $this->getIfSet('type', $this->data);
+        return $this->getIfSet('type', $this->data);
     }
 
     /**
@@ -220,43 +218,43 @@ class Account extends MoipResource
     {
         $account = clone $this;
         $account->data->email = new stdClass();
-        
+
         $email = $this->getIfSet('email', $response);
-        
+
         $account->data->email->address = $this->getIfSet('address', $email);
         $account->data->person = new stdClass();
-        
+
         $person = $this->getIfSet('person', $response);
-        
+
         $account->data->person->name = $this->getIfSet('name', $person);
         $account->data->person->lastName = $this->getIfSet('lastName', $person);
         $account->data->person->taxDocument = new stdClass();
-        
+
         $taxDocument = $this->getIfSet('taxDocument', $person);
-        
+
         $account->data->person->taxDocument->type = $this->getIfSet('type', $taxDocument);
         $account->data->person->taxDocument->number = $this->getIfSet('number', $taxDocument);
         $account->data->person->phone = new stdClass();
-        
+
         $phone = $this->getIfSet('phone', $person);
-        
+
         $account->data->person->phone->countryCode = $this->getIfSet('countryCode', $phone);
         $account->data->person->phone->areaCode = $this->getIfSet('areaCode', $phone);
         $account->data->person->phone->number = $this->getIfSet('number', $phone);
         $account->data->person->identityDocument = new stdClass();
-        
+
         $identityDocument = $this->getIfSet('identityDocument', $person);
-        
+
         $account->data->person->identityDocument->type = $this->getIfSet('type', $identityDocument);
         $account->data->person->identityDocument->number = $this->getIfSet('number', $identityDocument);
         $account->data->person->identityDocument->issuer = $this->getIfSet('issuer', $identityDocument);
         $account->data->person->identityDocument->issueDate = $this->getIfSet('issueDate', $identityDocument);
-        
+
         $account->data->person->birthDate = $this->getIfSet('birthDate', $person);
         $account->data->person->address = $this->getIfSet('address', $person);
         $account->data->_links = $this->getIfSet('_links', $response);
         $account->data->type = $this->getIfSet('type', $response);
-        
+
         return $account;
     }
 
@@ -273,7 +271,7 @@ class Account extends MoipResource
 
         return $this;
     }
-    
+
     /**
      * Set name from account.
      *
@@ -283,11 +281,11 @@ class Account extends MoipResource
      */
     public function setName($name)
     {
-    	$this->data->person->name = $name;
-    
-    	return $this;
+        $this->data->person->name = $name;
+
+        return $this;
     }
-    
+
     /**
      * Set name from account.
      *
@@ -297,9 +295,9 @@ class Account extends MoipResource
      */
     public function setLastName($lastname)
     {
-    	$this->data->person->lastName = $lastname;
-    
-    	return $this;
+        $this->data->person->lastName = $lastname;
+
+        return $this;
     }
 
     /**
@@ -355,39 +353,39 @@ class Account extends MoipResource
 
         return $this;
     }
-    
+
     /**
      * Set identity document from account.
      *
-     * @param string $number    						Número do documento.
-     * @param string $issuer      						Emissor do documento.
+     * @param string           $number    Número do documento.
+     * @param string           $issuer    Emissor do documento.
      * @param \DateTime|string $birthDate $issueDate 	Data de emissão do documento.
-     * @param string $type								Tipo do documento. Valores possíveis: RG.
+     * @param string           $type      Tipo do documento. Valores possíveis: RG.
      *
      * @return \Moip\Resource\Account
      */
     public function setIdentityDocument($number, $issuer, $issueDate, $type = 'RG')
     {
-    	$this->data->person->identityDocument = new stdClass();
-    	$this->data->person->identityDocument->type = $type;
-    	$this->data->person->identityDocument->number = $number;
-    	$this->data->person->identityDocument->issuer = $issuer;
-    	$this->data->person->identityDocument->issueDate = $issueDate;
-    	
-    	return $this;
+        $this->data->person->identityDocument = new stdClass();
+        $this->data->person->identityDocument->type = $type;
+        $this->data->person->identityDocument->number = $number;
+        $this->data->person->identityDocument->issuer = $issuer;
+        $this->data->person->identityDocument->issueDate = $issueDate;
+
+        return $this;
     }
-    
+
     /**
      * Set account type. Possible values: CONSUMER, MERCHANT.
-     * 
+     *
      * @param string $type
-     * 
+     *
      * @return \Moip\Resource\Account
      */
     public function setType($type)
     {
-    	$this->data->type = $type;
-    	
-    	return $this;
+        $this->data->type = $type;
+
+        return $this;
     }
 }
