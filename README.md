@@ -133,7 +133,7 @@ try {
 ```
 ## Documentação
 
-[Documentação oficial](https://moip.com.br/referencia-api/)
+[Documentação oficial](https://documentao-moip.readme.io/v2.0/reference)
 
 ## Testes
 Por padrão os testes não fazem nenhuma requisição para a API do Moip. É possível rodar os testes contra 
