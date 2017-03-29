@@ -483,14 +483,4 @@ class Payment extends MoipResource
 
         return $this->populate($response);
     }
-
-    /**
-     * Get the payment status.
-     *
-     * @return string|null
-     */
-    public function getStatus()
-    {
-        return $this->data ? $this->data->status : null;
-    }
 }
