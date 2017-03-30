@@ -36,8 +36,5 @@ class PaymentTest extends MoipTestCase
         $payment = $order->payments()->setBoleto(new \DateTime('today +1day'),
             'http://dev.moip.com.br/images/logo-header-moip.png')->execute();
         $this->assertNotEmpty($payment->getFundingInstrument()->boleto);
-        $pay_id = $payment->getId();
-        $this->assertEquals($payment->getLinks()->getLink('payBoleto')->getHref(),
-            "https://checkout-sandbox.moip.com.br/boleto/$pay_id");
     }
 }
