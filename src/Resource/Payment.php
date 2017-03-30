@@ -7,8 +7,6 @@ use stdClass;
 
 /**
  * Class Payment.
- *
- * @package Moip\Resource
  */
 class Payment extends MoipResource
 {

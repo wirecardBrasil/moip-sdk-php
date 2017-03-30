@@ -5,8 +5,6 @@ namespace Moip\Exceptions;
 /**
  * Class Error.
  * Represents an error returned by the API.
- *
- * @package Moip\Exceptions
  */
 class Error
 {

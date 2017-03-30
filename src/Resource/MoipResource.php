@@ -4,7 +4,6 @@ namespace Moip\Resource;
 
 use JsonSerializable;
 use Moip\Exceptions;
-use Moip\Links;
 use Moip\Moip;
 use Requests;
 use Requests_Exception;
@@ -12,8 +11,6 @@ use stdClass;
 
 /**
  * Class MoipResource.
- *
- * @package Moip\Resource
  */
 abstract class MoipResource implements JsonSerializable
 {

@@ -7,8 +7,6 @@ use stdClass;
 
 /**
  * Class Orders.
- *
- * @package Moip\Resource
  */
 class Orders extends MoipResource
 {

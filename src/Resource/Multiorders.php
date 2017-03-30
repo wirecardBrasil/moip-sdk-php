@@ -7,8 +7,6 @@ use stdClass;
 
 /**
  * Class Multiorders.
- *
- * @package Moip\Resource
  */
 class Multiorders extends MoipResource
 {

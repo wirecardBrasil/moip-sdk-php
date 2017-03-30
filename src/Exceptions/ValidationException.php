@@ -6,8 +6,6 @@ use RuntimeException;
 
 /**
  * Class ValidationException.
- *
- * @package Moip\Exceptions
  */
 class ValidationException extends RuntimeException
 {

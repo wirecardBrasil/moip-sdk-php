@@ -4,8 +4,6 @@ namespace Moip;
 
 /**
  * Class Utils.
- *
- * @package Moip
  */
 class Utils
 {
