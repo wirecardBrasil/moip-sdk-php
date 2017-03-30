@@ -5,6 +5,11 @@ namespace Moip\Resource;
 use ArrayIterator;
 use stdClass;
 
+/**
+ * Class Multiorders.
+ *
+ * @package Moip\Resource
+ */
 class Multiorders extends MoipResource
 {
     /**

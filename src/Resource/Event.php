@@ -4,8 +4,16 @@ namespace Moip\Resource;
 
 use stdClass;
 
+/**
+ * Class Event.
+ *
+ * @package Moip\Resource
+ */
 class Event extends MoipResource
 {
+    /**
+     * @const string
+     */
     const PATH = 'events';
 
     /**

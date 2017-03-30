@@ -6,11 +6,15 @@ use RuntimeException;
 
 /**
  * Class UnexpectedException.
+ *
+ * @package Moip\Exceptions
  */
 class UnexpectedException extends RuntimeException
 {
     /**
      * UnexpectedException constructor.
+     *
+     * @param null $previous
      */
     public function __construct($previous = null)
     {

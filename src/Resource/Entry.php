@@ -4,6 +4,11 @@ namespace Moip\Resource;
 
 use stdClass;
 
+/**
+ * Class Entry.
+ *
+ * @package Moip\Resource
+ */
 class Entry extends MoipResource
 {
     /**

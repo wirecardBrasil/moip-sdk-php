@@ -6,6 +6,8 @@ use Requests_Hooks;
 
 /**
  * Class MoipBasicAuth.
+ *
+ * @package Moip
  */
 class MoipBasicAuth implements MoipAuthentication
 {

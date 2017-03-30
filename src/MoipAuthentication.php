@@ -6,7 +6,7 @@ use Requests_Auth;
 
 /**
  * Interface MoipAuthentication.
+ *
+ * @package Moip
  */
-interface MoipAuthentication extends Requests_Auth
-{
-}
+interface MoipAuthentication extends Requests_Auth {}

@@ -7,6 +7,8 @@ use UnexpectedValueException;
 
 /**
  * Class Customer.
+ *
+ * @package Moip\Resource
  */
 class Customer extends MoipResource
 {
@@ -113,7 +115,7 @@ class Customer extends MoipResource
      *
      * @param string $moip_id
      *
-     * @return \Moip\Resource\Customer
+     * @return \Moip\Resource\Customer|stdClass
      */
     public function get($moip_id)
     {

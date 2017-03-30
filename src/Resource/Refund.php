@@ -6,6 +6,11 @@ use ArrayIterator;
 use Requests;
 use stdClass;
 
+/**
+ * Class Refund.
+ *
+ * @package Moip\Resource
+ */
 class Refund extends MoipResource
 {
     /**

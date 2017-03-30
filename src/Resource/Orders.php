@@ -5,6 +5,11 @@ namespace Moip\Resource;
 use ArrayIterator;
 use stdClass;
 
+/**
+ * Class Orders.
+ *
+ * @package Moip\Resource
+ */
 class Orders extends MoipResource
 {
     /**
@@ -178,7 +183,7 @@ class Orders extends MoipResource
     /**
      * Create a new order in MoIP.
      *
-     * @return Orders
+     * @return \Moip\Resource\Orders|stdClass
      */
     public function create()
     {

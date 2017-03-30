@@ -7,7 +7,7 @@ use stdClass;
 /**
  * Class Account.
  *
- * @todo Devo acrescentar transparentAccount?
+ * @package Moip\Resource
  */
 class Account extends MoipResource
 {
@@ -100,7 +100,7 @@ class Account extends MoipResource
      *
      * @param string $moip_id
      *
-     * @return \Moip\Resource\Account
+     * @return stdClass
      */
     public function get($moip_id)
     {
@@ -357,12 +357,12 @@ class Account extends MoipResource
     /**
      * Set identity document from account.
      *
-     * @param string           $number    Número do documento.
-     * @param string           $issuer    Emissor do documento.
-     * @param \DateTime|string $birthDate $issueDate 	Data de emissão do documento.
-     * @param string           $type      Tipo do documento. Valores possíveis: RG.
+     * @param string $number Número do documento.
+     * @param string $issuer Emissor do documento.
+     * @param $issueDate
+     * @param string $type Tipo do documento. Valores possíveis: RG.
      *
-     * @return \Moip\Resource\Account
+     * @return Account
      */
     public function setIdentityDocument($number, $issuer, $issueDate, $type = 'RG')
     {

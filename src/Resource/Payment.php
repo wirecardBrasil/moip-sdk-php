@@ -5,6 +5,11 @@ namespace Moip\Resource;
 use Requests;
 use stdClass;
 
+/**
+ * Class Payment.
+ *
+ * @package Moip\Resource
+ */
 class Payment extends MoipResource
 {
     /**
@@ -61,34 +66,42 @@ class Payment extends MoipResource
      * Just created, but not initialized yet.
      */
     const STATUS_CREATED = 'CREATED';
+
     /**
      * Waiting for the payment.
      */
     const STATUS_WAITING = 'WAITING';
+
     /**
      * On risk analysis, it may be automatic or manual.
      */
     const STATUS_IN_ANALYSIS = 'IN_ANALYSIS';
+
     /**
      * The amount was reserved on client credit card, it may be caught or discarded until 5 days.
      */
     const STATUS_PRE_AUTHORIZED = 'PRE_AUTHORIZED';
+
     /**
      * Payment confirmed by the bank institution.
      */
     const STATUS_AUTHORIZED = 'AUTHORIZED';
+
     /**
      * Payment cancelled.
      */
     const STATUS_CANCELLED = 'CANCELLED';
+
     /**
      * Payment refunded.
      */
     const STATUS_REFUNDED = 'REFUNDED';
+
     /**
      * Paymend reversed (it means that the payment may was not recognized by the client).
      */
     const STATUS_REVERSED = 'REVERSED';
+
     /**
      * Payment finalized, the amout is on your account.
      */
