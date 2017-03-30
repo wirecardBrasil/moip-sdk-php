@@ -13,8 +13,6 @@ use Requests_Session;
 
 /**
  * Class Moip.
- *
- * @package Moip
  */
 class Moip
 {
@@ -62,7 +60,7 @@ class Moip
      * Create a new aurhentication with the endpoint.
      *
      * @param \Moip\MoipAuthentication $moipAuthentication
-     * @param string $endpoint
+     * @param string                   $endpoint
      */
     public function __construct(MoipAuthentication $moipAuthentication, $endpoint = self::ENDPOINT_PRODUCTION)
     {

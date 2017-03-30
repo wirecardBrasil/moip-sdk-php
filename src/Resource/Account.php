@@ -6,8 +6,6 @@ use stdClass;
 
 /**
  * Class Account.
- *
- * @package Moip\Resource
  */
 class Account extends MoipResource
 {

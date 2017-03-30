@@ -6,8 +6,6 @@ use stdClass;
 
 /**
  * Class Event.
- *
- * @package Moip\Resource
  */
 class Event extends MoipResource
 {

@@ -8,8 +8,6 @@ use RuntimeException;
  * Class UnautorizedException.
  * This exception is thrown when the Moip API returns a 401 http code.
  * The error message was extracted from the documentation.
- *
- * @package Moip\Exceptions
  */
 class UnautorizedException extends RuntimeException
 {

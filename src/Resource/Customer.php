@@ -7,8 +7,6 @@ use UnexpectedValueException;
 
 /**
  * Class Customer.
- *
- * @package Moip\Resource
  */
 class Customer extends MoipResource
 {

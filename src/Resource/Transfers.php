@@ -7,8 +7,6 @@ use stdClass;
 
 /**
  * Class Transfers.
- *
- * @package Moip\Resource
  */
 class Transfers extends MoipResource
 {
