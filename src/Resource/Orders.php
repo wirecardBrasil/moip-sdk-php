@@ -128,6 +128,7 @@ class Orders extends MoipResource
     {
         $this->orders = clone $this;
         $this->orders->data->id = $response->id;
+        $this->orders->data->ownId = $response->ownId;
         $this->orders->data->amount->total = $response->amount->total;
         $this->orders->data->amount->fees = $response->amount->fees;
         $this->orders->data->amount->refunds = $response->amount->refunds;
