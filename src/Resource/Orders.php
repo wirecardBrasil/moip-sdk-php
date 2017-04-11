@@ -236,7 +236,7 @@ class Orders extends MoipResource
      */
     public function getAmountFees()
     {
-        return $this->getIfSet('feed', $this->data->amount);
+        return $this->getIfSet('fees', $this->data->amount);
     }
 
     /**
