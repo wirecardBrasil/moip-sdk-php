@@ -4,7 +4,7 @@ namespace Moip\Tests;
 
 use Moip\Exceptions;
 use Moip\Moip;
-use Moip\Utils;
+use Moip\Helper\Utils;
 use Requests_Exception;
 
 /**
