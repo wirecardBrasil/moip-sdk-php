@@ -30,7 +30,10 @@
     "autoload": {
         "psr-4": {
             "Moip\\": "src/"
-        }
+        },
+        "files": [
+            "src/Helper/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
