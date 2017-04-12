@@ -1,6 +1,6 @@
 <?php
 
-namespace Moip;
+namespace Moip\Auth;
 
 use Requests_Auth;
 
