@@ -6,9 +6,9 @@ use Moip\Contracts\MoipAuthentication;
 use Requests_Hooks;
 
 /**
- * Class MoipBasicAuth.
+ * Class BasicAuth.
  */
-class MoipBasicAuth implements MoipAuthentication
+class BasicAuth implements MoipAuthentication
 {
     /**
      * Token.
