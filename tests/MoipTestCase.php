@@ -3,7 +3,7 @@
 namespace Moip\Tests;
 
 use Moip\Moip;
-use Moip\MoipBasicAuth;
+use Moip\Auth\MoipBasicAuth;
 use Moip\Resource\Customer;
 use Moip\Resource\Orders;
 use PHPUnit_Framework_TestCase as TestCase;
@@ -90,7 +90,7 @@ abstract class MoipTestCase extends TestCase
             $auth = new MoipBasicAuth($moip_token, $moip_key);
         } else {
             $this->sandbox_mock = self::MOCK;
-            $auth = $this->getMock('\Moip\MoipAuthentication');
+            $auth = $this->getMock('\Moip\Auth\MoipAuthentication');
         }
         $this->moip = new Moip($auth, Moip::ENDPOINT_SANDBOX);
     }
