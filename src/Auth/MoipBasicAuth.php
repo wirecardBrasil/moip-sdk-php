@@ -2,6 +2,7 @@
 
 namespace Moip\Auth;
 
+use Moip\Contracts\MoipAuthentication;
 use Requests_Hooks;
 
 /**

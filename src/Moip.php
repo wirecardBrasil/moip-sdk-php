@@ -2,7 +2,7 @@
 
 namespace Moip;
 
-use Moip\Auth\MoipAuthentication;
+use Moip\Contracts\MoipAuthentication;
 use Moip\Resource\Account;
 use Moip\Resource\Customer;
 use Moip\Resource\Entry;

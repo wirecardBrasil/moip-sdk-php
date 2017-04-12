@@ -1,6 +1,6 @@
 <?php
 
-namespace Moip\Auth;
+namespace Moip\Contracts;
 
 use Requests_Auth;
 

@@ -90,7 +90,7 @@ abstract class MoipTestCase extends TestCase
             $auth = new MoipBasicAuth($moip_token, $moip_key);
         } else {
             $this->sandbox_mock = self::MOCK;
-            $auth = $this->getMock('\Moip\Auth\MoipAuthentication');
+            $auth = $this->getMock('\Moip\Contracts\MoipAuthentication');
         }
         $this->moip = new Moip($auth, Moip::ENDPOINT_SANDBOX);
     }
