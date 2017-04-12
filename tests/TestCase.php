@@ -6,13 +6,13 @@ use Moip\Moip;
 use Moip\Auth\BasicAuth;
 use Moip\Resource\Customer;
 use Moip\Resource\Orders;
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit_Framework_TestCase;
 use Requests_Response;
 
 /**
- * class MoipTestCase.
+ * class TestCase.
  */
-abstract class MoipTestCase extends TestCase
+abstract class TestCase extends PHPUnit_Framework_TestCase
 {
     /**
      * Variables representing the test modes. On MOCK mode no http request will be made.
@@ -90,7 +90,7 @@ abstract class MoipTestCase extends TestCase
             $auth = new BasicAuth($moip_token, $moip_key);
         } else {
             $this->sandbox_mock = self::MOCK;
-            $auth = $this->getMock('\Moip\Contracts\MoipAuthentication');
+            $auth = $this->getMock('\Moip\Contracts\Authentication');
         }
         $this->moip = new Moip($auth, Moip::ENDPOINT_SANDBOX);
     }

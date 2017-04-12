@@ -3,9 +3,9 @@
 namespace Moip\Tests\Resource;
 
 use Moip\Resource\Orders;
-use Moip\Tests\MoipTestCase;
+use Moip\Tests\TestCase;
 
-class OrdersTest extends MoipTestCase
+class OrdersTest extends TestCase
 {
     /**
      * Send http request.

@@ -3,12 +3,12 @@
 namespace Moip\Tests\Resource;
 
 use Moip\Resource\Customer;
-use Moip\Tests\MoipTestCase;
+use Moip\Tests\TestCase;
 
 /**
  * class CustomerTest.
  */
-class CustomerTest extends MoipTestCase
+class CustomerTest extends TestCase
 {
     /**
      * Test if the Customer object accepts a \DateTime object and correctly transforms it.

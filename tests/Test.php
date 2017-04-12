@@ -8,9 +8,9 @@ use Moip\Utils;
 use Requests_Exception;
 
 /**
- * class MoipTest.
+ * class Test.
  */
-class MoipTest extends MoipTestCase
+class Test extends TestCase
 {
     /**
      * Test should return instance of \Moip\Resource\Customer.

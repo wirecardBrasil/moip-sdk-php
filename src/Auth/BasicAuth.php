@@ -2,13 +2,13 @@
 
 namespace Moip\Auth;
 
-use Moip\Contracts\MoipAuthentication;
+use Moip\Contracts\Authentication;
 use Requests_Hooks;
 
 /**
  * Class BasicAuth.
  */
-class BasicAuth implements MoipAuthentication
+class BasicAuth implements Authentication
 {
     /**
      * Token.

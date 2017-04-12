@@ -2,9 +2,9 @@
 
 namespace Moip\Tests\Resource;
 
-use Moip\Tests\MoipTestCase;
+use Moip\Tests\TestCase;
 
-class PaymentTest extends MoipTestCase
+class PaymentTest extends TestCase
 {
     //todo: credit card hash
 
