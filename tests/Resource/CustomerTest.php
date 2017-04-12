@@ -11,7 +11,7 @@ use Moip\Tests\TestCase;
 class CustomerTest extends TestCase
 {
     /**
-     * Test if the Customer object accepts a \DateTime object and correctly transforms it.
+     * MoipTest if the Customer object accepts a \DateTime object and correctly transforms it.
      */
     public function testSetBirthDateDateTime()
     {
@@ -23,7 +23,7 @@ class CustomerTest extends TestCase
     }
 
     /**
-     * Test if the Customer object accepts a date string as argument.
+     * MoipTest if the Customer object accepts a date string as argument.
      */
     public function testSetBirthDateString()
     {
@@ -34,7 +34,7 @@ class CustomerTest extends TestCase
     }
 
     /**
-     * Test customer creation.
+     * MoipTest customer creation.
      */
     public function testCustomerCreate()
     {
@@ -50,7 +50,7 @@ class CustomerTest extends TestCase
     }
 
     /**
-     * Test customer shipping address.
+     * MoipTest customer shipping address.
      */
     public function testShippingAddress()
     {

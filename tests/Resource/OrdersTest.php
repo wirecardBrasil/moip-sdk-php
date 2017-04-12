@@ -29,7 +29,7 @@ class OrdersTest extends TestCase
     }
 
     /**
-     * Test creating an order.
+     * MoipTest creating an order.
      */
     public function testCreateOrder()
     {
@@ -51,7 +51,7 @@ class OrdersTest extends TestCase
     }
 
     /**
-     *Test if the total is correct.
+     *MoipTest if the total is correct.
      */
     public function testTotal()
     {
@@ -62,7 +62,7 @@ class OrdersTest extends TestCase
     }
 
     /**
-     * Test if the total is equal to the expected total.
+     * MoipTest if the total is equal to the expected total.
      */
     public function testTotalConstant()
     {

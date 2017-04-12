@@ -9,7 +9,7 @@ class PaymentTest extends TestCase
     //todo: credit card hash
 
     /**
-     * Test creating a credit card payment, passing all credit card data.
+     * MoipTest creating a credit card payment, passing all credit card data.
      */
     public function testCreditCardPCI()
     {
@@ -26,7 +26,7 @@ class PaymentTest extends TestCase
     }
 
     /**
-     * Test creating a billet payment.
+     * MoipTest creating a billet payment.
      */
     public function testBillet()
     {
