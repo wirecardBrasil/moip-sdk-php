@@ -10,24 +10,80 @@ use Requests_Hooks;
  */
 class Connect implements Authentication
 {
+    /**
+     * Define the type of response to be obtained. Possible values: CODE
+     * @const string
+     */
     const RESPONSE_TYPE = 'code';
-    const RECEIVE_FUNDS = 'RECEIVE_FUNDS';
-    const REFUND = 'REFUND';
-    const MANAGE_ACCOUNT_INFO = 'MANAGE_ACCOUNT_INFO';
-    const RETRIEVE_FINANCIAL_INFO = 'RETRIEVE_FINANCIAL_INFO';
-    const TRANSFER_FUNDS = 'TRANSFER_FUNDS';
-    const DEFINE_PREFERENCES = 'DEFINE_PREFERENCES';
-
-    private $client_id;
-    private $redirect_uri;
-    private $scope = [];
-
-    public function __construct()
-    {
-        return $this;
-    }
 
     /**
+     * Permission for creation and consultation of
+     * ORDERS, PAYMENTS, MULTI ORDERS, MULTI PAYMENTS, CUSTOMERS and consultation of LAUNCHES.
+     *
+     * @const string
+     */
+    const RECEIVE_FUNDS = 'RECEIVE_FUNDS';
+
+    /**
+     * Permission to create and consult reimbursements of
+     * ORDERS, PAYMENTS.
+     *
+     * @const string
+     */
+    const REFUND = 'REFUND';
+
+    /**
+     * Permission to consult ACCOUNTS registration information.
+     *
+     * @const string
+     */
+    const MANAGE_ACCOUNT_INFO = 'MANAGE_ACCOUNT_INFO';
+
+    /**
+     * Permission to query balance through the ACCOUNTS endpoint.
+     *
+     * @const string
+     */
+    const RETRIEVE_FINANCIAL_INFO = 'RETRIEVE_FINANCIAL_INFO';
+
+    /**
+     * Permission for bank transfers or for Moip accounts through the TRANSFERS endpoint.
+     *
+     * @const string
+     */
+    const TRANSFER_FUNDS = 'TRANSFER_FUNDS';
+
+    /**
+     * Permission to create, change, and delete notification preferences through the PREFERENCES endpoint.
+     *
+     * @const string
+     */
+    const DEFINE_PREFERENCES = 'DEFINE_PREFERENCES';
+
+    /**
+     * Unique identifier of the application that will be carried out the request.
+     *
+     * @var string (16)
+     */
+    private $client_id;
+
+    /**
+     * Client Redirect URI
+     *
+     * @var string (255)
+     */
+    private $redirect_uri;
+
+    /**
+     * Permissions that you want (Possible values depending on the feature.).
+     *
+     * @var array
+     */
+    private $scope = [];
+
+    /**
+     * Unique identifier of the application that will be carried out the request.
+     *
      * @return mixed
      */
     public function getClientId()
@@ -36,6 +92,8 @@ class Connect implements Authentication
     }
 
     /**
+     * Unique identifier of the application that will be carried out the request.
+     *
      * @param mixed $client_id
      *
      * @return \Moip\Auth\Connect
@@ -47,6 +105,8 @@ class Connect implements Authentication
     }
 
     /**
+     * Client Redirect URI.
+     *
      * @return mixed
      */
     public function getRedirectUri()
@@ -55,6 +115,8 @@ class Connect implements Authentication
     }
 
     /**
+     * Client Redirect URI.
+     *
      * @param mixed $redirect_uri
      *
      * @return \Moip\Auth\Connect
@@ -66,6 +128,8 @@ class Connect implements Authentication
     }
 
     /**
+     * Permissions that you want (Possible values depending on the feature.).
+     *
      * @return mixed
      */
     public function getScope()
@@ -74,6 +138,8 @@ class Connect implements Authentication
     }
 
     /**
+     * Permissions that you want (Possible values depending on the feature.).
+     *
      * @param array|string $scope
      *
      * @return \Moip\Auth\Connect
