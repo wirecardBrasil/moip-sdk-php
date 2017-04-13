@@ -74,7 +74,7 @@ class Connect implements Authentication
     }
 
     /**
-     * @param mixed $scope
+     * @param array|string $scope
      *
      * @return \Moip\Auth\Connect
      */
