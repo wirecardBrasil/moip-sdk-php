@@ -13,6 +13,7 @@ class Connect implements Authentication
 {
     /**
      * Define the type of response to be obtained. Possible values: CODE
+     *
      * @const string
      */
     const RESPONSE_TYPE = 'code';
