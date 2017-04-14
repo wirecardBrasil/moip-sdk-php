@@ -104,6 +104,17 @@ class Refund extends MoipResource
     }
 
     /**
+     * Get id MoIP refund.
+     *
+     *
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->getIfSet('id');
+    }
+
+    /**
      * Create a new refund in api MoIP.
      *
      * @param stdClass $data
