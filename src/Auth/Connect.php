@@ -3,6 +3,7 @@
 namespace Moip\Auth;
 
 use Moip\Contracts\Authentication;
+use Moip\Exceptions\InvalidArgumentException;
 use Requests_Hooks;
 
 /**
@@ -17,16 +18,14 @@ class Connect implements Authentication
     const RESPONSE_TYPE = 'code';
 
     /**
-     * Permission for creation and consultation of
-     * ORDERS, PAYMENTS, MULTI ORDERS, MULTI PAYMENTS, CUSTOMERS and consultation of LAUNCHES.
+     * Permission for creation and consultation of ORDERS, PAYMENTS, MULTI ORDERS, MULTI PAYMENTS, CUSTOMERS and consultation of LAUNCHES.
      *
      * @const string
      */
     const RECEIVE_FUNDS = 'RECEIVE_FUNDS';
 
     /**
-     * Permission to create and consult reimbursements of
-     * ORDERS, PAYMENTS.
+     * Permission to create and consult reimbursements ofORDERS, PAYMENTS.
      *
      * @const string
      */
@@ -80,6 +79,160 @@ class Connect implements Authentication
      * @var array
      */
     private $scope = [];
+
+    /**
+     * @param bool $scope
+     */
+    public function setScodeAll($scope)
+    {
+        if (! is_bool($scope)) {
+            throw new InvalidArgumentException('$scope deve ser boolean, foi passado ' . gettype($scope));
+        }
+
+        if ($scope === false) {
+            $this->scope = [];
+        } else {
+            $this->setReceiveFunds(true)
+                ->setRefund(true)
+                ->setManageAccountInfo(true)
+                ->setRetrieveFinancialInfo(true)
+                ->setTransferFunds(true)
+                ->setDefinePreferences(true);
+        }
+
+    }
+
+    /**
+     * Permission for creation and consultation of ORDERS, PAYMENTS, MULTI ORDERS, MULTI PAYMENTS, CUSTOMERS and consultation of LAUNCHES.
+     *
+     * @param  bool $receive_funds
+     *
+     * @return \Moip\Auth\Connect $this
+     *
+     * @throws \Moip\Exceptions\InvalidArgumentException
+     */
+    public function setReceiveFunds($receive_funds)
+    {
+        if (! is_bool($receive_funds)) {
+            throw new InvalidArgumentException('$receive_funds deve ser boolean, foi passado ' . gettype($receive_funds));
+        }
+
+        if ($receive_funds === true) {
+            $this->setScope(self::RECEIVE_FUNDS);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Permission to create and consult reimbursements ofORDERS, PAYMENTS.
+     *
+     * @param  bool $refund
+     *
+     * @return \Moip\Auth\Connect $this
+     *
+     * @throws \Moip\Exceptions\InvalidArgumentException
+     */
+    public function setRefund($refund)
+    {
+        if (! is_bool($refund)) {
+            throw new InvalidArgumentException('$refund deve ser boolean, foi passado ' . gettype($refund));
+        }
+
+        if ($refund === true) {
+            $this->setScope(self::RECEIVE_FUNDS);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Permission to consult ACCOUNTS registration information.
+     *
+     * @param  bool $manage_account_info
+     *
+     * @return \Moip\Auth\Connect $this
+     *
+     * @throws \Moip\Exceptions\InvalidArgumentException
+     */
+    public function setManageAccountInfo($manage_account_info)
+    {
+        if (! is_bool($manage_account_info)) {
+            throw new InvalidArgumentException('$manage_account_info deve ser boolean, foi passado ' . gettype($manage_account_info));
+        }
+
+        if ($manage_account_info === true) {
+            $this->setScope(self::RECEIVE_FUNDS);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Permission to query balance through the ACCOUNTS endpoint.
+     *
+     * @param  bool $retrieve_financial_info
+     *
+     * @return \Moip\Auth\Connect $this
+     *
+     * @throws \Moip\Exceptions\InvalidArgumentException
+     */
+    public function setRetrieveFinancialInfo($retrieve_financial_info)
+    {
+        if (! is_bool($retrieve_financial_info)) {
+            throw new InvalidArgumentException('$retrieve_financial_info deve ser boolean, foi passado ' . gettype($retrieve_financial_info));
+        }
+
+        if ($retrieve_financial_info === true) {
+            $this->setScope(self::RECEIVE_FUNDS);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Permission for bank transfers or for Moip accounts through the TRANSFERS endpoint.
+     *
+     * @param  bool $transfer_funds
+     *
+     * @return \Moip\Auth\Connect $this
+     *
+     * @throws \Moip\Exceptions\InvalidArgumentException
+     */
+    public function setTransferFunds($transfer_funds)
+    {
+        if (! is_bool($transfer_funds)) {
+            throw new InvalidArgumentException('$transfer_funds deve ser boolean, foi passado ' . gettype($transfer_funds));
+        }
+
+        if ($transfer_funds === true) {
+            $this->setScope(self::RECEIVE_FUNDS);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Permission to create, change, and delete notification preferences through the PREFERENCES endpoint.
+     *
+     * @param  bool $define_preferences
+     *
+     * @return $this
+     *
+     * @throws \Moip\Exceptions\InvalidArgumentException
+     */
+    public function setDefinePreferences($define_preferences)
+    {
+        if (! is_bool($define_preferences)) {
+            throw new InvalidArgumentException('$define_preferences deve ser boolean, foi passado ' . gettype($define_preferences));
+        }
+
+        if ($define_preferences === true) {
+            $this->setScope(self::RECEIVE_FUNDS);
+        }
+
+        return $this;
+    }
 
     /**
      * Unique identifier of the application that will be carried out the request.
@@ -146,7 +299,7 @@ class Connect implements Authentication
      */
     public function setScope($scope)
     {
-        $this->scope = $scope;
+        $this->scope[] = $scope;
 
         return $this;
     }
