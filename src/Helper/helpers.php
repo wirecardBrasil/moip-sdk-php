@@ -1,6 +1,6 @@
 <?php
 
-if (! function_exists('to_cents')) {
+if (!function_exists('to_cents')) {
     /**
      * convert a money amount (represented by a float or string (based on locale) ie.: R$ 5,00) to cents (represented by an int).
      *
@@ -16,7 +16,7 @@ if (! function_exists('to_cents')) {
     }
 }
 
-if (! function_exists('pr')) {
+if (!function_exists('pr')) {
     /**
      * print_r() convenience function.
      *
@@ -26,7 +26,9 @@ if (! function_exists('pr')) {
      * This function returns the same variable that was passed.
      *
      * @param mixed $var Variable to print out.
+     *
      * @return mixed the same $var that was passed to this function
+     *
      * @link http://book.cakephp.org/3.0/en/core-libraries/global-constants-and-functions.html#pr
      * @see debug()
      */
