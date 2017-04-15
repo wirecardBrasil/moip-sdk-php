@@ -5,9 +5,8 @@ namespace Moip\Exceptions;
 use RuntimeException;
 
 /**
- * Class InvalidArgumentException
+ * Class InvalidArgumentException.
  */
 class InvalidArgumentException extends RuntimeException
 {
-
 }
