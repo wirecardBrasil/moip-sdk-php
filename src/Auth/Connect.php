@@ -26,7 +26,7 @@ class Connect implements Authentication
     const RECEIVE_FUNDS = 'RECEIVE_FUNDS';
 
     /**
-     * Permission to create and consult reimbursements ofORDERS, PAYMENTS.
+     * Permission to create and consult reimbursements of ORDERS, PAYMENTS.
      *
      * @const string
      */
