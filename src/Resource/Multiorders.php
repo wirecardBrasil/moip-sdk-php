@@ -58,7 +58,7 @@ class Multiorders extends MoipResource
      */
     public function get($id_moip)
     {
-        return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, Entry::PATH, $id_moip));
+        return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, self::PATH, $id_moip));
     }
 
     /**
