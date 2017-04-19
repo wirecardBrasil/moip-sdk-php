@@ -19,12 +19,12 @@ class Connect implements Authentication
     /**
      * @const string
      */
-    const ENDPOINT_SANDBOX = 'https://connect.moip.com.br';
+    const ENDPOINT_SANDBOX = 'https://connect-sandbox.moip.com.br';
 
     /**
      * @const string
      */
-    const ENDPOINT_PRODUCTION = 'https://connect-sandbox.moip.com.br';
+    const ENDPOINT_PRODUCTION = 'https://connect.moip.com.br';
 
     /**
      * @const string
@@ -107,6 +107,18 @@ class Connect implements Authentication
      */
     private $scope = [];
 
+    public function getAuthUrl($auth_endpoint)
+    {
+        $query_string = [
+            'response_type' => self::RESPONSE_TYPE,
+            'client_id' => $this->client_id,
+            'redirect_uri' => $this->redirect_uri,
+            'scope' => implode(',', $this->scope)
+        ];
+
+        return $auth_endpoint.self::OAUTH_AUTHORIZE.'?'.http_build_query($query_string);;
+    }
+
     /**
      * @param bool $scope
      */
@@ -166,7 +178,7 @@ class Connect implements Authentication
         }
 
         if ($refund === true) {
-            $this->setScope(self::RECEIVE_FUNDS);
+            $this->setScope(self::REFUND);
         }
 
         return $this;
@@ -188,7 +200,7 @@ class Connect implements Authentication
         }
 
         if ($manage_account_info === true) {
-            $this->setScope(self::RECEIVE_FUNDS);
+            $this->setScope(self::MANAGE_ACCOUNT_INFO);
         }
 
         return $this;
@@ -210,7 +222,7 @@ class Connect implements Authentication
         }
 
         if ($retrieve_financial_info === true) {
-            $this->setScope(self::RECEIVE_FUNDS);
+            $this->setScope(self::RETRIEVE_FINANCIAL_INFO);
         }
 
         return $this;
@@ -232,7 +244,7 @@ class Connect implements Authentication
         }
 
         if ($transfer_funds === true) {
-            $this->setScope(self::RECEIVE_FUNDS);
+            $this->setScope(self::TRANSFER_FUNDS);
         }
 
         return $this;
@@ -254,7 +266,7 @@ class Connect implements Authentication
         }
 
         if ($define_preferences === true) {
-            $this->setScope(self::RECEIVE_FUNDS);
+            $this->setScope(self::DEFINE_PREFERENCES);
         }
 
         return $this;
