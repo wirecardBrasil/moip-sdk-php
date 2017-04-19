@@ -3,8 +3,8 @@
 namespace Moip\Tests;
 
 use Moip\Exceptions;
-use Moip\Moip;
 use Moip\Helper\Utils;
+use Moip\Moip;
 use Requests_Exception;
 
 /**

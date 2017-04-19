@@ -2,8 +2,8 @@
 
 namespace Moip\Tests;
 
-use Moip\Moip;
 use Moip\Auth\BasicAuth;
+use Moip\Moip;
 use Moip\Resource\Customer;
 use Moip\Resource\Orders;
 use PHPUnit_Framework_TestCase;
