@@ -7,21 +7,16 @@ use Moip\Exceptions\InvalidArgumentException;
 use Requests_Hooks;
 
 /**
-<<<<<<< HEAD
  * Class Connect
  *
  * For all requests involving more than one Moip Account directly, authentication through an OAuth token is required.
  * Using the OAuth 2.0 standard it is possible to authenticate to the Moip APIs and request the use of the APIs on behalf of another user.
  * In this way, another Moip user can grant you the most diverse permissions,
  * from receiving payments as a secondary receiver to even special actions like repayment of a payment.
-=======
- * Class Connect.
->>>>>>> 1736c8b385e75d4282846132de335c9a9cfee7bc
  */
 class Connect implements Authentication
 {
     /**
-<<<<<<< HEAD
      * @const string
      */
     const ENDPOINT_SANDBOX = 'https://connect-sandbox.moip.com.br';
@@ -41,12 +36,8 @@ class Connect implements Authentication
      */
     const OAUTH_TOKEN = '/oauth/token';
 
-
     /**
-     * Define the type of response to be obtained. Possible values: CODE
-=======
      * Define the type of response to be obtained. Possible values: CODE.
->>>>>>> 1736c8b385e75d4282846132de335c9a9cfee7bc
      *
      * @const string
      */
