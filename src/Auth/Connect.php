@@ -107,6 +107,13 @@ class Connect implements Authentication
      */
     private $scope = [];
 
+    /**
+     * URI of oauth.
+     *
+     * @param $auth_endpoint
+     *
+     * @return string
+     */
     public function getAuthUrl($auth_endpoint)
     {
         $query_string = [
