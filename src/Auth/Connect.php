@@ -2,9 +2,15 @@
 
 namespace Moip\Auth;
 
+use JsonSerializable;
 use Moip\Contracts\Authentication;
 use Moip\Exceptions\InvalidArgumentException;
+use Moip\Exceptions\UnexpectedException;
+use Moip\Moip;
+use Moip\Resource\MoipResource;
 use Requests_Hooks;
+use Requests_Session;
+use stdClass;
 
 /**
  * Class Connect
@@ -14,7 +20,7 @@ use Requests_Hooks;
  * In this way, another Moip user can grant you the most diverse permissions,
  * from receiving payments as a secondary receiver to even special actions like repayment of a payment.
  */
-class Connect implements Authentication
+class Connect implements Authentication, JsonSerializable
 {
     /**
      * @const string
@@ -100,11 +106,55 @@ class Connect implements Authentication
     private $redirect_uri;
 
     /**
+     * Endpoint.
+     *
+     * @var string
+     */
+    private $endpoint;
+
+    /**
      * Permissions that you want (Possible values depending on the feature.).
      *
      * @var array
      */
     private $scope = [];
+
+    /**
+     * @var Requests_Session HTTP session configured to use the moip API.
+     */
+    private $session;
+
+    /**
+     * Connect constructor.
+     */
+    public function __construct()
+    {
+        $this->createNewSession();
+    }
+
+    /**
+     * Creates a new Request_Session with all the default values.
+     * A Session is created at construction.
+     *
+     * @param float $timeout         How long should we wait for a response?(seconds with a millisecond precision, default: 30, example: 0.01).
+     * @param float $connect_timeout How long should we wait while trying to connect? (seconds with a millisecond precision, default: 10, example: 0.01)
+     */
+    public function createNewSession($timeout = 30.0, $connect_timeout = 30.0)
+    {
+        if (function_exists('posix_uname')) {
+            $uname = posix_uname();
+            $user_agent = sprintf('Mozilla/4.0 (compatible; %s; PHP/%s %s; %s; %s)',
+                Moip::CLIENT, PHP_SAPI, PHP_VERSION, $uname['sysname'], $uname['machine']);
+        } else {
+            $user_agent = sprintf('Mozilla/4.0 (compatible; %s; PHP/%s %s; %s)',
+                Moip::CLIENT, PHP_SAPI, PHP_VERSION, PHP_OS);
+        }
+        $sess = new Requests_Session($this->endpoint);
+        $sess->options['timeout'] = $timeout;
+        $sess->options['connect_timeout'] = $connect_timeout;
+        $sess->options['useragent'] = $user_agent;
+        $this->session = $sess;
+    }
 
     /**
      * URI of oauth.
@@ -364,5 +414,33 @@ class Connect implements Authentication
     public function register(Requests_Hooks &$hooks)
     {
         // TODO: Implement register() method.
+    }
+
+    /**
+     * Specify data which should be serialized to JSON
+     * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
+     * @return mixed data which can be serialized by <b>json_encode</b>,
+     * which is a value of any type other than a resource.
+     * @since 5.4.0
+     */
+    function jsonSerialize()
+    {
+        // TODO: Implement jsonSerialize() method.
+    }
+
+    /**
+     * @param string $endpoint
+     *
+     * @return \Moip\Auth\Connect
+     */
+    public function setEndpoint(string $endpoint)
+    {
+        if ($endpoint === self::ENDPOINT_SANDBOX || $endpoint === self::ENDPOINT_PRODUCTION) {
+            $this->endpoint = $endpoint;
+
+            return $this;
+        }
+
+        throw new InvalidArgumentException('Endpoint inválido.');
     }
 }
