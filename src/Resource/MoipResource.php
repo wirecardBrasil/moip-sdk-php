@@ -196,4 +196,18 @@ abstract class MoipResource implements JsonSerializable
 
         return $this->populate($response);
     }
+
+     /**
+      * Returns the HATEOAS structure, if any.
+      * 
+      * @return null|Links
+      */
+     public function getLinks()
+     {
+         $obj = $this->getIfSet('_links');
+
+         if ($obj) {
+            return new Links($obj);
+         }
+     }
 }
