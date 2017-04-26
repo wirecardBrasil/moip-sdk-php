@@ -5,15 +5,12 @@ namespace Moip\Auth;
 use JsonSerializable;
 use Moip\Contracts\Authentication;
 use Moip\Exceptions\InvalidArgumentException;
-use Moip\Exceptions\UnexpectedException;
 use Moip\Moip;
-use Moip\Resource\MoipResource;
 use Requests_Hooks;
 use Requests_Session;
-use stdClass;
 
 /**
- * Class Connect
+ * Class Connect.
  *
  * For all requests involving more than one Moip Account directly, authentication through an OAuth token is required.
  * Using the OAuth 2.0 standard it is possible to authenticate to the Moip APIs and request the use of the APIs on behalf of another user.
@@ -167,12 +164,12 @@ class Connect implements Authentication, JsonSerializable
     {
         $query_string = [
             'response_type' => self::RESPONSE_TYPE,
-            'client_id' => $this->client_id,
-            'redirect_uri' => $this->redirect_uri,
-            'scope' => implode(',', $this->scope)
+            'client_id'     => $this->client_id,
+            'redirect_uri'  => $this->redirect_uri,
+            'scope'         => implode(',', $this->scope),
         ];
 
-        return $auth_endpoint.self::OAUTH_AUTHORIZE.'?'.http_build_query($query_string);;
+        return $auth_endpoint.self::OAUTH_AUTHORIZE.'?'.http_build_query($query_string);
     }
 
     /**
@@ -417,13 +414,16 @@ class Connect implements Authentication, JsonSerializable
     }
 
     /**
-     * Specify data which should be serialized to JSON
+     * Specify data which should be serialized to JSON.
+     *
      * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
+     *
      * @return mixed data which can be serialized by <b>json_encode</b>,
-     * which is a value of any type other than a resource.
+     *               which is a value of any type other than a resource.
+     *
      * @since 5.4.0
      */
-    function jsonSerialize()
+    public function jsonSerialize()
     {
         // TODO: Implement jsonSerialize() method.
     }
