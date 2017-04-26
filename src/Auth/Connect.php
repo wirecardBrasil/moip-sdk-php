@@ -5,12 +5,9 @@ namespace Moip\Auth;
 use JsonSerializable;
 use Moip\Contracts\Authentication;
 use Moip\Exceptions\InvalidArgumentException;
-use Moip\Exceptions\UnexpectedException;
 use Moip\Moip;
-use Moip\Resource\MoipResource;
 use Requests_Hooks;
 use Requests_Session;
-use stdClass;
 
 /**
  * Class Connect
