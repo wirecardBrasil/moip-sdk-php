@@ -92,6 +92,20 @@ class Connect implements Authentication, JsonSerializable
     const DEFINE_PREFERENCES = 'DEFINE_PREFERENCES';
 
     /**
+     * List all scopes.
+     *
+     * @const array
+     */
+    const SCOPE_ALL  = [
+        self::RECEIVE_FUNDS,
+        self::REFUND,
+        self::MANAGE_ACCOUNT_INFO,
+        self::RETRIEVE_FINANCIAL_INFO,
+        self::TRANSFER_FUNDS,
+        self::DEFINE_PREFERENCES,
+    ];
+
+    /**
      * Unique identifier of the application that will be carried out the request.
      *
      * @var string (16)
@@ -126,9 +140,19 @@ class Connect implements Authentication, JsonSerializable
 
     /**
      * Connect constructor.
+     *
+     * @param string $client_id
+     * @param string $redirect_uri
+     * @param array $scope
+     * @param string $endpoint
      */
-    public function __construct()
+    public function __construct($client_id = '', $redirect_uri = '', $scope = [], $endpoint = self::ENDPOINT_PRODUCTION)
     {
+        $this->client_id = $client_id;
+        $this->redirect_uri = $redirect_uri;
+        $this->scope = $this->setScope($endpoint);
+        $this->endpoint = $endpoint;
+
         $this->createNewSession();
     }
 
@@ -395,6 +419,14 @@ class Connect implements Authentication, JsonSerializable
      */
     public function setScope($scope)
     {
+        if (! in_array($scope, self::SCOPE_ALL, true)) {
+            throw new InvalidArgumentException();
+        }
+
+        if (is_array($scope)) {
+            $this->scope = $scope;
+        }
+
         $this->scope[] = $scope;
 
         return $this;
