@@ -189,8 +189,11 @@ class Connect implements Authentication, JsonSerializable
      *
      * @return string
      */
-    public function getAuthUrl($auth_endpoint)
+    public function getAuthUrl($auth_endpoint = null)
     {
+        if ($auth_endpoint !== null) {
+            $this->endpoint = $auth_endpoint;
+        }
         $query_string = [
             'response_type' => self::RESPONSE_TYPE,
             'client_id' => $this->client_id,
@@ -198,7 +201,7 @@ class Connect implements Authentication, JsonSerializable
             'scope' => implode(',', $this->scope)
         ];
 
-        return $auth_endpoint.self::OAUTH_AUTHORIZE.'?'.http_build_query($query_string);;
+        return $this->endpoint.self::OAUTH_AUTHORIZE.'?'.http_build_query($query_string);;
     }
 
     /**
