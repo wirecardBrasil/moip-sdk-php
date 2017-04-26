@@ -15,7 +15,7 @@ use Requests_Hooks;
 use Requests_Session;
 
 /**
- * Class Connect
+ * Class Connect.
  *
  * For all requests involving more than one Moip Account directly, authentication through an OAuth token is required.
  * Using the OAuth 2.0 standard it is possible to authenticate to the Moip APIs and request the use of the APIs on behalf of another user.
@@ -219,14 +219,19 @@ class Connect implements Authentication, JsonSerializable
         }
         $query_string = [
             'response_type' => self::RESPONSE_TYPE,
-            'client_id' => $this->client_id,
-            'redirect_uri' => $this->redirect_uri,
-            'scope' => implode(',', $this->scope)
+            'client_id'     => $this->client_id,
+            'redirect_uri'  => $this->redirect_uri,
+            'scope'         => implode(',', $this->scope),
         ];
 
         return $this->endpoint.self::OAUTH_AUTHORIZE.'?'.http_build_query($query_string);;
     }
 
+    /**
+     * With the permission granted, you will receive a code that will allow you to retrieve the authentication accessToken and process requests involving another user.
+     *
+     * @return mixed
+     */
     public function authorize()
     {
         $path = $this->endpoint . self::OAUTH_TOKEN;
@@ -493,34 +498,6 @@ class Connect implements Authentication, JsonSerializable
     }
 
     /**
-     * Register hooks as needed.
-     *
-     * This method is called in {@see Requests::request} when the user has set
-     * an instance as the 'auth' option. Use this callback to register all the
-     * hooks you'll need.
-     *
-     * @see Requests_Hooks::register
-     *
-     * @param Requests_Hooks $hooks Hook system
-     */
-    public function register(Requests_Hooks &$hooks)
-    {
-        // TODO: Implement register() method.
-    }
-
-    /**
-     * Specify data which should be serialized to JSON
-     * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
-     * @return mixed data which can be serialized by <b>json_encode</b>,
-     * which is a value of any type other than a resource.
-     * @since 5.4.0
-     */
-    function jsonSerialize()
-    {
-        // TODO: Implement jsonSerialize() method.
-    }
-
-    /**
      * @param string $endpoint
      *
      * @return \Moip\Auth\Connect
@@ -574,5 +551,36 @@ class Connect implements Authentication, JsonSerializable
     public function getCode()
     {
         return $this->code;
+    }
+
+    /**
+     * Register hooks as needed.
+     *
+     * This method is called in {@see Requests::request} when the user has set
+     * an instance as the 'auth' option. Use this callback to register all the
+     * hooks you'll need.
+     *
+     * @see Requests_Hooks::register
+     *
+     * @param Requests_Hooks $hooks Hook system
+     */
+    public function register(Requests_Hooks &$hooks)
+    {
+        // TODO: Implement register() method.
+    }
+
+    /**
+     * Specify data which should be serialized to JSON.
+     *
+     * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
+     *
+     * @return mixed data which can be serialized by <b>json_encode</b>,
+     *               which is a value of any type other than a resource.
+     *
+     * @since 5.4.0
+     */
+    public function jsonSerialize()
+    {
+        // TODO: Implement jsonSerialize() method.
     }
 }

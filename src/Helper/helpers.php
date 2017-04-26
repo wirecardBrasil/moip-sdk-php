@@ -10,7 +10,7 @@ if (!function_exists('to_cents')) {
      *
      * @return int
      */
-    function to_cents(float $amount): int
+    function to_cents(float $amount)
     {
         return Moip\Helper\Utils::toCents($amount);
     }
