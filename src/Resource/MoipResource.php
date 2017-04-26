@@ -4,6 +4,7 @@ namespace Moip\Resource;
 
 use JsonSerializable;
 use Moip\Exceptions;
+use Moip\Helper\Links;
 use Moip\Moip;
 use Requests;
 use Requests_Exception;
@@ -76,6 +77,25 @@ abstract class MoipResource implements JsonSerializable
         }
     }
 
+    /**
+     * @return \Moip\Helper\Links
+     */
+    public function getLinks()
+    {
+        $links = $this->getIfSet('_links');
+
+        if ($links !== null) {
+            return new Links($links);
+        }
+    }
+
+    /**
+     * @param $key
+     * @param $fmt
+     * @param stdClass|null $data
+     *
+     * @return bool|\DateTime|null
+     */
     protected function getIfSetDateFmt($key, $fmt, stdClass $data = null)
     {
         $val = $this->getIfSet($key, $data);
