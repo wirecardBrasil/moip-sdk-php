@@ -6,7 +6,6 @@ use JsonSerializable;
 use Moip\Contracts\Authentication;
 use Moip\Exceptions\Error;
 use Moip\Exceptions\InvalidArgumentException;
-use Moip\Exceptions\UnautorizedException;
 use Moip\Exceptions\UnexpectedException;
 use Moip\Exceptions\ValidationException;
 use Moip\Moip;
@@ -105,7 +104,7 @@ class Connect implements Authentication, JsonSerializable
      *
      * @const array
      */
-    const SCOPE_ALL  = [
+    const SCOPE_ALL = [
         self::RECEIVE_FUNDS,
         self::REFUND,
         self::MANAGE_ACCOUNT_INFO,
@@ -159,10 +158,10 @@ class Connect implements Authentication, JsonSerializable
     /**
      * Connect constructor.
      *
-     * @param string $redirect_uri
-     * @param string $client_id
+     * @param string     $redirect_uri
+     * @param string     $client_id
      * @param array|bool $scope
-     * @param string $endpoint
+     * @param string     $endpoint
      */
     public function __construct($redirect_uri = '', $client_id = '', $scope = true, $endpoint = self::ENDPOINT_PRODUCTION)
     {
@@ -182,7 +181,7 @@ class Connect implements Authentication, JsonSerializable
      * Creates a new Request_Session with all the default values.
      * A Session is created at construction.
      *
-     * @param float $timeout How long should we wait for a response?(seconds with a millisecond precision, default: 30, example: 0.01).
+     * @param float $timeout         How long should we wait for a response?(seconds with a millisecond precision, default: 30, example: 0.01).
      * @param float $connect_timeout How long should we wait while trying to connect? (seconds with a millisecond precision, default: 10, example: 0.01)
      *
      * @return \Requests_Session
@@ -224,7 +223,7 @@ class Connect implements Authentication, JsonSerializable
             'scope'         => implode(',', $this->scope),
         ];
 
-        return $this->endpoint.self::OAUTH_AUTHORIZE.'?'.http_build_query($query_string);;
+        return $this->endpoint.self::OAUTH_AUTHORIZE.'?'.http_build_query($query_string);
     }
 
     /**
@@ -234,14 +233,14 @@ class Connect implements Authentication, JsonSerializable
      */
     public function authorize()
     {
-        $path = $this->endpoint . self::OAUTH_TOKEN;
+        $path = $this->endpoint.self::OAUTH_TOKEN;
         $headers = ['Content-Type' => 'application/x-www-form-urlencoded'];
         $body = [
-            'client_id' => $this->client_id,
+            'client_id'     => $this->client_id,
             'client_secret' => $this->client_secret,
-            'grant_type' => self::GRANT_TYPE,
-            'code' => $this->code,
-            'redirect_uri' => $this->redirect_uri
+            'grant_type'    => self::GRANT_TYPE,
+            'code'          => $this->code,
+            'redirect_uri'  => $this->redirect_uri,
         ];
 
         try {
@@ -484,7 +483,7 @@ class Connect implements Authentication, JsonSerializable
      */
     public function setScope($scope)
     {
-        if (! in_array($scope, self::SCOPE_ALL, true)) {
+        if (!in_array($scope, self::SCOPE_ALL, true)) {
             throw new InvalidArgumentException();
         }
 
@@ -504,7 +503,7 @@ class Connect implements Authentication, JsonSerializable
      */
     public function setEndpoint(string $endpoint)
     {
-        if (! in_array($endpoint, [self::ENDPOINT_SANDBOX, self::ENDPOINT_PRODUCTION])) {
+        if (!in_array($endpoint, [self::ENDPOINT_SANDBOX, self::ENDPOINT_PRODUCTION])) {
             throw new InvalidArgumentException('Endpoint inválido.');
         }
 
