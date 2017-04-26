@@ -141,18 +141,23 @@ class Connect implements Authentication, JsonSerializable
     /**
      * Connect constructor.
      *
-     * @param string $client_id
      * @param string $redirect_uri
-     * @param array $scope
+     * @param string $client_id
+     * @param array|bool $scope
      * @param string $endpoint
      */
-    public function __construct($client_id = '', $redirect_uri = '', $scope = [], $endpoint = self::ENDPOINT_PRODUCTION)
+    public function __construct($redirect_uri = '', $client_id = '', $scope = true, $endpoint = self::ENDPOINT_PRODUCTION)
     {
         $this->client_id = $client_id;
         $this->redirect_uri = $redirect_uri;
-        $this->scope = $this->setScope($endpoint);
-        $this->endpoint = $endpoint;
 
+        if (is_bool($scope)) {
+            $this->setScodeAll($scope);
+        } else {
+            $this->setScope($endpoint);
+        }
+
+        $this->setEndpoint($endpoint);
         $this->createNewSession();
     }
 
@@ -201,6 +206,8 @@ class Connect implements Authentication, JsonSerializable
 
     /**
      * @param bool $scope
+     *
+     * @return $this
      */
     public function setScodeAll($scope)
     {
@@ -218,6 +225,8 @@ class Connect implements Authentication, JsonSerializable
                 ->setTransferFunds(true)
                 ->setDefinePreferences(true);
         }
+
+        return $this;
     }
 
     /**
@@ -467,12 +476,12 @@ class Connect implements Authentication, JsonSerializable
      */
     public function setEndpoint(string $endpoint)
     {
-        if ($endpoint === self::ENDPOINT_SANDBOX || $endpoint === self::ENDPOINT_PRODUCTION) {
-            $this->endpoint = $endpoint;
-
-            return $this;
+        if (! in_array($endpoint, [self::ENDPOINT_SANDBOX, self::ENDPOINT_PRODUCTION])) {
+            throw new InvalidArgumentException('Endpoint inválido.');
         }
 
-        throw new InvalidArgumentException('Endpoint inválido.');
+        $this->endpoint = $endpoint;
+
+        return $this;
     }
 }
