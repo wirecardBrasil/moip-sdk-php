@@ -185,14 +185,14 @@ class Connect implements Authentication, JsonSerializable
     /**
      * URI of oauth.
      *
-     * @param $auth_endpoint
+     * @param $endpoint
      *
      * @return string
      */
-    public function getAuthUrl($auth_endpoint = null)
+    public function getAuthUrl($endpoint = null)
     {
-        if ($auth_endpoint !== null) {
-            $this->endpoint = $auth_endpoint;
+        if ($endpoint !== null) {
+            $this->endpoint = $endpoint;
         }
         $query_string = [
             'response_type' => self::RESPONSE_TYPE,
