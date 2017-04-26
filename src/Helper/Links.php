@@ -56,9 +56,6 @@ class Links
         return $this->checkout;
     }
 
-    /**
-     *
-     */
     private function generateMethods()
     {
         $this->checkout = new stdClass();
