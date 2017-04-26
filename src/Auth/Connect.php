@@ -4,8 +4,13 @@ namespace Moip\Auth;
 
 use JsonSerializable;
 use Moip\Contracts\Authentication;
+use Moip\Exceptions\Error;
 use Moip\Exceptions\InvalidArgumentException;
+use Moip\Exceptions\UnautorizedException;
+use Moip\Exceptions\UnexpectedException;
+use Moip\Exceptions\ValidationException;
 use Moip\Moip;
+use Requests_Exception;
 use Requests_Hooks;
 use Requests_Session;
 
@@ -38,6 +43,13 @@ class Connect implements Authentication, JsonSerializable
      * @const string
      */
     const OAUTH_TOKEN = '/oauth/token';
+
+    /**
+     * Type of request desired. Possible values: AUTHORIZATION_CODE.
+     *
+     * @const string
+     */
+    const GRANT_TYPE = 'authorization_code';
 
     /**
      * Define the type of response to be obtained. Possible values: CODE.
@@ -110,6 +122,13 @@ class Connect implements Authentication, JsonSerializable
     private $client_id;
 
     /**
+     * Classic non-standard authentication and access token for integration with generic SDKs.
+     *
+     * @var string (35)
+     */
+    private $client_secret;
+
+    /**
      * Client Redirect URI.
      *
      * @var string (255)
@@ -131,9 +150,11 @@ class Connect implements Authentication, JsonSerializable
     private $scope = [];
 
     /**
-     * @var Requests_Session HTTP session configured to use the moip API.
+     * Validation code to retrieve the access token.
+     *
+     * @var string (32)
      */
-    private $session;
+    private $code;
 
     /**
      * Connect constructor.
@@ -155,15 +176,16 @@ class Connect implements Authentication, JsonSerializable
         }
 
         $this->setEndpoint($endpoint);
-        $this->createNewSession();
     }
 
     /**
      * Creates a new Request_Session with all the default values.
      * A Session is created at construction.
      *
-     * @param float $timeout         How long should we wait for a response?(seconds with a millisecond precision, default: 30, example: 0.01).
+     * @param float $timeout How long should we wait for a response?(seconds with a millisecond precision, default: 30, example: 0.01).
      * @param float $connect_timeout How long should we wait while trying to connect? (seconds with a millisecond precision, default: 10, example: 0.01)
+     *
+     * @return \Requests_Session
      */
     public function createNewSession($timeout = 30.0, $connect_timeout = 30.0)
     {
@@ -179,7 +201,8 @@ class Connect implements Authentication, JsonSerializable
         $sess->options['timeout'] = $timeout;
         $sess->options['connect_timeout'] = $connect_timeout;
         $sess->options['useragent'] = $user_agent;
-        $this->session = $sess;
+
+        return $sess;
     }
 
     /**
@@ -202,6 +225,34 @@ class Connect implements Authentication, JsonSerializable
         ];
 
         return $this->endpoint.self::OAUTH_AUTHORIZE.'?'.http_build_query($query_string);;
+    }
+
+    public function authorize()
+    {
+        $path = $this->endpoint . self::OAUTH_TOKEN;
+        $headers = ['Content-Type' => 'application/x-www-form-urlencoded'];
+        $body = [
+            'client_id' => $this->client_id,
+            'client_secret' => $this->client_secret,
+            'grant_type' => self::GRANT_TYPE,
+            'code' => $this->code,
+            'redirect_uri' => $this->redirect_uri
+        ];
+
+        try {
+            $http_response = $this->createNewSession()->request($path, $headers, $body, 'POST');
+        } catch (Requests_Exception $e) {
+            throw new UnexpectedException($e);
+        }
+
+        if ($http_response->status_code >= 200 && $http_response->status_code < 300) {
+            return json_decode($http_response->body);
+        } elseif ($http_response->status_code >= 400 && $http_response->status_code <= 499) {
+            $errors = Error::parseErrors($http_response->body);
+            throw new ValidationException($http_response->status_code, $errors);
+        }
+
+        throw new UnexpectedException();
     }
 
     /**
@@ -483,5 +534,45 @@ class Connect implements Authentication, JsonSerializable
         $this->endpoint = $endpoint;
 
         return $this;
+    }
+
+    /**
+     * @param mixed $client_secret
+     *
+     * @return \Moip\Auth\Connect
+     */
+    public function setClientSecret($client_secret)
+    {
+        $this->client_secret = $client_secret;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getClientSecret()
+    {
+        return $this->client_secret;
+    }
+
+    /**
+     * @param string $code
+     *
+     * @return \Moip\Auth\Connect
+     */
+    public function setCode(string $code)
+    {
+        $this->code = $code;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCode()
+    {
+        return $this->code;
     }
 }
