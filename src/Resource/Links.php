@@ -1,6 +1,6 @@
 <?php
 
-namespace Moip;
+namespace Moip\Resource;
 
 /**
  * Class that represents the HATEOAS structure of the API resources.

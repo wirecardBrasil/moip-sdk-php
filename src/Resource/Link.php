@@ -1,6 +1,6 @@
 <?php
 
-namespace Moip;
+namespace Moip\Resource;
 
 /**
  * Class Link represents a single link from the resource HATEOAS structure.
