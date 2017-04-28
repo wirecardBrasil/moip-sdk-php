@@ -273,6 +273,7 @@ class Connect implements Authentication, JsonSerializable
         if ($scope === false) {
             $this->scope = [];
         } else {
+            $this->scope = [];
             $this->setReceiveFunds(true)
                 ->setRefund(true)
                 ->setManageAccountInfo(true)
