@@ -116,21 +116,21 @@ class Connect implements Authentication, JsonSerializable
     /**
      * Unique identifier of the application that will be carried out the request.
      *
-     * @var string (16)
+     * @var string
      */
     private $client_id;
 
     /**
      * Classic non-standard authentication and access token for integration with generic SDKs.
      *
-     * @var string (35)
+     * @var string
      */
     private $client_secret;
 
     /**
      * Client Redirect URI.
      *
-     * @var string (255)
+     * @var string
      */
     private $redirect_uri;
 
@@ -151,7 +151,7 @@ class Connect implements Authentication, JsonSerializable
     /**
      * Validation code to retrieve the access token.
      *
-     * @var string (32)
+     * @var string
      */
     private $code;
 
