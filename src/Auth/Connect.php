@@ -171,7 +171,7 @@ class Connect implements Authentication, JsonSerializable
         if (is_bool($scope)) {
             $this->setScodeAll($scope);
         } else {
-            $this->setScope($endpoint);
+            $this->setScope($scope);
         }
 
         $this->setEndpoint($endpoint);
