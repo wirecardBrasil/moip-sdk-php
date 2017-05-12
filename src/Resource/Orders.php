@@ -87,6 +87,7 @@ class Orders extends MoipResource
         $receiver->moipAccount = new stdClass();
         $receiver->moipAccount->id = $moipAccount;
         if (!empty($fixed)) {
+        	$receiver->amount = new stdClass();
             $receiver->amount->fixed = $fixed;
         }
         $receiver->type = $type;
