@@ -555,13 +555,12 @@ class Orders extends MoipResource
      *
      * @return $this
      */
-    public function setUrlSuccess($urlSuccess = "")
+    public function setUrlSuccess($urlSuccess = '')
     {
         $this->data->checkoutPreferences->redirectUrls->urlSuccess = $urlSuccess;
 
         return $this;
     }
-
 
     /**
      * Set URL for redirection in case of failure.
@@ -570,7 +569,7 @@ class Orders extends MoipResource
      *
      * @return $this
      */
-    public function setUrlFailure($urlFailure = "")
+    public function setUrlFailure($urlFailure = '')
     {
         $this->data->checkoutPreferences->redirectUrls->urlFailure = $urlFailure;
 
