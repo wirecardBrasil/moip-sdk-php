@@ -393,6 +393,20 @@ class Payment extends MoipResource
     }
 
     /**
+     * Set statement descriptor.
+     *
+     * @param string $statementDescriptor
+     *
+     * @return $this
+     */
+    public function setStatementDescriptor($statementDescriptor)
+    {
+        $this->data->statementDescriptor = $statementDescriptor;
+
+        return $this;
+    }
+
+    /**
      * Set payment means made available by banks.
      *
      * @param string           $bankNumber     Bank number. Possible values: 001, 237, 341, 041.
