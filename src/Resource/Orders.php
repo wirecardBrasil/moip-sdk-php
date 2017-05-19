@@ -109,6 +109,8 @@ class Orders extends MoipResource
         $this->data->amount->subtotals = new stdClass();
         $this->data->items = [];
         $this->data->receivers = [];
+        $this->data->checkoutPreferences = new stdClass();
+        $this->data->checkoutPreferences->redirectUrls = new stdClass();
     }
 
     /**
@@ -423,6 +425,16 @@ class Orders extends MoipResource
     }
 
     /**
+     * Get checkout preferences of the order.
+     *
+     * @return string
+     */
+    public function getCheckoutPreferences()
+    {
+        return $this->getIfSet('checkoutPreferences');
+    }
+
+    /**
      * Structure of payment.
      *
      * @return \Moip\Resource\Payment
@@ -533,6 +545,34 @@ class Orders extends MoipResource
     public function setShippingAmount($value)
     {
         $this->data->amount->subtotals->shipping = (float) $value;
+
+        return $this;
+    }
+
+    /**
+     * Set URL for redirection in case of success.
+     *
+     * @param string $urlSuccess UrlSuccess.
+     *
+     * @return $this
+     */
+    public function setUrlSuccess($urlSuccess = '')
+    {
+        $this->data->checkoutPreferences->redirectUrls->urlSuccess = $urlSuccess;
+
+        return $this;
+    }
+
+    /**
+     * Set URL for redirection in case of failure.
+     *
+     * @param string $urlFailure UrlFailure.
+     *
+     * @return $this
+     */
+    public function setUrlFailure($urlFailure = '')
+    {
+        $this->data->checkoutPreferences->redirectUrls->urlFailure = $urlFailure;
 
         return $this;
     }

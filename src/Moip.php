@@ -2,6 +2,7 @@
 
 namespace Moip;
 
+use Moip\Contracts\Authentication;
 use Moip\Resource\Account;
 use Moip\Resource\Customer;
 use Moip\Resource\Entry;
@@ -59,10 +60,10 @@ class Moip
     /**
      * Create a new aurhentication with the endpoint.
      *
-     * @param \Moip\MoipAuthentication $moipAuthentication
-     * @param string                   $endpoint
+     * @param \Moip\Auth\MoipAuthentication $moipAuthentication
+     * @param string                        $endpoint
      */
-    public function __construct(MoipAuthentication $moipAuthentication, $endpoint = self::ENDPOINT_PRODUCTION)
+    public function __construct(Authentication $moipAuthentication, $endpoint = self::ENDPOINT_PRODUCTION)
     {
         $this->moipAuthentication = $moipAuthentication;
         $this->endpoint = $endpoint;
