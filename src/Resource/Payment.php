@@ -140,7 +140,7 @@ class Payment extends MoipResource
     }
 
     /**
-     * Get an payment in MoIP.
+     * Get an payment and multipayment in MoIP.
      *
      * @param string $id_moip Id MoIP payment
      *
@@ -148,7 +148,11 @@ class Payment extends MoipResource
      */
     public function get($id_moip)
     {
-        return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, self::PATH, $id_moip));
+        if ($this->order !== null) {
+            return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, self::PATH, $id_moip));
+        } else {
+            return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, self::MULTI_PAYMENTS_PATH, $id_moip));
+        }
     }
 
     /**
