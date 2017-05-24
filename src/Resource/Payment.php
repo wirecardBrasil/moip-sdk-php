@@ -150,7 +150,8 @@ class Payment extends MoipResource
     {
         if ($this->order !== null) {
             return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, self::PATH, $id_moip));
-        }return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, self::MULTI_PAYMENTS_PATH, $id_moip));
+        }
+        return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, self::MULTI_PAYMENTS_PATH, $id_moip));
     }
 
     /**
