@@ -478,6 +478,23 @@ class Orders extends MoipResource
 
         return $this;
     }
+    
+    /**
+     * Set customer id associated with the order.
+     *
+     * @param string $id Customer's id.
+     *
+     * @return $this
+    */
+    public function setCustomerId($id)
+    {
+        if (!isset($this->data->customer)) {
+            $this->data->customer = new stdClass();
+        }
+        $this->data->customer->id = $id;
+
+        return $this;
+    }
 
     /**
      * Set discounted value of the item will be subtracted from the total value of the items.
