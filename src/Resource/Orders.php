@@ -141,8 +141,7 @@ class Orders extends MoipResource
         $this->orders->data->amount->subtotals = $response->amount->subtotals;
 
         $customer = new Customer($this->moip);
-        $customer->populate($response->customer);
-        $this->orders->data->customer = $customer;
+        $this->orders->data->customer = $customer->populate($response->customer);
 
         $this->orders->data->payments = $this->structure($response, Payment::PATH, Payment::class);
         $this->orders->data->refunds = $this->structure($response, Refund::PATH, Refund::class);
