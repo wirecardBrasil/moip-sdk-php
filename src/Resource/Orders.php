@@ -87,7 +87,7 @@ class Orders extends MoipResource
         $receiver->moipAccount = new stdClass();
         $receiver->moipAccount->id = $moipAccount;
         if (!empty($fixed)) {
-        	$receiver->amount = new stdClass();
+            $receiver->amount = new stdClass();
             $receiver->amount->fixed = $fixed;
         }
         $receiver->type = $type;
@@ -478,14 +478,14 @@ class Orders extends MoipResource
 
         return $this;
     }
-    
+
     /**
      * Set customer id associated with the order.
      *
      * @param string $id Customer's id.
      *
      * @return $this
-    */
+     */
     public function setCustomerId($id)
     {
         if (!isset($this->data->customer)) {
