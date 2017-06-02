@@ -10,10 +10,10 @@ class OrdersTest extends TestCase
     /**
      * Send http request.
      *
-     * @param Orders $order
+     * @param \Moip\Resource\Orders $order
      * @param string $body
      *
-     * @return Orders
+     * @return \Moip\Resource\Orders
      */
     private function executeOrder(Orders $order = null, $body = null)
     {
@@ -27,6 +27,15 @@ class OrdersTest extends TestCase
 
         return $order->create();
     }
+
+    /**
+     * @const string
+     */
+    public function testAssertConstPath()
+    {
+        $this->assertEquals('orders', Orders::PATH);
+    }
+
 
     /**
      * MoipTest creating an order.
