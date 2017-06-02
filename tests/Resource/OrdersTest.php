@@ -46,6 +46,11 @@ class OrdersTest extends TestCase
         $this->assertEquals('PRIMARY', Orders::RECEIVER_TYPE_PRIMARY);
     }
 
+    public function testAssertConstReceiverTypeSecpndary()
+    {
+        $this->assertEquals('SECONDARY', Orders::RECEIVER_TYPE_SECONDARY);
+    }
+
     /**
      * MoipTest creating an order.
      */
