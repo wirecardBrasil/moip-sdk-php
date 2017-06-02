@@ -36,6 +36,15 @@ class OrdersTest extends TestCase
         $this->assertEquals('orders', Orders::PATH);
     }
 
+    /**
+     * Defines what kind of payee as pripmary.
+     *
+     * @const string
+     */
+    public function testAssertConstReceiverTypePrimary()
+    {
+        $this->assertEquals('PRIMARY', Orders::RECEIVER_TYPE_PRIMARY);
+    }
 
     /**
      * MoipTest creating an order.
