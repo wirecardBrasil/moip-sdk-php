@@ -4,7 +4,6 @@ namespace Moip\Auth;
 
 use JsonSerializable;
 use Moip\Contracts\Authentication;
-use Moip\Exceptions\Error;
 use Moip\Exceptions\InvalidArgumentException;
 use Moip\Exceptions\UnexpectedException;
 use Moip\Exceptions\ValidationException;
@@ -252,8 +251,7 @@ class Connect implements Authentication, JsonSerializable
         if ($http_response->status_code >= 200 && $http_response->status_code < 300) {
             return json_decode($http_response->body);
         } elseif ($http_response->status_code >= 400 && $http_response->status_code <= 499) {
-            $errors = Error::parseErrors($http_response->body);
-            throw new ValidationException($http_response->status_code, $errors);
+            throw new ValidationException($http_response->status_code, $http_response->body);
         }
 
         throw new UnexpectedException();
