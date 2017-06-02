@@ -3,9 +3,9 @@
 namespace Moip\Tests\Resource;
 
 use Moip\Resource\Orders;
-use Moip\Tests\MoipTestCase;
+use Moip\Tests\TestCase;
 
-class OrdersTest extends MoipTestCase
+class OrdersTest extends TestCase
 {
     /**
      * Send http request.
@@ -29,7 +29,7 @@ class OrdersTest extends MoipTestCase
     }
 
     /**
-     * Test creating an order.
+     * MoipTest creating an order.
      */
     public function testCreateOrder()
     {
@@ -51,7 +51,7 @@ class OrdersTest extends MoipTestCase
     }
 
     /**
-     *Test if the total is correct.
+     *MoipTest if the total is correct.
      */
     public function testTotal()
     {
@@ -62,7 +62,7 @@ class OrdersTest extends MoipTestCase
     }
 
     /**
-     * Test if the total is equal to the expected total.
+     * MoipTest if the total is equal to the expected total.
      */
     public function testTotalConstant()
     {
