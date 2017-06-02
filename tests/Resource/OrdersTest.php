@@ -57,6 +57,16 @@ class OrdersTest extends TestCase
     }
 
     /**
+     * Currency used in the application.
+     *
+     * @const string
+     */
+    public function testAssertConstAmountCurrency()
+    {
+        $this->assertEquals('BRL', Orders::AMOUNT_CURRENCY);
+    }
+
+    /**
      * MoipTest creating an order.
      */
     public function testCreateOrder()
