@@ -46,6 +46,11 @@ class OrdersTest extends TestCase
         $this->assertEquals('PRIMARY', Orders::RECEIVER_TYPE_PRIMARY);
     }
 
+    /**
+     * Defines what kind of payee as secundary.
+     *
+     * @const string
+     */
     public function testAssertConstReceiverTypeSecpndary()
     {
         $this->assertEquals('SECONDARY', Orders::RECEIVER_TYPE_SECONDARY);
