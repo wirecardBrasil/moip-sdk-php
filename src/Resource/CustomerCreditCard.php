@@ -19,7 +19,14 @@ class CustomerCreditCard extends MoipResource
      *
      * @const
      */
-    const PATH = 'customers/%s/fundinginstruments';
+    const PATH_POST = 'customers/%s/fundinginstruments';
+
+    /**
+     * Delete a credit card
+     *
+     * @const
+     */
+    const PATH_DELETE = 'fundinginstruments/%s';
 
     /**
      * @const sting
@@ -32,6 +39,7 @@ class CustomerCreditCard extends MoipResource
     protected function initialize()
     {
         $this->data = new stdClass();
+        $this->data->method = self::METHOD_CREDIT_CARD;
         $this->data->creditCard = new stdClass();
         $this->data->creditCard->holder = new stdClass();
         $this->data->creditCard->holder->taxDocument = new stdClass();
@@ -50,20 +58,40 @@ class CustomerCreditCard extends MoipResource
         $funding = clone $this;
         $funding->data->method = self::METHOD_CREDIT_CARD;
         $funding->data->creditCard = new stdClass();
-        $funding->data->creditCard->expirationMonth;
-        $funding->data->creditCard->expirationYear;
-        $funding->data->creditCard->number;
-        $funding->data->creditCard->cvc;
-        $funding->data->creditCard->holder = new stdClass();
-        $funding->data->creditCard->holder->fullname;
-        $funding->data->creditCard->holder->birthdate;
-        $funding->data->creditCard->holder->taxDocument = new stdClass();
-        $funding->data->creditCard->holder->taxDocument->type;
-        $funding->data->creditCard->holder->taxDocument->number;
-        $funding->data->creditCard->holder->phone = new stdClass();
-        $funding->data->creditCard->holder->phone->countryCode;
-        $funding->data->creditCard->holder->phone->areaCode;
-        $funding->data->creditCard->holder->phone->number;
+        $funding->data->creditCard->id = $response->creditCard->id;
+        $funding->data->creditCard->brand = $response->creditCard->brand;
+        $funding->data->creditCard->first6 = $response->creditCard->first6;
+        $funding->data->creditCard->last4 = $response->creditCard->last4;
+        $funding->data->creditCard->store = $response->creditCard->store;
+        $funding->data->card = new stdClass();
+        $funding->data->card->brand = $response->card->brand;
+        $funding->data->card->store = $response->card->store;
+
+        return $funding;
+    }
+    
+    /**
+     * Create.
+     *
+     * @param $customer_id
+     *
+     * @return stdClass
+     */
+    public function create($customer_id)
+    {
+        return $this->createResource(sprintf('%s/%s', MoipResource::VERSION, sprintf(self::PATH_POST, $customer_id)));
+    }
+
+    /**
+     * Delete.
+     *
+     * @param $creditcard_id
+     *
+     * @return mixed
+     */
+    public function delete($creditcard_id)
+    {
+        return $this->deleteByPath(sprintf('%s/%s', MoipResource::VERSION, sprintf(self::PATH_DELETE, $creditcard_id)));
     }
 
     /**
@@ -173,9 +201,9 @@ class CustomerCreditCard extends MoipResource
     /**
      * Telefone do cliente.
      *
-     * @param string $country_code DDI (código internacional) do telefone. Valores possíveis: 55.
-     * @param $area_code Código de área do cliente. Limite de caracteres: (2).
-     * @param $number Número de telefone do cliente. Limite de caracteres: 9
+     * @param int $country_code DDI (código internacional) do telefone. Valores possíveis: 55.
+     * @param int $area_code Código de área do cliente. Limite de caracteres: (2).
+     * @param int $number Número de telefone do cliente. Limite de caracteres: 9
      *
      * @return $this
      */
