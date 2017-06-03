@@ -10,10 +10,10 @@ class OrdersTest extends TestCase
     /**
      * Send http request.
      *
-     * @param Orders $order
+     * @param \Moip\Resource\Orders $order
      * @param string $body
      *
-     * @return Orders
+     * @return \Moip\Resource\Orders
      */
     private function executeOrder(Orders $order = null, $body = null)
     {
@@ -26,6 +26,44 @@ class OrdersTest extends TestCase
         $this->mockHttpSession($body);
 
         return $order->create();
+    }
+
+    /**
+     * @const string
+     */
+    public function testAssertConstPath()
+    {
+        $this->assertEquals('orders', Orders::PATH);
+    }
+
+    /**
+     * Defines what kind of payee as pripmary.
+     *
+     * @const string
+     */
+    public function testAssertConstReceiverTypePrimary()
+    {
+        $this->assertEquals('PRIMARY', Orders::RECEIVER_TYPE_PRIMARY);
+    }
+
+    /**
+     * Defines what kind of payee as secundary.
+     *
+     * @const string
+     */
+    public function testAssertConstReceiverTypeSecpndary()
+    {
+        $this->assertEquals('SECONDARY', Orders::RECEIVER_TYPE_SECONDARY);
+    }
+
+    /**
+     * Currency used in the application.
+     *
+     * @const string
+     */
+    public function testAssertConstAmountCurrency()
+    {
+        $this->assertEquals('BRL', Orders::AMOUNT_CURRENCY);
     }
 
     /**

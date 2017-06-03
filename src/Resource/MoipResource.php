@@ -216,4 +216,16 @@ abstract class MoipResource implements JsonSerializable
 
         return $this->populate($response);
     }
+
+    /**
+     * Delete a new item in Moip.
+     *
+     * @param $path
+     *
+     * @return mixed
+     */
+    public function deleteByPath($path)
+    {
+        $reponse = $this->httpRequest($path, Requests::DELETE);
+    }
 }
