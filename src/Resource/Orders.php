@@ -279,7 +279,7 @@ class Orders extends MoipResource
      *
      * @return string
      */
-    public function getCurrenty()
+    public function getCurrency()
     {
         return $this->getIfSet('currency', $this->data->amount);
     }
