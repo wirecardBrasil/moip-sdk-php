@@ -58,7 +58,7 @@ class Customer extends MoipResource
      */
     public function creditCard()
     {
-        return New CustomerCreditCard($this->moip);
+        return new CustomerCreditCard($this->moip);
     }
 
     /**

@@ -9,8 +9,6 @@ use stdClass;
  *
  * Add a credit card.
  * Through this API you can add one or more credit cards to a Customer.
- *
- * @package Moip\Resource
  */
 class CustomerCreditCard extends MoipResource
 {
@@ -22,7 +20,7 @@ class CustomerCreditCard extends MoipResource
     const PATH_POST = 'customers/%s/fundinginstruments';
 
     /**
-     * Delete a credit card
+     * Delete a credit card.
      *
      * @const
      */
@@ -69,7 +67,7 @@ class CustomerCreditCard extends MoipResource
 
         return $funding;
     }
-    
+
     /**
      * Create.
      *
@@ -111,10 +109,10 @@ class CustomerCreditCard extends MoipResource
 
     /**
      * Ano de expiração do cartão.
-     * Necessário estar dentro do escopo PCI para enviar esse campo sem criptografia
+     * Necessário estar dentro do escopo PCI para enviar esse campo sem criptografia.
      *
      * @param int $expiration_year
-     * 
+     *
      * @return $this
      */
     public function setExpirationYear($expiration_year)
@@ -126,8 +124,8 @@ class CustomerCreditCard extends MoipResource
 
     /**
      * Número do cartão de crédito.
-     * Necessário estar dentro do escopo PCI para enviar esse campo sem criptografia
-     * 
+     * Necessário estar dentro do escopo PCI para enviar esse campo sem criptografia.
+     *
      * @param $number
      *
      * @return $this
@@ -144,19 +142,19 @@ class CustomerCreditCard extends MoipResource
      * Necessário estar dentro do escopo PCI para enviar esse campo sem criptografia.
      *
      * @param string $cvc
-     * 
+     *
      * @return $this
      */
     public function setCvc($cvc)
     {
         $this->data->creditCard->cvc = $cvc;
-        
+
         return $this;
     }
 
     /**
      * Nome do portador impresso no cartão.
-     * 
+     *
      * @param $fullname
      *
      * @return $this
@@ -169,7 +167,7 @@ class CustomerCreditCard extends MoipResource
     }
 
     /**
-     * Data de nascimento do cliente. date(AAAA-MM-DD),
+     * Data de nascimento do cliente. date(AAAA-MM-DD),.
      *
      * @param $birthdate
      *
@@ -185,7 +183,7 @@ class CustomerCreditCard extends MoipResource
     /**
      * Documento fiscal.
      *
-     * @param string $type Tipo do documento. Valores possíveis: CPF.
+     * @param string $type   Tipo do documento. Valores possíveis: CPF.
      * @param string $number Número do documento.
      *
      * @return $this
@@ -202,8 +200,8 @@ class CustomerCreditCard extends MoipResource
      * Telefone do cliente.
      *
      * @param int $country_code DDI (código internacional) do telefone. Valores possíveis: 55.
-     * @param int $area_code Código de área do cliente. Limite de caracteres: (2).
-     * @param int $number Número de telefone do cliente. Limite de caracteres: 9
+     * @param int $area_code    Código de área do cliente. Limite de caracteres: (2).
+     * @param int $number       Número de telefone do cliente. Limite de caracteres: 9
      *
      * @return $this
      */

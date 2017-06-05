@@ -11,7 +11,7 @@ class OrdersTest extends TestCase
      * Send http request.
      *
      * @param \Moip\Resource\Orders $order
-     * @param string $body
+     * @param string                $body
      *
      * @return \Moip\Resource\Orders
      */
