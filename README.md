@@ -58,12 +58,12 @@ Execute em seu shell:
 require 'vendor/autoload.php';
 
 use Moip\Moip;
-use Moip\MoipBasicAuth;
+use Moip\Auth\BasicAuth;
 
 $token = '01010101010101010101010101010101';
 $key = 'ABABABABABABABABABABABABABABABABABABABAB';
 
-$moip = new Moip(new MoipBasicAuth($token, $key), Moip::ENDPOINT_SANDBOX);
+$moip = new Moip(new BasicAuth($token, $key), Moip::ENDPOINT_SANDBOX);
 ```
 
 ## Criando um comprador
