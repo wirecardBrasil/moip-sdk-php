@@ -10,26 +10,11 @@ use Requests_Hooks;
  */
 class BasicAuth implements Authentication
 {
-    /**
-     * Token.
-     *
-     * @var string
-     */
+
     private $token;
 
-    /**
-     * Access key.
-     *
-     * @var string
-     */
     private $key;
 
-    /**
-     * Create a new MoipBasic instance.
-     *
-     * @param string $token
-     * @param string $key
-     */
     public function __construct($token, $key)
     {
         $this->token = $token;
