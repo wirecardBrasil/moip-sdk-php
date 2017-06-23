@@ -3,6 +3,7 @@
 namespace Moip\Tests;
 
 use Moip\Auth\BasicAuth;
+use Moip\Auth\OAuth;
 use Moip\Moip;
 use Moip\Resource\Customer;
 use Moip\Resource\Orders;
@@ -148,7 +149,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
      */
     public function createAccount()
     {
-        $moip = new Moip(new MoipOAuth('1tldio91gi74r34zv30d4saz8yuuws5'), Moip::ENDPOINT_SANDBOX);
+        $moip = new Moip(new OAuth('1tldio91gi74r34zv30d4saz8yuuws5'), Moip::ENDPOINT_SANDBOX);
 
         $uniqEmail = 'fulano'.uniqid('MPA-').'@detal123.com.br';
 
