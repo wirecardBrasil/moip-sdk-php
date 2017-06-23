@@ -10,9 +10,18 @@ use Requests_Hooks;
  */
 class BasicAuth implements Authentication
 {
-
+    /**
+     * Token.
+     *
+     * @var string
+     */
     private $token;
 
+    /**
+    * Access key.
+    *
+    * @var string
+    */
     private $key;
 
     public function __construct($token, $key)
