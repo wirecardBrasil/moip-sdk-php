@@ -252,6 +252,7 @@ class Account extends MoipResource
         $account->data->person->address = $this->getIfSet('address', $person);
         $account->data->_links = $this->getIfSet('_links', $response);
         $account->data->type = $this->getIfSet('type', $response);
+        $account->data->id = $this->getIfSet('id', $response);
 
         return $account;
     }

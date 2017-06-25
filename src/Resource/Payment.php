@@ -249,6 +249,16 @@ class Payment extends MoipResource
     }
 
     /**
+     * Get href to Boleto
+     **
+     * @return stdClass
+     */
+    public function getHrefBoleto()
+    {
+        return $this->getIfSet('_links')->payBoleto->redirectHref;
+    }
+
+    /**
      * Set means of payment.
      *
      * @param \stdClass $fundingInstrument
