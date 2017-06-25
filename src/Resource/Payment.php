@@ -250,7 +250,8 @@ class Payment extends MoipResource
 
     /**
      * Get href to Boleto
-     **
+     **.
+     *
      * @return stdClass
      */
     public function getHrefBoleto()
