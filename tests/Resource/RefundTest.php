@@ -7,7 +7,7 @@ use Moip\Tests\TestCase;
 class RefundTest extends TestCase
 {
 
-    public function testRefundBankAccountFull() 
+    public function testRefundBankAccountFull()
     {
         $this->mockHttpSession($this->body_order);
         $order = $this->createOrder()->create();
@@ -19,7 +19,7 @@ class RefundTest extends TestCase
         $this->assertNotEmpty($refund->getId());
     }
     
-    public function testRefundBankAccountPartial() 
+    public function testRefundBankAccountPartial()
     {
         $this->mockHttpSession($this->body_order);
         $order = $this->createOrder()->create();
