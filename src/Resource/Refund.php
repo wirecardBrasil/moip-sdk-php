@@ -160,7 +160,7 @@ class Refund extends MoipResource
     {
         $data = new stdClass();
         $data->refundingInstrument = new stdClass(); 
-        $data->refundingInstrument->method= self::METHOD_BANK_ACCOUNT;
+        $data->refundingInstrument->method = self::METHOD_BANK_ACCOUNT;
         $data->refundingInstrument->bankAccount = new stdClass();
         $data->refundingInstrument->bankAccount->type = $type;
         $data->refundingInstrument->bankAccount->bankNumber = $bankNumber;
