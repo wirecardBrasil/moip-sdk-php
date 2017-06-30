@@ -131,6 +131,10 @@ try {
     printf($e->__toString());
 }
 ```
+## Mais exemplos?
+
+Veja mais exemplos na [Wiki](https://github.com/moip/moip-sdk-php/wiki)
+
 ## Documentação
 
 [Documentação oficial](https://documentao-moip.readme.io/v2.0/reference)
