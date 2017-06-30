@@ -83,7 +83,7 @@ class Orders extends MoipResource
      *
      * @return $this
      */
-    public function addReceiver($moipAccount, $type, $fixed = NULL, $percentual = NULL, $feePayor = false)
+    public function addReceiver($moipAccount, $type, $fixed = null, $percentual = null, $feePayor = false)
     {
         $receiver = new stdClass();
         $receiver->moipAccount = new stdClass();
@@ -599,13 +599,13 @@ class Orders extends MoipResource
 
         return $this;
     }
-    
+
     /**
-     * Set installment settings for checkout preferences
+     * Set installment settings for checkout preferences.
      *
      * @param array $quantity
-     * @param int $discountValue
-     * @param int $additionalValue
+     * @param int   $discountValue
+     * @param int   $additionalValue
      *
      * @return $this
      */
