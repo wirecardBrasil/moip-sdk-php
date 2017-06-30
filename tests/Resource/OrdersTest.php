@@ -111,4 +111,54 @@ class OrdersTest extends TestCase
         $this->assertEquals($expected, $total_calculated);
         $this->assertEquals($expected, $order->getAmountTotal());
     }
+
+    /**
+     * MoipTest if order is created with installment preferences.
+     */
+    public function testCreateOrderWithInstallmentPreferences()
+    {
+        $quantity = [1, 6];
+        $discount = 0;
+        $additional = 100;
+        $order = $this->createOrder()->setInstallmentCheckoutPreferences($quantity, $discount, $additional);
+        $returned_order = $this->executeOrder($order);
+
+        $this->assertNotEmpty($returned_order->getId());
+        $this->assertEquals([1, 6], $returned_order->getCheckoutPreferences()->installments->quantity);
+    }
+
+    public function testCreateOrderAddingReceiverNoAmount()
+    {
+        $order = $this->createOrder()->addReceiver('MPA-7ED9D2D0BC81', 'PRIMARY');
+        $returned_order = $this->executeOrder($order);
+        $this->assertNotEmpty($returned_order->getId());
+        $receivers = $returned_order->getReceiverIterator();
+        $this->assertEquals('MPA-7ED9D2D0BC81', $receivers[0]->moipAccount->id);
+    }
+
+    public function testCreateOrderAddingReceiverAmountFixed()
+    {
+        $order = $this->createOrder()->addReceiver('MPA-7ED9D2D0BC81', 'PRIMARY', 30000);
+        $receivers = $order->getReceiverIterator();
+        $this->assertEquals(30000, $receivers[0]->amount->fixed);
+    }
+
+    public function testCreateOrderAddingReceiverAmountPercentual()
+    {
+        $order = $this->createOrder()->addReceiver('MPA-7ED9D2D0BC81', 'PRIMARY', null, 40);
+        $receivers = $order->getReceiverIterator();
+        $this->assertEquals(40, $receivers[0]->amount->percentual);
+    }
+
+    public function testCreateOrderAddingReceiverFeePayor()
+    {
+        $order = $this->createOrder()->addReceiver('MPA-7ED9D2D0BC81', 'PRIMARY', null, 40, true);
+        $receivers = $order->getReceiverIterator();
+        $this->assertEquals(40, $receivers[0]->amount->percentual);
+        $this->assertTrue($receivers[0]->feePayor);
+        $order2 = $this->createOrder()->addReceiver('MPA-7ED9D2D0BC81', 'PRIMARY', 30000, null, true);
+        $receivers2 = $order2->getReceiverIterator();
+        $this->assertEquals(30000, $receivers2[0]->amount->fixed);
+        $this->assertTrue($receivers2[0]->feePayor);
+    }
 }

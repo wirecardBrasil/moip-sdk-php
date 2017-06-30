@@ -78,10 +78,12 @@ class Orders extends MoipResource
      * @param string $moipAccount Id MoIP MoIP account that will receive payment values.
      * @param string $type        Define qual o tipo de recebedor do pagamento, valores possíveis: PRIMARY, SECONDARY.
      * @param int    $fixed       Value that the receiver will receive.
+     * @param int    $percentual  Percentual value that the receiver will receive. Possible values: 0 - 100
+     * @param bool   $feePayor    Flag to know if receiver is the payer of Moip tax.
      *
      * @return $this
      */
-    public function addReceiver($moipAccount, $type, $fixed)
+    public function addReceiver($moipAccount, $type, $fixed = null, $percentual = null, $feePayor = false)
     {
         $receiver = new stdClass();
         $receiver->moipAccount = new stdClass();
@@ -90,6 +92,11 @@ class Orders extends MoipResource
             $receiver->amount = new stdClass();
             $receiver->amount->fixed = $fixed;
         }
+        if (!empty($percentual)) {
+            $receiver->amount = new stdClass();
+            $receiver->amount->percentual = $percentual;
+        }
+        $receiver->feePayor = $feePayor;
         $receiver->type = $type;
 
         $this->data->receivers[] = $receiver;
@@ -589,6 +596,25 @@ class Orders extends MoipResource
     public function setUrlFailure($urlFailure = '')
     {
         $this->data->checkoutPreferences->redirectUrls->urlFailure = $urlFailure;
+
+        return $this;
+    }
+
+    /**
+     * Set installment settings for checkout preferences.
+     *
+     * @param array $quantity
+     * @param int   $discountValue
+     * @param int   $additionalValue
+     *
+     * @return $this
+     */
+    public function setInstallmentCheckoutPreferences($quantity, $discountValue = 0, $additionalValue = 0)
+    {
+        $this->data->checkoutPreferences->installments = new stdClass();
+        $this->data->checkoutPreferences->installments->quantity = $quantity;
+        $this->data->checkoutPreferences->installments->discount = $discountValue;
+        $this->data->checkoutPreferences->installments->addition = $additionalValue;
 
         return $this;
     }
