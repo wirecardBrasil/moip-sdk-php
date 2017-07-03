@@ -19,6 +19,11 @@ class Payment extends MoipResource
      * @const string
      */
     const MULTI_PAYMENTS_PATH = 'multipayments';
+    
+    /**
+     * @const string
+     */
+    const SIMULATOR_PATH = 'simulador';
 
     /**
      * Payment means.
@@ -258,6 +263,16 @@ class Payment extends MoipResource
     {
         return $this->getIfSet('_links')->payBoleto->redirectHref;
     }
+    
+    /**
+     * Returns payment amount.
+     *
+     * @return stdClass
+     */
+    public function getAmount()
+    {
+        return $this->data->amount;
+    }
 
     /**
      * Set means of payment.
@@ -333,14 +348,16 @@ class Payment extends MoipResource
      *
      * @param string                  $hash   Credit card hash encripted using Moip.js
      * @param \Moip\Resource\Customer $holder
+     * @param bool                    $store  Flag to know if credit card should be saved.
      *
      * @return $this
      */
-    public function setCreditCardHash($hash, Customer $holder)
+    public function setCreditCardHash($hash, Customer $holder, $store = true)
     {
         $this->data->fundingInstrument->method = self::METHOD_CREDIT_CARD;
         $this->data->fundingInstrument->creditCard = new stdClass();
         $this->data->fundingInstrument->creditCard->hash = $hash;
+        $this->data->fundingInstrument->creditCard->store = $store;
         $this->setCreditCardHolder($holder);
 
         return $this;
@@ -356,10 +373,11 @@ class Payment extends MoipResource
      * @param string                  $number          Card number.
      * @param int                     $cvc             Card Security Code.
      * @param \Moip\Resource\Customer $holder
+     * @param bool                    $store           Flag to know if credit card should be saved.
      *
      * @return $this
      */
-    public function setCreditCard($expirationMonth, $expirationYear, $number, $cvc, Customer $holder)
+    public function setCreditCard($expirationMonth, $expirationYear, $number, $cvc, Customer $holder, $store = true)
     {
         $this->data->fundingInstrument->method = self::METHOD_CREDIT_CARD;
         $this->data->fundingInstrument->creditCard = new stdClass();
@@ -367,6 +385,7 @@ class Payment extends MoipResource
         $this->data->fundingInstrument->creditCard->expirationYear = $expirationYear;
         $this->data->fundingInstrument->creditCard->number = $number;
         $this->data->fundingInstrument->creditCard->cvc = $cvc;
+        $this->data->fundingInstrument->creditCard->store = $store;
         $this->setCreditCardHolder($holder);
 
         return $this;
@@ -522,5 +541,25 @@ class Payment extends MoipResource
         $response = $this->httpRequest($path, Requests::POST, $this);
 
         return $this->populate($response);
+    }
+    
+    /**
+     * Authorize a payment (Available only in sandbox to credit card payment with status IN_ANALYSIS and billet payment with status WAITING)
+     *
+     * @return bool
+     */
+    public function authorize($amount = null)
+    {
+        if (is_null($amount)) {
+            $amount = $this->getAmount()->total;
+        }
+        $path = sprintf('/%s/%s?payment_id=%s&amount=%s', self::SIMULATOR_PATH, 'authorize', $this->getId(), $amount);
+        $response = $this->httpRequest($path, Requests::GET);
+
+        if (empty($response)) {
+            return true;
+        }
+
+        return false;
     }
 }
