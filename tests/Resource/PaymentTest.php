@@ -47,4 +47,9 @@ class PaymentTest extends TestCase
         $this->assertFalse($payment->getFundingInstrument()->creditCard->store);
         $this->assertNotEmpty($payment->getId());
     }
+    
+    public function shouldCreateEscrowPayment() 
+    {
+        
+    }
 }

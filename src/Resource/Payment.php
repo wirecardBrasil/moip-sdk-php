@@ -502,6 +502,18 @@ class Payment extends MoipResource
 
         return $this;
     }
+    
+    /**
+     * Set escrow to a payment
+     *
+     * @return $this
+     */
+    public function setEscrow($description = '') {
+        $this->data->escrow = new stdClass();
+        $this->data->escrow->description = $description;
+        
+        return $this;
+    }
 
     /**
      * Capture a pre-authorized amount on a credit card payment.
