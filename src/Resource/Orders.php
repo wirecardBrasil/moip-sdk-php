@@ -612,12 +612,12 @@ class Orders extends MoipResource
      */
     public function addInstallmentCheckoutPreferences($quantity, $discountValue = 0, $additionalValue = 0)
     {
-        $installmentCheckoutPreferences = new stdClass();
-        $installmentCheckoutPreferences->quantity = $quantity;
-        $installmentCheckoutPreferences->discount = $discountValue;
-        $installmentCheckoutPreferences->addition = $additionalValue;
+        $installmentPreferences = new stdClass();
+        $installmentPreferences->quantity = $quantity;
+        $installmentPreferences->discount = $discountValue;
+        $installmentPreferences->addition = $additionalValue;
         
-        $this->data->checkoutPreferences->installments[] = $installmentCheckoutPreferences;
+        $this->data->checkoutPreferences->installments[] = $installmentPreferences;
 
         return $this;
     }
