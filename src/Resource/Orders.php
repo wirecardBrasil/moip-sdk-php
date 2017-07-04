@@ -616,7 +616,7 @@ class Orders extends MoipResource
         $installmentPreferences->quantity = $quantity;
         $installmentPreferences->discount = $discountValue;
         $installmentPreferences->addition = $additionalValue;
-        
+
         $this->data->checkoutPreferences->installments[] = $installmentPreferences;
 
         return $this;
