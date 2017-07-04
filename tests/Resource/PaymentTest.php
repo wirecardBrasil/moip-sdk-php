@@ -37,4 +37,14 @@ class PaymentTest extends TestCase
             'http://dev.moip.com.br/images/logo-header-moip.png')->execute();
         $this->assertNotEmpty($payment->getFundingInstrument()->boleto);
     }
+    
+    public function testCreditCardPCIStore() 
+    {
+        $this->mockHttpSession($this->body_order);
+        $order = $this->createOrder()->create();
+        $cc = '5555666677778884';
+        $payment = $order->payments()->setCreditCard(5, 2018, $cc, 123, $this->createCustomer(), false)->execute();
+        $this->assertFalse($payment->getFundingInstrument()->creditCard->store);
+        $this->assertNotEmpty($payment->getId());
+    }
 }
