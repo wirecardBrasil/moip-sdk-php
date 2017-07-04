@@ -19,7 +19,7 @@ class Payment extends MoipResource
      * @const string
      */
     const MULTI_PAYMENTS_PATH = 'multipayments';
-    
+
     /**
      * @const string
      */
@@ -263,7 +263,7 @@ class Payment extends MoipResource
     {
         return $this->getIfSet('_links')->payBoleto->redirectHref;
     }
-    
+
     /**
      * Returns payment amount.
      *
@@ -542,9 +542,9 @@ class Payment extends MoipResource
 
         return $this->populate($response);
     }
-    
+
     /**
-     * Authorize a payment (Available only in sandbox to credit card payment with status IN_ANALYSIS and billet payment with status WAITING)
+     * Authorize a payment (Available only in sandbox to credit card payment with status IN_ANALYSIS and billet payment with status WAITING).
      *
      * @return bool
      */
