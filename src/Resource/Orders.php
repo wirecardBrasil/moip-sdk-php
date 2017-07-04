@@ -118,6 +118,7 @@ class Orders extends MoipResource
         $this->data->receivers = [];
         $this->data->checkoutPreferences = new stdClass();
         $this->data->checkoutPreferences->redirectUrls = new stdClass();
+        $this->data->checkoutPreferences->installments = [];
     }
 
     /**
@@ -609,12 +610,14 @@ class Orders extends MoipResource
      *
      * @return $this
      */
-    public function setInstallmentCheckoutPreferences($quantity, $discountValue = 0, $additionalValue = 0)
+    public function addInstallmentCheckoutPreferences($quantity, $discountValue = 0, $additionalValue = 0)
     {
-        $this->data->checkoutPreferences->installments = new stdClass();
-        $this->data->checkoutPreferences->installments->quantity = $quantity;
-        $this->data->checkoutPreferences->installments->discount = $discountValue;
-        $this->data->checkoutPreferences->installments->addition = $additionalValue;
+        $installmentPreferences = new stdClass();
+        $installmentPreferences->quantity = $quantity;
+        $installmentPreferences->discount = $discountValue;
+        $installmentPreferences->addition = $additionalValue;
+
+        $this->data->checkoutPreferences->installments[] = $installmentPreferences;
 
         return $this;
     }

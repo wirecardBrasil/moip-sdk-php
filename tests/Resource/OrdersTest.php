@@ -120,19 +120,16 @@ class OrdersTest extends TestCase
         $quantity = [1, 6];
         $discount = 0;
         $additional = 100;
-        $order = $this->createOrder()->setInstallmentCheckoutPreferences($quantity, $discount, $additional);
+        $order = $this->createOrder()->addInstallmentCheckoutPreferences($quantity, $discount, $additional);
         $returned_order = $this->executeOrder($order);
-
         $this->assertNotEmpty($returned_order->getId());
-        $this->assertEquals([1, 6], $returned_order->getCheckoutPreferences()->installments->quantity);
+        $this->assertEquals([1, 6], $returned_order->getCheckoutPreferences()->installments[0]->quantity);
     }
 
     public function testCreateOrderAddingReceiverNoAmount()
     {
         $order = $this->createOrder()->addReceiver('MPA-7ED9D2D0BC81', 'PRIMARY');
-        $returned_order = $this->executeOrder($order);
-        $this->assertNotEmpty($returned_order->getId());
-        $receivers = $returned_order->getReceiverIterator();
+        $receivers = $order->getReceiverIterator();
         $this->assertEquals('MPA-7ED9D2D0BC81', $receivers[0]->moipAccount->id);
     }
 
