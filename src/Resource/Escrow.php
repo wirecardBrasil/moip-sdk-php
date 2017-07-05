@@ -1,17 +1,11 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 namespace Moip\Resource;
 
+use stdClass;
+
 /**
- * Description of Escrow
- *
- * @author caiogaspar
+ * Class Escrow.
  */
 class Escrow extends MoipResource {
     
@@ -26,12 +20,80 @@ class Escrow extends MoipResource {
     protected function initialize()
     {
         $this->data = new stdClass();
-        $this->data->installmentCount = 1;
-        $this->data->fundingInstrument = new stdClass();
     }
     
     /**
-     * Mount payment structure.
+     * Get id MoIP payment.
+     *
+     *
+     * @return \Moip\Resource\Escrow
+     */
+    public function getId()
+    {
+        return $this->getIfSet('id');
+    }
+    
+    /**
+     * Get escrow status.
+     *
+     * @return string Escrow status. Possible values HOLD_PENDING, HELD, RELEASED
+     */
+    public function getStatus()
+    {
+        return $this->getIfSet('status');
+    }
+
+    /**
+     * get creation time.
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->data->createdAt;
+    }
+
+    /**
+     * Returns when the last update occurred.
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->data->updatedAt;
+    }
+    
+    /**
+     * Set escrow description.
+     *
+     * @param string $description
+     *
+     * @return $this
+     */
+    public function setDescription($description)
+    {
+        $this->data->description = $description;
+
+        return $this;
+    }
+    
+    /**
+     * Release a escrow payment
+     *
+     * @return Payment
+     */
+    
+    public function release() 
+    {
+        $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, self::PATH, $this->getId(), 'release');
+
+        $response = $this->httpRequest($path, Requests::POST);
+
+        return $this->populate($response);
+    }
+    
+    /**
+     * Mount escrow structure.
      *
      * @param \stdClass $response
      *
@@ -43,14 +105,8 @@ class Escrow extends MoipResource {
 
         $escrow->data->id = $this->getIfSet('id', $response);
         $escrow->data->status = $this->getIfSet('status', $response);
-        $escrow->data->delayCapture = $this->getIfSet('delayCapture', $response);
-        $escrow->data->amount = new stdClass();
-        $escrow->data->amount->total = $this->getIfSet('total', $response->amount);
-        $escrow->data->amount->currency = $this->getIfSet('currency', $response->amount);
-        $escrow->data->installmentCount = $this->getIfSet('installmentCount', $response);
-        $escrow->data->fundingInstrument = $this->getIfSet('fundingInstrument', $response);
-        $escrow->data->fees = $this->getIfSet('fees', $response);
-        $escrow->data->refunds = $this->getIfSet('refunds', $response);
+        $escrow->data->description = $this->getIfSet('description', $response);
+        $escrow->data->amount = $this->getIfSet('amount', $response);
         $escrow->data->_links = $this->getIfSet('_links', $response);
         $escrow->data->createdAt = $this->getIfSetDateTime('createdAt', $response);
         $escrow->data->updatedAt = $this->getIfSetDateTime('updatedAt', $response);

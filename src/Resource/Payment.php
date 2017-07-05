@@ -273,6 +273,11 @@ class Payment extends MoipResource
     {
         return $this->data->amount;
     }
+    
+    public function getEscrow()
+    {
+        return $this->data->escrow;
+    }
 
     /**
      * Set means of payment.
@@ -506,12 +511,14 @@ class Payment extends MoipResource
     /**
      * Set escrow to a payment
      *
+     * @param \Moip\Resource\Escrow $escrow
+     * 
      * @return $this
      */
-    public function setEscrow($description = '') {
-        $this->data->escrow = new stdClass();
-        $this->data->escrow->description = $description;
-        
+    public function setEscrow(Escrow $escrow) 
+    {
+        $this->data->escrow = $escrow;
+
         return $this;
     }
 
