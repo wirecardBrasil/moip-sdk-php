@@ -3,6 +3,7 @@
 namespace Moip\Resource;
 
 use stdClass;
+use Requests;
 
 /**
  * Class Escrow.
@@ -23,7 +24,20 @@ class Escrow extends MoipResource {
     }
     
     /**
-     * Get id MoIP payment.
+     * Set id MoIP escrow.
+     *
+     *
+     * @return \Moip\Resource\Escrow
+     */
+    public function setId($id)
+    {
+        $this->data->id = $id;
+
+        return $this;
+    }
+    
+    /**
+     * Get id MoIP escrow.
      *
      *
      * @return \Moip\Resource\Escrow

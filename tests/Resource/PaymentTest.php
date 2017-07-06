@@ -59,6 +59,6 @@ class PaymentTest extends TestCase
             ->setCreditCard(5, 2018, $cc, 123, $this->createCustomer(), false)
             ->setEscrow('teste de descricao')
             ->execute();
-        $this->assertEquals('teste de descricao', $payment->getEscrows()[0]->description);
+        $this->assertEquals('teste de descricao', $payment->getEscrow()->description);
     }
 }
