@@ -97,7 +97,7 @@ class Escrow extends MoipResource {
     {
         $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, self::PATH, $this->getId(), 'release');
 
-        $response = $this->httpRequest($path, Requests::POST);
+        $response = $this->httpRequest($path, Requests::POST, []);
 
         return $this->populate($response);
     }
