@@ -190,6 +190,7 @@ class Payment extends MoipResource
         $payment->data->amount->currency = $this->getIfSet('currency', $response->amount);
         $payment->data->installmentCount = $this->getIfSet('installmentCount', $response);
         $payment->data->fundingInstrument = $this->getIfSet('fundingInstrument', $response);
+        $payment->data->escrows = $this->getIfSet('escrows', $response);
         $payment->data->fees = $this->getIfSet('fees', $response);
         $payment->data->refunds = $this->getIfSet('refunds', $response);
         $payment->data->_links = $this->getIfSet('_links', $response);
@@ -274,9 +275,9 @@ class Payment extends MoipResource
         return $this->data->amount;
     }
     
-    public function getEscrow()
+    public function getEscrows()
     {
-        return $this->data->escrow;
+        return $this->data->escrows;
     }
 
     /**
@@ -511,13 +512,14 @@ class Payment extends MoipResource
     /**
      * Set escrow to a payment
      *
-     * @param \Moip\Resource\Escrow $escrow
+     * @param string $description
      * 
      * @return $this
      */
-    public function setEscrow(Escrow $escrow) 
+    public function setEscrow($description) 
     {
-        $this->data->escrow = $escrow;
+        $this->data->escrow = new stdClass();
+        $this->data->escrow->description = $description;
 
         return $this;
     }

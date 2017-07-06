@@ -64,17 +64,13 @@ class Escrow extends MoipResource {
     }
     
     /**
-     * Set escrow description.
+     * Get escrow description
      *
-     * @param string $description
-     *
-     * @return $this
+     * @return string Escrow description
      */
-    public function setDescription($description)
+    public function getDescription()
     {
-        $this->data->description = $description;
-
-        return $this;
+        return $this->data->description;
     }
     
     /**

@@ -3,7 +3,6 @@
 namespace Moip\Tests\Resource;
 
 use Moip\Tests\TestCase;
-use Moip\Resource\Escrow;
 
 class PaymentTest extends TestCase
 {
@@ -55,12 +54,11 @@ class PaymentTest extends TestCase
         $this->mockHttpSession($this->body_order);
         $order = $this->createOrder()->create();
         $cc = '5555666677778884';
-        $escrow = (new Escrow($this->moip))->setDescription('teste');
         $this->mockHttpSession($this->body_cc_pay_pci_escrow);
         $payment = $order->payments()
             ->setCreditCard(5, 2018, $cc, 123, $this->createCustomer(), false)
-            ->setEscrow($escrow)
+            ->setEscrow('teste de descricao')
             ->execute();
-        $this->assertNotEmpty($payment->getEscrow());
+        $this->assertEquals('teste de descricao', $payment->getEscrows()[0]->description);
     }
 }
