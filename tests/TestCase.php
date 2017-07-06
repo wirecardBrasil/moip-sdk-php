@@ -70,6 +70,11 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
     /**
      * @var string response from moip API.
      */
+    protected $body_release_escrow = '{"id":"ECW-H57H2GERO1WD","status":"RELEASED","description":"teste de descricao","amount":7300,"createdAt":"2017-07-06T10:57:33.000-03","updatedAt":"2017-07-06T10:57:33.000-03","_links":{"self":{"href":"https://sandbox.moip.com.br/v2/escrows/ECW-H57H2GERO1WD"},"order":{"href":"https://sandbox.moip.com.br/v2/orders/ORD-P7SAQDF3ZRK4","title":"ORD-P7SAQDF3ZRK4"},"payment":{"href":"https://sandbox.moip.com.br/v2/payments/PAY-6UIWRQ6YA89A","title":"PAY-6UIWRQ6YA89A"}}}';
+    
+    /**
+     * @var string response from moip API.
+     */
     protected $body_billet_pay = '{"id":"PAY-XNVIBO5MIQ9S","status":"WAITING","delayCapture":false,"amount":{"total":102470,"fees":3645,"refunds":0,"liquid":98825,"currency":"BRL"},"installmentCount":1,"fundingInstrument":{"boleto":{"expirationDate":"2016-05-21","lineCode":"23793.39126 60000.062608 32001.747909 7 68010000102470"},"method":"BOLETO"},"fees":[{"type":"TRANSACTION","amount":3645}],"events":[{"type":"PAYMENT.CREATED","createdAt":"2016-05-20T15:19:47.000-03"},{"type":"PAYMENT.WAITING","createdAt":"2016-05-20T15:19:47.000-03"}],"_links":{"order":{"href":"https://sandbox.moip.com.br/v2/orders/ORD-3KSQDBJSTIF6","title":"ORD-3KSQDBJSTIF6"},"payBoleto":{"redirectHref":"https://checkout-sandbox.moip.com.br/boleto/PAY-XNVIBO5MIQ9S"},"self":{"href":"https://sandbox.moip.com.br/v2/payments/PAY-XNVIBO5MIQ9S"}},"updatedAt":"2016-05-20T15:19:47.000-03","createdAt":"2016-05-20T15:19:47.000-03"}';
 
     /**
@@ -105,8 +110,12 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
         // check if we can run the request on sandbox
         $moip_key = getenv('MOIP_KEY');
         $moip_token = getenv('MOIP_TOKEN');
-
-        if ($moip_key && $moip_token) {
+        $moip_access_token = getenv('MOIP_ACCESS_TOKEN');
+        
+        if ($moip_access_token) {
+            $this->sandbox_mock = self::SANDBOX;
+            $auth = new OAuth($moip_access_token);
+        } elseif ($moip_key && $moip_token) {
             $this->sandbox_mock = self::SANDBOX;
             $auth = new BasicAuth($moip_token, $moip_key);
         } else {
