@@ -212,6 +212,19 @@ class Payment extends MoipResource
 
         return $refund;
     }
+    
+    /**
+     * Escrows.
+     *
+     * @return Escrow
+     */
+    public function escrows()
+    {
+        $escrow = new Escrow($this->moip);
+        $escrow->setId($this->getEscrow()->id);
+
+        return $escrow;
+    }
 
     /**
      * Get payment status.
@@ -275,9 +288,14 @@ class Payment extends MoipResource
         return $this->data->amount;
     }
     
-    public function getEscrows()
+    /**
+     * Returns escrow.
+     *
+     * @return stdClass
+     */
+    public function getEscrow()
     {
-        return $this->data->escrows;
+        return reset($this->data->escrows);
     }
 
     /**
