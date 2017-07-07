@@ -2,7 +2,6 @@
 
 namespace Moip\Tests;
 
-use Moip\Auth\BasicAuth;
 use Moip\Auth\OAuth;
 use Moip\Moip;
 use Moip\Resource\Customer;
@@ -108,16 +107,11 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         // check if we can run the request on sandbox
-        $moip_key = getenv('MOIP_KEY');
-        $moip_token = getenv('MOIP_TOKEN');
         $moip_access_token = getenv('MOIP_ACCESS_TOKEN');
         
         if ($moip_access_token) {
             $this->sandbox_mock = self::SANDBOX;
             $auth = new OAuth($moip_access_token);
-        } elseif ($moip_key && $moip_token) {
-            $this->sandbox_mock = self::SANDBOX;
-            $auth = new BasicAuth($moip_token, $moip_key);
         } else {
             $this->sandbox_mock = self::MOCK;
             $auth = $this->getMock('\Moip\Contracts\Authentication');
