@@ -1,5 +1,4 @@
 <?php
-
 namespace Moip\Tests\Resource;
 
 use Moip\Tests\TestCase;
@@ -33,8 +32,7 @@ class PaymentTest extends TestCase
         $this->mockHttpSession($this->body_order);
         $order = $this->createOrder()->create();
         $this->mockHttpSession($this->body_billet_pay);
-        $payment = $order->payments()->setBoleto(new \DateTime('today +1day'),
-            'http://dev.moip.com.br/images/logo-header-moip.png')->execute();
+        $payment = $order->payments()->setBoleto(new \DateTime('today +1day'), 'http://dev.moip.com.br/images/logo-header-moip.png')->execute();
         $this->assertNotEmpty($payment->getFundingInstrument()->boleto);
     }
 
@@ -48,8 +46,8 @@ class PaymentTest extends TestCase
         $this->assertFalse($payment->getFundingInstrument()->creditCard->store);
         $this->assertNotEmpty($payment->getId());
     }
-    
-    public function testShouldCreateEscrowPaymentWithCreditCard() 
+
+    public function testShouldCreateEscrowPaymentWithCreditCard()
     {
         $this->mockHttpSession($this->body_order);
         $order = $this->createOrder()->create();

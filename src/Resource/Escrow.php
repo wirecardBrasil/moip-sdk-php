@@ -1,20 +1,20 @@
 <?php
-
 namespace Moip\Resource;
 
-use stdClass;
 use Requests;
+use stdClass;
 
 /**
  * Class Escrow.
  */
-class Escrow extends MoipResource {
-    
+class Escrow extends MoipResource
+{
+
     /**
      * @const string
      */
     const PATH = 'escrows';
-    
+
     /**
      * Initializes new instances.
      */
@@ -22,7 +22,7 @@ class Escrow extends MoipResource {
     {
         $this->data = new stdClass();
     }
-    
+
     /**
      * Set id MoIP escrow.
      *
@@ -35,7 +35,7 @@ class Escrow extends MoipResource {
 
         return $this;
     }
-    
+
     /**
      * Get id MoIP escrow.
      *
@@ -46,7 +46,7 @@ class Escrow extends MoipResource {
     {
         return $this->getIfSet('id');
     }
-    
+
     /**
      * Get escrow status.
      *
@@ -76,7 +76,7 @@ class Escrow extends MoipResource {
     {
         return $this->data->updatedAt;
     }
-    
+
     /**
      * Get escrow description
      *
@@ -86,14 +86,13 @@ class Escrow extends MoipResource {
     {
         return $this->data->description;
     }
-    
+
     /**
      * Release a escrow payment
      *
      * @return Payment
      */
-    
-    public function release() 
+    public function release()
     {
         $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, self::PATH, $this->getId(), 'release');
 
@@ -101,7 +100,7 @@ class Escrow extends MoipResource {
 
         return $this->populate($response);
     }
-    
+
     /**
      * Mount escrow structure.
      *

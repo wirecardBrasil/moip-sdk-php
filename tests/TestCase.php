@@ -1,5 +1,4 @@
 <?php
-
 namespace Moip\Tests;
 
 use Moip\Auth\OAuth;
@@ -14,6 +13,7 @@ use Requests_Response;
  */
 abstract class TestCase extends PHPUnit_Framework_TestCase
 {
+
     /**
      * Variables representing the test modes. On MOCK mode no http request will be made.
      * In SANDBOX mode HTTP requests will be made to the Moip::SANDBOX_ENDPOINT, the authentication information
@@ -26,7 +26,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
      * Intance of \Moip\Moip.
      *
      * @var \Moip\Moip
-     **/
+     * */
     protected $moip;
 
     /**
@@ -38,7 +38,6 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
      * @var string date used for testing.
      */
     protected $date_string = '1989-06-01';
-
     //todo: add the ability to use the play(https://github.com/rodrigosaito/mockwebserver-player) files from the jada sdk
     //the two responses below were based on the moip Java sdk's test files (https://github.com/moip/moip-sdk-java/)
     /**
@@ -60,7 +59,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
      * @var string response from moip API.
      */
     protected $body_cc_pay_pci_store = '{"id":"PAY-L6J2NKS9OGYU","status":"IN_ANALYSIS","delayCapture":false,"amount":{"total":102470,"fees":5695,"refunds":0,"liquid":96775,"currency":"BRL"},"installmentCount":1,"fundingInstrument":{"creditCard":{"id":"CRC-2TJ13YB4Y1WU","brand":"MASTERCARD","first6":"555566","last4":"8884","store":false,"holder":{"birthdate":"1989-06-01","birthDate":"1989-06-01","taxDocument":{"type":"CPF","number":"22222222222"},"fullname":"Jose Silva"}},"method":"CREDIT_CARD"},"fees":[{"type":"TRANSACTION","amount":5695}],"events":[{"type":"PAYMENT.IN_ANALYSIS","createdAt":"2016-02-19T18:18:54.535-02"},{"type":"PAYMENT.CREATED","createdAt":"2016-02-19T18:18:51.946-02"}],"_links":{"order":{"href":"https://sandbox.moip.com.br/v2/orders/ORD-8UDL4K9VRJTB","title":"ORD-8UDL4K9VRJTB"},"self":{"href":"https://sandbox.moip.com.br/v2/payments/PAY-L6J2NKS9OGYU"}},"createdAt":"2016-02-19T18:18:51.944-02","updatedAt":"2016-02-19T18:18:54.535-02"}';
-    
+
     /**
      * @var string response from moip API.
      */
@@ -70,7 +69,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
      * @var string response from moip API.
      */
     protected $body_release_escrow = '{"id":"ECW-H57H2GERO1WD","status":"RELEASED","description":"teste de descricao","amount":7300,"createdAt":"2017-07-06T10:57:33.000-03","updatedAt":"2017-07-06T10:57:33.000-03","_links":{"self":{"href":"https://sandbox.moip.com.br/v2/escrows/ECW-H57H2GERO1WD"},"order":{"href":"https://sandbox.moip.com.br/v2/orders/ORD-P7SAQDF3ZRK4","title":"ORD-P7SAQDF3ZRK4"},"payment":{"href":"https://sandbox.moip.com.br/v2/payments/PAY-6UIWRQ6YA89A","title":"PAY-6UIWRQ6YA89A"}}}';
-    
+
     /**
      * @var string response from moip API.
      */
@@ -97,7 +96,6 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
      * @see $last_cus_id
      */
     protected $last_ord_id = 'meu_id_pedido';
-
     protected $sandbox_mock = self::MOCK;
 
     /**
@@ -108,7 +106,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
     {
         // check if we can run the request on sandbox
         $moip_access_token = getenv('MOIP_ACCESS_TOKEN');
-        
+
         if ($moip_access_token) {
             $this->sandbox_mock = self::SANDBOX;
             $auth = new OAuth($moip_access_token);
@@ -159,8 +157,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
             ->setEmail('jose_silva0@email.com')
             ->setTaxDocument('22222222222', 'CPF')
             ->setPhone(11, 66778899, 55)
-            ->addAddress(Customer::ADDRESS_SHIPPING, 'Avenida Faria Lima', '2927', 'Itaim', 'Sao Paulo',
-                'SP', '01234000', '8');
+            ->addAddress(Customer::ADDRESS_SHIPPING, 'Avenida Faria Lima', '2927', 'Itaim', 'Sao Paulo', 'SP', '01234000', '8');
 
         return $customer;
     }
@@ -174,7 +171,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
     {
         $moip = new Moip(new OAuth('1tldio91gi74r34zv30d4saz8yuuws5'), Moip::ENDPOINT_SANDBOX);
 
-        $uniqEmail = 'fulano'.uniqid('MPA-').'@detal123.com.br';
+        $uniqEmail = 'fulano' . uniqid('MPA-') . '@detal123.com.br';
 
         $account = $moip->accounts()
             ->setEmail($uniqEmail)
