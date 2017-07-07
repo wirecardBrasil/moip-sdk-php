@@ -10,7 +10,6 @@ use stdClass;
  */
 class Escrow extends MoipResource
 {
-
     /**
      * @const string
      */
@@ -79,7 +78,7 @@ class Escrow extends MoipResource
     }
 
     /**
-     * Get escrow description
+     * Get escrow description.
      *
      * @return string Escrow description.
      */

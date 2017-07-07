@@ -135,8 +135,7 @@ class Payment extends MoipResource
         if ($this->order !== null) {
             $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, Orders::PATH, $this->order->getId(), self::PATH);
         } else {
-            $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, Multiorders::PATH, $this->multiorder->getId(),
-                self::MULTI_PAYMENTS_PATH);
+            $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, Multiorders::PATH, $this->multiorder->getId(), self::MULTI_PAYMENTS_PATH);
         }
 
         $response = $this->httpRequest($path, Requests::POST, $this);
@@ -212,7 +211,7 @@ class Payment extends MoipResource
 
         return $refund;
     }
-    
+
     /**
      * Escrows.
      *
@@ -269,7 +268,7 @@ class Payment extends MoipResource
 
     /**
      * Get href to Boleto
-     **.
+     * *.
      *
      * @return stdClass
      */
@@ -287,7 +286,7 @@ class Payment extends MoipResource
     {
         return $this->data->amount;
     }
-    
+
     /**
      * Returns escrow.
      *
@@ -526,7 +525,7 @@ class Payment extends MoipResource
 
         return $this;
     }
-    
+
     /**
      * Set escrow to a payment.
      *

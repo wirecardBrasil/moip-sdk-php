@@ -1,11 +1,11 @@
 <?php
+
 namespace Moip\Tests\Resource;
 
 use Moip\Tests\TestCase;
 
 class EscrowTest extends TestCase
 {
-
     public function testShouldReleaseEscrow()
     {
         $this->mockHttpSession($this->body_order);

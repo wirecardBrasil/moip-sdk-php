@@ -1,4 +1,5 @@
 <?php
+
 namespace Moip\Tests;
 
 use Moip\Auth\OAuth;
@@ -13,7 +14,6 @@ use Requests_Response;
  */
 abstract class TestCase extends PHPUnit_Framework_TestCase
 {
-
     /**
      * Variables representing the test modes. On MOCK mode no http request will be made.
      * In SANDBOX mode HTTP requests will be made to the Moip::SANDBOX_ENDPOINT, the authentication information
