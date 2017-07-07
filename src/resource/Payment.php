@@ -528,13 +528,13 @@ class Payment extends MoipResource
     }
     
     /**
-     * Set escrow to a payment
+     * Set escrow to a payment.
      *
      * @param string $description
-     * 
+     *
      * @return $this
      */
-    public function setEscrow($description) 
+    public function setEscrow($description)
     {
         $this->data->escrow = new stdClass();
         $this->data->escrow->description = $description;
@@ -551,11 +551,10 @@ class Payment extends MoipResource
      */
     public function capture()
     {
-        if ($this->order !== null) {
-            $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, self::PATH, $this->getId(), 'capture');
-        } else {
+        if (is_null($this->order)) {
             throw new \Exception('Sorry, multipayment capture is not available on this version');
         }
+        $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, self::PATH, $this->getId(), 'capture');
 
         $response = $this->httpRequest($path, Requests::POST, $this);
 
@@ -571,11 +570,10 @@ class Payment extends MoipResource
      */
     public function avoid()
     {
-        if ($this->order !== null) {
-            $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, self::PATH, $this->getId(), 'void');
-        } else {
+        if (is_null($this->order)) {
             throw new \Exception('Sorry, multipayment capture is not available on this version');
         }
+        $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, self::PATH, $this->getId(), 'void');
 
         $response = $this->httpRequest($path, Requests::POST, $this);
 

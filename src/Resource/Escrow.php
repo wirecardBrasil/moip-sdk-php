@@ -1,4 +1,5 @@
 <?php
+
 namespace Moip\Resource;
 
 use Requests;
@@ -80,7 +81,7 @@ class Escrow extends MoipResource
     /**
      * Get escrow description
      *
-     * @return string Escrow description
+     * @return string Escrow description.
      */
     public function getDescription()
     {
@@ -88,7 +89,7 @@ class Escrow extends MoipResource
     }
 
     /**
-     * Release a escrow payment
+     * Release a escrow payment.
      *
      * @return Payment
      */

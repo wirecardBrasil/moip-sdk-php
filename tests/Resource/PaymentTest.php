@@ -1,4 +1,5 @@
 <?php
+
 namespace Moip\Tests\Resource;
 
 use Moip\Tests\TestCase;

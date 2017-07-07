@@ -171,7 +171,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
     {
         $moip = new Moip(new OAuth('1tldio91gi74r34zv30d4saz8yuuws5'), Moip::ENDPOINT_SANDBOX);
 
-        $uniqEmail = 'fulano' . uniqid('MPA-') . '@detal123.com.br';
+        $uniqEmail = 'fulano'.uniqid('MPA-').'@detal123.com.br';
 
         $account = $moip->accounts()
             ->setEmail($uniqEmail)
