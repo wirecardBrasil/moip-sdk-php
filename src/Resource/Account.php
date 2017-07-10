@@ -108,7 +108,7 @@ class Account extends MoipResource
 
         return $this;
     }
-    
+
     /**
      * Create a new account.
      *
