@@ -5,7 +5,7 @@ namespace Moip\Tests\Resource;
 use Moip\Tests\TestCase;
 
 /**
- * Description of AccountTest
+ * Description of AccountTest.
  */
 class AccountTest extends TestCase
 {

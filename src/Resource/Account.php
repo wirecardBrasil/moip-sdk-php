@@ -161,7 +161,7 @@ class Account extends MoipResource
      */
     public function getFullname()
     {
-        return $this->getIfSet('name', $this->data->person) . ' ' . $this->getIfSet('lastName', $this->data->person);
+        return $this->getIfSet('name', $this->data->person).' '.$this->getIfSet('lastName', $this->data->person);
     }
 
     /**
@@ -215,7 +215,7 @@ class Account extends MoipResource
     }
 
     /**
-     * Get alternative phones
+     * Get alternative phones.
      *
      * @return array
      */
@@ -225,7 +225,7 @@ class Account extends MoipResource
     }
 
     /**
-     * Get data company
+     * Get company data.
      *
      * @return array
      */
@@ -517,7 +517,7 @@ class Account extends MoipResource
     /**
      * Set company name.
      *
-     * @param string $name Trading Name.
+     * @param string $name         Trading Name.
      * @param string $businessName Company Name.
      *
      * @return $this
