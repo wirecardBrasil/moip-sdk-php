@@ -27,7 +27,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
      * Intance of \Moip\Moip.
      *
      * @var \Moip\Moip
-     **/
+     * */
     protected $moip;
 
     /**
@@ -39,7 +39,6 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
      * @var string date used for testing.
      */
     protected $date_string = '1989-06-01';
-
     //todo: add the ability to use the play(https://github.com/rodrigosaito/mockwebserver-player) files from the jada sdk
     //the two responses below were based on the moip Java sdk's test files (https://github.com/moip/moip-sdk-java/)
     /**
@@ -76,7 +75,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
      * @var string response from moip API.
      */
     protected $body_moip_account = '{"id":"MPA-CB428374873D","login":"fulano@email2.com","accessToken":"f16fee8779d84e8ba91588b443b665c6_v2","channelId":"APP-18JTHC3LEMT9","type":"MERCHANT","transparentAccount":true,"email":{"address":"fulano@email2.com","confirmed":false},"person":{"name":"Fulano","lastName":"De Tal","birthDate":"1988-12-30","taxDocument":{"type":"CPF","number":"162.621.310-00"},"address":{"street":"Rua de teste","streetNumber":"123","district":"Bairro","zipcode":"01234567","zipCode":"01234567","city":"Sao Paulo","state":"SP","country":"BRA","complement":"Apt. 23"},"phone":{"countryCode":"55","areaCode":"11","number":"66778899"},"identityDocument":{"number":"4737283560","issuer":"SSP","issueDate":"2015-06-23","type":"RG"},"alternativePhones":[{"countryCode":"55","areaCode":"11","number":"66448899"},{"countryCode":"55","areaCode":"11","number":"66338899"}]},"company":{"name":"Empresa Teste","businessName":"Teste Empresa ME","taxDocument":{"type":"CNPJ","number":"69.086.878/0001-98"},"address":{"street":"Rua de teste 2","streetNumber":"123","district":"Bairro Teste","zipcode":"01234567","zipCode":"01234567","city":"Sao Paulo","state":"SP","country":"BRA","complement":"Apt. 23"},"phone":{"countryCode":"55","areaCode":"11","number":"66558899"},"openingDate":"2011-01-01"},"createdAt":"2017-07-10T13:42:19.967Z","_links":{"self":{"href":"https://sandbox.moip.com.br/moipaccounts/MPA-CB428374873D","title":null}}}';
-    
+
     /**
      * @var string holds the last generated customer ownId. In mock mode it'll be always the default, but it changes on sandbox mode.
      */
@@ -88,7 +87,6 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
      * @see $last_cus_id
      */
     protected $last_ord_id = 'meu_id_pedido';
-
     protected $sandbox_mock = self::MOCK;
 
     /**
@@ -151,8 +149,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
             ->setEmail('jose_silva0@email.com')
             ->setTaxDocument('22222222222', 'CPF')
             ->setPhone(11, 66778899, 55)
-            ->addAddress(Customer::ADDRESS_SHIPPING, 'Avenida Faria Lima', '2927', 'Itaim', 'Sao Paulo',
-                'SP', '01234000', '8');
+            ->addAddress(Customer::ADDRESS_SHIPPING, 'Avenida Faria Lima', '2927', 'Itaim', 'Sao Paulo', 'SP', '01234000', '8');
 
         return $customer;
     }
@@ -166,7 +163,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
     {
         $moip = new Moip(new OAuth('1tldio91gi74r34zv30d4saz8yuuws5'), Moip::ENDPOINT_SANDBOX);
 
-        $uniqEmail = 'fulano'.uniqid('MPA-').'@detal123.com.br';
+        $uniqEmail = 'fulano' . uniqid('MPA-') . '@detal123.com.br';
 
         $account = $moip->accounts()
             ->setEmail($uniqEmail)

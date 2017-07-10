@@ -29,7 +29,7 @@ class Account extends MoipResource
      * @const string
      */
     const TAX_DOCUMENT = 'CPF';
-    
+
     /**
      * Standard company document type.
      *
@@ -87,7 +87,7 @@ class Account extends MoipResource
 
         return $this;
     }
-    
+
     /**
      * Add alternative phone to an account.
      *
@@ -103,12 +103,11 @@ class Account extends MoipResource
         $alternativePhone->countryCode = $countryCode;
         $alternativePhone->areaCode = $areaCode;
         $alternativePhone->number = $number;
-        
+
         $this->data->person->alternativePhones[] = $alternativePhone;
 
         return $this;
     }
-
     /**
      * Create a new account.
      *
@@ -162,7 +161,7 @@ class Account extends MoipResource
      */
     public function getFullname()
     {
-        return $this->getIfSet('name', $this->data->person).' '.$this->getIfSet('lastName', $this->data->person);
+        return $this->getIfSet('name', $this->data->person) . ' ' . $this->getIfSet('lastName', $this->data->person);
     }
 
     /**
@@ -214,7 +213,7 @@ class Account extends MoipResource
     {
         return $this->getIfSet('type', $this->data->person->taxDocument);
     }
-    
+
     /**
      * Get alternative phones
      *
@@ -224,7 +223,7 @@ class Account extends MoipResource
     {
         return $this->getIfSet('alternativePhones', $this->data->person);
     }
-    
+
     /**
      * Get data company
      *
@@ -300,9 +299,9 @@ class Account extends MoipResource
 
         $account->data->person->birthDate = $this->getIfSet('birthDate', $person);
         $account->data->person->address = $this->getIfSet('address', $person);
-        
+
         $account->data->person->alternativePhones = $this->getIfSet('alternativePhones', $person);
-        
+
         $account->data->company = $this->getIfSet('company', $response);
         $account->data->_links = $this->getIfSet('_links', $response);
         $account->data->type = $this->getIfSet('type', $response);
@@ -342,7 +341,7 @@ class Account extends MoipResource
     /**
      * Set name from account.
      *
-     * @param string $name Account's person name.
+     * @param string $lastname Account's person name.
      *
      * @return \Moip\Resource\Account
      */
@@ -427,7 +426,7 @@ class Account extends MoipResource
 
         return $this;
     }
-    
+
     /**
      * Set person nationality.
      *
@@ -441,7 +440,7 @@ class Account extends MoipResource
 
         return $this;
     }
-    
+
     /**
      * Set person birth place.
      *
@@ -455,7 +454,7 @@ class Account extends MoipResource
 
         return $this;
     }
-    
+
     /**
      * Set parents name.
      *
@@ -472,7 +471,7 @@ class Account extends MoipResource
 
         return $this;
     }
-    
+
     /**
      * Set site.
      *
@@ -486,7 +485,7 @@ class Account extends MoipResource
 
         return $this;
     }
-    
+
     /**
      * Set transparent account.
      *
@@ -500,7 +499,7 @@ class Account extends MoipResource
 
         return $this;
     }
-    
+
     /**
      * Set business segment.
      *
@@ -514,7 +513,7 @@ class Account extends MoipResource
 
         return $this;
     }
-    
+
     /**
      * Set company name.
      *
@@ -526,11 +525,11 @@ class Account extends MoipResource
     public function setCompanyName($name, $businessName)
     {
         $this->data->company->name = $name;
-        $this->data->company->businessName = $businessName;        
+        $this->data->company->businessName = $businessName;
 
         return $this;
     }
-    
+
     /**
      * Set company opening date.
      *
@@ -547,7 +546,7 @@ class Account extends MoipResource
 
         return $this;
     }
-    
+
     /**
      * Set company tax document.
      *
@@ -563,7 +562,7 @@ class Account extends MoipResource
 
         return $this;
     }
-    
+
     /**
      * Set company tax document.
      *
@@ -579,7 +578,7 @@ class Account extends MoipResource
 
         return $this;
     }
-    
+
     /**
      * Set address to company.
      *
@@ -610,7 +609,7 @@ class Account extends MoipResource
 
         return $this;
     }
-    
+
     /**
      * Set company phone.
      *
@@ -620,7 +619,7 @@ class Account extends MoipResource
      *
      * @return \Moip\Resource\Account
      */
-    public function setCompanyPhone($areaCode, $number, $countryCode = 55) 
+    public function setCompanyPhone($areaCode, $number, $countryCode = 55)
     {
         $this->data->company->phone = new stdClass();
         $this->data->company->phone->countryCode = $countryCode;
