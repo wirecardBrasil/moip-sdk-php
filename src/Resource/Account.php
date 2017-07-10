@@ -503,7 +503,7 @@ class Account extends MoipResource
     /**
      * Set business segment.
      *
-     * @param int $segmentId business segment id. Possible values available at: https://documentao-moip.readme.io/v2.0/reference#tabela-de-categorias-de-estabelecimento 
+     * @param int $segmentId business segment id. Possible values available at: https://documentao-moip.readme.io/v2.0/reference#tabela-de-categorias-de-estabelecimento .
      *
      * @return $this
      */
