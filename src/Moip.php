@@ -10,6 +10,7 @@ use Moip\Resource\Multiorders;
 use Moip\Resource\Orders;
 use Moip\Resource\Payment;
 use Moip\Resource\Transfers;
+use Moip\Resource\NotificationPreferences;
 use Requests_Session;
 
 /**
@@ -189,6 +190,16 @@ class Moip
     public function transfers()
     {
         return new Transfers($this);
+    }
+    
+    /**
+     * Create a new Notification Prefences instance.
+     *
+     * @return NotificationPreferences
+     */
+    public function notifications()
+    {
+        return new NotificationPreferences($this);
     }
 
     /**

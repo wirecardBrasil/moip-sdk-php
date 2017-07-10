@@ -73,6 +73,11 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
     protected $body_refund_partial_bankaccount = '{"id":"REF-0R8FSCPTI5IS","status":"REQUESTED","events":[{"type":"REFUND.REQUESTED","createdAt":"2017-06-27T11:27:56.000-03"}],"amount":{"total":20000,"fees":0,"currency":"BRL"},"type":"PARTIAL","refundingInstrument":{"bankAccount":{"bankNumber":"001","bankName":"BANCO DO BRASIL S.A.","agencyNumber":"1584","agencyCheckNumber":"9","accountNumber":"00210169","accountCheckNumber":"6","type":"SAVING","holder":{"taxDocument":{"type":"CPF","number":"22222222222"},"fullname":"Fulano de Tal"}},"method":"BANK_ACCOUNT"},"createdAt":"2017-06-27T11:27:56.000-03","_links":{"self":{"href":"https://sandbox.moip.com.br/v2/refunds/REF-0R8FSCPTI5IS"},"order":{"href":"https://sandbox.moip.com.br/v2/orders/ORD-0HX56ERCBKWE","title":"ORD-0HX56ERCBKWE"},"payment":{"href":"https://sandbox.moip.com.br/v2/payments/PAY-1177YNDVSO7W","title":"PAY-1177YNDVSO7W"}}}';
 
     /**
+     * @var string response from moip API.
+     */
+    protected $body_notification_preference = '{"events":["ORDER.*","PAYMENT.AUTHORIZED","PAYMENT.CANCELLED"],"target":"http://requestb.in/1dhjesw1","media":"WEBHOOK","token":"994e3ffae9214fbc806d01de2dd5d341","id":"NPR-N6QZE3223P98"}';
+
+    /**
      * @var string holds the last generated customer ownId. In mock mode it'll be always the default, but it changes on sandbox mode.
      */
     protected $last_cus_id = 'meu_id_customer';
