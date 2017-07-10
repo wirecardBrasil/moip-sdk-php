@@ -73,6 +73,11 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
     protected $body_refund_partial_bankaccount = '{"id":"REF-0R8FSCPTI5IS","status":"REQUESTED","events":[{"type":"REFUND.REQUESTED","createdAt":"2017-06-27T11:27:56.000-03"}],"amount":{"total":20000,"fees":0,"currency":"BRL"},"type":"PARTIAL","refundingInstrument":{"bankAccount":{"bankNumber":"001","bankName":"BANCO DO BRASIL S.A.","agencyNumber":"1584","agencyCheckNumber":"9","accountNumber":"00210169","accountCheckNumber":"6","type":"SAVING","holder":{"taxDocument":{"type":"CPF","number":"22222222222"},"fullname":"Fulano de Tal"}},"method":"BANK_ACCOUNT"},"createdAt":"2017-06-27T11:27:56.000-03","_links":{"self":{"href":"https://sandbox.moip.com.br/v2/refunds/REF-0R8FSCPTI5IS"},"order":{"href":"https://sandbox.moip.com.br/v2/orders/ORD-0HX56ERCBKWE","title":"ORD-0HX56ERCBKWE"},"payment":{"href":"https://sandbox.moip.com.br/v2/payments/PAY-1177YNDVSO7W","title":"PAY-1177YNDVSO7W"}}}';
 
     /**
+     * @var string response from moip API.
+     */
+    protected $body_moip_account = '{"id":"MPA-B10A9B63F804","login":"dev.moip35@labs.moip.com.br","accessToken":"dc7238b5daff4d6583f0edb3cdf61b2f_v2","channelId":"APP-18JTHC3LEMT9","type":"MERCHANT","transparentAccount":false,"email":{"address":"dev.moip35@labs.moip.com.br","confirmed":false},"person":{"name":"Runscope","lastName":"Random 9123","birthDate":"1990-01-01","taxDocument":{"type":"CPF","number":"473.886.013-50"},"address":{"street":"Av. Brigadeiro Faria Lima","streetNumber":"2927","district":"Itaim","zipcode":"01234000","zipCode":"01234000","city":"São Paulo","state":"SP","country":"BRA"},"phone":{"countryCode":"55","areaCode":"11","number":"965213244"},"identityDocument":{"number":"434522345","issuer":"SSP","issueDate":"2000-12-12","type":"RG"}},"createdAt":"2017-07-07T19:17:06.136Z","_links":{"self":{"href":"https://sandbox.moip.com.br/moipaccounts/MPA-B10A9B63F804","title":null},"setPassword":{"href":"https://desenvolvedor.moip.com.br/sandbox/AskForNewPassword.do?method=confirm\u0026email=dev.moip35%40labs.moip.com.br\u0026code=765e4e0e217a154f1489bd01ccd3d594"}}}';
+    
+    /**
      * @var string holds the last generated customer ownId. In mock mode it'll be always the default, but it changes on sandbox mode.
      */
     protected $last_cus_id = 'meu_id_customer';
