@@ -214,6 +214,26 @@ class Account extends MoipResource
     {
         return $this->getIfSet('type', $this->data->person->taxDocument);
     }
+    
+    /**
+     * Get alternative phones
+     *
+     * @return array
+     */
+    public function getAlternativePhones()
+    {
+        return $this->getIfSet('alternativePhones', $this->data->person);
+    }
+    
+    /**
+     * Get data company
+     *
+     * @return array
+     */
+    public function getCompany()
+    {
+        return $this->getIfSet('company', $this->data);
+    }
 
     /**
      * Get tax document number from account.

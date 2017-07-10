@@ -33,9 +33,8 @@ class AccountTest extends TestCase
             ->setCompanyAddress('Rua de teste 2', 123, 'Bairro Teste', 'Sao Paulo', 'SP', '01234567', 'Apt. 23','BRA')
             ->setCompanyMainActivity('82.91-1/00', 'Atividades de cobranças e informações cadastrais')
             ->create();
-        
-        print_r($account);
         $this->assertNotEmpty($account->getId());
-        $this->assertEquals();
+        $this->assertEquals('66448899',$account->getAlternativePhones()[0]->number);
+        $this->assertEquals('Teste Empresa ME', $account->getCompany()->businessName);
     }
 }
