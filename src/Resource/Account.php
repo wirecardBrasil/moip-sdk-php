@@ -108,14 +108,11 @@ class Account extends MoipResource
 
         return $this;
     }
+    
     /**
      * Create a new account.
      *
      * @return \stdClass
-     */
-
-    /**
-     * @return stdClass
      */
     public function create()
     {
