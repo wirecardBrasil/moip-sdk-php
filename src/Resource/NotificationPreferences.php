@@ -88,7 +88,47 @@ class NotificationPreferences extends MoipResource
      */
     public function create()
     {
-        return $this->createResource(sprintf('/%s/%s/%s', MoipResource::VERSION, self::PATH, 'notifications'));
+        return $this->createResource($this->generatePath('notifications'));
+    }
+    
+    /**
+     * Get a notification preference.
+     *
+     * @param string $notification_id Moip notification id.
+     *
+     * @return stdClass
+     */
+    public function get($notification_id)
+    {
+        return $this->getByPath($this->generatePath('notifications', $notification_id));
+    }
+    
+    /**
+     * Delete.
+     *
+     * @param $notification_id
+     *
+     * @return mixed
+     */
+    public function delete($notification_id)
+    {
+        return $this->deleteByPath($this->generatePath('notifications', $notification_id));
+    }
+    
+    /**
+     * Generate URL to request.
+     *
+     * @param $method
+     * @param $id
+     *
+     * @return string
+     */
+    public function generatePath($method, $id = null) 
+    {
+        if (!is_null($id)) {
+            return sprintf('%s/%s/%s/%s', MoipResource::VERSION, self::PATH, $method, $id);
+        }
+        return sprintf('%s/%s/%s', MoipResource::VERSION, self::PATH, $method);
     }
     
     /**
