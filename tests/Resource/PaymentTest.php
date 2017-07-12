@@ -33,8 +33,31 @@ class PaymentTest extends TestCase
         $this->mockHttpSession($this->body_order);
         $order = $this->createOrder()->create();
         $this->mockHttpSession($this->body_billet_pay);
-        $payment = $order->payments()->setBoleto(new \DateTime('today +1day'),
-            'http://dev.moip.com.br/images/logo-header-moip.png')->execute();
+        $payment = $order->payments()->setBoleto(new \DateTime('today +1day'), 'http://dev.moip.com.br/images/logo-header-moip.png')->execute();
         $this->assertNotEmpty($payment->getFundingInstrument()->boleto);
+    }
+
+    public function testCreditCardPCIStore()
+    {
+        $this->mockHttpSession($this->body_order);
+        $order = $this->createOrder()->create();
+        $cc = '5555666677778884';
+        $this->mockHttpSession($this->body_cc_pay_pci_store);
+        $payment = $order->payments()->setCreditCard(5, 2018, $cc, 123, $this->createCustomer(), false)->execute();
+        $this->assertFalse($payment->getFundingInstrument()->creditCard->store);
+        $this->assertNotEmpty($payment->getId());
+    }
+
+    public function testShouldCreateEscrowPaymentWithCreditCard()
+    {
+        $this->mockHttpSession($this->body_order);
+        $order = $this->createOrder()->create();
+        $cc = '5555666677778884';
+        $this->mockHttpSession($this->body_cc_pay_pci_escrow);
+        $payment = $order->payments()
+            ->setCreditCard(5, 2018, $cc, 123, $this->createCustomer(), false)
+            ->setEscrow('teste de descricao')
+            ->execute();
+        $this->assertEquals('teste de descricao', $payment->getEscrow()->description);
     }
 }

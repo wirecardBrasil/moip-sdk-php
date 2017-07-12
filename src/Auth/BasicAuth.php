@@ -24,12 +24,6 @@ class BasicAuth implements Authentication
      */
     private $key;
 
-    /**
-     * Create a new MoipBasic instance.
-     *
-     * @param string $token
-     * @param string $key
-     */
     public function __construct($token, $key)
     {
         $this->token = $token;

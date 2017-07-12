@@ -2,7 +2,7 @@
 
 namespace Moip\Tests;
 
-use Moip\Auth\BasicAuth;
+use Moip\Auth\OAuth;
 use Moip\Moip;
 use Moip\Resource\Customer;
 use Moip\Resource\Orders;
@@ -26,7 +26,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
      * Intance of \Moip\Moip.
      *
      * @var \Moip\Moip
-     **/
+     * */
     protected $moip;
 
     /**
@@ -38,7 +38,6 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
      * @var string date used for testing.
      */
     protected $date_string = '1989-06-01';
-
     //todo: add the ability to use the play(https://github.com/rodrigosaito/mockwebserver-player) files from the jada sdk
     //the two responses below were based on the moip Java sdk's test files (https://github.com/moip/moip-sdk-java/)
     /**
@@ -59,7 +58,42 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
     /**
      * @var string response from moip API.
      */
+    protected $body_cc_pay_pci_store = '{"id":"PAY-L6J2NKS9OGYU","status":"IN_ANALYSIS","delayCapture":false,"amount":{"total":102470,"fees":5695,"refunds":0,"liquid":96775,"currency":"BRL"},"installmentCount":1,"fundingInstrument":{"creditCard":{"id":"CRC-2TJ13YB4Y1WU","brand":"MASTERCARD","first6":"555566","last4":"8884","store":false,"holder":{"birthdate":"1989-06-01","birthDate":"1989-06-01","taxDocument":{"type":"CPF","number":"22222222222"},"fullname":"Jose Silva"}},"method":"CREDIT_CARD"},"fees":[{"type":"TRANSACTION","amount":5695}],"events":[{"type":"PAYMENT.IN_ANALYSIS","createdAt":"2016-02-19T18:18:54.535-02"},{"type":"PAYMENT.CREATED","createdAt":"2016-02-19T18:18:51.946-02"}],"_links":{"order":{"href":"https://sandbox.moip.com.br/v2/orders/ORD-8UDL4K9VRJTB","title":"ORD-8UDL4K9VRJTB"},"self":{"href":"https://sandbox.moip.com.br/v2/payments/PAY-L6J2NKS9OGYU"}},"createdAt":"2016-02-19T18:18:51.944-02","updatedAt":"2016-02-19T18:18:54.535-02"}';
+
+    /**
+     * @var string response from moip API.
+     */
+    protected $body_cc_pay_pci_escrow = '{"id":"PAY-DB5TBW0E0Z24","status":"IN_ANALYSIS","delayCapture":false,"amount":{"total":7300,"fees":0,"refunds":0,"liquid":7300,"currency":"BRL"},"installmentCount":1,"statementDescriptor":"minhaLoja.com","fundingInstrument":{"creditCard":{"id":"CRC-7D197TPTPYWQ","brand":"VISA","first6":"401200","last4":"1112","store":true,"holder":{"birthdate":"1988-12-30","birthDate":"1988-12-30","taxDocument":{"type":"CPF","number":"22222222222"},"fullname":"Jose Portador da Silva"}},"method":"CREDIT_CARD"},"fees":[{"type":"TRANSACTION","amount":0}],"escrows":[{"id":"ECW-MYB3UUWHHPM9","status":"HOLD_PENDING","description":"teste de descricao","amount":7300,"createdAt":"2017-07-05T10:19:19.156-03","updatedAt":"2017-07-05T10:19:19.156-03","_links":{"self":{"href":"https://sandbox.moip.com.br/v2/escrows/ECW-MYB3UUWHHPM9"},"order":{"href":"https://sandbox.moip.com.br/v2/orders/ORD-QDDLVRVO8ZTK","title":"ORD-QDDLVRVO8ZTK"},"payment":{"href":"https://sandbox.moip.com.br/v2/payments/PAY-DB5TBW0E0Z24","title":"PAY-DB5TBW0E0Z24"}}}],"events":[{"type":"PAYMENT.IN_ANALYSIS","createdAt":"2017-07-05T10:19:19.299-03"},{"type":"PAYMENT.CREATED","createdAt":"2017-07-05T10:19:19.125-03"}],"receivers":[{"moipAccount":{"id":"MPA-7ED9D2D0BC81","login":"ev@traca.com.br","fullname":"Carmen Elisabete de Menezes ME"},"type":"PRIMARY","amount":{"total":7300,"refunds":0}}],"_links":{"self":{"href":"https://sandbox.moip.com.br/v2/payments/PAY-DB5TBW0E0Z24"},"order":{"href":"https://sandbox.moip.com.br/v2/orders/ORD-QDDLVRVO8ZTK","title":"ORD-QDDLVRVO8ZTK"}},"createdAt":"2017-07-05T10:19:19.117-03","updatedAt":"2017-07-05T10:19:19.299-03"}';
+
+    /**
+     * @var string response from moip API.
+     */
+    protected $body_release_escrow = '{"id":"ECW-H57H2GERO1WD","status":"RELEASED","description":"teste de descricao","amount":7300,"createdAt":"2017-07-06T10:57:33.000-03","updatedAt":"2017-07-06T10:57:33.000-03","_links":{"self":{"href":"https://sandbox.moip.com.br/v2/escrows/ECW-H57H2GERO1WD"},"order":{"href":"https://sandbox.moip.com.br/v2/orders/ORD-P7SAQDF3ZRK4","title":"ORD-P7SAQDF3ZRK4"},"payment":{"href":"https://sandbox.moip.com.br/v2/payments/PAY-6UIWRQ6YA89A","title":"PAY-6UIWRQ6YA89A"}}}';
+
+    /**
+     * @var string response from moip API.
+     */
     protected $body_billet_pay = '{"id":"PAY-XNVIBO5MIQ9S","status":"WAITING","delayCapture":false,"amount":{"total":102470,"fees":3645,"refunds":0,"liquid":98825,"currency":"BRL"},"installmentCount":1,"fundingInstrument":{"boleto":{"expirationDate":"2016-05-21","lineCode":"23793.39126 60000.062608 32001.747909 7 68010000102470"},"method":"BOLETO"},"fees":[{"type":"TRANSACTION","amount":3645}],"events":[{"type":"PAYMENT.CREATED","createdAt":"2016-05-20T15:19:47.000-03"},{"type":"PAYMENT.WAITING","createdAt":"2016-05-20T15:19:47.000-03"}],"_links":{"order":{"href":"https://sandbox.moip.com.br/v2/orders/ORD-3KSQDBJSTIF6","title":"ORD-3KSQDBJSTIF6"},"payBoleto":{"redirectHref":"https://checkout-sandbox.moip.com.br/boleto/PAY-XNVIBO5MIQ9S"},"self":{"href":"https://sandbox.moip.com.br/v2/payments/PAY-XNVIBO5MIQ9S"}},"updatedAt":"2016-05-20T15:19:47.000-03","createdAt":"2016-05-20T15:19:47.000-03"}';
+
+    /**
+     * @var string response from moip API.
+     */
+    protected $body_refund_full_bankaccount = '{"id":"REF-F60THFADO8N4","status":"REQUESTED","events":[{"type":"REFUND.REQUESTED","createdAt":"2017-06-27T08:52:36.000-03"}],"amount":{"total":45000,"fees":0,"currency":"BRL"},"type":"FULL","refundingInstrument":{"bankAccount":{"bankNumber":"001","bankName":"BANCO DO BRASIL S.A.","agencyNumber":"1584","agencyCheckNumber":"9","accountNumber":"00210169","accountCheckNumber":"6","type":"CHECKING","holder":{"taxDocument":{"type":"CPF","number":"22222222222"},"fullname":"Fulano de Tal"}},"method":"BANK_ACCOUNT"},"createdAt":"2017-06-27T08:52:36.000-03","_links":{"self":{"href":"https://sandbox.moip.com.br/v2/refunds/REF-F60THFADO8N4"},"order":{"href":"https://sandbox.moip.com.br/v2/orders/ORD-KNCJJINLN9QL","title":"ORD-KNCJJINLN9QL"},"payment":{"href":"https://sandbox.moip.com.br/v2/payments/PAY-WRZLMJ8JZA9Q","title":"PAY-WRZLMJ8JZA9Q"}}}';
+
+    /**
+     * @var string response from moip API.
+     */
+    protected $body_refund_partial_bankaccount = '{"id":"REF-0R8FSCPTI5IS","status":"REQUESTED","events":[{"type":"REFUND.REQUESTED","createdAt":"2017-06-27T11:27:56.000-03"}],"amount":{"total":20000,"fees":0,"currency":"BRL"},"type":"PARTIAL","refundingInstrument":{"bankAccount":{"bankNumber":"001","bankName":"BANCO DO BRASIL S.A.","agencyNumber":"1584","agencyCheckNumber":"9","accountNumber":"00210169","accountCheckNumber":"6","type":"SAVING","holder":{"taxDocument":{"type":"CPF","number":"22222222222"},"fullname":"Fulano de Tal"}},"method":"BANK_ACCOUNT"},"createdAt":"2017-06-27T11:27:56.000-03","_links":{"self":{"href":"https://sandbox.moip.com.br/v2/refunds/REF-0R8FSCPTI5IS"},"order":{"href":"https://sandbox.moip.com.br/v2/orders/ORD-0HX56ERCBKWE","title":"ORD-0HX56ERCBKWE"},"payment":{"href":"https://sandbox.moip.com.br/v2/payments/PAY-1177YNDVSO7W","title":"PAY-1177YNDVSO7W"}}}';
+
+    /**
+     * @var string response from moip API.
+     */
+    protected $body_notification_preference = '{"events":["ORDER.*","PAYMENT.AUTHORIZED","PAYMENT.CANCELLED"],"target":"http://requestb.in/1dhjesw1","media":"WEBHOOK","token":"994e3ffae9214fbc806d01de2dd5d341","id":"NPR-N6QZE3223P98"}';
+
+    /**
+     * @var string response from moip API.
+     */
+    protected $body_moip_account = '{"id":"MPA-CB428374873D","login":"fulano@email2.com","accessToken":"f16fee8779d84e8ba91588b443b665c6_v2","channelId":"APP-18JTHC3LEMT9","type":"MERCHANT","transparentAccount":true,"email":{"address":"fulano@email2.com","confirmed":false},"person":{"name":"Fulano","lastName":"De Tal","birthDate":"1988-12-30","taxDocument":{"type":"CPF","number":"162.621.310-00"},"address":{"street":"Rua de teste","streetNumber":"123","district":"Bairro","zipcode":"01234567","zipCode":"01234567","city":"Sao Paulo","state":"SP","country":"BRA","complement":"Apt. 23"},"phone":{"countryCode":"55","areaCode":"11","number":"66778899"},"identityDocument":{"number":"4737283560","issuer":"SSP","issueDate":"2015-06-23","type":"RG"},"alternativePhones":[{"countryCode":"55","areaCode":"11","number":"66448899"},{"countryCode":"55","areaCode":"11","number":"66338899"}]},"company":{"name":"Empresa Teste","businessName":"Teste Empresa ME","taxDocument":{"type":"CNPJ","number":"69.086.878/0001-98"},"address":{"street":"Rua de teste 2","streetNumber":"123","district":"Bairro Teste","zipcode":"01234567","zipCode":"01234567","city":"Sao Paulo","state":"SP","country":"BRA","complement":"Apt. 23"},"phone":{"countryCode":"55","areaCode":"11","number":"66558899"},"openingDate":"2011-01-01"},"createdAt":"2017-07-10T13:42:19.967Z","_links":{"self":{"href":"https://sandbox.moip.com.br/moipaccounts/MPA-CB428374873D","title":null}}}';
 
     /**
      * @var string holds the last generated customer ownId. In mock mode it'll be always the default, but it changes on sandbox mode.
@@ -72,7 +106,6 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
      * @see $last_cus_id
      */
     protected $last_ord_id = 'meu_id_pedido';
-
     protected $sandbox_mock = self::MOCK;
 
     /**
@@ -82,12 +115,11 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         // check if we can run the request on sandbox
-        $moip_key = getenv('MOIP_KEY');
-        $moip_token = getenv('MOIP_TOKEN');
+        $moip_access_token = getenv('MOIP_ACCESS_TOKEN');
 
-        if ($moip_key && $moip_token) {
+        if ($moip_access_token) {
             $this->sandbox_mock = self::SANDBOX;
-            $auth = new BasicAuth($moip_token, $moip_key);
+            $auth = new OAuth($moip_access_token);
         } else {
             $this->sandbox_mock = self::MOCK;
             $auth = $this->getMock('\Moip\Contracts\Authentication');
@@ -135,8 +167,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
             ->setEmail('jose_silva0@email.com')
             ->setTaxDocument('22222222222', 'CPF')
             ->setPhone(11, 66778899, 55)
-            ->addAddress(Customer::ADDRESS_SHIPPING, 'Avenida Faria Lima', '2927', 'Itaim', 'Sao Paulo',
-                'SP', '01234000', '8');
+            ->addAddress(Customer::ADDRESS_SHIPPING, 'Avenida Faria Lima', '2927', 'Itaim', 'Sao Paulo', 'SP', '01234000', '8');
 
         return $customer;
     }
@@ -148,7 +179,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
      */
     public function createAccount()
     {
-        $moip = new Moip(new MoipOAuth('1tldio91gi74r34zv30d4saz8yuuws5'), Moip::ENDPOINT_SANDBOX);
+        $moip = new Moip(new OAuth('1tldio91gi74r34zv30d4saz8yuuws5'), Moip::ENDPOINT_SANDBOX);
 
         $uniqEmail = 'fulano'.uniqid('MPA-').'@detal123.com.br';
 

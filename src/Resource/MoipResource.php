@@ -226,6 +226,6 @@ abstract class MoipResource implements JsonSerializable
      */
     public function deleteByPath($path)
     {
-        $reponse = $this->httpRequest($path, Requests::DELETE);
+        return $this->httpRequest($path, Requests::DELETE);
     }
 }

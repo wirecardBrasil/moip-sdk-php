@@ -58,12 +58,12 @@ Execute em seu shell:
 require 'vendor/autoload.php';
 
 use Moip\Moip;
-use Moip\MoipBasicAuth;
+use Moip\Auth\BasicAuth;
 
 $token = '01010101010101010101010101010101';
 $key = 'ABABABABABABABABABABABABABABABABABABABAB';
 
-$moip = new Moip(new MoipBasicAuth($token, $key), Moip::ENDPOINT_SANDBOX);
+$moip = new Moip(new BasicAuth($token, $key), Moip::ENDPOINT_SANDBOX);
 ```
 
 ## Criando um comprador
@@ -131,22 +131,28 @@ try {
     printf($e->__toString());
 }
 ```
+
+## Mais exemplos?
+
+Veja mais exemplos na [Wiki](https://github.com/moip/moip-sdk-php/wiki)
+
 ## Documentação
 
 [Documentação oficial](https://documentao-moip.readme.io/v2.0/reference)
 
 ## Testes
 Por padrão os testes não fazem nenhuma requisição para a API do Moip. É possível rodar os testes contra 
-o ambiente de [Sandbox](https://conta-sandbox.moip.com.br/) do moip, para isso basta setar as seguintes variáveis de ambiente:
- - `MOIP_TOKEN` Seu token de acesso a sandbox.
- - `MOIP_KEY` Sua chave de acesso a sandbox.
+o ambiente de [Sandbox](https://conta-sandbox.moip.com.br/) do moip, para isso basta setar a variável de ambiente:
+ - `MOIP_ACCESS_TOKEN` Token de autenticação do seu aplicativo Moip.
 
-[Como obter suas chaves](http://dev.moip.com.br/docs/#obter-chaves-de-acesso).
+[Como registrar seu aplicativo Moip](https://dev.moip.com.br/docs/moip-connect#section--registrando-seu-aplicativo-)
+
+Para registrar seu aplicativo Moip você precisará de suas chaves de acesso.
+[Como obter suas chaves de acesso](http://dev.moip.com.br/docs/#obter-chaves-de-acesso).
 
 Exemplo:
 ```shell
-export MOIP_TOKEN=01010101010101010101010101010101
-export MOIP_KEY=ABABABABABABABABABABABABABABABABABABABAB
+export MOIP_ACCESS_TOKEN=76926cb0305243c8adc79aad54321ec1_v2
 vendor/bin/phpunit -c .
 ```
 
