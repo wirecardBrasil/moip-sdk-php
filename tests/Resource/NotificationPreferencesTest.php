@@ -18,16 +18,16 @@ class NotificationPreferencesTest extends TestCase
             ->addEvent('PAYMENT.AUTHORIZED')
             ->setTarget('http://requestb.in/1dhjesw1')
             ->create();
-        
+
         return $notification;
     }
-    
+
     public function testShouldCreateNotificationPreference()
     {
         $notification = $this->createNotification();
         $this->assertNotEmpty($notification->getId());
     }
-    
+
     public function testEndpointDeleteNotificationPreference()
     {
         $path = $this->moip->notifications()->generatePath('notifications', 'NPR-CQU74AQOIVCV');

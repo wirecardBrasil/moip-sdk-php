@@ -27,7 +27,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
      * Intance of \Moip\Moip.
      *
      * @var \Moip\Moip
-     **/
+     * */
     protected $moip;
 
     /**
@@ -39,7 +39,6 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
      * @var string date used for testing.
      */
     protected $date_string = '1989-06-01';
-
     //todo: add the ability to use the play(https://github.com/rodrigosaito/mockwebserver-player) files from the jada sdk
     //the two responses below were based on the moip Java sdk's test files (https://github.com/moip/moip-sdk-java/)
     /**
@@ -88,7 +87,6 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
      * @see $last_cus_id
      */
     protected $last_ord_id = 'meu_id_pedido';
-
     protected $sandbox_mock = self::MOCK;
 
     /**
@@ -151,8 +149,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
             ->setEmail('jose_silva0@email.com')
             ->setTaxDocument('22222222222', 'CPF')
             ->setPhone(11, 66778899, 55)
-            ->addAddress(Customer::ADDRESS_SHIPPING, 'Avenida Faria Lima', '2927', 'Itaim', 'Sao Paulo',
-                'SP', '01234000', '8');
+            ->addAddress(Customer::ADDRESS_SHIPPING, 'Avenida Faria Lima', '2927', 'Itaim', 'Sao Paulo', 'SP', '01234000', '8');
 
         return $customer;
     }

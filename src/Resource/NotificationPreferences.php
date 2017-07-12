@@ -15,14 +15,14 @@ class NotificationPreferences extends MoipResource
      * @const string
      */
     const PATH = 'preferences';
-    
+
     /**
      * Notification media.
      *
      * @var string
      */
     const NOTIFICATION_MEDIA = 'WEBHOOK';
-    
+
     /**
      * Initialize a new instance.
      */
@@ -32,7 +32,7 @@ class NotificationPreferences extends MoipResource
         $this->data->events = [];
         $this->data->media = self::NOTIFICATION_MEDIA;
     }
-    
+
     /**
      * Add a new address to the account.
      *
@@ -46,9 +46,9 @@ class NotificationPreferences extends MoipResource
 
         return $this;
     }
-    
+
     /**
-     * Set target to notification
+     * Set target to notification.
      *
      * @param string $target Notification URL.
      *
@@ -60,7 +60,7 @@ class NotificationPreferences extends MoipResource
 
         return $this;
     }
-    
+
     /**
      * Returns target.
      *
@@ -70,7 +70,7 @@ class NotificationPreferences extends MoipResource
     {
         return $this->data->target;
     }
-    
+
     /**
      * Returns notification id.
      *
@@ -80,7 +80,7 @@ class NotificationPreferences extends MoipResource
     {
         return $this->data->id;
     }
-    
+
     /**
      * Create a new notification preference.
      *
@@ -90,7 +90,7 @@ class NotificationPreferences extends MoipResource
     {
         return $this->createResource($this->generatePath('notifications'));
     }
-    
+
     /**
      * Get a notification preference.
      *
@@ -102,7 +102,7 @@ class NotificationPreferences extends MoipResource
     {
         return $this->getByPath($this->generatePath('notifications', $notification_id));
     }
-    
+
     /**
      * Delete.
      *
@@ -114,7 +114,7 @@ class NotificationPreferences extends MoipResource
     {
         return $this->deleteByPath($this->generatePath('notifications', $notification_id));
     }
-    
+
     /**
      * Generate URL to request.
      *
@@ -123,14 +123,14 @@ class NotificationPreferences extends MoipResource
      *
      * @return string
      */
-    public function generatePath($method, $id = null) 
+    public function generatePath($method, $id = null)
     {
         if (!is_null($id)) {
             return sprintf('%s/%s/%s/%s', MoipResource::VERSION, self::PATH, $method, $id);
         }
         return sprintf('%s/%s/%s', MoipResource::VERSION, self::PATH, $method);
     }
-    
+
     /**
      * Mount the notification preference structure.
      *
@@ -149,5 +149,4 @@ class NotificationPreferences extends MoipResource
 
         return $account;
     }
-    
 }
