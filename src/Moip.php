@@ -7,6 +7,7 @@ use Moip\Resource\Account;
 use Moip\Resource\Customer;
 use Moip\Resource\Entry;
 use Moip\Resource\Multiorders;
+use Moip\Resource\NotificationPreferences;
 use Moip\Resource\Orders;
 use Moip\Resource\Payment;
 use Moip\Resource\Transfers;
@@ -35,7 +36,7 @@ class Moip
      * Client name.
      *
      * @const string
-     **/
+     * */
     const CLIENT = 'Moip SDK';
 
     /**
@@ -81,11 +82,9 @@ class Moip
     {
         if (function_exists('posix_uname')) {
             $uname = posix_uname();
-            $user_agent = sprintf('Mozilla/4.0 (compatible; %s; PHP/%s %s; %s; %s)',
-                self::CLIENT, PHP_SAPI, PHP_VERSION, $uname['sysname'], $uname['machine']);
+            $user_agent = sprintf('Mozilla/4.0 (compatible; %s; PHP/%s %s; %s; %s)', self::CLIENT, PHP_SAPI, PHP_VERSION, $uname['sysname'], $uname['machine']);
         } else {
-            $user_agent = sprintf('Mozilla/4.0 (compatible; %s; PHP/%s %s; %s)',
-                self::CLIENT, PHP_SAPI, PHP_VERSION, PHP_OS);
+            $user_agent = sprintf('Mozilla/4.0 (compatible; %s; PHP/%s %s; %s)', self::CLIENT, PHP_SAPI, PHP_VERSION, PHP_OS);
         }
         $sess = new Requests_Session($this->endpoint);
         $sess->options['auth'] = $this->moipAuthentication;
@@ -174,7 +173,6 @@ class Moip
     {
         return new Multiorders($this);
     }
-
     /**
      * Create a new Transfers.
      *
@@ -189,6 +187,16 @@ class Moip
     public function transfers()
     {
         return new Transfers($this);
+    }
+
+    /**
+     * Create a new Notification Prefences instance.
+     *
+     * @return NotificationPreferences
+     */
+    public function notifications()
+    {
+        return new NotificationPreferences($this);
     }
 
     /**
