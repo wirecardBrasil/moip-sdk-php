@@ -116,23 +116,6 @@ class NotificationPreferences extends MoipResource
     }
 
     /**
-     * Generate URL to request.
-     *
-     * @param $method
-     * @param $id
-     *
-     * @return string
-     */
-    public function generatePath($method, $id = null)
-    {
-        if (!is_null($id)) {
-            return sprintf('%s/%s/%s/%s', MoipResource::VERSION, self::PATH, $method, $id);
-        }
-        
-        return sprintf('%s/%s/%s', MoipResource::VERSION, self::PATH, $method);
-    }
-
-    /**
      * Mount the notification preference structure.
      *
      * @param \stdClass $response

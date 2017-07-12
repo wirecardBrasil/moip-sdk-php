@@ -143,6 +143,23 @@ abstract class MoipResource implements JsonSerializable
     }
 
     /**
+     * Generate URL to request.
+     *
+     * @param $action
+     * @param $id
+     *
+     * @return string
+     */
+    public function generatePath($action, $id = null)
+    {
+        if (!is_null($id)) {
+            return sprintf('%s/%s/%s/%s', self::VERSION, static::PATH, $action, $id);
+        }
+
+        return sprintf('%s/%s/%s', self::VERSION, static::PATH, $action);
+    }
+
+    /**
      * Execute a http request. If payload == null no body will be sent. Empty body ('{}') is supported by sending a
      * empty stdClass.
      *
