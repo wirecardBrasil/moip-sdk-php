@@ -78,18 +78,25 @@ class Orders extends MoipResource
      * @param string $moipAccount Id MoIP MoIP account that will receive payment values.
      * @param string $type        Define qual o tipo de recebedor do pagamento, valores possíveis: PRIMARY, SECONDARY.
      * @param int    $fixed       Value that the receiver will receive.
+     * @param int    $percentual  Percentual value that the receiver will receive. Possible values: 0 - 100
+     * @param bool   $feePayor    Flag to know if receiver is the payer of Moip tax.
      *
      * @return $this
      */
-    public function addReceiver($moipAccount, $type, $fixed)
+    public function addReceiver($moipAccount, $type, $fixed = null, $percentual = null, $feePayor = false)
     {
         $receiver = new stdClass();
         $receiver->moipAccount = new stdClass();
         $receiver->moipAccount->id = $moipAccount;
         if (!empty($fixed)) {
-        	$receiver->amount = new stdClass();
+            $receiver->amount = new stdClass();
             $receiver->amount->fixed = $fixed;
         }
+        if (!empty($percentual)) {
+            $receiver->amount = new stdClass();
+            $receiver->amount->percentual = $percentual;
+        }
+        $receiver->feePayor = $feePayor;
         $receiver->type = $type;
 
         $this->data->receivers[] = $receiver;
@@ -109,6 +116,9 @@ class Orders extends MoipResource
         $this->data->amount->subtotals = new stdClass();
         $this->data->items = [];
         $this->data->receivers = [];
+        $this->data->checkoutPreferences = new stdClass();
+        $this->data->checkoutPreferences->redirectUrls = new stdClass();
+        $this->data->checkoutPreferences->installments = [];
     }
 
     /**
@@ -141,8 +151,7 @@ class Orders extends MoipResource
         $this->orders->data->amount->subtotals = $response->amount->subtotals;
 
         $customer = new Customer($this->moip);
-        $customer->populate($response->customer);
-        $this->orders->data->customer = $customer;
+        $this->orders->data->customer = $customer->populate($response->customer);
 
         $this->orders->data->payments = $this->structure($response, Payment::PATH, Payment::class);
         $this->orders->data->refunds = $this->structure($response, Refund::PATH, Refund::class);
@@ -423,6 +432,16 @@ class Orders extends MoipResource
     }
 
     /**
+     * Get checkout preferences of the order.
+     *
+     * @return string
+     */
+    public function getCheckoutPreferences()
+    {
+        return $this->getIfSet('checkoutPreferences');
+    }
+
+    /**
      * Structure of payment.
      *
      * @return \Moip\Resource\Payment
@@ -475,6 +494,23 @@ class Orders extends MoipResource
     public function setCustomer(Customer $customer)
     {
         $this->data->customer = $customer;
+
+        return $this;
+    }
+
+    /**
+     * Set customer id associated with the order.
+     *
+     * @param string $id Customer's id.
+     *
+     * @return $this
+     */
+    public function setCustomerId($id)
+    {
+        if (!isset($this->data->customer)) {
+            $this->data->customer = new stdClass();
+        }
+        $this->data->customer->id = $id;
 
         return $this;
     }
@@ -533,6 +569,55 @@ class Orders extends MoipResource
     public function setShippingAmount($value)
     {
         $this->data->amount->subtotals->shipping = (float) $value;
+
+        return $this;
+    }
+
+    /**
+     * Set URL for redirection in case of success.
+     *
+     * @param string $urlSuccess UrlSuccess.
+     *
+     * @return $this
+     */
+    public function setUrlSuccess($urlSuccess = '')
+    {
+        $this->data->checkoutPreferences->redirectUrls->urlSuccess = $urlSuccess;
+
+        return $this;
+    }
+
+    /**
+     * Set URL for redirection in case of failure.
+     *
+     * @param string $urlFailure UrlFailure.
+     *
+     * @return $this
+     */
+    public function setUrlFailure($urlFailure = '')
+    {
+        $this->data->checkoutPreferences->redirectUrls->urlFailure = $urlFailure;
+
+        return $this;
+    }
+
+    /**
+     * Set installment settings for checkout preferences.
+     *
+     * @param array $quantity
+     * @param int   $discountValue
+     * @param int   $additionalValue
+     *
+     * @return $this
+     */
+    public function addInstallmentCheckoutPreferences($quantity, $discountValue = 0, $additionalValue = 0)
+    {
+        $installmentPreferences = new stdClass();
+        $installmentPreferences->quantity = $quantity;
+        $installmentPreferences->discount = $discountValue;
+        $installmentPreferences->addition = $additionalValue;
+
+        $this->data->checkoutPreferences->installments[] = $installmentPreferences;
 
         return $this;
     }

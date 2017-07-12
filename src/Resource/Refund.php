@@ -146,7 +146,7 @@ class Refund extends MoipResource
     /**
      * Bank account is the bank address of a particular vendor or a customer.
      *
-     * @param string                  $type               Kind of refund. possible values: FULL, PARTIAL.
+     * @param string                  $type               Kind of bank account. possible values: CHECKING, SAVING.
      * @param string                  $bankNumber         Bank number. possible values: 001, 237, 341, 041.
      * @param int                     $agencyNumber       Branch number.
      * @param int                     $agencyCheckNumber  Checksum of the agency.
@@ -159,19 +159,20 @@ class Refund extends MoipResource
     private function bankAccount($type, $bankNumber, $agencyNumber, $agencyCheckNumber, $accountNumber, $accountCheckNumber, Customer $holder)
     {
         $data = new stdClass();
-        $data->refundingInstrument = self::METHOD_BANK_ACCOUNT;
-        $data->bankAccount = new stdClass();
-        $data->bankAccount->type = $type;
-        $data->bankAccount->bankNumber = $bankNumber;
-        $data->bankAccount->agencyNumber = $agencyNumber;
-        $data->bankAccount->agencyCheckNumber = $agencyCheckNumber;
-        $data->bankAccount->accountNumber = $accountNumber;
-        $data->bankAccount->accountCheckNumber = $accountCheckNumber;
-        $data->bankAccount->holder = new stdClass();
-        $data->bankAccount->holder->fullname = $holder->getFullname();
-        $data->bankAccount->holder->taxDocument = new stdClass();
-        $data->bankAccount->holder->taxDocument->type = $holder->getTaxDocumentType();
-        $data->bankAccount->holder->taxDocument->number = $holder->getTaxDocumentNumber();
+        $data->refundingInstrument = new stdClass();
+        $data->refundingInstrument->method = self::METHOD_BANK_ACCOUNT;
+        $data->refundingInstrument->bankAccount = new stdClass();
+        $data->refundingInstrument->bankAccount->type = $type;
+        $data->refundingInstrument->bankAccount->bankNumber = $bankNumber;
+        $data->refundingInstrument->bankAccount->agencyNumber = $agencyNumber;
+        $data->refundingInstrument->bankAccount->agencyCheckNumber = $agencyCheckNumber;
+        $data->refundingInstrument->bankAccount->accountNumber = $accountNumber;
+        $data->refundingInstrument->bankAccount->accountCheckNumber = $accountCheckNumber;
+        $data->refundingInstrument->bankAccount->holder = new stdClass();
+        $data->refundingInstrument->bankAccount->holder->fullname = $holder->getFullname();
+        $data->refundingInstrument->bankAccount->holder->taxDocument = new stdClass();
+        $data->refundingInstrument->bankAccount->holder->taxDocument->type = $holder->getTaxDocumentType();
+        $data->refundingInstrument->bankAccount->holder->taxDocument->number = $holder->getTaxDocumentNumber();
 
         return $data;
     }
@@ -179,7 +180,7 @@ class Refund extends MoipResource
     /**
      * Making a full refund to the bank account.
      *
-     * @param string                  $type               Kind of refund. possible values: FULL, PARTIAL.
+     * @param string                  $type               Kind of bank account. possible values: CHECKING, SAVING.
      * @param string                  $bankNumber         Bank number. possible values: 001, 237, 341, 041.
      * @param int                     $agencyNumber       Branch number.
      * @param int                     $agencyCheckNumber  Checksum of the agency.
@@ -199,7 +200,7 @@ class Refund extends MoipResource
     /**
      * Making a partial refund in the bank account.
      *
-     * @param string                  $type               Kind of refund. possible values: FULL, PARTIAL.
+     * @param string                  $type               Kind of bank account. possible values: CHECKING, SAVING.
      * @param string                  $bankNumber         Bank number. possible values: 001, 237, 341, 041.
      * @param int                     $agencyNumber       Branch number.
      * @param int                     $agencyCheckNumber  Checksum of the agency.

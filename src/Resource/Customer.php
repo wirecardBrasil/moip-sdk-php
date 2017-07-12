@@ -54,6 +54,14 @@ class Customer extends MoipResource
     }
 
     /**
+     * @return \Moip\Resource\CustomerCreditCard
+     */
+    public function creditCard()
+    {
+        return new CustomerCreditCard($this->moip);
+    }
+
+    /**
      * Add a new address to the customer.
      *
      * @param string $type       Address type: SHIPPING or BILLING.
@@ -98,10 +106,6 @@ class Customer extends MoipResource
      * Create a new customer.
      *
      * @return \stdClass
-     */
-
-    /**
-     * @return stdClass
      */
     public function create()
     {

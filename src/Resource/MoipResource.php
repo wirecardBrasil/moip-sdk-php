@@ -4,6 +4,7 @@ namespace Moip\Resource;
 
 use JsonSerializable;
 use Moip\Exceptions;
+use Moip\Helper\Links;
 use Moip\Moip;
 use Requests;
 use Requests_Exception;
@@ -76,6 +77,25 @@ abstract class MoipResource implements JsonSerializable
         }
     }
 
+    /**
+     * @return \Moip\Helper\Links
+     */
+    public function getLinks()
+    {
+        $links = $this->getIfSet('_links');
+
+        if ($links !== null) {
+            return new Links($links);
+        }
+    }
+
+    /**
+     * @param $key
+     * @param $fmt
+     * @param stdClass|null $data
+     *
+     * @return bool|\DateTime|null
+     */
     protected function getIfSetDateFmt($key, $fmt, stdClass $data = null)
     {
         $val = $this->getIfSet($key, $data);
@@ -120,6 +140,23 @@ abstract class MoipResource implements JsonSerializable
     public function jsonSerialize()
     {
         return $this->data;
+    }
+
+    /**
+     * Generate URL to request.
+     *
+     * @param $action
+     * @param $id
+     *
+     * @return string
+     */
+    public function generatePath($action, $id = null)
+    {
+        if (!is_null($id)) {
+            return sprintf('%s/%s/%s/%s', self::VERSION, static::PATH, $action, $id);
+        }
+
+        return sprintf('%s/%s/%s', self::VERSION, static::PATH, $action);
     }
 
     /**
@@ -197,17 +234,15 @@ abstract class MoipResource implements JsonSerializable
         return $this->populate($response);
     }
 
-     /**
-      * Returns the HATEOAS structure, if any.
-      * 
-      * @return null|Links
-      */
-     public function getLinks()
-     {
-         $obj = $this->getIfSet('_links');
-
-         if ($obj) {
-            return new Links($obj);
-         }
-     }
+    /**
+     * Delete a new item in Moip.
+     *
+     * @param $path
+     *
+     * @return mixed
+     */
+    public function deleteByPath($path)
+    {
+        return $this->httpRequest($path, Requests::DELETE);
+    }
 }

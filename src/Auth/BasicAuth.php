@@ -1,13 +1,14 @@
 <?php
 
-namespace Moip;
+namespace Moip\Auth;
 
+use Moip\Contracts\Authentication;
 use Requests_Hooks;
 
 /**
- * Class MoipBasicAuth.
+ * Class BasicAuth.
  */
-class MoipBasicAuth implements MoipAuthentication
+class BasicAuth implements Authentication
 {
     /**
      * Token.
@@ -23,12 +24,6 @@ class MoipBasicAuth implements MoipAuthentication
      */
     private $key;
 
-    /**
-     * Create a new MoipBasic instance.
-     *
-     * @param string $token
-     * @param string $key
-     */
     public function __construct($token, $key)
     {
         $this->token = $token;

@@ -3,17 +3,17 @@
 namespace Moip\Tests;
 
 use Moip\Exceptions;
+use Moip\Helper\Utils;
 use Moip\Moip;
-use Moip\Utils;
 use Requests_Exception;
 
 /**
  * class MoipTest.
  */
-class MoipTest extends MoipTestCase
+class MoipTest extends TestCase
 {
     /**
-     * Test should return instance of \Moip\Resource\Customer.
+     * MoipTest should return instance of \Moip\Resource\Customer.
      */
     public function testShouldReceiveInstanceOfCustomer()
     {
@@ -23,7 +23,7 @@ class MoipTest extends MoipTestCase
     }
 
     /**
-     * Test should return instance of \Moip\Resource\Account.
+     * MoipTest should return instance of \Moip\Resource\Account.
      */
     public function testShouldReceiveInstanceOfAccount()
     {
@@ -33,7 +33,7 @@ class MoipTest extends MoipTestCase
     }
 
     /**
-     * Test should return instance of \Moip\Resource\Entry.
+     * MoipTest should return instance of \Moip\Resource\Entry.
      */
     public function testShouldReceiveInstanceOfEntry()
     {
@@ -43,7 +43,7 @@ class MoipTest extends MoipTestCase
     }
 
     /**
-     * Test should return instance of \Moip\Resource\Orders.
+     * MoipTest should return instance of \Moip\Resource\Orders.
      */
     public function testShouldReceiveInstanceOfOrders()
     {
@@ -53,7 +53,7 @@ class MoipTest extends MoipTestCase
     }
 
     /**
-     * Test should return instance of \Moip\Resource\Payment.
+     * MoipTest should return instance of \Moip\Resource\Payment.
      */
     public function testShouldReceiveInstanceOfPayment()
     {
@@ -63,7 +63,7 @@ class MoipTest extends MoipTestCase
     }
 
     /**
-     * Test should return instance of \Moip\Resource\Multiorders.
+     * MoipTest should return instance of \Moip\Resource\Multiorders.
      */
     public function testShouldReceiveInstanceOfMultiorders()
     {
@@ -73,7 +73,7 @@ class MoipTest extends MoipTestCase
     }
 
     /**
-     * Test if a \Moip\Exceptions\testShouldRaiseValidationException is thrown and is correctly constructed.
+     * MoipTest if a \Moip\Exceptions\testShouldRaiseValidationException is thrown and is correctly constructed.
      */
     public function testShouldRaiseValidationException()
     {
@@ -106,7 +106,7 @@ class MoipTest extends MoipTestCase
     }
 
     /**
-     * Test if \Moip\Exceptios\UnautorizedException is thrown.
+     * MoipTest if \Moip\Exceptios\UnautorizedException is thrown.
      */
     public function testShouldRaiseUnautorizedException()
     {
@@ -122,7 +122,7 @@ class MoipTest extends MoipTestCase
     }
 
     /**
-     * Test if UnexpectedException is thrown when 500 http status code is returned.
+     * MoipTest if UnexpectedException is thrown when 500 http status code is returned.
      */
     public function testShouldRaiseUnexpectedException500()
     {
@@ -137,7 +137,7 @@ class MoipTest extends MoipTestCase
     }
 
     /**
-     * Test if UnexpectedException is thrown when a Requests_Exception is thrown.
+     * MoipTest if UnexpectedException is thrown when a Requests_Exception is thrown.
      */
     public function testShouldRaiseUnexpectedExceptionNetworkError()
     {
@@ -162,7 +162,7 @@ class MoipTest extends MoipTestCase
     }
 
     /**
-     * Test if we can connect to the API endpoints.
+     * MoipTest if we can connect to the API endpoints.
      * This is primarily to make user we are using HTTPS urls and the certification verification is ok.
      */
     public function testConnectEndPoints()
@@ -177,7 +177,7 @@ class MoipTest extends MoipTestCase
     }
 
     /**
-     * Test the convertion from money to cents using floats.
+     * MoipTest the convertion from money to cents using floats.
      */
     public function testToCents()
     {

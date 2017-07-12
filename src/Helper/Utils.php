@@ -1,6 +1,6 @@
 <?php
 
-namespace Moip;
+namespace Moip\Helper;
 
 /**
  * Class Utils.

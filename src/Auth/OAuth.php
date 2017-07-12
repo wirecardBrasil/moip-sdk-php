@@ -1,13 +1,14 @@
 <?php
 
-namespace Moip;
+namespace Moip\Auth;
 
+use Moip\Contracts\Authentication;
 use Requests_Hooks;
 
 /**
- * Class MoipOAuth.
+ * Class OAuth.
  */
-class MoipOAuth implements MoipAuthentication
+class OAuth implements Authentication
 {
     /**
      * Access Token.
@@ -17,7 +18,7 @@ class MoipOAuth implements MoipAuthentication
     private $accessToken;
 
     /**
-     * Create a new MoipOAuth instance.
+     * Create a new OAuth instance.
      *
      * @param string $accessToken
      */
