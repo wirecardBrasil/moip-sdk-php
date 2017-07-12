@@ -2,9 +2,9 @@
 
 namespace Moip\Tests\Resource;
 
-use Moip\Tests\TestCase;
 use Moip\Resource\MoipResource;
 use Moip\Resource\NotificationPreferences;
+use Moip\Tests\TestCase;
 
 /**
  * Description of NotificationPreferencesTest.
