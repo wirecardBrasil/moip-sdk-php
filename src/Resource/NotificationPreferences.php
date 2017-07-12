@@ -128,7 +128,7 @@ class NotificationPreferences extends MoipResource
         if (!is_null($id)) {
             return sprintf('%s/%s/%s/%s', MoipResource::VERSION, self::PATH, $method, $id);
         }
-        
+
         return sprintf('%s/%s/%s', MoipResource::VERSION, self::PATH, $method);
     }
 
