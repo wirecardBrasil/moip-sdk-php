@@ -192,6 +192,8 @@ abstract class MoipResource implements JsonSerializable
             $queryParams['q'] = $qParam;
         }
         
+        print_r($queryParams);
+        
         return sprintf('/%s/%s?%s', MoipResource::VERSION, static::PATH, http_build_query($queryParams));
     }
 

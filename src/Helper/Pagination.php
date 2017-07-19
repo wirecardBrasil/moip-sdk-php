@@ -6,6 +6,17 @@ class Pagination
 {
     private $offset = 0;
     private $limit = 100;
+    
+    public function __construct($limit = null, $offset = null)
+    {
+        if (!empty($limit)) {
+            $this->limit = $limit;
+        }
+        
+        if (!empty($offset)) {
+            $this->offset = $offset;
+        }
+    }
 
     public function getOffset()
     {
