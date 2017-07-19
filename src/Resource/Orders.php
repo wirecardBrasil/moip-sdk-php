@@ -448,7 +448,7 @@ class Orders extends MoipResource
      *
      * @return \Moip\Resource\OrdersList
      */
-    public function getList(Pagination $pagination = NULL, Filters $filters = NULL)
+    public function getList(Pagination $pagination = NULL, Filters $filters = NULL, $qParam = '')
     {
         $orderList = new OrdersList($this->moip);
         return $orderList->get($pagination, $filters);

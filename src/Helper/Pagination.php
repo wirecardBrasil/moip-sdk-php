@@ -26,17 +26,4 @@ class Pagination
     {
         $this->limit = $limit;
     }
-    
-    public function __toString()
-    {
-        if ($this->getLimit() == 0) {
-            return '';
-        }
-            
-        if ($this->getOffset() <= 0) {
-            return sprintf('limit=%d', $this->getLimit()); 
-        }
-        
-        return sprintf('limit=%d&offset=%d', $this->getLimit(), $this->getOffset());
-    }
 }

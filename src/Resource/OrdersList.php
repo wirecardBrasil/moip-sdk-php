@@ -41,6 +41,16 @@ class OrdersList extends MoipResource
     }
     
     /**
+     * Get orders.
+     *
+     * @return array
+     */
+    public function getOrders()
+    {
+        return $this->getIfSet('orders');
+    }
+    
+    /**
      * Get an order list in MoIP.
      *
      * @param Pagination $pagination
@@ -50,23 +60,8 @@ class OrdersList extends MoipResource
      * @return stdClass
      */
     public function get(Pagination $pagination = NULL, Filters $filters = NULL, $qParam = '')
-    {
-        if (is_null($pagination)) {
-            $pagination = new Pagination();
-        }
-        
-        $path = sprintf('/%s/%s?%s', MoipResource::VERSION, self::PATH, $pagination->__toString());
-        
-        if (!is_null($filters)) {
-            $path = sprintf('/%s/%s?%s%s&q=%s', MoipResource::VERSION, self::PATH, $pagination->__toString(), $filters->__toString(), $qParam);
-        }
-        
-        return $this->getByPath($path);
-    }
-    
-    public function getOrders()
-    {
-        return $this->getIfSet('orders');
+    {   
+        return $this->getByPath($this->generateListPath($pagination, $filters, $qParam));
     }
     
     protected function populate(stdClass $response)
