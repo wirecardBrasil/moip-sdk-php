@@ -31,29 +31,14 @@ class MoipResourceTest extends TestCase
     {
         $testCases = [];
         
-        $testCases[] = [
-            null,
-            null,
-            null,
-            sprintf('/%s/%s?%s', MoipResource::VERSION, OrdersList::PATH, '')
-        ];
-        
         $filter = new Filters();
         $filter->between('value', 1000, 10000);
         
-        $testCases[] = [
-            new Pagination(10, 0),
-            $filter,
-            null,
-            sprintf('/%s/%s?%s', MoipResource::VERSION, OrdersList::PATH, 'limit=10&offset=0&filters='.urlencode('value::bt(1000,10000)'))
-        ];
+        $pagination = new Pagination(10, 0);
         
-        $testCases[] = [
-            new Pagination(10, 0),
-            $filter,
-            'jose augusto',
-            sprintf('/%s/%s?%s', MoipResource::VERSION, OrdersList::PATH, 'limit=10&offset=0&filters='.urlencode('value::bt(1000,10000)&q='. urlencode('jose augusto')))
-        ];
+        $testCases[] = [null,null,null,sprintf('/%s/%s?%s', MoipResource::VERSION, OrdersList::PATH, '')];
+        $testCases[] = [$pagination,$filter,null,sprintf('/%s/%s?%s', MoipResource::VERSION, OrdersList::PATH, 'limit=10&offset=0&filters='.urlencode('value::bt(1000,10000)'))];
+        $testCases[] = [$pagination,$filter,'jose augusto',sprintf('/%s/%s?%s', MoipResource::VERSION, OrdersList::PATH, 'limit=10&offset=0&filters='.urlencode('value::bt(1000,10000)').'&q='. urlencode('jose augusto'))];
         
         return $testCases;
     }
