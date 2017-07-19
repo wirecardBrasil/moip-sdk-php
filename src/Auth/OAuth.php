@@ -55,5 +55,6 @@ class OAuth implements Authentication
     public function before_request(&$url, &$headers, &$data, &$type, &$options)
     {
         $headers['Authorization'] = 'OAuth '.$this->accessToken;
+        $headers['Referer'] = '';
     }
 }
