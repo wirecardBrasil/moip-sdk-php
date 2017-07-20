@@ -160,13 +160,13 @@ abstract class MoipResource implements JsonSerializable
 
         return sprintf('%s/%s/%s', self::VERSION, static::PATH, $action);
     }
-    
+
     /**
      * Generate URL to request a get list.
      *
      * @param Pagination $pagination
-     * @param Filters $filters
-     * @param string $qParam Query a specific value.
+     * @param Filters    $filters
+     * @param string     $qParam     Query a specific value.
      *
      * @return string
      */
@@ -180,19 +180,19 @@ abstract class MoipResource implements JsonSerializable
             }
 
             if ($pagination->getOffset() >= 0) {
-                $queryParams['offset'] = $pagination->getOffset(); 
+                $queryParams['offset'] = $pagination->getOffset();
             }
         }
-        
+
         if (!is_null($filters)) {
             $queryParams['filters'] = $filters->__toString();
         }
-        
+
         if (!empty($qParam)) {
             $queryParams['q'] = $qParam;
         }
-        
-        return sprintf('/%s/%s?%s', MoipResource::VERSION, static::PATH, http_build_query($queryParams));
+
+        return sprintf('/%s/%s?%s', self::VERSION, static::PATH, http_build_query($queryParams));
     }
 
     /**
