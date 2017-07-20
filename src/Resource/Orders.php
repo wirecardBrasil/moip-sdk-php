@@ -442,7 +442,7 @@ class Orders extends MoipResource
     {
         return $this->getIfSet('checkoutPreferences');
     }
-    
+
     /**
      * Create a new Orders list instance.
      *
@@ -451,6 +451,7 @@ class Orders extends MoipResource
     public function getList(Pagination $pagination = null, Filters $filters = null, $qParam = '')
     {
         $orderList = new OrdersList($this->moip);
+
         return $orderList->get($pagination, $filters, $qParam);
     }
 
