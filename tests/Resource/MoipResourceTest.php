@@ -32,13 +32,13 @@ class MoipResourceTest extends TestCase
         $testCases = [];
         
         $filter = new Filters();
-        $filter->between('value', 1000, 10000);
-        
+        $filter->between('amount', 1000, 10000);
+        $filter->in('status', ['NOT_PAID', 'WAITING']);
         $pagination = new Pagination(10, 0);
         
         $testCases[] = [null,null,null,sprintf('/%s/%s?%s', MoipResource::VERSION, OrdersList::PATH, '')];
-        $testCases[] = [$pagination,$filter,null,sprintf('/%s/%s?%s', MoipResource::VERSION, OrdersList::PATH, 'limit=10&offset=0&filters='.urlencode('value::bt(1000,10000)'))];
-        $testCases[] = [$pagination,$filter,'jose augusto',sprintf('/%s/%s?%s', MoipResource::VERSION, OrdersList::PATH, 'limit=10&offset=0&filters='.urlencode('value::bt(1000,10000)').'&q='. urlencode('jose augusto'))];
+        $testCases[] = [$pagination,$filter,null,sprintf('/%s/%s?%s', MoipResource::VERSION, OrdersList::PATH, 'limit=10&offset=0&filters='.urlencode('amount::bt(1000,10000)|status::in(NOT_PAID,WAITING)'))];
+        $testCases[] = [$pagination,$filter,'jose augusto',sprintf('/%s/%s?%s', MoipResource::VERSION, OrdersList::PATH, 'limit=10&offset=0&filters='.urlencode('amount::bt(1000,10000)|status::in(NOT_PAID,WAITING)').'&q='. urlencode('jose augusto'))];
         
         return $testCases;
     }
