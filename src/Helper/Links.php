@@ -49,6 +49,24 @@ class Links
     }
 
     /**
+     * @param null|string $link
+     *
+     * @return mixed
+     */
+    public function getLink($link)
+    {
+        if (isset($this->links->$link->redirectHref)) {
+            return $this->links->$link->redirectHref;
+        }
+
+        if (isset($this->links->$link->href)) {
+            return $this->links->$link->href;
+        }
+
+        return $this->links->$link;
+    }
+
+    /**
      * @return mixed
      */
     public function getAllCheckout()
@@ -60,8 +78,10 @@ class Links
     {
         $this->checkout = new stdClass();
 
-        foreach ($this->links->checkout as $method => $link) {
-            $this->checkout->$method = $link->redirectHref;
+        if (isset($this->links->checkout)) {
+            foreach ($this->links->checkout as $method => $link) {
+                $this->checkout->$method = $link->redirectHref;
+            }
         }
     }
 }
