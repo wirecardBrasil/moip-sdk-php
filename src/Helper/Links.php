@@ -59,7 +59,7 @@ class Links
             return $this->links->$link->redirectHref;
         }
 
-        if ($this->links->$link->href) {
+        if (isset($this->links->$link->href)) {
             return $this->links->$link->href;
         }
 
