@@ -5,7 +5,7 @@ namespace Moip\Tests\Helper;
 use Moip\Tests\TestCase;
 
 class LinksTest extends TestCase
-{    
+{
     public function testGetLinkWithoutCheckout()
     {
         $this->sandbox_mock = self::MOCK;
