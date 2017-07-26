@@ -5,9 +5,10 @@ namespace Moip\Tests\Helper;
 use Moip\Tests\TestCase;
 
 class LinksTest extends TestCase
-{
+{    
     public function testGetLinkWithoutCheckout()
     {
+        $this->sandbox_mock = self::MOCK;
         $this->mockHttpSession($this->body_order);
         $order = $this->createOrder()->create();
         $this->mockHttpSession($this->body_billet_pay);
@@ -18,6 +19,7 @@ class LinksTest extends TestCase
 
     public function testGetCheckoutLink()
     {
+        $this->sandbox_mock = self::MOCK;
         $this->mockHttpSession($this->body_order);
         $order = $this->createOrder()->create();
 
