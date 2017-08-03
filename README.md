@@ -55,12 +55,12 @@
       - [Com Dados do Cartão](#com-dados-do-cartão)
     - [Com Boleto](#criando-um-pagamento-com-boleto)
   - [Reembolsos](#reembolsos)
-    - [Cartão de crédito](#cartão-de-crédito-2)
+    - [Cartão de crédito](#cartão-de-crédito-1)
       - [Valor Total](#valor-total)
       - [Valor Parcial](#valor-parcial)
-    - [Conta Bancária](#conta-bancaria)
-      - [Valor Total](#valor-total2)
-      - [Valor Parcial](#valor-parcial2)
+    - [Conta Bancária](#conta-bancária)
+      - [Valor Total](#valor-total-1)
+      - [Valor Parcial](#valor-parcial-1)
     - [Consulta](#consulta-2)
   - [Multipedidos](#multipedidos)
     - [Criação](#criando-um-multipedido)
@@ -269,6 +269,7 @@ try {
     printf($e->__toString());
 }
 ```
+
 ### Conta bancária
 #### Valor Total
 ```php
@@ -288,7 +289,7 @@ try {
 ```
 
 #### Valor Parcial
-````php
+```php
 try {
     $amount = 30000;
     $type = 'SAVING';
