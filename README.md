@@ -40,7 +40,7 @@
 
 - [Instalação](#instalação)
 - [Configurando a autenticação](#configurando-a-autenticação)
-  - [Por BasicAuth](#por-basicauth)
+  - [Por BasicAuth](#por-basic-auth)
   - [Por OAuth](#por-oauth)
 - [Exemplos de Uso](#clientes):
   - [Clientes](#clientes)
@@ -198,7 +198,7 @@ try {
 Após criar o pedido basta criar um pagamento nesse pedido.
 
 #### Com hash
-> Esse método requer certificação PCI. [Consulte a documentação.](https://documentao-moip.readme.io/v2.0/reference#criar-pagamento)
+> Para mais detalhes sobre a geração de hash com os dados do cartão [consulte a documentação.](https://dev.moip.com.br/docs/criptografia-de-cartao)
 
 ```php
 try {
@@ -216,7 +216,7 @@ try {
 ```
 
 #### Com dados do cartão
-> Para mais detalhes [consulte a documentação.](https://dev.moip.com.br/docs/criptografia-de-cartao)
+> Esse método requer certificação PCI. [Consulte a documentação.](https://documentao-moip.readme.io/v2.0/reference#criar-pagamento)
 ```php
 try {
     $payment = $order->payments()->setCreditCard(12, 21, '4073020000000002', '123', $customer)
