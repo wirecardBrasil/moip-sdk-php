@@ -12,27 +12,15 @@
 [![Build Status](https://travis-ci.org/moip/moip-sdk-php.svg?branch=master)](https://travis-ci.org/moip/moip-sdk-php)
 [![Circleci Status](https://circleci.com/gh/moip/moip-sdk-php/tree/analysis-qg67K6.svg?style=shield)](#)
 
-> Informações
-
-[![Dependency Status](https://gemnasium.com/moip/moip-sdk-php.svg)](https://gemnasium.com/moip/moip-sdk-php)
-[![Github Issues](http://githubbadges.herokuapp.com/moip/moip-sdk-php/issues.svg?style=square)](https://github.com/moip/moip-sdk-php/issues)
-[![Github Pulls](http://githubbadges.herokuapp.com/moip/moip-sdk-php/pulls.svg?style=square)](https://github.com/moip/moip-sdk-php/issues)
-
 > Estatísticas
 
 [![Total Downloads](https://poser.pugx.org/moip/moip-sdk-php/downloads)](https://packagist.org/packages/moip/moip-sdk-php)
 [![Monthly Downloads](https://poser.pugx.org/moip/moip-sdk-php/d/monthly)](https://packagist.org/packages/moip/moip-sdk-php)
-[![Daily Downloads](https://poser.pugx.org/moip/moip-sdk-php/d/daily)](https://packagist.org/packages/moip/moip-sdk-php)
-![Repo Size](https://reposs.herokuapp.com/?path=Moip/moip-sdk-php)
 
 > Versões
 
 [![Latest Stable Version](https://poser.pugx.org/moip/moip-sdk-php/v/stable)](https://packagist.org/packages/moip/moip-sdk-php)
 [![Latest Unstable Version](https://poser.pugx.org/moip/moip-sdk-php/v/unstable)](https://packagist.org/packages/moip/moip-sdk-php)
-
-> Licença
-
-[![License](https://poser.pugx.org/moip/moip-sdk-php/license)](https://packagist.org/packages/moip/moip-sdk-php)
 
 ---
 
@@ -370,10 +358,6 @@ try {
     printf($e->__toString());
 }
 ```
-
-## Mais exemplos?
-
-Veja mais exemplos na [Wiki](https://github.com/moip/moip-sdk-php/wiki)
 
 ## Documentação
 
