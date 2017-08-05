@@ -298,6 +298,16 @@ class Payment extends MoipResource
     }
 
     /**
+     * Returns installment count.
+     *
+     * @return stdClass
+     */
+    public function getInstallmentCount()
+    {
+        return $this->data->installmentCount;
+    }
+
+    /**
      * Set means of payment.
      *
      * @param \stdClass $fundingInstrument
