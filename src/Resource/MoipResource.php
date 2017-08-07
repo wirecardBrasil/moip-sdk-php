@@ -131,7 +131,13 @@ abstract class MoipResource implements JsonSerializable
      */
     protected function getIfSetDateTime($key, stdClass $data = null)
     {
-        return $this->getIfSetDateFmt($key, \DateTime::ATOM, $data);
+        $rawDateTime = $this->getIfSet($key, $data);
+
+        if (!empty($rawDateTime)) {
+            $dateTime = new \DateTime($rawDateTime);
+
+            return $dateTime ? $dateTime : null;
+        }
     }
 
     /**
