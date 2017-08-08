@@ -135,9 +135,9 @@ abstract class MoipResource implements JsonSerializable
 
         if (!empty($rawDateTime)) {
             $dateTime = new \DateTime($rawDateTime);
-
-            return $dateTime ? $dateTime : null;
         }
+        
+        return $dateTime;
     }
 
     /**
