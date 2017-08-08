@@ -3,6 +3,8 @@
 namespace Moip\Resource;
 
 use ArrayIterator;
+use Moip\Helper\Filters;
+use Moip\Helper\Pagination;
 use stdClass;
 
 /**
@@ -439,6 +441,18 @@ class Orders extends MoipResource
     public function getCheckoutPreferences()
     {
         return $this->getIfSet('checkoutPreferences');
+    }
+
+    /**
+     * Create a new Orders list instance.
+     *
+     * @return \Moip\Resource\OrdersList
+     */
+    public function getList(Pagination $pagination = null, Filters $filters = null, $qParam = '')
+    {
+        $orderList = new OrdersList($this->moip);
+
+        return $orderList->get($pagination, $filters, $qParam);
     }
 
     /**

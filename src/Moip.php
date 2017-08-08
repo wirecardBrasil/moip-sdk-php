@@ -37,7 +37,14 @@ class Moip
      *
      * @const string
      * */
-    const CLIENT = 'Moip SDK';
+    const CLIENT = 'MoipPhpSDK';
+
+    /**
+     * Client Version.
+     *
+     * @const string
+     */
+    const CLIENT_VERSION = '1.3.0';
 
     /**
      * Authentication that will be added to the header of request.
@@ -80,12 +87,7 @@ class Moip
      */
     public function createNewSession($timeout = 30.0, $connect_timeout = 30.0)
     {
-        if (function_exists('posix_uname')) {
-            $uname = posix_uname();
-            $user_agent = sprintf('Mozilla/4.0 (compatible; %s; PHP/%s %s; %s; %s)', self::CLIENT, PHP_SAPI, PHP_VERSION, $uname['sysname'], $uname['machine']);
-        } else {
-            $user_agent = sprintf('Mozilla/4.0 (compatible; %s; PHP/%s %s; %s)', self::CLIENT, PHP_SAPI, PHP_VERSION, PHP_OS);
-        }
+        $user_agent = sprintf('%s/%s (+https://github.com/moip/moip-sdk-php/)', self::CLIENT, self::CLIENT_VERSION);
         $sess = new Requests_Session($this->endpoint);
         $sess->options['auth'] = $this->moipAuthentication;
         $sess->options['timeout'] = $timeout;

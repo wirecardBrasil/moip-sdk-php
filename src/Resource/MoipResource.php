@@ -4,7 +4,9 @@ namespace Moip\Resource;
 
 use JsonSerializable;
 use Moip\Exceptions;
+use Moip\Helper\Filters;
 use Moip\Helper\Links;
+use Moip\Helper\Pagination;
 use Moip\Moip;
 use Requests;
 use Requests_Exception;
@@ -129,7 +131,13 @@ abstract class MoipResource implements JsonSerializable
      */
     protected function getIfSetDateTime($key, stdClass $data = null)
     {
-        return $this->getIfSetDateFmt($key, \DateTime::ATOM, $data);
+        $rawDateTime = $this->getIfSet($key, $data);
+
+        if (!empty($rawDateTime)) {
+            $dateTime = new \DateTime($rawDateTime);
+        }
+
+        return $dateTime;
     }
 
     /**
@@ -157,6 +165,40 @@ abstract class MoipResource implements JsonSerializable
         }
 
         return sprintf('%s/%s/%s', self::VERSION, static::PATH, $action);
+    }
+
+    /**
+     * Generate URL to request a get list.
+     *
+     * @param Pagination $pagination
+     * @param Filters    $filters
+     * @param string     $qParam     Query a specific value.
+     *
+     * @return string
+     */
+    public function generateListPath(Pagination $pagination = null, Filters $filters = null, $qParam = '')
+    {
+        $queryParams = [];
+
+        if (!is_null($pagination)) {
+            if ($pagination->getLimit() != 0) {
+                $queryParams['limit'] = $pagination->getLimit();
+            }
+
+            if ($pagination->getOffset() >= 0) {
+                $queryParams['offset'] = $pagination->getOffset();
+            }
+        }
+
+        if (!is_null($filters)) {
+            $queryParams['filters'] = $filters->__toString();
+        }
+
+        if (!empty($qParam)) {
+            $queryParams['q'] = $qParam;
+        }
+
+        return sprintf('/%s/%s?%s', self::VERSION, static::PATH, http_build_query($queryParams));
     }
 
     /**
