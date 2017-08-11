@@ -53,7 +53,6 @@ class Account extends MoipResource
         $this->data->email = new stdClass();
         $this->data->person = new stdClass();
         $this->data->person->alternativePhones = [];
-        $this->data->company = new stdClass();
         $this->data->type = self::ACCOUNT_TYPE;
     }
 
@@ -521,10 +520,21 @@ class Account extends MoipResource
      */
     public function setCompanyName($name, $businessName)
     {
+        $this->initializeCompany();
         $this->data->company->name = $name;
         $this->data->company->businessName = $businessName;
 
         return $this;
+    }
+
+    /**
+     * Initialize company node.
+     */
+    private function initializeCompany()
+    {
+        if (!isset($this->data->company)) {
+            $this->data->company = new stdClass();
+        }
     }
 
     /**
@@ -539,6 +549,7 @@ class Account extends MoipResource
         if ($openingDate instanceof \DateTime) {
             $openingDate = $openingDate->format('Y-m-d');
         }
+        $this->initializeCompany();
         $this->data->company->openingDate = $openingDate;
 
         return $this;
@@ -553,6 +564,7 @@ class Account extends MoipResource
      */
     public function setCompanyTaxDocument($documentNumber)
     {
+        $this->initializeCompany();
         $this->data->company->taxDocument = new stdClass();
         $this->data->company->taxDocument->type = self::COMPANY_TAX_DOCUMENT;
         $this->data->company->taxDocument->number = $documentNumber;
@@ -569,6 +581,7 @@ class Account extends MoipResource
      */
     public function setCompanyMainActivity($cnae, $description)
     {
+        $this->initializeCompany();
         $this->data->company->mainActivity = new stdClass();
         $this->data->company->mainActivity->cnae = $cnae;
         $this->data->company->mainActivity->description = $description;
@@ -602,6 +615,7 @@ class Account extends MoipResource
         $address->country = $country;
         $address->zipCode = $zip;
 
+        $this->initializeCompany();
         $this->data->company->address = $address;
 
         return $this;
@@ -618,6 +632,7 @@ class Account extends MoipResource
      */
     public function setCompanyPhone($areaCode, $number, $countryCode = 55)
     {
+        $this->initializeCompany();
         $this->data->company->phone = new stdClass();
         $this->data->company->phone->countryCode = $countryCode;
         $this->data->company->phone->areaCode = $areaCode;
