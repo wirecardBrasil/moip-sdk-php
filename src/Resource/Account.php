@@ -526,11 +526,11 @@ class Account extends MoipResource
 
         return $this;
     }
-    
+
     /**
      * Initialize company node.
      */
-    private function initializeCompany() 
+    private function initializeCompany()
     {
         if (!isset($this->data->company)) {
             $this->data->company = new stdClass();
