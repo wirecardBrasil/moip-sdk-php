@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+<a name="v1.3.1"></a>
+### [1.3.1](https://github.com/moip/moip-sdk-php/compare/v1.3.0...v1.3.1) (2017-08-11)
+
+
+#### Bug Fixes
+
+* **Account:**  Fix account create without company set (#157) ([4d7f4bc5](4d7f4bc5))
+
 <a name="1.3.0"></a>
 # [1.3.0](https://github.com/moip/moip-sdk-php/compare/v1.2.0...v1.3.0) (2017-08-08)
 
@@ -29,4 +37,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   ([d327f03](https://github.com/moip/moip-sdk-php/commit/d327f03b5d2449dbac95f3f3cabcd17a19b8853a))
 
 ## BREAKING CHANGES
-Now tests are runned using OAuth authentication instead Basic Auth, because now there are tests to resources that only uses OAuth authentication.
+Now tests are run using OAuth authentication instead Basic Auth, because now there are tests to resources that only uses OAuth authentication.
