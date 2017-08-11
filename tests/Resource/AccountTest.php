@@ -8,7 +8,7 @@ use Moip\Tests\TestCase;
  * Description of AccountTest.
  */
 class AccountTest extends TestCase
-{    
+{
     public function testShouldCreateAccount()
     {
         $this->mockHttpSession($this->body_moip_account);
@@ -30,7 +30,7 @@ class AccountTest extends TestCase
 
         $this->assertNotEmpty($account->getId());
     }
-    
+
     public function testShouldCreateAccountWithCompany()
     {
         $this->mockHttpSession($this->body_moip_account);
