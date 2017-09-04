@@ -323,7 +323,7 @@ class Customer extends MoipResource
      *
      * @return $this
      */
-    public function setCreditCard($expirationMonth, $expirationYear, $number, $cvc, Customer $holder = null)
+    public function setCreditCard($expirationMonth, $expirationYear, $number, $cvc, Customer $holder = null, $holderName = null)
     {
         if ($holder === null) {
             $holder = $this;
@@ -341,7 +341,11 @@ class Customer extends MoipResource
         $this->data->fundingInstrument->creditCard->number = $number;
         $this->data->fundingInstrument->creditCard->cvc = $cvc;
         $this->data->fundingInstrument->creditCard->holder = new stdClass();
-        $this->data->fundingInstrument->creditCard->holder->fullname = $holder->getFullname();
+        if ($holderName) {
+            $this->data->fundingInstrument->creditCard->holder->fullname = $holderName;
+        } else {
+            $this->data->fundingInstrument->creditCard->holder->fullname = $holder->getFullname();
+        }
         $this->data->fundingInstrument->creditCard->holder->birthdate = $birthdate;
         $this->data->fundingInstrument->creditCard->holder->taxDocument = new stdClass();
         $this->data->fundingInstrument->creditCard->holder->taxDocument->type = $holder->getTaxDocumentType();
