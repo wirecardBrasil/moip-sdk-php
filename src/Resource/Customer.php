@@ -341,7 +341,7 @@ class Customer extends MoipResource
         $this->data->fundingInstrument->creditCard->number = $number;
         $this->data->fundingInstrument->creditCard->cvc = $cvc;
         $this->data->fundingInstrument->creditCard->holder = new stdClass();
-        if ($holderName){
+        if ($holderName) {
             $this->data->fundingInstrument->creditCard->holder->fullname = $holderName;
         } else {
             $this->data->fundingInstrument->creditCard->holder->fullname = $holder->getFullname();
