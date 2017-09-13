@@ -133,6 +133,7 @@ abstract class MoipResource implements JsonSerializable
     {
         $rawDateTime = $this->getIfSet($key, $data);
 
+        $dateTime = null;
         if (!empty($rawDateTime)) {
             $dateTime = new \DateTime($rawDateTime);
         }
