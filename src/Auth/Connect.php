@@ -500,7 +500,7 @@ class Connect implements Authentication, JsonSerializable
      *
      * @return \Moip\Auth\Connect
      */
-    public function setEndpoint(string $endpoint)
+    public function setEndpoint($endpoint)
     {
         if (!in_array($endpoint, [self::ENDPOINT_SANDBOX, self::ENDPOINT_PRODUCTION])) {
             throw new InvalidArgumentException('Endpoint inválido.');
@@ -536,7 +536,7 @@ class Connect implements Authentication, JsonSerializable
      *
      * @return \Moip\Auth\Connect
      */
-    public function setCode(string $code)
+    public function setCode($code)
     {
         $this->code = $code;
 
