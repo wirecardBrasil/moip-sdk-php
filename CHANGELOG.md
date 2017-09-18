@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+<a name="v1.3.2"></a>
+### [1.3.2](https://github.com/moip/moip-sdk-php/compare/v1.3.0...v1.3.2) (2017-09-18)
+
+
+#### Bug Fixes
+- **MoipResource:** Initializing variable to prevent E_NOTICE ([42ee471](https://github.com/moip/moip-sdk-php/commit/42ee471ce2b2131cb326f434fd2a105ceb7f1f45))
+- **Connect:** Removing type declaration from methods to compatibility with PHP older versions ([77abe58](https://github.com/moip/moip-sdk-php/commit/77abe58da9e5b658160f1a279ba6227e9ade4409))
+
 <a name="v1.3.1"></a>
 ### [1.3.1](https://github.com/moip/moip-sdk-php/compare/v1.3.0...v1.3.1) (2017-08-11)
 
