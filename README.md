@@ -34,6 +34,8 @@
   - [Clientes](#clientes)
     - [Criação](#criando-um-comprador)
     - [Consulta](#consultando-os-dados-de-um-comprador)
+    - [Adicionar cartão de crédito](#adicionar-cartão-de-crédito)
+    - [Deletar cartão de crédito](#deletar-cartão-de-crédito)
   - [Pedidos](#pedidos)
     - [Criação](#criando-um-pedido-com-o-comprador-que-acabamos-de-criar)
     - [Consulta](#consultando-um-pedido)
@@ -139,6 +141,33 @@ try {
     $customer_id = 'CUS-Q3BL0CAJ2G33';
     $customer = $moip->customers()->get($customer_id);
     print_r($customer);
+} catch (Exception $e) {
+    printf($e->__toString());
+}
+```
+
+### Adicionar cartão de crédito
+```php
+try {
+    $customer = $moip->customers()->creditCard()
+        ->setExpirationMonth('05')
+        ->setExpirationYear(2018)
+        ->setNumber('4012001037141112')
+        ->setCVC('123')
+        ->setFullName('Jose Portador da Silva')
+        ->setBirthDate('1988-12-30')
+        ->setTaxDocument('CPF', '33333333333')
+        ->setPhone('55','11','66778899')
+        ->create(CUSTOMER_ID);
+} catch (Exception $e) {
+    printf($e->__toString());
+}
+```
+
+### Deletar cartão de crédito
+```php
+try {
+    $moip->customers()->creditCard()->delete(CREDIT_CARD_ID);
 } catch (Exception $e) {
     printf($e->__toString());
 }
