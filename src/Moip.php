@@ -44,7 +44,7 @@ class Moip
      *
      * @const string
      */
-    const CLIENT_VERSION = '1.3.1';
+    const CLIENT_VERSION = '1.3.2';
 
     /**
      * Authentication that will be added to the header of request.

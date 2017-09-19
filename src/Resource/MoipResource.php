@@ -133,6 +133,7 @@ abstract class MoipResource implements JsonSerializable
     {
         $rawDateTime = $this->getIfSet($key, $data);
 
+        $dateTime = null;
         if (!empty($rawDateTime)) {
             $dateTime = new \DateTime($rawDateTime);
         }
@@ -243,8 +244,10 @@ abstract class MoipResource implements JsonSerializable
             throw new Exceptions\UnautorizedException();
         } elseif ($code >= 400 && $code <= 499) {
             $errors = Exceptions\Error::parseErrors($response_body);
+
             throw new Exceptions\ValidationException($code, $errors);
         }
+
         throw new Exceptions\UnexpectedException();
     }
 
