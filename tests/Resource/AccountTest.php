@@ -60,4 +60,15 @@ class AccountTest extends TestCase
         $this->assertEquals('66448899', $account->getAlternativePhones()[0]->number);
         $this->assertEquals('Teste Empresa ME', $account->getCompany()->businessName);
     }
+
+    public function testCheckExistingAccount()
+    {
+           
+    }
+
+    public function testCheckNonExistingAccount()
+    {
+
+    }
+
 }

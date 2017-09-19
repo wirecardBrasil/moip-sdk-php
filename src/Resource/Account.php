@@ -131,6 +131,18 @@ class Account extends MoipResource
     }
 
     /**
+     * Check if an account exists.
+     *
+     * @param string $moip_id
+     *
+     * @return stdClass
+     */
+     public function checkAccountExists($moip_id)
+     {
+         return $this->getByPath(sprintf('/%s/%s/%s?tax_document=%s', MoipResource::VERSION, self::PATH, 'exists', $moip_id));
+     }
+
+    /**
      * Get account id.
      *
      * @return string The buyer id.
