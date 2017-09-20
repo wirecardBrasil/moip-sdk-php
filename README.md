@@ -10,7 +10,6 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/9e877cf78f844b9a9e40cec175c3aa5a)](https://www.codacy.com/app/jeancesargarcia/moip-sdk-php?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=moip/moip-sdk-php&amp;utm_campaign=Badge_Grade)
 [![StyleCI](https://styleci.io/repos/19941899/shield)](https://styleci.io/repos/19941899)
 [![Build Status](https://travis-ci.org/moip/moip-sdk-php.svg?branch=master)](https://travis-ci.org/moip/moip-sdk-php)
-[![Circleci Status](https://circleci.com/gh/moip/moip-sdk-php/tree/analysis-qg67K6.svg?style=shield)](#)
 
 > Estatísticas
 
@@ -57,6 +56,10 @@
     - [Consulta](#consultando-um-multipedido)
   - [Multipagamentos](#multipagamentos)
     - [Criação](#criando-um-multipagamento)
+  - [Conta Moip](#conta-moip)
+    - [Criação](#criação)
+    - [Consulta](#consulta-3)
+    - [Verifica se usuário já possui Conta Moip](#verifica-se-usuário-já-possui-conta-moip)
   - [Webhooks](#webhooks)    
 - [Packages](#packages)
 - [Documentação](#documentação)
@@ -379,14 +382,73 @@ try {
     $hash = 'i1naupwpTLrCSXDnigLLTlOgtm+xBWo6iX54V/hSyfBeFv3rvqa1VyQ8/pqWB2JRQX2GhzfGppXFPCmd/zcmMyDSpdnf1GxHQHmVemxu4AZeNxs+TUAbFWsqEWBa6s95N+O4CsErzemYZHDhsjEgJDe17EX9MqgbN3RFzRmZpJqRvqKXw9abze8hZfEuUJjC6ysnKOYkzDBEyQibvGJjCv3T/0Lz9zFruSrWBw+NxWXNZjXSY0KF8MKmW2Gx1XX1znt7K9bYNfhA/QO+oD+v42hxIeyzneeRcOJ/EXLEmWUsHDokevOkBeyeN4nfnET/BatcDmv8dpGXrTPEoxmmGQ==';
     $payment = $multiorder->multipayments()
         ->setCreditCardHash($hash, $customer)
-	->setInstallmentCount(3)
-	->setStatementDescriptor('teste de pag')
-	->setDelayCapture(false)
-	->execute();
-	print_r($payment);
+        ->setInstallmentCount(3)
+        ->setStatementDescriptor('teste de pag')
+        ->setDelayCapture(false)
+        ->execute();
+    print_r($payment);
 } catch (Exception $e) {
     printf($e->__toString());
 }
+```
+
+## Conta Moip
+
+### Criação
+```php
+try {
+    $street = 'Rua de teste';
+    $number = 123;
+    $district = 'Bairro';
+    $city = 'Sao Paulo';
+    $state = 'SP';
+    $zip = '01234567';
+    $complement = 'Apt. 23';
+    $country = 'BRA';
+    $area_code = 11;
+    $phone_number = 66778899;
+    $country_code = 55;
+    $identity_document = '4737283560';
+    $issuer = 'SSP';
+    $issue_date = '2015-06-23';
+    $account = $moip->accounts()
+        ->setName('Fulano')
+        ->setLastName('De Tal')
+        ->setEmail('fulano@email2.com')
+        ->setIdentityDocument($identity_document, $issuer, $issue_date)
+        ->setBirthDate('1988-12-30')
+        ->setTaxDocument('16262131000')
+        ->setType('MERCHANT')
+        ->setPhone($area_code, $phone_number, $country_code)
+        ->addAlternativePhone(11, 66448899, 55)
+        ->addAddress($street, $number, $district, $city, $state, $zip, $complement, $country)        
+        ->setCompanyName('Empresa Teste', 'Teste Empresa ME')
+        ->setCompanyOpeningDate('2011-01-01')
+        ->setCompanyPhone(11, 66558899, 55)
+        ->setCompanyTaxDocument('69086878000198')
+        ->setCompanyAddress('Rua de teste 2', 123, 'Bairro Teste', 'Sao Paulo', 'SP', '01234567', 'Apt. 23', 'BRA')
+        ->setCompanyMainActivity('82.91-1/00', 'Atividades de cobranças e informações cadastrais')
+        ->create();
+    print_r($account);
+} catch (Exception $e) {
+    printf($e->__toString());
+}
+```
+
+### Consulta
+```php
+try {	
+	$account = $moip->accounts()->get(ACCOUNT_ID);
+	print_r($account);
+} catch (Exception $e) {
+	printf($e->__toString());
+}
+```
+
+### Verifica se usuário já possui conta Moip
+```php
+// retorna verdadeiro se já possui e falso caso não possuir conta Moip
+$moip->accounts()->checkAccountExists(CPF);
 ```
 
 ## Webhooks
