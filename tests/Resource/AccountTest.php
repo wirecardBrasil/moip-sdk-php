@@ -72,5 +72,4 @@ class AccountTest extends TestCase
         $this->mockHttpSession('', 404);
         $this->assertFalse($this->moip->accounts()->checkAccountExists('412.309.725-10'));
     }
-
 }

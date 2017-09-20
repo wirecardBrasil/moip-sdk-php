@@ -149,6 +149,7 @@ class Account extends MoipResource
                 throw new ValidationException($e->getStatusCode(), $e->getErrors());
             }
         }
+
         return false;
     }
 

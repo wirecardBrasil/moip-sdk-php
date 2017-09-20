@@ -87,7 +87,7 @@ class CustomerTest extends TestCase
             ->setTaxDocument('CPF', '33333333333')
             ->setPhone('55', '11', '66778899')
             ->create($customer->getId());
-        
+
         $this->assertNotEmpty($creditCard->getId());
         $this->assertEquals($creditCard->getFirst6(), '401200');
         $this->assertEquals($creditCard->getLast4(), '1112');
