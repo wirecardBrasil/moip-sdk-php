@@ -113,7 +113,8 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
     protected $last_ord_id = 'meu_id_pedido';
     protected $sandbox_mock = self::MOCK;
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
 
         $this->body_client = $this->readJsonFile('jsons/customer/create');
@@ -163,10 +164,10 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
-    * Method to read JSON from a file.
-    *
-    * @param string $filename location of file
-    */
+     * Method to read JSON from a file.
+     *
+     * @param string $filename location of file
+     */
     public function readJsonFile($filename)
     {
         return file_get_contents("$filename.json", FILE_USE_INCLUDE_PATH);

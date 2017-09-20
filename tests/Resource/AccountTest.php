@@ -2,7 +2,6 @@
 
 namespace Moip\Tests\Resource;
 
-use Moip\Exceptions;
 use Moip\Tests\TestCase;
 
 /**
@@ -70,7 +69,7 @@ class AccountTest extends TestCase
 
     public function testCheckNonExistingAccount()
     {
-        $this->mockHttpSession('', 404);        
+        $this->mockHttpSession('', 404);
         $this->assertFalse($this->moip->accounts()->checkAccountExists('412.309.725-10'));
     }
 

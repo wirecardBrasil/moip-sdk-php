@@ -138,19 +138,19 @@ class Account extends MoipResource
      *
      * @return stdClass
      */
-     public function checkAccountExists($tax_document)
-     {
+    public function checkAccountExists($tax_document)
+    {
         try {
             $this->getByPathNoPopulate(sprintf('/%s/%s/%s?tax_document=%s', MoipResource::VERSION, self::PATH, 'exists', $tax_document));
 
             return true;
-        } catch (ValidationException $e) {                        
+        } catch (ValidationException $e) {
             if ($e->getStatusCode() != 404) {
                 throw new ValidationException($e->getStatusCode(), $e->getErrors());
             }
         }
         return false;
-     }
+    }
 
     /**
      * Get account id.

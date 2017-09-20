@@ -68,9 +68,10 @@ class CustomerTest extends TestCase
     }
 
     /**
-    * MoipTest create credit card for customer.
-    */
-    public function testCreateCreditCard() {
+     * MoipTest create credit card for customer.
+     */
+    public function testCreateCreditCard()
+    {
         $this->mockHttpSession($this->body_client);
         $customer = $this->createCustomer()->create();
 
@@ -84,7 +85,7 @@ class CustomerTest extends TestCase
             ->setFullName('Jose Portador da Silva')
             ->setBirthDate('1988-12-30')
             ->setTaxDocument('CPF', '33333333333')
-            ->setPhone('55','11','66778899')
+            ->setPhone('55', '11', '66778899')
             ->create($customer->getId());
         
         $this->assertNotEmpty($creditCard->getId());

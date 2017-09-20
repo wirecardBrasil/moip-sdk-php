@@ -260,8 +260,8 @@ abstract class MoipResource implements JsonSerializable
      */
     public function getByPath($path)
     {
-        $response = $this->httpRequest($path, Requests::GET);        
-        
+        $response = $this->httpRequest($path, Requests::GET);
+
         return $this->populate($response);
     }
 
@@ -272,10 +272,10 @@ abstract class MoipResource implements JsonSerializable
      *
      * @return stdClass
      */
-     public function getByPathNoPopulate($path)
-     {
-         return $this->httpRequest($path, Requests::GET);                          
-     }
+    public function getByPathNoPopulate($path)
+    {
+        return $this->httpRequest($path, Requests::GET);
+    }
 
     /**
      * Create a new item in Moip.

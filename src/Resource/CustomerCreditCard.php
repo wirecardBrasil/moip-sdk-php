@@ -257,10 +257,10 @@ class CustomerCreditCard extends MoipResource
     /**
      * Get if a credit card was stored or not.
      *
-     * @return boolean
+     * @return bool
      */
-     public function getStore()
-     {
-         return $this->data->creditCard->store;
-     }
+    public function getStore()
+    {
+        return $this->data->creditCard->store;
+    }
 }
