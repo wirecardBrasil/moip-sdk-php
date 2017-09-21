@@ -60,7 +60,8 @@
     - [Criação](#criação)
     - [Consulta](#consulta-3)
     - [Verifica se usuário já possui Conta Moip](#verifica-se-usuário-já-possui-conta-moip)
-  - [Webhooks](#webhooks)    
+  - [Webhooks](#webhooks) 
+    - [Consulta](#consulta-4)
 - [Packages](#packages)
 - [Documentação](#documentação)
 - [Testes](#testes)
@@ -460,6 +461,18 @@ Para receber e acessar os dados enviados pelo Moip, você precisa adicionar o se
 $json = file_get_contents('php://input');
 // Converte os dados recebidos
 $response = json_decode($json, true);
+```
+
+### Consulta
+
+#### Sem paginação ou filtro por resource/evento
+```php
+$moip->webhooks()->get();
+```
+
+#### Com paginação e filtros por resource/evento
+```php
+$moip->webhooks()->get(new Pagination(10, 0), 'ORD-ID', 'ORDER.PAID');
 ```
 
 ## Documentação
