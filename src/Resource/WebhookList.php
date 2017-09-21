@@ -40,8 +40,8 @@ class WebhookList extends MoipResource
      * Get a webhook.
      *
      * @param Pagination $pagination
-     * @param string $resource_id
-     * @param string $event
+     * @param string     $resource_id
+     * @param string     $event
      *
      * @return stdClass
      */
@@ -71,9 +71,9 @@ class WebhookList extends MoipResource
     {
         $webhookList = clone $this;
         $webhookList->data = new stdClass();
- 
+
         $webhookList->data->webhooks = $response->webhooks;
- 
+
         return $webhookList;
     }
 }

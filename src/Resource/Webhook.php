@@ -23,7 +23,7 @@ class Webhook extends MoipResource
     {
         return $this->getIfSet('id');
     }
- 
+
     /**
      * Get resource id.
      *
@@ -33,7 +33,7 @@ class Webhook extends MoipResource
     {
         return $this->getIfSet('resourceId');
     }
- 
+
     /**
      * Get event.
      *
@@ -43,7 +43,7 @@ class Webhook extends MoipResource
     {
         return $this->getIfSet('event');
     }
- 
+
     /**
      * Get url.
      *
@@ -53,7 +53,7 @@ class Webhook extends MoipResource
     {
         return $this->getIfSet('url');
     }
- 
+
     /**
      * Get webhook status.
      *
@@ -75,13 +75,13 @@ class Webhook extends MoipResource
     {
         $webhook = clone $this;
         $webhook->data = new stdClass();
-  
+
         $webhook->data->id = $response->id;
         $webhook->data->event = $response->event;
         $webhook->data->url = $response->url;
         $webhook->data->resourceId = $response->resourceId;
         $webhook->data->status = $response->status;
-  
+
         return $webhook;
     }
 }
