@@ -11,6 +11,7 @@ use Moip\Resource\NotificationPreferences;
 use Moip\Resource\Orders;
 use Moip\Resource\Payment;
 use Moip\Resource\Transfers;
+use Moip\Resource\WebhookList;
 use Requests_Session;
 
 /**
@@ -201,6 +202,16 @@ class Moip
     {
         return new NotificationPreferences($this);
     }
+
+    /**
+     * Create a new WebhookList instance.
+     *
+     * @return WebhookList
+     */
+     public function webhooks()
+     {
+         return new WebhookList($this);
+     }
 
     /**
      * Get the endpoint.
