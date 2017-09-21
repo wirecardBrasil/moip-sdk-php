@@ -2,6 +2,7 @@
 
 namespace Moip\Resource;
 
+use Moip\Exceptions\ValidationException;
 use stdClass;
 
 /**
@@ -128,6 +129,28 @@ class Account extends MoipResource
     public function get($moip_id)
     {
         return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, self::PATH, $moip_id));
+    }
+
+    /**
+     * Check if an account exists.
+     *
+     * @param string $tax_document
+     *
+     * @return bool
+     */
+    public function checkExistence($tax_document)
+    {
+        try {
+            $this->getByPathNoPopulate(sprintf('/%s/%s/%s?tax_document=%s', MoipResource::VERSION, self::PATH, 'exists', $tax_document));
+
+            return true;
+        } catch (ValidationException $e) {
+            if ($e->getStatusCode() != 404) {
+                throw new ValidationException($e->getStatusCode(), $e->getErrors());
+            }
+        }
+
+        return false;
     }
 
     /**

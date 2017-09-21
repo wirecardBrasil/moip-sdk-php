@@ -11,6 +11,18 @@ use Moip\Tests\TestCase;
 
 class MoipResourceTest extends TestCase
 {
+    private $filter;
+    private $pagination;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->filter = new Filters();
+        $this->filter->between('amount', 1000, 10000);
+        $this->filter->in('status', ['NOT_PAID', 'WAITING']);
+        $this->pagination = new Pagination(10, 0);
+    }
+
     public function testEndpointGeneratePath()
     {
         $path = $this->moip->notifications()->generatePath('notifications', 'NPR-CQU74AQOIVCV');
@@ -18,28 +30,21 @@ class MoipResourceTest extends TestCase
         $this->assertEquals($expected, $path);
     }
 
-    /**
-     * @dataProvider provider
-     */
-    public function testEndpointGenerateListPath($pagination, $filter, $qParam, $expected)
+    public function testEndpointGenerateListPathNoParams()
     {
-        $path = $this->moip->orders()->generateListPath($pagination, $filter, $qParam);
-        $this->assertEquals($expected, $path);
+        $path = $this->moip->orders()->generateListPath();
+        $this->assertEquals(sprintf('/%s/%s?%s', MoipResource::VERSION, OrdersList::PATH, ''), $path);
     }
 
-    public function provider()
+    public function testEndpointGenerateListPaginationFilter()
     {
-        $testCases = [];
+        $path = $this->moip->orders()->generateListPath($this->pagination, $this->filter, null);
+        $this->assertEquals(sprintf('/%s/%s?%s', MoipResource::VERSION, OrdersList::PATH, 'limit=10&offset=0&filters='.urlencode('amount::bt(1000,10000)|status::in(NOT_PAID,WAITING)')), $path);
+    }
 
-        $filter = new Filters();
-        $filter->between('amount', 1000, 10000);
-        $filter->in('status', ['NOT_PAID', 'WAITING']);
-        $pagination = new Pagination(10, 0);
-
-        $testCases[] = [null, null, null, sprintf('/%s/%s?%s', MoipResource::VERSION, OrdersList::PATH, '')];
-        $testCases[] = [$pagination, $filter, null, sprintf('/%s/%s?%s', MoipResource::VERSION, OrdersList::PATH, 'limit=10&offset=0&filters='.urlencode('amount::bt(1000,10000)|status::in(NOT_PAID,WAITING)'))];
-        $testCases[] = [$pagination, $filter, 'jose augusto', sprintf('/%s/%s?%s', MoipResource::VERSION, OrdersList::PATH, 'limit=10&offset=0&filters='.urlencode('amount::bt(1000,10000)|status::in(NOT_PAID,WAITING)').'&q='.urlencode('jose augusto'))];
-
-        return $testCases;
+    public function testEndpointGenerateListAllParams()
+    {
+        $path = $this->moip->orders()->generateListPath($this->pagination, $this->filter, 'jose augusto');
+        $this->assertEquals(sprintf('/%s/%s?%s', MoipResource::VERSION, OrdersList::PATH, 'limit=10&offset=0&filters='.urlencode('amount::bt(1000,10000)|status::in(NOT_PAID,WAITING)').'&q='.urlencode('jose augusto')), $path);
     }
 }
