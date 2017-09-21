@@ -15,26 +15,26 @@ class WebhookList extends MoipResource
      *
      * @const string
      */
-    const PATH = 'webhooks';    
+    const PATH = 'webhooks';
 
     /**
      * Initialize a new instance.
      */
     public function initialize()
     {
-        $this->data = new stdClass();        
+        $this->data = new stdClass();
         $this->data->webhooks = [];
-    } 
+    }
 
     /**
      * Get webhooks.
      *
      * @return array
      */
-     public function getWebhooks()
-     {
-         return $this->getIfSet('webhooks');
-     }
+    public function getWebhooks()
+    {
+        return $this->getIfSet('webhooks');
+    }
 
     /**
      * Get a webhook.
@@ -49,13 +49,11 @@ class WebhookList extends MoipResource
     {
         $params = [];
 
-        if (!is_null($resource_id))
-        {
+        if (!is_null($resource_id)) {
             $params['resourceId'] = $resource_id;
         }
 
-        if (!is_null($event))
-        {
+        if (!is_null($event)) {
             $params['event'] = $event;
         }
 
@@ -63,19 +61,19 @@ class WebhookList extends MoipResource
     }
 
     /**
-     * Mount the seller structure from account.
+     * Mount structure of Webhook List.
      *
      * @param \stdClass $response
      *
-     * @return \Moip\Resource\Webhook Webhook List
+     * @return \Moip\Resource\WebhookList Webhook List
      */
-     protected function populate(stdClass $response)
-     {
-         $webhookList = clone $this;
-         $webhookList->data = new stdClass();
+    protected function populate(stdClass $response)
+    {
+        $webhookList = clone $this;
+        $webhookList->data = new stdClass();
  
-         $webhookList->data->webhooks = $response->webhooks;
+        $webhookList->data->webhooks = $response->webhooks;
  
-         return $webhookList;
-     }
+        return $webhookList;
+    }
 }

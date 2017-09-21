@@ -208,10 +208,10 @@ class Moip
      *
      * @return WebhookList
      */
-     public function webhooks()
-     {
-         return new WebhookList($this);
-     }
+    public function webhooks()
+    {
+        return new WebhookList($this);
+    }
 
     /**
      * Get the endpoint.
