@@ -136,9 +136,9 @@ class Account extends MoipResource
      *
      * @param string $tax_document
      *
-     * @return stdClass
+     * @return bool
      */
-    public function checkAccountExists($tax_document)
+    public function checkExistence($tax_document)
     {
         try {
             $this->getByPathNoPopulate(sprintf('/%s/%s/%s?tax_document=%s', MoipResource::VERSION, self::PATH, 'exists', $tax_document));

@@ -64,12 +64,12 @@ class AccountTest extends TestCase
     public function testCheckExistingAccount()
     {
         $this->mockHttpSession('', 200);
-        $this->assertTrue($this->moip->accounts()->checkAccountExists('123.456.798-91'));
+        $this->assertTrue($this->moip->accounts()->checkExistence('123.456.798-91'));
     }
 
     public function testCheckNonExistingAccount()
     {
         $this->mockHttpSession('', 404);
-        $this->assertFalse($this->moip->accounts()->checkAccountExists('412.309.725-10'));
+        $this->assertFalse($this->moip->accounts()->checkExistence('412.309.725-10'));
     }
 }
