@@ -180,7 +180,7 @@ abstract class MoipResource implements JsonSerializable
     public function generateListPath(Pagination $pagination = null, Filters $filters = null, $params = [])
     {
         if (is_string($params)) {
-            trigger_error("The method generateListPath(Pagination, Filters, string) is deprecated, use generateListPath(Pagination, Filters, array) instead. The method will become private in the next release.", E_USER_NOTICE);
+            trigger_error('The method generateListPath(Pagination, Filters, string) is deprecated, use generateListPath(Pagination, Filters, array) instead. The method will become private in the next release.', E_USER_NOTICE);
         }
 
         $queryParams = [];
