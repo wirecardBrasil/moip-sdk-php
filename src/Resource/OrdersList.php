@@ -60,7 +60,7 @@ class OrdersList extends MoipResource
      */
     public function get(Pagination $pagination = null, Filters $filters = null, $qParam = '')
     {
-        return $this->getByPath($this->generateListPath($pagination, $filters, $qParam));
+        return $this->getByPath($this->generateListPath($pagination, $filters, ['q' => $qParam]));
     }
 
     protected function populate(stdClass $response)

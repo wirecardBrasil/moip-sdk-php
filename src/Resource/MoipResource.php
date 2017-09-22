@@ -173,12 +173,16 @@ abstract class MoipResource implements JsonSerializable
      *
      * @param Pagination $pagination
      * @param Filters    $filters
-     * @param string     $qParam     Query a specific value.
+     * @param array      $params
      *
      * @return string
      */
-    public function generateListPath(Pagination $pagination = null, Filters $filters = null, $otherParams = [])
+    public function generateListPath(Pagination $pagination = null, Filters $filters = null, $params = [])
     {
+        if (is_string($params)) {
+            trigger_error("The method generateListPath(Pagination, Filters, string) is deprecated, use generateListPath(Pagination, Filters, array) instead. The method will become private in the next release.", E_USER_NOTICE);
+        }
+
         $queryParams = [];
 
         if (!is_null($pagination)) {
@@ -195,8 +199,8 @@ abstract class MoipResource implements JsonSerializable
             $queryParams['filters'] = $filters->__toString();
         }
 
-        if (!empty($otherParams)) {
-            $queryParams = array_merge($queryParams, $otherParams);
+        if (!empty($params)) {
+            $queryParams = array_merge($queryParams, $params);
         }
 
         if (!empty($queryParams)) {
