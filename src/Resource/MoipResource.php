@@ -173,11 +173,11 @@ abstract class MoipResource implements JsonSerializable
      *
      * @param Pagination $pagination
      * @param Filters    $filters
-     * @param string     $qParam     Query a specific value.
+     * @param array      $params
      *
      * @return string
      */
-    public function generateListPath(Pagination $pagination = null, Filters $filters = null, $qParam = '')
+    public function generateListPath(Pagination $pagination = null, Filters $filters = null, $params = [])
     {
         $queryParams = [];
 
@@ -195,11 +195,15 @@ abstract class MoipResource implements JsonSerializable
             $queryParams['filters'] = $filters->__toString();
         }
 
-        if (!empty($qParam)) {
-            $queryParams['q'] = $qParam;
+        if (!empty($params)) {
+            $queryParams = array_merge($queryParams, $params);
         }
 
-        return sprintf('/%s/%s?%s', self::VERSION, static::PATH, http_build_query($queryParams));
+        if (!empty($queryParams)) {
+            return sprintf('/%s/%s?%s', self::VERSION, static::PATH, http_build_query($queryParams));
+        }
+
+        return sprintf('/%s/%s', self::VERSION, static::PATH);
     }
 
     /**

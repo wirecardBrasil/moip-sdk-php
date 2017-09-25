@@ -33,7 +33,7 @@ class MoipResourceTest extends TestCase
     public function testEndpointGenerateListPathNoParams()
     {
         $path = $this->moip->orders()->generateListPath();
-        $this->assertEquals(sprintf('/%s/%s?%s', MoipResource::VERSION, OrdersList::PATH, ''), $path);
+        $this->assertEquals(sprintf('/%s/%s', MoipResource::VERSION, OrdersList::PATH), $path);
     }
 
     public function testEndpointGenerateListPaginationFilter()
@@ -44,7 +44,7 @@ class MoipResourceTest extends TestCase
 
     public function testEndpointGenerateListAllParams()
     {
-        $path = $this->moip->orders()->generateListPath($this->pagination, $this->filter, 'jose augusto');
+        $path = $this->moip->orders()->generateListPath($this->pagination, $this->filter, ['q' => 'jose augusto']);
         $this->assertEquals(sprintf('/%s/%s?%s', MoipResource::VERSION, OrdersList::PATH, 'limit=10&offset=0&filters='.urlencode('amount::bt(1000,10000)|status::in(NOT_PAID,WAITING)').'&q='.urlencode('jose augusto')), $path);
     }
 }

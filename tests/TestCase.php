@@ -142,6 +142,12 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
         $this->body_order_list = $this->readJsonFile('jsons/order/get_list');
 
         $this->body_add_credit_card = $this->readJsonFile('jsons/customer/add_credit_card');
+
+        $this->body_list_webhook_no_filter = $this->readJsonFile('jsons/webhooks/get_no_filter');
+
+        $this->body_list_webhook_pagination = $this->readJsonFile('jsons/webhooks/get_pagination');
+
+        $this->body_list_webhook_all_filters = $this->readJsonFile('jsons/webhooks/get_all_filters');
     }
 
     /**
