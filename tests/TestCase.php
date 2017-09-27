@@ -101,6 +101,11 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
     protected $body_order_list;
 
     /**
+     * @var string response from moip API.
+     */
+     protected $body_notification_list;
+
+    /**
      * @var string holds the last generated customer ownId. In mock mode it'll be always the default, but it changes on sandbox mode.
      */
     protected $last_cus_id = 'meu_id_customer';
@@ -148,6 +153,8 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
         $this->body_list_webhook_pagination = $this->readJsonFile('jsons/webhooks/get_pagination');
 
         $this->body_list_webhook_all_filters = $this->readJsonFile('jsons/webhooks/get_all_filters');
+
+        $this->body_notification_list = $this->readJsonFile('jsons/notification/list');
     }
 
     /**

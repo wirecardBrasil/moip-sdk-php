@@ -104,6 +104,18 @@ class NotificationPreferences extends MoipResource
     }
 
     /**
+     * Create a new Orders list instance.
+     *
+     * @return \Moip\Resource\NotificationPreferencesList
+     */
+    public function getList()
+    {
+        $notificationList = new NotificationPreferencesList($this->moip);
+
+        return $notificationList->get();
+    }
+
+    /**
      * Delete.
      *
      * @param $notification_id

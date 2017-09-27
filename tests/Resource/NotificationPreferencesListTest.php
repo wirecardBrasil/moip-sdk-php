@@ -1,0 +1,19 @@
+<?php
+
+namespace Moip\Tests\Resource;
+
+use Moip\Helper\Filters;
+use Moip\Helper\Pagination;
+use Moip\Tests\TestCase;
+
+class NotificationPreferencesListTest extends TestCase
+{
+    public function testShouldGetNotificationsList()
+    {
+        $this->mockHttpSession($this->body_notification_list);
+
+        $orders = $this->moip->notifications()->getList();
+
+        $this->assertNotNull($orders->getOrders());
+    }
+}
