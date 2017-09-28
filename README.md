@@ -474,7 +474,12 @@ try {
 
 ### Consulta
 ```php
-
+try {
+    $notification = $this->moip->notifications()->get('NPR-N6QZE3223P98');
+    print_r($notification);
+} catch (Exception $e) {
+    printf($e->__toString());    
+}
 ```
 
 ### Exclusão
