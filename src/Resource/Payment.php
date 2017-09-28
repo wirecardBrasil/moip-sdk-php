@@ -278,6 +278,39 @@ class Payment extends MoipResource
     }
 
     /**
+     * Get LineCode to Boleto
+     * *.
+     *
+     * @return stdClass
+     */
+    public function getLineCodeBoleto()
+    {
+        return $this->getIfSet('fundingInstrument')->boleto->lineCode;
+    }
+
+    /**
+     * Get href from print to Boleto
+     * *.
+     *
+     * @return stdClass
+     */
+    public function getHrefPrintBoleto()
+    {
+        return $this->getIfSet('_links')->payBoleto->printHref;
+    }
+
+    /**
+     * Get Expirate Date to Boleto
+     * *.
+     *
+     * @return stdClass
+     */
+    public function getExpirationDateBoleto()
+    {
+        return $this->getIfSet('fundingInstrument')->boleto->expirationDate;
+    }
+
+    /**
      * Returns payment amount.
      *
      * @return stdClass

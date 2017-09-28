@@ -82,6 +82,16 @@ class NotificationPreferences extends MoipResource
     }
 
     /**
+    * Returns notification token.
+    *
+    * @return stdClass
+    */
+    public function getToken()
+    {
+        return $this->data->token;
+    }
+
+    /**
      * Create a new notification preference.
      *
      * @return \stdClass
