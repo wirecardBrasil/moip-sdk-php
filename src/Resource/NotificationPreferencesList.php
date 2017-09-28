@@ -25,7 +25,7 @@ class NotificationPreferencesList extends MoipResource
      */
     public function getNotifications()
     {
-        return $this->data;
+        return $this->data->notifications;
     }
 
     /**
@@ -35,7 +35,7 @@ class NotificationPreferencesList extends MoipResource
      */
     public function get()
     {
-        return $this->getByPath(sprintf('/%s/%s', MoipResource::VERSION, self::PATH));
+        return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, self::PATH, 'notifications'));
     }
 
     protected function populate(stdClass $response)
