@@ -12,8 +12,8 @@ class NotificationPreferencesListTest extends TestCase
     {
         $this->mockHttpSession($this->body_notification_list);
 
-        $orders = $this->moip->notifications()->getList();
-
-        $this->assertNotNull($orders->getOrders());
+        $notifications = $this->moip->notifications()->getList();
+        
+        $this->assertNotNull($notifications->getNotifications());        
     }
 }

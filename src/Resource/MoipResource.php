@@ -221,7 +221,7 @@ abstract class MoipResource implements JsonSerializable
      * @return stdClass
      */
     protected function httpRequest($path, $method, $payload = null)
-    {
+    {        
         $http_sess = $this->moip->getSession();
         $headers = [];
         $body = null;
@@ -246,7 +246,7 @@ abstract class MoipResource implements JsonSerializable
             return json_decode($response_body);
         } elseif ($code == 401) {
             throw new Exceptions\UnautorizedException();
-        } elseif ($code >= 400 && $code <= 499) {
+        } elseif ($code >= 400 && $code <= 499) {            
             $errors = Exceptions\Error::parseErrors($response_body);
 
             throw new Exceptions\ValidationException($code, $errors);
@@ -263,9 +263,12 @@ abstract class MoipResource implements JsonSerializable
      * @return stdClass
      */
     public function getByPath($path)
-    {
+    {        
         $response = $this->httpRequest($path, Requests::GET);
 
+        if (is_array($response)) {
+            $response = (object)$response;
+        }
         return $this->populate($response);
     }
 
