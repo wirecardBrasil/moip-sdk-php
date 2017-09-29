@@ -269,6 +269,7 @@ abstract class MoipResource implements JsonSerializable
         if (is_array($response)) {
             $response = (object) $response;
         }
+
         return $this->populate($response);
     }
 
