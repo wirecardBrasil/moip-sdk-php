@@ -60,4 +60,16 @@ class AccountTest extends TestCase
         $this->assertEquals('66448899', $account->getAlternativePhones()[0]->number);
         $this->assertEquals('Teste Empresa ME', $account->getCompany()->businessName);
     }
+
+    public function testCheckExistingAccount()
+    {
+        $this->mockHttpSession('', 200);
+        $this->assertTrue($this->moip->accounts()->checkExistence('123.456.798-91'));
+    }
+
+    public function testCheckNonExistingAccount()
+    {
+        $this->mockHttpSession('', 404);
+        $this->assertFalse($this->moip->accounts()->checkExistence('412.309.725-10'));
+    }
 }

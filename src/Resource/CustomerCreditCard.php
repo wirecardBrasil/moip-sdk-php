@@ -213,4 +213,54 @@ class CustomerCreditCard extends MoipResource
 
         return $this;
     }
+
+    /**
+     * Get credit card id.
+     *
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->data->creditCard->id;
+    }
+
+    /**
+     * Get brand.
+     *
+     * @return string
+     */
+    public function getBrand()
+    {
+        return $this->data->creditCard->brand;
+    }
+
+    /**
+     * Get first 6 characters from credit card.
+     *
+     * @return string
+     */
+    public function getFirst6()
+    {
+        return $this->data->creditCard->first6;
+    }
+
+    /**
+     * Get last 4 characters from credit card.
+     *
+     * @return string
+     */
+    public function getLast4()
+    {
+        return $this->data->creditCard->last4;
+    }
+
+    /**
+     * Get if a credit card was stored or not.
+     *
+     * @return bool
+     */
+    public function getStore()
+    {
+        return $this->data->creditCard->store;
+    }
 }

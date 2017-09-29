@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+<a name="v2.0.0"></a>
+### [2.0.0](https://github.com/moip/moip-sdk-php/compare/v1.3.2...v2.0.0) (2017-09-29)
+
+### Features
+
+* **Account:** Create method to check if an account exists ([17e6cd2](https://github.com/moip/moip-sdk-php/commit/17e6cd2))
+* **Webhooks:**  Create method to get a list of webhooks([fa4a7d4](https://github.com/moip/moip-sdk-php/commit/fa4a7d49c2650813592a1f764be51e336247a9f5))
+* added methods to get boleto print link and token from webhook([ab158a6](https://github.com/moip/moip-sdk-php/commit/ab158a6746cc75138111353301c5c066af8b962e))
+
+## BREAKING CHANGES
+Method `generateListPath` from MoipResource changed last parameter to array instead string.
+
 <a name="v1.3.2"></a>
 ### [1.3.2](https://github.com/moip/moip-sdk-php/compare/v1.3.0...v1.3.2) (2017-09-18)
 
