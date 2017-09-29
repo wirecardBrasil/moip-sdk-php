@@ -2,8 +2,6 @@
 
 namespace Moip\Resource;
 
-use Moip\Helper\Filters;
-use Moip\Helper\Pagination;
 use stdClass;
 
 class NotificationPreferencesList extends MoipResource
