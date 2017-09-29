@@ -155,6 +155,8 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
         $this->body_list_webhook_all_filters = $this->readJsonFile('jsons/webhooks/get_all_filters');
 
         $this->body_notification_list = $this->readJsonFile('jsons/notification/list');
+
+        $this->body_multiorder = $this->readJsonFile('jsons/multiorder/create');
     }
 
     /**
@@ -278,6 +280,48 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
 
         return $order;
     }
+
+    /**
+     * Creates a multiorder.
+     *
+     * @return Multiorders
+     */
+     public function createMultiorder()
+     {
+         if ($this->sandbox_mock == self::SANDBOX) {
+             $this->last_ord_id = uniqid('MOR-');
+         } else {
+             $this->last_ord_id = 'meu_id_pedido';
+         }
+
+        $order = $this->moip->orders()->setOwnId(uniqid())
+            ->addItem("bicicleta 1",1, "sku1", 10000)
+            ->addItem("bicicleta 2",1, "sku2", 11000)
+            ->addItem("bicicleta 3",1, "sku3", 12000)
+            ->addItem("bicicleta 4",1, "sku4", 13000)
+            ->setShippingAmount(3000)
+            ->setAddition(1000)
+            ->setDiscount(5000)
+            ->setCustomer($this->createCustomer())
+            ->addReceiver('MPA-VB5OGTVPCI52', 'PRIMARY', NULL);
+
+        $order2 = $this->moip->orders()->setOwnId(uniqid())
+            ->addItem("bicicleta 1",1, "sku1", 10000)
+            ->addItem("bicicleta 2",1, "sku2", 11000)
+            ->addItem("bicicleta 3",1, "sku3", 12000)
+            ->setShippingAmount(3000)
+            ->setAddition(1000)
+            ->setDiscount(5000)
+            ->setCustomer($this->createCustomer())
+            ->addReceiver('MPA-IFYRB1HBL73Z', 'PRIMARY', NULL); 
+
+        $multiorder = $this->moip->multiorders()
+             ->setOwnId(uniqid())
+             ->addOrder($order)
+             ->addOrder($order2);
+
+        return $multiorder;
+     }
 
     /**
      * Tears down the fixture, for example, close a network connection.

@@ -189,6 +189,7 @@ class Payment extends MoipResource
         $payment->data->amount->currency = $this->getIfSet('currency', $response->amount);
         $payment->data->installmentCount = $this->getIfSet('installmentCount', $response);
         $payment->data->fundingInstrument = $this->getIfSet('fundingInstrument', $response);
+        $payment->data->payments = $this->getIfSet('payments', $response);
         $payment->data->escrows = $this->getIfSet('escrows', $response);
         $payment->data->fees = $this->getIfSet('fees', $response);
         $payment->data->refunds = $this->getIfSet('refunds', $response);
@@ -338,6 +339,16 @@ class Payment extends MoipResource
     public function getInstallmentCount()
     {
         return $this->data->installmentCount;
+    }
+
+    /**
+     * Get payments.
+     *
+     * @return array
+     */
+    public function getPayments()
+    {
+        return $this->getIfSet('payments');
     }
 
     /**
@@ -640,5 +651,10 @@ class Payment extends MoipResource
         }
 
         return false;
+    }
+
+    private function isMultipayment($paymentId)
+    {
+        return 0 === strpos($paymentId, 'MPY');
     }
 }

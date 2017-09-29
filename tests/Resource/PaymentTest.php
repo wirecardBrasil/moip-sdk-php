@@ -60,4 +60,33 @@ class PaymentTest extends TestCase
             ->execute();
         $this->assertEquals('teste de descricao', $payment->getEscrow()->description);
     }
+
+    /**
+     * MoipTest creating a credit card multipayment, passing all credit card data.
+     */
+    public function testMultipaymentCreditCardPCI()
+    {
+        $this->mockHttpSession($this->body_multiorder);
+        $order = $this->createMultiorder()->create();
+        $this->mockHttpSession($this->body_cc_pay_pci);
+        $cc = '5555666677778884';
+        $payment = $order->multipayments()->setCreditCard(5, 2018, $cc, 123, $this->createCustomer())->execute();
+
+        $first6 = $payment->getPayments()[0]->fundingInstrument->creditCard->first6;
+        $last4 = $payment->getPayments()[0]->fundingInstrument->creditCard->last4;
+        $this->assertEquals($first6, substr($cc, 0, 6));
+        $this->assertEquals($last4, substr($cc, -4));
+    }
+ 
+     /**
+     * MoipTest creating a billet multipayment.
+     */
+    public function testMultipaymentBillet()
+    {
+        $this->mockHttpSession($this->body_multiorder);
+        $order = $this->createMultiorder()->create();
+        $this->mockHttpSession($this->body_billet_pay);
+        $payment = $order->multipayments()->setBoleto(new \DateTime('today +1day'), 'http://dev.moip.com.br/images/logo-header-moip.png')->execute();
+        $this->assertNotEmpty($payment->getFundingInstrument()->boleto);
+    }
 }
