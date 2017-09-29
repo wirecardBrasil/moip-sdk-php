@@ -32,6 +32,6 @@ class NotificationPreferencesTest extends TestCase
         $this->assertEquals('WEBHOOK', $notification->getMedia());
         $this->assertEquals('994e3ffae9214fbc806d01de2dd5d341', $notification->getToken());
         $this->assertEquals('http://requestb.in/1dhjesw1', $notification->getTarget());
-        $this->assertEquals(["ORDER.*","PAYMENT.AUTHORIZED","PAYMENT.CANCELLED"], $notification->getEvents());
+        $this->assertEquals(['ORDER.*', 'PAYMENT.AUTHORIZED', 'PAYMENT.CANCELLED'], $notification->getEvents());
     }
 }

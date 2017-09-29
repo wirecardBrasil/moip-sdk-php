@@ -2,8 +2,6 @@
 
 namespace Moip\Tests\Resource;
 
-use Moip\Helper\Filters;
-use Moip\Helper\Pagination;
 use Moip\Tests\TestCase;
 
 class NotificationPreferencesListTest extends TestCase
@@ -14,6 +12,6 @@ class NotificationPreferencesListTest extends TestCase
 
         $notifications = $this->moip->notifications()->getList();
         
-        $this->assertNotNull($notifications->getNotifications());        
+        $this->assertNotNull($notifications->getNotifications());
     }
 }

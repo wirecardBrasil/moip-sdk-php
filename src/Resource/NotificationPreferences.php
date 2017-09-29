@@ -100,7 +100,7 @@ class NotificationPreferences extends MoipResource
     {
         return $this->data->events;
     }
- 
+
     /**
      * Returns notification id.
      *
