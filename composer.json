@@ -17,6 +17,14 @@
         {
             "name": "Joao Batista Neto",
             "email": "neto.joaobatista@gmail.com"
+        },
+        {
+            "name": "Caio Gaspar",
+            "email": "caio.gaspar@moip.com.br"
+        },
+        {
+            "name": "João Lucas Lucchetta",
+            "email": "joao.lucchetta@moip.com.br"
         }
     ],
     "require": {
