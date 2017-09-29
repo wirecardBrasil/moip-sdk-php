@@ -27,7 +27,7 @@ class NotificationPreferencesList extends MoipResource
     }
 
     /**
-     * Get a notification list
+     * Get a notification list.
      *
      * @return stdClass
      */
@@ -41,7 +41,7 @@ class NotificationPreferencesList extends MoipResource
         $notificationsList = clone $this;
 
         $notificationsList->data = new stdClass();
-        
+
         $notificationsList->data->notifications = $response;
 
         return $notificationsList;
