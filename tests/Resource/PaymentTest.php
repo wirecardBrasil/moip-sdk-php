@@ -153,4 +153,33 @@ class PaymentTest extends TestCase
 
         $this->assertEquals('CANCELLED', $cancelled_payment->getStatus());
     }
+
+    public function testGetPayment()
+    {
+        $this->mockHttpSession($this->body_order);
+        $order = $this->createOrder()->create();
+        $this->mockHttpSession($this->body_cc_pay_pci);
+        $payment = $order->payments()->setCreditCard(5, 2018, '5555666677778884', 123, $this->createCustomer())->execute();
+
+        $this->mockHttpSession($this->body_get_pay);
+        $payment_get = $this->moip->payments()->get($payment->getId());
+
+        $this->assertEquals($payment_get->getAmount()->total, 102470);
+        $this->assertEquals($payment_get->getFundingInstrument()->method, 'CREDIT_CARD');
+        $this->assertEquals($payment_get->getInstallmentCount(), 1);
+    }
+
+    public function testGetMultiPayment()
+    {
+        $this->mockHttpSession($this->body_multiorder);
+        $order = $this->createMultiorder()->create();
+        $this->mockHttpSession($this->body_cc_multipay);
+        $payment = $order->multipayments()->setCreditCard(5, 2018, '4012001037141112', 123, $this->createCustomer())->execute();
+        
+        $this->mockHttpSession($this->body_get_multipay);
+        $payment_get = $this->moip->payments()->get($payment->getId());
+
+        $this->assertEquals($payment_get->getAmount()->total, 77000);
+        $this->assertNotNull($payment_get->getPayments());
+    }
 }
