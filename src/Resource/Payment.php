@@ -636,6 +636,20 @@ class Payment extends MoipResource
     }
 
     /**
+     * Cancel a pre-authorized amount on a credit card payment.
+     *
+     * @throws \Exception
+     *
+     * @return Payment
+     */
+    public function avoid()
+    {
+        trigger_error('The function \'avoid\' is deprecated, use \'cancel\' instead', E_USER_NOTICE);
+
+        return $this->cancel();
+    }
+
+    /**
      * Authorize a payment (Available only in sandbox to credit card payment with status IN_ANALYSIS and billet payment with status WAITING).
      *
      * @return bool
