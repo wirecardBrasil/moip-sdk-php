@@ -121,4 +121,36 @@ class PaymentTest extends TestCase
 
         $this->assertEquals('AUTHORIZED', $captured_payment->getStatus());
     }
+
+    public function testCancelPreAuthorizedMultiPayment()
+    {
+        $this->mockHttpSession($this->body_multiorder);
+        $order = $this->createMultiorder()->create();
+        $this->mockHttpSession($this->body_cc_multipay);
+        $payment = $order->multipayments()
+            ->setCreditCard(5, 2018, '4012001037141112', 123, $this->createCustomer())
+            ->setDelayCapture(true)
+            ->execute();
+    
+        $this->mockHttpSession($this->body_cancel_multipay);
+        $cancelled_payment = $payment->cancel();
+    
+        $this->assertEquals('CANCELLED', $cancelled_payment->getStatus());
+    }
+
+    public function testCancelPreAuthorizedPayment()
+    {
+        $this->mockHttpSession($this->body_order);
+        $order = $this->createOrder()->create();
+        $this->mockHttpSession($this->body_cc_delay_capture);
+        $payment = $order->payments()
+            ->setCreditCard(5, 2018, '5555666677778884', 123, $this->createCustomer(), false)
+            ->setDelayCapture(true)
+            ->execute();
+
+        $this->mockHttpSession($this->body_cancel_pay);
+        $cancelled_payment = $payment->cancel();
+
+        $this->assertEquals('CANCELLED', $cancelled_payment->getStatus());
+    }
 }
