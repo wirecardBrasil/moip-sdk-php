@@ -203,7 +203,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
      */
     public function readJsonFile($filename)
     {
-        return file_get_contents('$filename.json', FILE_USE_INCLUDE_PATH);
+        return file_get_contents($filename.'.json', FILE_USE_INCLUDE_PATH);
     }
 
     /**
