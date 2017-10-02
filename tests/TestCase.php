@@ -331,7 +331,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
             ->setAddition(1000)
             ->setDiscount(5000)
             ->setCustomer($this->createCustomer())
-            ->addReceiver('MPA-IFYRB1HBL73Z', 'PRIMARY', null); 
+            ->addReceiver('MPA-IFYRB1HBL73Z', 'PRIMARY', null);
 
         $multiorder = $this->moip->multiorders()
                 ->setOwnId(uniqid())
