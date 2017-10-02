@@ -169,7 +169,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
         $this->body_capture_multipay = $this->readJsonFile('jsons/multipayment/capture');
 
         $this->body_cancel_pay = $this->readJsonFile('jsons/payment/cancel_pre_authorized');
-        
+
         $this->body_cancel_multipay = $this->readJsonFile('jsons/multipayment/cancel_pre_authorized');
 
         $this->body_get_pay = $this->readJsonFile('jsons/payment/get');
@@ -203,7 +203,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
      */
     public function readJsonFile($filename)
     {
-        return file_get_contents("$filename.json", FILE_USE_INCLUDE_PATH);
+        return file_get_contents('$filename.json', FILE_USE_INCLUDE_PATH);
     }
 
     /**
@@ -304,42 +304,42 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
      *
      * @return Multiorders
      */
-     public function createMultiorder()
-     {
-         if ($this->sandbox_mock == self::SANDBOX) {
-             $this->last_ord_id = uniqid('MOR-');
-         } else {
-             $this->last_ord_id = 'meu_id_pedido';
-         }
+    public function createMultiorder()
+    {
+        if ($this->sandbox_mock == self::SANDBOX) {
+            $this->last_ord_id = uniqid('MOR-');
+        } else {
+            $this->last_ord_id = 'meu_id_pedido';
+        }
 
         $order = $this->moip->orders()->setOwnId(uniqid())
-            ->addItem("bicicleta 1",1, "sku1", 10000)
-            ->addItem("bicicleta 2",1, "sku2", 11000)
-            ->addItem("bicicleta 3",1, "sku3", 12000)
-            ->addItem("bicicleta 4",1, "sku4", 13000)
+            ->addItem('bicicleta 1', 1, 'sku1', 10000)
+            ->addItem('bicicleta 2', 1, 'sku2', 11000)
+            ->addItem('bicicleta 3', 1, 'sku3', 12000)
+            ->addItem('bicicleta 4', 1, 'sku4', 13000)
             ->setShippingAmount(3000)
             ->setAddition(1000)
             ->setDiscount(5000)
             ->setCustomer($this->createCustomer())
-            ->addReceiver('MPA-VB5OGTVPCI52', 'PRIMARY', NULL);
+            ->addReceiver('MPA-VB5OGTVPCI52', 'PRIMARY', null);
 
         $order2 = $this->moip->orders()->setOwnId(uniqid())
-            ->addItem("bicicleta 1",1, "sku1", 10000)
-            ->addItem("bicicleta 2",1, "sku2", 11000)
-            ->addItem("bicicleta 3",1, "sku3", 12000)
+            ->addItem('bicicleta 1', 1, 'sku1', 10000)
+            ->addItem('bicicleta 2', 1, 'sku2', 11000)
+            ->addItem('bicicleta 3', 1, 'sku3', 12000)
             ->setShippingAmount(3000)
             ->setAddition(1000)
             ->setDiscount(5000)
             ->setCustomer($this->createCustomer())
-            ->addReceiver('MPA-IFYRB1HBL73Z', 'PRIMARY', NULL); 
+            ->addReceiver('MPA-IFYRB1HBL73Z', 'PRIMARY', null); 
 
         $multiorder = $this->moip->multiorders()
-             ->setOwnId(uniqid())
-             ->addOrder($order)
-             ->addOrder($order2);
+                ->setOwnId(uniqid())
+                ->addOrder($order)
+                ->addOrder($order2);
 
         return $multiorder;
-     }
+    }
 
     /**
      * Tears down the fixture, for example, close a network connection.
