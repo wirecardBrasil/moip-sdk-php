@@ -60,6 +60,11 @@
     - [Criação](#criação)
     - [Consulta](#consulta-3)
     - [Verifica se usuário já possui Conta Moip](#verifica-se-usuário-já-possui-conta-moip)
+  - [Preferências de Notificação](#preferências-de-notificação)
+    -  [Criação](#criação-1)
+    -  [Consulta](#consulta-4)
+    -  [Exclusão](#exclusão)
+    -  [Listagem](#listagem)
   - [Webhooks](#webhooks) 
     - [Consulta](#consulta-4)
 - [Packages](#packages)
@@ -450,6 +455,52 @@ try {
 ```php
 // retorna verdadeiro se já possui e falso caso não possuir conta Moip
 $moip->accounts()->checkAccountExists(CPF);
+```
+
+## Preferências de notificação
+
+### Criação
+```php
+try {
+    $notification = $moip->notifications()->addEvent('ORDER.*')
+        ->addEvent('PAYMENT.AUTHORIZED')
+        ->setTarget('http://requestb.in/1dhjesw1')
+        ->create();
+    print_r($notification);
+} catch (Exception $e) {
+    printf($e->__toString());    
+}
+```
+
+### Consulta
+```php
+try {
+    $notification = $this->moip->notifications()->get('NPR-N6QZE3223P98');
+    print_r($notification);
+} catch (Exception $e) {
+    printf($e->__toString());    
+}
+```
+
+### Exclusão
+```php
+try {
+    $notification_id = 'NPR-123456789012';
+    $notification = $moip->notifications()->delete($notification_id);
+    print_r($notification);
+} catch (Exception $e) {
+    printf($e->__toString());    
+}
+```
+
+### Listagem
+```php
+try {    
+    $notifications = $moip->notifications()->getList();
+    print_r($notifications);
+} catch (Exception $e) {
+    printf($e->__toString());    
+}
 ```
 
 ## Webhooks
