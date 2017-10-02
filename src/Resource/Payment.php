@@ -604,10 +604,11 @@ class Payment extends MoipResource
      */
     public function capture()
     {
-        if (is_null($this->order)) {
-            throw new \Exception('Sorry, multipayment capture is not available on this version');
+        if (!$this->isMultipayment($this->getId())) {
+            $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, self::PATH, $this->getId(), 'capture');
+        } else {
+            $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, self::MULTI_PAYMENTS_PATH, $this->getId(), 'capture');
         }
-        $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, self::PATH, $this->getId(), 'capture');
 
         $response = $this->httpRequest($path, Requests::POST, $this);
 
@@ -615,18 +616,19 @@ class Payment extends MoipResource
     }
 
     /**
-     * Avoid a pre-authorized amount on a credit card payment.
+     * Cancel a pre-authorized amount on a credit card payment.
      *
      * @throws \Exception
      *
      * @return Payment
      */
-    public function avoid()
+    public function cancel()
     {
-        if (is_null($this->order)) {
-            throw new \Exception('Sorry, multipayment capture is not available on this version');
+        if (!$this->isMultipayment($this->getId())) {
+            $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, self::PATH, $this->getId(), 'void');
+        } else {
+            $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, self::MULTI_PAYMENTS_PATH, $this->getId(), 'void');
         }
-        $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, self::PATH, $this->getId(), 'void');
 
         $response = $this->httpRequest($path, Requests::POST, $this);
 

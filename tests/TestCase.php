@@ -136,6 +136,10 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
 
         $this->body_billet_pay = $this->readJsonFile('jsons/payment/create_billet');
 
+        $this->body_billet_multipay = $this->readJsonFile('jsons/multipayment/create_billet');
+
+        $this->body_cc_multipay = $this->readJsonFile('jsons/multipayment/create_cc');
+
         $this->body_refund_full_bankaccount = $this->readJsonFile('jsons/refund/full_bankaccount');
 
         $this->body_refund_partial_bankaccount = $this->readJsonFile('jsons/refund/partial_bankaccount');
@@ -157,6 +161,12 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
         $this->body_notification_list = $this->readJsonFile('jsons/notification/list');
 
         $this->body_multiorder = $this->readJsonFile('jsons/multiorder/create');
+
+        $this->body_cc_delay_capture = $this->readJsonFile('jsons/payment/create_cc_delay_capture');
+
+        $this->body_capture_pay = $this->readJsonFile('jsons/payment/capture');
+
+        $this->body_capture_multipay = $this->readJsonFile('jsons/multipayment/capture');
     }
 
     /**
