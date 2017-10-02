@@ -77,8 +77,8 @@ class PaymentTest extends TestCase
         $this->assertEquals($first6, substr($cc, 0, 6));
         $this->assertEquals($last4, substr($cc, -4));
     }
- 
-     /**
+
+    /**
      * MoipTest creating a billet multipayment.
      */
     public function testMultipaymentBillet()
@@ -131,10 +131,10 @@ class PaymentTest extends TestCase
             ->setCreditCard(5, 2018, '4012001037141112', 123, $this->createCustomer())
             ->setDelayCapture(true)
             ->execute();
-    
+
         $this->mockHttpSession($this->body_cancel_multipay);
         $cancelled_payment = $payment->cancel();
-    
+
         $this->assertEquals('CANCELLED', $cancelled_payment->getStatus());
     }
 
@@ -175,7 +175,7 @@ class PaymentTest extends TestCase
         $order = $this->createMultiorder()->create();
         $this->mockHttpSession($this->body_cc_multipay);
         $payment = $order->multipayments()->setCreditCard(5, 2018, '4012001037141112', 123, $this->createCustomer())->execute();
-        
+
         $this->mockHttpSession($this->body_get_multipay);
         $payment_get = $this->moip->payments()->get($payment->getId());
 
