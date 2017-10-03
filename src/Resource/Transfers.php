@@ -51,6 +51,16 @@ class Transfers extends MoipResource
     }
 
     /**
+     * Initializes new transferInstrument instance if it doesn't exist
+     */
+    private function intializeTransferInstrument()
+    {
+        if (!isset($this->data->transferInstrument)) {
+            $this->data->transferInstrument = new stdClass();
+        }
+    }
+
+    /**
      * Set info of transfers.
      *
      * @param $amount
@@ -71,7 +81,7 @@ class Transfers extends MoipResource
         $accountCheckNumber
     ) {
         $this->data->amount = $amount;
-        $this->data->transferInstrument = new stdClass();
+        $this->intializeTransferInstrument();
         $this->data->transferInstrument->method = self::METHOD;
         $this->data->transferInstrument->bankAccount = new stdClass();
         $this->data->transferInstrument->bankAccount->type = self::TYPE;
@@ -92,6 +102,7 @@ class Transfers extends MoipResource
      */
     public function setHolder($fullname, $taxDocument)
     {
+        $this->intializeTransferInstrument();
         $this->data->transferInstrument->bankAccount->holder = new stdClass();
         $this->data->transferInstrument->bankAccount->holder->fullname = $fullname;
         $this->data->transferInstrument->bankAccount->holder->taxDocument = new stdClass();
