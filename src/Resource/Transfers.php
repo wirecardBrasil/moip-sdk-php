@@ -51,7 +51,7 @@ class Transfers extends MoipResource
     }
 
     /**
-     * Initializes new transferInstrument instance if it doesn't exist
+     * Initializes new transferInstrument instance if it doesn't exist.
      */
     private function intializeTransferInstrument()
     {
