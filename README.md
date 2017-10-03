@@ -39,10 +39,14 @@
     - [Criação](#criando-um-pedido-com-o-comprador-que-acabamos-de-criar)
     - [Consulta](#consultando-um-pedido)
   - [Pagamentos](#pagamentos)
-    - [Cartão de Crédito](#cartão-de-crédito)
-      - [Com Hash](#com-hash)
-      - [Com Dados do Cartão](#com-dados-do-cartão)
-    - [Com Boleto](#criando-um-pagamento-com-boleto)
+    - [Criação](#criação)
+      - [Cartão de Crédito](#cartão-de-crédito)
+        - [Com Hash](#com-hash)
+        - [Com Dados do Cartão](#com-dados-do-cartão)
+      - [Com Boleto](#criando-um-pagamento-com-boleto)
+    - [Consulta](#consulta)
+    - [Capturar pagamento pré-autorizado](#capturar-pagamento-pré-autorizado)
+    - [Cancelar pagamento pré-autorizado](#cancelar-pagamento-pré-autorizado)
   - [Reembolsos](#reembolsos)
     - [Cartão de crédito](#cartão-de-crédito-1)
       - [Valor Total](#valor-total)
@@ -50,23 +54,24 @@
     - [Conta Bancária](#conta-bancária)
       - [Valor Total](#valor-total-1)
       - [Valor Parcial](#valor-parcial-1)
-    - [Consulta](#consulta-2)
+    - [Consulta](#consulta-1)
   - [Multipedidos](#multipedidos)
     - [Criação](#criando-um-multipedido)
     - [Consulta](#consultando-um-multipedido)
   - [Multipagamentos](#multipagamentos)
     - [Criação](#criando-um-multipagamento)
+    - [Consulta](#consulta-2)
   - [Conta Moip](#conta-moip)
-    - [Criação](#criação)
+    - [Criação](#criação-1)
     - [Consulta](#consulta-3)
     - [Verifica se usuário já possui Conta Moip](#verifica-se-usuário-já-possui-conta-moip)
   - [Preferências de Notificação](#preferências-de-notificação)
-    -  [Criação](#criação-1)
+    -  [Criação](#criação-2)
     -  [Consulta](#consulta-4)
     -  [Exclusão](#exclusão)
     -  [Listagem](#listagem)
   - [Webhooks](#webhooks) 
-    - [Consulta](#consulta-4)
+    - [Consulta](#consulta-5)
 - [Packages](#packages)
 - [Documentação](#documentação)
 - [Testes](#testes)
@@ -221,10 +226,12 @@ try {
 ```
 
 ## Pagamentos
-### Cartão de crédito
+
+### Criação
+#### Cartão de crédito
 Após criar o pedido basta criar um pagamento nesse pedido.
 
-#### Com hash
+##### Com hash
 > Para mais detalhes sobre a geração de hash com os dados do cartão [consulte a documentação.](https://dev.moip.com.br/docs/criptografia-de-cartao)
 
 ```php
@@ -242,7 +249,7 @@ try {
 }
 ```
 
-#### Com dados do cartão
+##### Com dados do cartão
 > Esse método requer certificação PCI. [Consulte a documentação.](https://documentao-moip.readme.io/v2.0/reference#criar-pagamento)
 ```php
 try {
@@ -255,8 +262,7 @@ try {
 }
 ```
 
-
-### Criando um pagamento com boleto
+#### Criando um pagamento com boleto
 ```php
 $logo_uri = 'https://cdn.moip.com.br/wp-content/uploads/2016/05/02163352/logo-moip.png';
 $expiration_date = new DateTime();
@@ -265,6 +271,39 @@ try {
     $payment = $order->payments()  
         ->setBoleto($expiration_date, $logo_uri, $instruction_lines)
         ->execute();
+    print_r($payment);
+} catch (Exception $e) {
+    printf($e->__toString());
+}
+```
+
+### Consulta
+```php
+try {
+    $payment = $moip->payments()->get('PAYMENT-ID');
+    print_r($payment);
+} catch (Exception $e) {
+    printf($e->__toString());
+}
+```
+
+### Capturar pagamento pré-autorizado
+```php
+try {
+    $captured_payment = $payment->capture();
+    print_r($captured_payment);
+} catch (Exception $e) {
+    printf($e->__toString());
+}
+```
+
+### Cancelar pagamento pré-autorizado
+
+> O método `avoid` usado para cancelamento de pagamentos pré-autorizados foi substituído por `cancel`.
+
+```php
+try {
+    $payment = $payment->cancel();
     print_r($payment);
 } catch (Exception $e) {
     printf($e->__toString());
@@ -392,6 +431,16 @@ try {
         ->setStatementDescriptor('teste de pag')
         ->setDelayCapture(false)
         ->execute();
+    print_r($payment);
+} catch (Exception $e) {
+    printf($e->__toString());
+}
+```
+
+### Consulta
+```php
+try {
+    $payment = $moip->payments()->get('PAYMENT-ID');
     print_r($payment);
 } catch (Exception $e) {
     printf($e->__toString());
