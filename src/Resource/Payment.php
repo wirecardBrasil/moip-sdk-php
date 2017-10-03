@@ -604,9 +604,8 @@ class Payment extends MoipResource
      */
     public function capture()
     {
-        if (!$this->isMultipayment($this->getId())) {
-            $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, self::PATH, $this->getId(), 'capture');
-        } else {
+        $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, self::PATH, $this->getId(), 'capture');
+        if ($this->isMultipayment($this->getId())) {
             $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, self::MULTI_PAYMENTS_PATH, $this->getId(), 'capture');
         }
 
@@ -624,9 +623,8 @@ class Payment extends MoipResource
      */
     public function cancel()
     {
-        if (!$this->isMultipayment($this->getId())) {
-            $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, self::PATH, $this->getId(), 'void');
-        } else {
+        $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, self::PATH, $this->getId(), 'void');
+        if ($this->isMultipayment($this->getId())) {
             $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, self::MULTI_PAYMENTS_PATH, $this->getId(), 'void');
         }
 
