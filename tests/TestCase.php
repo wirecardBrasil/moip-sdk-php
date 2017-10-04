@@ -175,6 +175,8 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
         $this->body_get_pay = $this->readJsonFile('jsons/payment/get');
 
         $this->body_get_multipay = $this->readJsonFile('jsons/multipayment/get');
+
+        $this->body_keys = $this->readJsonFile('jsons/keys/get');
     }
 
     /**
