@@ -82,16 +82,6 @@ class NotificationPreferences extends MoipResource
     }
 
     /**
-     * Returns token.
-     *
-     * @return string
-     */
-    public function getToken()
-    {
-        return $this->data->token;
-    }
-
-    /**
      * Returns events.
      *
      * @return array
