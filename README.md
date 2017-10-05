@@ -38,6 +38,12 @@
   - [Pedidos](#pedidos)
     - [Criação](#criando-um-pedido-com-o-comprador-que-acabamos-de-criar)
     - [Consulta](#consultando-um-pedido)
+      - [Pedido Específico](#pedido-específico)
+      - [Todos os Pedidos](#todos-os-pedidos)
+        - [Sem Filtro](#sem-filtro)
+        - [Com Filtros](#com-filtros)
+        - [Com Paginação](#com-paginação)
+        - [Consulta Valor Específico](#consulta-valor-específico)
   - [Pagamentos](#pagamentos)
     - [Criação](#criação)
       - [Cartão de Crédito](#cartão-de-crédito)
@@ -195,9 +201,46 @@ print_r($order);
 ```
 
 ### Consultando um pedido
+#### Pedido específico
 ```php
 $order = $moip->orders()->get('ORD-KZCH1S1ORAH23');
 print_r($order);
+```
+
+#### Todos os Pedidos
+##### Sem Filtro
+```php
+$orders = $this->moip->orders()->getList();
+```
+
+##### Com Filtros
+```php
+$filters = new Filters();
+$filters->greaterThanOrEqual(OrdersList::CREATED_AT, '2017-08-17');
+$filters->in(OrdersList::PAYMENT_METHOD, ['BOLETO', 'DEBIT_CARD']);
+$filters->lessThan(OrdersList::VALUE, 100000);
+
+$orders = $this->moip->orders()->getList(null, $filters);
+```
+
+##### Com Paginação
+```php
+$orders = $this->moip->orders()->getList(new Pagination(10,0));
+```
+
+##### Consulta Valor Específico
+```php
+$orders = $this->moip->orders()->getList(null, null, 'josé silva');
+```
+
+> Também é possível usar paginação, filtros e consulta de valor específico juntos
+
+```php
+$filters = new Filters();
+$filters->greaterThanOrEqual(OrdersList::CREATED_AT, '2017-08-17');
+$filters->lessThan(OrdersList::VALUE, 100000);
+
+$orders = $this->moip->orders()->getList(new Pagination(10,0), $filters, 'josé silva');
 ```
 
 ## Pagamentos
