@@ -65,6 +65,7 @@
     - [Criação](#criação-1)
     - [Consulta](#consulta-3)
     - [Verifica se usuário já possui Conta Moip](#verifica-se-usuário-já-possui-conta-moip)
+    - [Obter chave pública de uma Conta Moip](#obter-chave-pública-de-uma-conta-moip)
   - [Preferências de Notificação](#preferências-de-notificação)
     -  [Criação](#criação-2)
     -  [Consulta](#consulta-4)
@@ -504,6 +505,16 @@ try {
 ```php
 // retorna verdadeiro se já possui e falso caso não possuir conta Moip
 $moip->accounts()->checkAccountExists(CPF);
+```
+
+### Obter chave pública de uma Conta Moip
+```php
+try {
+    $keys = $moip->keys()->get();
+    print_r($keys);
+} catch (Exception $e) {
+    printf($e->__toString());
+}
 ```
 
 ## Preferências de notificação
