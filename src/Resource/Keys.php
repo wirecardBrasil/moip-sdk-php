@@ -2,7 +2,6 @@
 
 namespace Moip\Resource;
 
-use Requests;
 use stdClass;
 
 /**
@@ -67,7 +66,7 @@ class Keys extends MoipResource
      * @return stdClass
      */
     public function get()
-    {        
+    {
         return $this->getByPath(sprintf('/%s/%s', MoipResource::VERSION, self::PATH));
-    }       
+    }
 }
