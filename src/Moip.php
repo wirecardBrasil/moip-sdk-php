@@ -4,6 +4,7 @@ namespace Moip;
 
 use Moip\Contracts\Authentication;
 use Moip\Resource\Account;
+use Moip\Resource\BankAccount;
 use Moip\Resource\Customer;
 use Moip\Resource\Entry;
 use Moip\Resource\Multiorders;
@@ -135,6 +136,16 @@ class Moip
     public function accounts()
     {
         return new Account($this);
+    }
+
+    /**
+     * Create a new BankAccount instance.
+     *
+     * @return \Moip\Resource\BankAccount
+     */
+    public function bank_accounts()
+    {
+        return new BankAccount($this);
     }
 
     /**
