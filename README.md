@@ -564,6 +564,7 @@ try {
     //StatusCode >= 500
     echo $e->getMessage();
 }
+```
 
 ## Documentação
 
