@@ -38,6 +38,10 @@ class Transfers extends MoipResource
     protected function initialize()
     {
         $this->data = new stdClass();
+        $this->data->transferInstrument = new stdClass();
+        $this->data->transferInstrument->bankAccount = new stdClass();
+        $this->data->transferInstrument->bankAccount->holder = new stdClass();
+        $this->data->transferInstrument->bankAccount->holder->taxDocument = new stdClass();
     }
 
     /**
@@ -77,16 +81,6 @@ class Transfers extends MoipResource
     }
 
     /**
-     * Initializes new transferInstrument instance if it doesn't exist.
-     */
-    private function intializeTransferInstrument()
-    {
-        if (!isset($this->data->transferInstrument)) {
-            $this->data->transferInstrument = new stdClass();
-        }
-    }
-
-    /**
      * Set info of transfers.
      *
      * @param integer $amount
@@ -107,9 +101,7 @@ class Transfers extends MoipResource
         $accountCheckNumber
     ) {
         $this->data->amount = $amount;
-        $this->intializeTransferInstrument();
         $this->data->transferInstrument->method = self::METHOD;
-        $this->data->transferInstrument->bankAccount = new stdClass();
         $this->data->transferInstrument->bankAccount->type = self::TYPE;
         $this->data->transferInstrument->bankAccount->bankNumber = $bankNumber;
         $this->data->transferInstrument->bankAccount->agencyNumber = $agencyNumber;
@@ -140,10 +132,7 @@ class Transfers extends MoipResource
      */
     public function setHolder($fullname, $taxDocument)
     {
-        $this->intializeTransferInstrument();
-        $this->data->transferInstrument->bankAccount->holder = new stdClass();
         $this->data->transferInstrument->bankAccount->holder->fullname = $fullname;
-        $this->data->transferInstrument->bankAccount->holder->taxDocument = new stdClass();
         $this->data->transferInstrument->bankAccount->holder->taxDocument->type = self::TYPE_HOLD;
         $this->data->transferInstrument->bankAccount->holder->taxDocument->number = $taxDocument;
 
