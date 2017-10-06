@@ -2,10 +2,10 @@
 
 namespace Moip\Resource;
 
-use Requests;
-use stdClass;
 use Moip\Helper\Filters;
 use Moip\Helper\Pagination;
+use Requests;
+use stdClass;
 
 /**
  * Class Transfers.
@@ -83,12 +83,12 @@ class Transfers extends MoipResource
     /**
      * Set info of transfers.
      *
-     * @param integer $amount
-     * @param string $bankNumber Bank number. possible values: 001, 237, 341, 041.
-     * @param integer $agencyNumber
-     * @param integer $agencyCheckNumber
-     * @param integer $accountNumber
-     * @param integer $accountCheckNumber
+     * @param int    $amount
+     * @param string $bankNumber         Bank number. possible values: 001, 237, 341, 041.
+     * @param int    $agencyNumber
+     * @param int    $agencyCheckNumber
+     * @param int    $accountNumber
+     * @param int    $accountCheckNumber
      *
      * @return $this
      */
@@ -126,7 +126,7 @@ class Transfers extends MoipResource
      * Set info of holder.
      *
      * @param string $fullname
-     * @param integer $taxDocument
+     * @param int    $taxDocument
      *
      * @return $this
      */

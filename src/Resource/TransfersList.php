@@ -2,9 +2,9 @@
 
 namespace Moip\Resource;
 
-use stdClass;
 use Moip\Helper\Filters;
 use Moip\Helper\Pagination;
+use stdClass;
 
 class TransfersList extends MoipResource
 {
@@ -38,8 +38,8 @@ class TransfersList extends MoipResource
      * Get transfer list.
      *
      * @param Pagination $pagination
-     * @param Filters $filters
-     * @param string $qParam Query a specific value.
+     * @param Filters    $filters
+     * @param string     $qParam     Query a specific value.
      *
      * @return stdClass
      */
