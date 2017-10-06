@@ -46,6 +46,30 @@ class Transfers extends MoipResource
     protected function populate(stdClass $response)
     {
         $transfers = clone $this;
+        $transfers->data->id = $this->getIfSet('id', $response);
+        $transfers->data->amount = $this->getIfSet('amount', $response);
+
+        $transfer_instrument = $this->getIfSet('transferInstrument', $response);
+        $transfers->data->transferInstrument = new stdClass();
+        $transfers->data->transferInstrument->method = $this->getIfSet('method', $transfer_instrument);
+
+        $bank_account = $this->getIfSet('bankAccount', $transfer_instrument);
+        $transfers->data->transferInstrument->bankAccount = new stdClass();
+        $transfers->data->transferInstrument->bankAccount->type = $this->getIfSet('type', $bank_account);
+        $transfers->data->transferInstrument->bankAccount->bankNumber = $this->getIfSet('bankNumber', $bank_account);
+        $transfers->data->transferInstrument->bankAccount->agencyNumber = $this->getIfSet('agencyNumber', $bank_account);
+        $transfers->data->transferInstrument->bankAccount->agencyCheckNumber = $this->getIfSet('agencyCheckNumber', $bank_account);
+        $transfers->data->transferInstrument->bankAccount->accountNumber = $this->getIfSet('accountNumber', $bank_account);
+        $transfers->data->transferInstrument->bankAccount->accountCheckNumber = $this->getIfSet('accountCheckNumber', $bank_account);
+
+        $holder = $this->getIfSet('holder', $bank_account);
+        $transfers->data->transferInstrument->bankAccount->holder = new stdClass();
+        $transfers->data->transferInstrument->bankAccount->holder->fullname = $this->getIfSet('fullname', $holder);
+
+        $tax_document = $this->getIfSet('taxDocument', $holder);
+        $this->data->transferInstrument->bankAccount->holder->taxDocument = new stdClass();
+        $this->data->transferInstrument->bankAccount->holder->taxDocument->type = $this->getIfSet('type', $tax_document);
+        $this->data->transferInstrument->bankAccount->holder->taxDocument->number = $this->getIfSet('number', $tax_document);
 
         return $transfers;
     }
