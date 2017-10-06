@@ -76,6 +76,10 @@
     -  [Consulta](#consulta-4)
     -  [Exclusão](#exclusão)
     -  [Listagem](#listagem)
+  - [Transferência](#transferencia)
+    - [Criando/executando uma transferência](#transferencia-criacao)
+    - [Consulta](#transferencia-consulta)
+    - [Reverter](#transferencia-reverter)
   - [Webhooks](#webhooks) 
     - [Consulta](#consulta-5)
 - [Packages](#packages)
@@ -508,29 +512,6 @@ $notifications = $moip->notifications()->getList();
 print_r($notifications);
 ```
 
-## Webhooks
-> O PHP, por padrão, está preparado para receber apenas alguns tipos de `content-type` (`application/x-www-form-urlencoded` e `multipart/form-data`). A plataforma do Moip, no entanto, envia dados no formato JSON, o qual a linguagem não está preparada para receber por padrão. 
-Para receber e acessar os dados enviados pelo Moip, você precisa adicionar o seguinte código ao seu arquivo que receberá os webhooks:
-
-```php
-// Pega o RAW data da requisição
-$json = file_get_contents('php://input');
-// Converte os dados recebidos
-$response = json_decode($json, true);
-```
-
-### Consulta
-
-#### Sem paginação ou filtro por resource/evento
-```php
-$moip->webhooks()->get();
-```
-
-#### Com paginação e filtros por resource/evento
-```php
-$moip->webhooks()->get(new Pagination(10, 0), 'ORD-ID', 'ORDER.PAID');
-```
-
 ## Transferência
 
 ### Criando/executando uma transferência
@@ -579,6 +560,28 @@ $transfer_id = 'TRA-28HRLYNLMUFH';
 $transfer = $this->moip->transfers()->revert($transfer_id);
 ```
 
+## Webhooks
+> O PHP, por padrão, está preparado para receber apenas alguns tipos de `content-type` (`application/x-www-form-urlencoded` e `multipart/form-data`). A plataforma do Moip, no entanto, envia dados no formato JSON, o qual a linguagem não está preparada para receber por padrão. 
+Para receber e acessar os dados enviados pelo Moip, você precisa adicionar o seguinte código ao seu arquivo que receberá os webhooks:
+
+```php
+// Pega o RAW data da requisição
+$json = file_get_contents('php://input');
+// Converte os dados recebidos
+$response = json_decode($json, true);
+```
+
+### Consulta
+
+#### Sem paginação ou filtro por resource/evento
+```php
+$moip->webhooks()->get();
+```
+
+#### Com paginação e filtros por resource/evento
+```php
+$moip->webhooks()->get(new Pagination(10, 0), 'ORD-ID', 'ORDER.PAID');
+```
 
 ## Tratamento de Exceções
 
