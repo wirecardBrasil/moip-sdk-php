@@ -76,6 +76,11 @@
     -  [Consulta](#consulta-4)
     -  [Exclusão](#exclusão)
     -  [Listagem](#listagem)
+  - [Contas bancárias](#contas-bancarias)
+    - [Criação](#contas-bancarias-criacao)
+    - [Consulta](#contas-bancarias-consulta)
+    - [Exclusão](#contas-bancarias-exclusao)
+    - [Atualização](#contas-bancarias-atualizacao)
   - [Webhooks](#webhooks) 
     - [Consulta](#consulta-5)
 - [Packages](#packages)
@@ -506,6 +511,58 @@ print_r($notification);
 ```php
 $notifications = $moip->notifications()->getList();
 print_r($notifications);
+```
+
+## Contas bancárias
+
+### Criação
+```php
+$account_id = 'MPA-05E8C79EAAAA';
+$bank_account = $moip->bank_accounts()
+        ->setBankNumber('237')
+        ->setAgencyNumber('12345')
+        ->setAgencyCheckNumber('0')
+        ->setAccountNumber('12345678')
+        ->setAccountCheckNumber('7')
+        ->setType('CHECKING')
+        ->setTaxDocument('CPF', '622.134.533-22')
+        ->setFullname('Demo Moip')
+        ->create($account_id);
+        
+print_r($bank_account);
+```
+
+### Consulta
+#### Conta bancária específica
+```php
+$bank_account_id = 'BKA-397X21X1G6LT';
+$bank_account = $moip->bank_accounts()->get($bank_account_id);
+
+print_r($bank_account);
+```
+
+#### Todas contas bancárias
+```php
+$account_id = 'MPA-05E8C79EAAAA';
+$bank_accounts = $moip->bank_accounts()->getList($account_id)->getBankAccounts();
+
+print_r($bank_accounts);
+```
+
+### Exclusão
+```php
+$bank_account_id = 'BKA-397X21X1G6LT';
+$moip->bank_accounts()->delete($bank_account_id);
+```
+
+### Atualização
+```php
+$bank_account_id = 'BKA-397X21X1G6LT';
+$bank_account = $moip->bank_accounts()->get($bank_account_id);
+$bank_account->setAccountCheckNumber('7');
+$bank_account->update();
+
+print_r($bank_account);
 ```
 
 ## Webhooks
