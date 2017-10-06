@@ -11,22 +11,22 @@ use stdClass;
 class Transfers extends MoipResource
 {
     /**
-     * @const strign
+     * @const string
      */
     const PATH = 'transfers';
 
     /**
-     * @const strign
+     * @const string
      */
     const METHOD = 'BANK_ACCOUNT';
 
     /**
-     * @const strign
+     * @const string
      */
     const TYPE = 'CHECKING';
 
     /**
-     * @const strign
+     * @const string
      */
     const TYPE_HOLD = 'CPF';
 
@@ -87,12 +87,12 @@ class Transfers extends MoipResource
     /**
      * Set info of transfers.
      *
-     * @param $amount
-     * @param $bankNumber Bank number. possible values: 001, 237, 341, 041.
-     * @param $agencyNumber
-     * @param $agencyCheckNumber
-     * @param $accountNumber
-     * @param $accountCheckNumber
+     * @param integer $amount
+     * @param string $bankNumber Bank number. possible values: 001, 237, 341, 041.
+     * @param integer $agencyNumber
+     * @param integer $agencyCheckNumber
+     * @param integer $accountNumber
+     * @param integer $accountCheckNumber
      *
      * @return $this
      */
@@ -119,8 +119,10 @@ class Transfers extends MoipResource
     }
 
     /**
-     * @param $fullname
-     * @param $taxDocument
+     * Set info of holder.
+     *
+     * @param string $fullname
+     * @param integer $taxDocument
      *
      * @return $this
      */
