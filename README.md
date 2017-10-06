@@ -531,6 +531,55 @@ $moip->webhooks()->get();
 $moip->webhooks()->get(new Pagination(10, 0), 'ORD-ID', 'ORDER.PAID');
 ```
 
+## Transferência
+
+### Criando/executando uma transferência
+```php
+$amount = 500;
+$bank_number = '001';
+$agency_number = '1111';
+$agency_check_number = '2';
+$account_number = '9999';
+$account_check_number = '8';
+$holder_name = 'Nome do Portador';
+$tax_document = '22222222222';
+
+$transfer = $moip->transfers()
+->setTransfers($amount, $bank_number, $agency_number, $agency_check_number, $account_number, $account_check_number)
+->setHolder($holder_name, $tax_document)
+->execute();
+
+print_r($transfer);
+```
+
+### Consulta
+#### Transferência específica
+```php
+$transfer_id = 'TRA-28HRLYNLMUFH';
+$transfer = $this->moip->transfers()->get($transfer_id);
+
+print_r($transfer);
+```
+
+#### Todas transferências
+##### Sem paginação
+```php
+$transfers = $this->moip->transfers()->getList();
+```
+
+##### Com paginação
+```php
+$transfers = $this->moip->transfers()->getList(new Pagination(10,0));
+```
+
+### Reverter
+```php
+$transfer_id = 'TRA-28HRLYNLMUFH';
+
+$transfer = $this->moip->transfers()->revert($transfer_id);
+```
+
+
 ## Tratamento de Exceções
 
 Quando ocorre algum erro na API, é lançada a exceção `UnexpectedException` para erros inesperados, `UnautorizedException` para erros de autenticação e `ValidationException`
