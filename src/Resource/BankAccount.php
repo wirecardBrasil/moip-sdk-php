@@ -94,7 +94,7 @@ class BankAccount extends MoipResource
     /**
      * Returns bank account agency number.
      *
-     * @return integer
+     * @return int
      */
     public function getAgencyNumber()
     {
@@ -104,7 +104,7 @@ class BankAccount extends MoipResource
     /**
      * Set bank account agency number
      *
-     * @param integer $agency_number Bank account agency number.
+     * @param int $agency_number Bank account agency number.
      *
      * @return $this
      */
@@ -118,7 +118,7 @@ class BankAccount extends MoipResource
     /**
      * Returns bank account agency check number.
      *
-     * @return integer
+     * @return int
      */
     public function getAgencyCheckNumber()
     {
@@ -128,7 +128,7 @@ class BankAccount extends MoipResource
     /**
      * Set bank account agency check number
      *
-     * @param integer $agency_check_number Bank account agency check number.
+     * @param int $agency_check_number Bank account agency check number.
      *
      * @return $this
      */
@@ -142,7 +142,7 @@ class BankAccount extends MoipResource
     /**
      * Returns bank account number.
      *
-     * @return integer
+     * @return int
      */
     public function getAccountNumber()
     {
@@ -166,7 +166,7 @@ class BankAccount extends MoipResource
     /**
      * Returns bank account check number.
      *
-     * @return integer
+     * @return int
      */
     public function getAccountCheckNumber()
     {
@@ -176,7 +176,7 @@ class BankAccount extends MoipResource
     /**
      * Set bank account check number.
      *
-     * @param integer $account_check_number Bank account check number.
+     * @param int $account_check_number Bank account check number.
      *
      * @return $this
      */
@@ -222,7 +222,7 @@ class BankAccount extends MoipResource
     }
 
     /**
-     * Set holder tax document
+     * Set holder tax document.
      *
      * @param string $type   Document type (CPF or CNPJ)
      * @param string $number Document number
