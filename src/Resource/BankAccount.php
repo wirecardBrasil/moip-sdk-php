@@ -102,7 +102,7 @@ class BankAccount extends MoipResource
     }
 
     /**
-     * Set bank account agency number
+     * Set bank account agency number.
      *
      * @param int $agency_number Bank account agency number.
      *
@@ -126,7 +126,7 @@ class BankAccount extends MoipResource
     }
 
     /**
-     * Set bank account agency check number
+     * Set bank account agency check number.
      *
      * @param int $agency_check_number Bank account agency check number.
      *
