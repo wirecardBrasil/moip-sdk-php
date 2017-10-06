@@ -4,6 +4,8 @@ namespace Moip\Resource;
 
 use Requests;
 use stdClass;
+use Moip\Helper\Filters;
+use Moip\Helper\Pagination;
 
 /**
  * Class Transfers.
@@ -119,6 +121,16 @@ class Transfers extends MoipResource
     }
 
     /**
+     * Returns transfer.
+     *
+     * @return stdClass
+     */
+    public function getTransfers()
+    {
+        return $this->data;
+    }
+
+    /**
      * Set info of holder.
      *
      * @param string $fullname
@@ -139,6 +151,16 @@ class Transfers extends MoipResource
     }
 
     /**
+     * Returns transfer holder.
+     *
+     * @return stdClass
+     */
+    public function getHolder()
+    {
+        return $this->data->transferInstrument->bankAccount->holder;
+    }
+
+    /**
      * Execute Tranfers.
      *
      * @return Transfers
@@ -150,6 +172,46 @@ class Transfers extends MoipResource
         $response = $this->httpRequest($path, Requests::POST, $this);
 
         return $this->populate($response);
+    }
+
+    /**
+     * Revert Tranfers.
+     *
+     * @param string $id Transfer id.
+     *
+     * @return Transfers
+     */
+    public function revert($id)
+    {
+        $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, self::PATH, $id, 'reverse');
+
+        $response = $this->httpRequest($path, Requests::POST, $this);
+
+        return $this->populate($response);
+    }
+
+    /**
+     * Get a Transfer.
+     *
+     * @param string $id Transfer id.
+     *
+     * @return stdClass
+     */
+    public function get($id)
+    {
+        return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, self::PATH, $id));
+    }
+
+    /**
+     * Create a new Transfers list instance.
+     *
+     * @return \Moip\Resource\TransfersList
+     */
+    public function getList(Pagination $pagination = null, Filters $filters = null, $qParam = '')
+    {
+        $transfersList = new TransfersList($this->moip);
+
+        return $transfersList->get($pagination, $filters, $qParam);
     }
 
     /**
