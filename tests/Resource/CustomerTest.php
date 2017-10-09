@@ -47,6 +47,8 @@ class CustomerTest extends TestCase
         $this->assertEquals($customer_original->getFullname(), $customer->getFullname());
         $this->assertEquals($customer_original->getPhoneNumber(), $customer->getPhoneNumber());
         $this->assertEquals($customer_original->getBirthDate(), $customer->getBirthDate());
+        $this->assertEquals($customer_original->getTaxDocumentType(), $customer->getTaxDocumentType());
+        $this->assertEquals($customer_original->getTaxDocumentNumber(), $customer->getTaxDocumentNumber());
     }
 
     /**
