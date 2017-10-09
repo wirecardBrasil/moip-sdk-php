@@ -524,6 +524,18 @@ $json = file_get_contents('php://input');
 $response = json_decode($json, true);
 ```
 
+### Consulta
+
+#### Sem paginação ou filtro por resource/evento
+```php
+$moip->webhooks()->get();
+```
+
+#### Com paginação e filtros por resource/evento
+```php
+$moip->webhooks()->get(new Pagination(10, 0), 'ORD-ID', 'ORDER.PAID');
+```
+
 ## Contas bancárias
 
 ### Criação
@@ -574,18 +586,6 @@ $bank_account->setAccountCheckNumber('7');
 $bank_account->update();
 
 print_r($bank_account);
-```
-
-### Consulta
-
-#### Sem paginação ou filtro por resource/evento
-```php
-$moip->webhooks()->get();
-```
-
-#### Com paginação e filtros por resource/evento
-```php
-$moip->webhooks()->get(new Pagination(10, 0), 'ORD-ID', 'ORDER.PAID');
 ```
 
 ## Tratamento de Exceções
