@@ -34,9 +34,9 @@ class BankAccountTest extends TestCase
 
     public function testShouldGetBankAccount()
     {
-        $this->mockHttpSession($this->body_bank_account_create);
+        $bank_account_id = $this->createBankAccount()->getId();;
 
-        $bank_account_id = 'BKA-DN6831N81J7K';
+        $this->mockHttpSession($this->body_bank_account_create);
 
         $bank_account = $this->moip->bank_accounts()->get($bank_account_id);
         $this->assertEquals($bank_account_id, $bank_account->getId());
@@ -55,9 +55,9 @@ class BankAccountTest extends TestCase
 
     public function testShouldUpdateBankAccount()
     {
-        $this->mockHttpSession($this->body_bank_account_update);
+        $bank_account_id = $this->createBankAccount()->getId();
 
-        $bank_account_id = 'BKA-DN6831N81J7K';
+        $this->mockHttpSession($this->body_bank_account_update);
 
         $bank_account = $this->moip->bank_accounts()
             ->setAccountCheckNumber('8')
