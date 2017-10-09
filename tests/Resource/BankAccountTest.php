@@ -34,7 +34,7 @@ class BankAccountTest extends TestCase
 
     public function testShouldGetBankAccount()
     {
-        $bank_account_id = $this->createBankAccount()->getId();;
+        $bank_account_id = $this->createBankAccount()->getId();
 
         $this->mockHttpSession($this->body_bank_account_create);
 
