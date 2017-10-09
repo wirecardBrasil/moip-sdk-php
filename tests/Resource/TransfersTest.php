@@ -34,9 +34,9 @@ class TransfersTest extends TestCase
 
     public function testShouldGetTransfer()
     {
-        $this->mockHttpSession($this->body_transfers_create);
+        $transfer_id = $this->createTransfer()->getId();
 
-        $transfer_id = 'TRA-28HRLYNLMUFH';
+        $this->mockHttpSession($this->body_transfers_create);
 
         $transfer = $this->moip->transfers()->get($transfer_id);
         $this->assertEquals($transfer_id, $transfer->getId());
@@ -63,9 +63,9 @@ class TransfersTest extends TestCase
 
     public function testShouldRevertTransfer()
     {
-        $this->mockHttpSession($this->body_transfers_revert);
+        $transfer_id = $this->createTransfer()->getId();
 
-        $transfer_id = 'TRA-28HRLYNLMUFH';
+        $this->mockHttpSession($this->body_transfers_revert);
 
         $transfer = $this->moip->transfers()->revert($transfer_id);
         $this->assertNotEmpty($transfer->getId());
