@@ -76,13 +76,13 @@
     -  [Consulta](#consulta-4)
     -  [Exclusão](#exclusão)
     -  [Listagem](#listagem)
-  - [Contas bancárias](#contas-bancarias)
-    - [Criação](#contas-bancarias-criacao)
-    - [Consulta](#contas-bancarias-consulta)
-    - [Exclusão](#contas-bancarias-exclusao)
-    - [Atualização](#contas-bancarias-atualizacao)
   - [Webhooks](#webhooks) 
     - [Consulta](#consulta-5)
+  - [Contas bancárias](#contas-bancárias)
+    - [Criação](#criação-3)
+    - [Consulta](#consulta-6)
+    - [Exclusão](#exclusão-1)
+    - [Atualização](#atualização)
 - [Packages](#packages)
 - [Tratamento de exceções](#tratamento-de-exceções)
 - [Documentação](#documentação)
@@ -513,6 +513,17 @@ $notifications = $moip->notifications()->getList();
 print_r($notifications);
 ```
 
+## Webhooks
+> O PHP, por padrão, está preparado para receber apenas alguns tipos de `content-type` (`application/x-www-form-urlencoded` e `multipart/form-data`). A plataforma do Moip, no entanto, envia dados no formato JSON, o qual a linguagem não está preparada para receber por padrão. 
+Para receber e acessar os dados enviados pelo Moip, você precisa adicionar o seguinte código ao seu arquivo que receberá os webhooks:
+
+```php
+// Pega o RAW data da requisição
+$json = file_get_contents('php://input');
+// Converte os dados recebidos
+$response = json_decode($json, true);
+```
+
 ## Contas bancárias
 
 ### Criação
@@ -563,17 +574,6 @@ $bank_account->setAccountCheckNumber('7');
 $bank_account->update();
 
 print_r($bank_account);
-```
-
-## Webhooks
-> O PHP, por padrão, está preparado para receber apenas alguns tipos de `content-type` (`application/x-www-form-urlencoded` e `multipart/form-data`). A plataforma do Moip, no entanto, envia dados no formato JSON, o qual a linguagem não está preparada para receber por padrão. 
-Para receber e acessar os dados enviados pelo Moip, você precisa adicionar o seguinte código ao seu arquivo que receberá os webhooks:
-
-```php
-// Pega o RAW data da requisição
-$json = file_get_contents('php://input');
-// Converte os dados recebidos
-$response = json_decode($json, true);
 ```
 
 ### Consulta
