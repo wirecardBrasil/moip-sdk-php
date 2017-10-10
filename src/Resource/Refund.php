@@ -121,10 +121,10 @@ class Refund extends MoipResource
      *
      * @return $this
      */
-    private function execute(stdClass $data = null)
+    private function execute(stdClass $data = null, $resourceId = null)
     {
         $body = empty($data) ? new stdClass() : $data;
-        $response = $this->httpRequest($this->getPath(), Requests::POST, $body);
+        $response = $this->httpRequest($this->getPath($resourceId), Requests::POST, $body);
 
         return $this->populate($response);
     }
@@ -134,8 +134,13 @@ class Refund extends MoipResource
      *
      * @return string
      */
-    private function getPath()
+    private function getPath($resourceId = null)
     {
+        if (!is_null($resourceId)) {
+            $endpoint = ($this->isOrder($resourceId) ? Orders::PATH : Payment::PATH);
+            return sprintf('/%s/%s/%s/%s', MoipResource::VERSION, $endpoint, $resourceId, self::PATH);
+        }
+
         if ($this->order !== null) {
             return sprintf('/%s/%s/%s/%s', MoipResource::VERSION, Orders::PATH, $this->order->getId(), self::PATH);
         }
@@ -277,5 +282,42 @@ class Refund extends MoipResource
     public function setPayment(Payment $payment)
     {
         $this->payment = $payment;
+    }
+
+    public function bankAccounts($resourceId, $amount = null, BankAccount $bankAccount = null)
+    {
+        if (!is_null($amount)) {
+            $data = $this->bankAccount(
+                $bankAccount->getType(),
+                $bankAccount->getBankNumber(),
+                $bankAccount->getAgencyNumber(),
+                $bankAccount->getAgencyCheckNumber(),
+                $bankAccount->getAccountNumber(),
+                $bankAccount->getAccountCheckNumber(),
+                (new Customer($this->moip))
+            );
+            $data->amount = $amount;
+
+            return $this->execute($data, $resourceId);
+        }
+
+        return $this->execute();
+    }
+
+    public function creditCard($resourceId, $amount = null)
+    {
+        if (!is_null($amount)) {
+            $data = new stdClass();
+            $data->amount = $amount;
+
+            return $this->execute($data, $resourceId);
+        }
+
+        return $this->execute();
+    }
+
+    private function isOrder($resourceId)
+    {
+        return 0 === strpos($resourceId, 'ORD');
     }
 }
