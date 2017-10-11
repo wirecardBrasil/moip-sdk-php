@@ -196,6 +196,8 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
         $this->body_transfers_list = $this->readJsonFile('jsons/transfers/list');
 
         $this->body_transfers_revert = $this->readJsonFile('jsons/transfers/revert');
+
+        $this->body_keys = $this->readJsonFile('jsons/keys/get');
     }
 
     /**
