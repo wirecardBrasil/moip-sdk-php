@@ -259,7 +259,6 @@ $payment = $order->payments()
     ->setCreditCardHash($hash, $customer)
     ->setInstallmentCount(3)
     ->setStatementDescriptor('teste de pag')
-    ->setDelayCapture(false)
     ->execute();
 print_r($payment);
 ```
@@ -418,7 +417,6 @@ $payment = $multiorder->multipayments()
     ->setCreditCardHash($hash, $customer)
     ->setInstallmentCount(3)
     ->setStatementDescriptor('teste de pag')
-    ->setDelayCapture(false)
     ->execute();
 print_r($payment);
 ```
