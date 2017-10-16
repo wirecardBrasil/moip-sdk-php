@@ -218,7 +218,7 @@ class Refund extends MoipResource
         $data->refundingInstrument->method = self::METHOD_BANK_ACCOUNT;
         $data->refundingInstrument->bankAccount = new stdClass();
         $data->refundingInstrument->bankAccount->type = $bankAccount->getType();
-        $data->refundingInstrument->bankAccount->bankNumber = $bankNumber->getBankNumber();
+        $data->refundingInstrument->bankAccount->bankNumber = $bankAccount->getBankNumber();
         $data->refundingInstrument->bankAccount->agencyNumber = $bankAccount->getAgencyNumber();
         $data->refundingInstrument->bankAccount->agencyCheckNumber = $bankAccount->getAgencyCheckNumber();
         $data->refundingInstrument->bankAccount->accountNumber = $bankAccount->getAccountNumber();
@@ -267,7 +267,7 @@ class Refund extends MoipResource
      */
     public function bankAccountPartial($amount, $type, $bankNumber, $agencyNumber, $agencyCheckNumber, $accountNumber, $accountCheckNumber, Customer $holder)
     {
-        $data = $this->bankAccountData($type, $bankNumber, $agencyNumber, $agencyCheckNumber, $accountNumber, $accountCheckNumber, $holder);
+        $data = $this->bankAccountDataCustomer($type, $bankNumber, $agencyNumber, $agencyCheckNumber, $accountNumber, $accountCheckNumber, $holder);
         $data->amount = $amount;
 
         return $this->execute($data);
@@ -353,7 +353,7 @@ class Refund extends MoipResource
             return $this->execute($data, $resourceId);
         }
 
-        return $this->execute();
+        return $this->execute(null, $resourceId);
     }
 
     private function isOrder($resourceId)

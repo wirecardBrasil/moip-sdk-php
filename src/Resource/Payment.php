@@ -332,6 +332,16 @@ class Payment extends MoipResource
     }
 
     /**
+     * Returns order.
+     *
+     * @return Order
+     */
+    public function getOrder()
+    {
+        return $this->order;
+    }
+
+    /**
      * Returns installment count.
      *
      * @return stdClass
