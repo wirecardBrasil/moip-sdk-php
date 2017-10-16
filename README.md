@@ -312,13 +312,20 @@ print_r($payment);
 
 ## Reembolsos
 
-Para fazer reembolsos é necessário ter o objeto **```Payment```** do pagamento que você deseja reembolsar.
+Para fazer reembolsos é necessário ter o objeto **```Payment```** do pagamento que você deseja reembolsar ou passar apenas o ID do pagamento.
 
 ### Cartão de crédito
 #### Valor Total
+
+##### Com o objeto
 ```php
 $refund = $payment->refunds()->creditCardFull();
 print_r($refund);
+```
+
+##### Passando apenas o ID
+```php
+
 ```
 
 #### Valor Parcial

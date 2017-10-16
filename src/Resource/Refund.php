@@ -95,6 +95,7 @@ class Refund extends MoipResource
             }
         }
 
+        $refund->data->type = $this->getIfSet('type', $response);
         $refund->data->status = $this->getIfSet('status', $response);
         $refund->data->method = $this->getIfSet('method', $response);
         $refund->data->createdAt = $this->getIfSet('createdAt', $response);

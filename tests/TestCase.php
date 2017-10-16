@@ -165,10 +165,6 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
 
         $this->body_cc_multipay = $this->readJsonFile('jsons/multipayment/create_cc');
 
-        $this->body_refund_full_bankaccount = $this->readJsonFile('jsons/refund/full_bankaccount');
-
-        $this->body_refund_partial_bankaccount = $this->readJsonFile('jsons/refund/partial_bankaccount');
-
         $this->body_notification_preference = $this->readJsonFile('jsons/notification/create');
 
         $this->body_moip_account = $this->readJsonFile('jsons/account/create');
@@ -208,6 +204,14 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
         $this->body_transfers_revert = $this->readJsonFile('jsons/transfers/revert');
 
         $this->body_keys = $this->readJsonFile('jsons/keys/get');
+
+        $this->body_order_refund_full_bankaccount = $this->readJsonFile('jsons/refund/order_full_bankaccount');
+
+        $this->body_payment_refund_full_bankaccount = $this->readJsonFile('jsons/refund/payment_full_bankaccount');
+
+        $this->body_order_refund_partial_bankaccount = $this->readJsonFile('jsons/refund/order_partial_bankaccount');
+
+        $this->body_payment_refund_partial_bankaccount = $this->readJsonFile('jsons/refund/payment_partial_bankaccount');
 
         $this->body_order_refund_full_cc = $this->readJsonFile('jsons/refund/order_full_cc');
 
