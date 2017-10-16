@@ -39,6 +39,16 @@ class BankAccount extends MoipResource
     }
 
     /**
+     * Get bank account id.
+     *
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->getIfSet('id');
+    }
+
+    /**
      * Set bank account type.
      *
      * @return $this
@@ -177,7 +187,7 @@ class BankAccount extends MoipResource
      */
     public function getFullname()
     {
-        return $this->getIfSet('fullname');
+        return $this->getIfSet('fullname', $this->data->holder);
     }
 
     /**
@@ -187,7 +197,7 @@ class BankAccount extends MoipResource
      */
     public function getTaxDocumentType()
     {
-        return $this->getIfSet('type', $this->data->taxDocument);
+        return $this->getIfSet('type', $this->data->holder->taxDocument);
     }
 
     /**
@@ -197,7 +207,7 @@ class BankAccount extends MoipResource
      */
     public function getTaxDocumentNumber()
     {
-        return $this->getIfSet('number', $this->data->taxDocument);
+        return $this->getIfSet('number', $this->data->holder->taxDocument);
     }
 
     public function setHolder($fullname, $taxDocument, $type)
