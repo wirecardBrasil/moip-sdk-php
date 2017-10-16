@@ -60,25 +60,28 @@
     - [Conta Bancária](#conta-bancária)
       - [Valor Total](#valor-total-1)
       - [Valor Parcial](#valor-parcial-1)
-    - [Consulta](#consulta-1)
   - [Multipedidos](#multipedidos)
     - [Criação](#criando-um-multipedido)
     - [Consulta](#consultando-um-multipedido)
   - [Multipagamentos](#multipagamentos)
     - [Criação](#criando-um-multipagamento)
-    - [Consulta](#consulta-2)
+    - [Consulta](#consulta-1)
   - [Conta Moip](#conta-moip)
     - [Criação](#criação-1)
-    - [Consulta](#consulta-3)
+    - [Consulta](#consulta-2)
     - [Verifica se usuário já possui Conta Moip](#verifica-se-usuário-já-possui-conta-moip)
     - [Obter chave pública de uma Conta Moip](#obter-chave-pública-de-uma-conta-moip)
   - [Preferências de Notificação](#preferências-de-notificação)
     -  [Criação](#criação-2)
-    -  [Consulta](#consulta-4)
+    -  [Consulta](#consulta-3)
     -  [Exclusão](#exclusão)
     -  [Listagem](#listagem)
   - [Webhooks](#webhooks) 
+    - [Consulta](#consulta-4)
+  - [Transferência](#transferência)
+    - [Criando/executando uma transferência](#criandoexecutando-uma-transferência)
     - [Consulta](#consulta-5)
+    - [Reverter](#reverter)
 - [Packages](#packages)
 - [Tratamento de exceções](#tratamento-de-exceções)
 - [Documentação](#documentação)
@@ -538,6 +541,54 @@ $moip->webhooks()->get();
 #### Com paginação e filtros por resource/evento
 ```php
 $moip->webhooks()->get(new Pagination(10, 0), 'ORD-ID', 'ORDER.PAID');
+```
+
+## Transferência
+
+### Criando/executando uma transferência
+```php
+$amount = 500;
+$bank_number = '001';
+$agency_number = '1111';
+$agency_check_number = '2';
+$account_number = '9999';
+$account_check_number = '8';
+$holder_name = 'Nome do Portador';
+$tax_document = '22222222222';
+
+$transfer = $moip->transfers()
+    ->setTransfers($amount, $bank_number, $agency_number, $agency_check_number, $account_number, $account_check_number)
+    ->setHolder($holder_name, $tax_document)
+    ->execute();
+
+print_r($transfer);
+```
+
+### Consulta
+#### Transferência específica
+```php
+$transfer_id = 'TRA-28HRLYNLMUFH';
+$transfer = $this->moip->transfers()->get($transfer_id);
+
+print_r($transfer);
+```
+
+#### Todas transferências
+##### Sem paginação
+```php
+$transfers = $this->moip->transfers()->getList();
+```
+
+##### Com paginação
+```php
+$transfers = $this->moip->transfers()->getList(new Pagination(10,0));
+```
+
+### Reverter
+```php
+$transfer_id = 'TRA-28HRLYNLMUFH';
+
+$transfer = $this->moip->transfers()->revert($transfer_id);
 ```
 
 ## Tratamento de Exceções
