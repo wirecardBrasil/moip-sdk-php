@@ -161,6 +161,7 @@ class Refund extends MoipResource
     {
         if (!is_null($resourceId)) {
             $endpoint = ($this->isOrder($resourceId) ? Orders::PATH : Payment::PATH);
+
             return sprintf('/%s/%s/%s/%s', MoipResource::VERSION, $endpoint, $resourceId, self::PATH);
         }
 
@@ -207,7 +208,7 @@ class Refund extends MoipResource
 
     /**
      * Bank account is the bank address of a particular vendor or a customer.
-     *     
+     *
      * @param \Moip\Resource\BankAccount $bankAccount
      *
      * @return \stdClass
@@ -338,11 +339,11 @@ class Refund extends MoipResource
     public function bankAccount($resourceId, BankAccount $bankAccount, $amount = null)
     {
         $data = $this->bankAccountData($bankAccount);
-        
+
         if (!is_null($amount)) {
             $data->amount = $amount;
         }
-        return $this->execute($data, $resourceId);        
+        return $this->execute($data, $resourceId);
     }
 
     public function creditCard($resourceId, $amount = null)

@@ -7,7 +7,7 @@ use Moip\Tests\TestCase;
 class RefundTest extends TestCase
 {
     public function testRefundOrderCreditCardFull()
-    {   
+    {
         $order = $this->paymentCreditCard(false);
 
         $this->mockHttpSession($this->body_order_refund_full_cc);
@@ -53,7 +53,7 @@ class RefundTest extends TestCase
     }
 
     public function testRefundPaymentCreditCardFull()
-    {   
+    {
         $payment = $this->paymentCreditCard();
 
         $this->mockHttpSession($this->body_payment_refund_full_cc);
@@ -187,7 +187,7 @@ class RefundTest extends TestCase
     }
 
     private function bankAccount()
-    {        
+    {
         return $this->moip->bankaccount()
             ->setType('CHECKING')
             ->setBankNumber('237')
@@ -209,7 +209,7 @@ class RefundTest extends TestCase
         $this->mockHttpSession('');
         $payment->authorize();
 
-        return ($returnPayment ? $payment : $order);
+        return $returnPayment ? $payment : $order;
     }
 
     private function paymentCreditCard($returnPayment = true)
@@ -219,6 +219,6 @@ class RefundTest extends TestCase
         $this->mockHttpSession($this->body_cc_pay_pci);
         $payment = ($order->payments()->setCreditCard(5, 2018, '5555666677778884', 123, $this->createCustomer())->execute());
         
-        return ($returnPayment ? $payment : $order);
+        return $returnPayment ? $payment : $order;
     }
 }

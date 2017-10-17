@@ -22,7 +22,7 @@ class BankAccount extends MoipResource
      * @const string
      */
     const CHECKING = 'CHECKING';
-     
+
     /**
      * Bank account type.
      *
@@ -56,7 +56,7 @@ class BankAccount extends MoipResource
     public function setType($type)
     {
         $this->data->type = $type;
-        
+
         return $this;
     }
 
@@ -78,7 +78,7 @@ class BankAccount extends MoipResource
     public function setBankNumber($bankNumber)
     {
         $this->data->bankNumber = $bankNumber;
-        
+
         return $this;
     }
 
@@ -100,7 +100,7 @@ class BankAccount extends MoipResource
     public function setAgencyNumber($agencyNumber)
     {
         $this->data->agencyNumber = $agencyNumber;
-        
+
         return $this;
     }
 
@@ -122,7 +122,7 @@ class BankAccount extends MoipResource
     public function setAgencyCheckNumber($agencyCheckNumber)
     {
         $this->data->agencyCheckNumber = $agencyCheckNumber;
-        
+
         return $this;
     }
 
@@ -144,7 +144,7 @@ class BankAccount extends MoipResource
     public function setAccountNumber($accountNumber)
     {
         $this->data->accountNumber = $accountNumber;
-        
+
         return $this;
     }
 
@@ -154,7 +154,7 @@ class BankAccount extends MoipResource
      * @return $this
      */
     public function getAccountNumber()
-    {   
+    {
         return $this->getIfSet('accountNumber');
     }
 
@@ -166,7 +166,7 @@ class BankAccount extends MoipResource
     public function setAccountCheckNumber($accountCheckNumber)
     {
         $this->data->accountCheckNumber = $accountCheckNumber;
-        
+
         return $this;
     }
 
@@ -176,7 +176,7 @@ class BankAccount extends MoipResource
      * @return $this
      */
     public function getAccountCheckNumber()
-    {   
+    {
         return $this->getIfSet('accountCheckNumber');
     }
 
@@ -250,5 +250,4 @@ class BankAccount extends MoipResource
 
         return $bankAccount;
     }
-
 }
