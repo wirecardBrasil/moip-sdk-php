@@ -325,17 +325,28 @@ print_r($refund);
 
 ##### Passando apenas o ID
 ```php
-
+$refund = $moip->refunds()->creditCard('RESOURCE-ID');
+print_r($refund);
 ```
 
 #### Valor Parcial
+
+##### Com o objeto
 ```php
 $refund = $payment->refunds()->creditCardPartial(30000);
 print_r($refund);
 ```
 
+##### Passando apenas o ID
+```php
+$refund = $moip->refunds()->creditCard('RESOURCE-ID', 5000);
+print_r($refund);
+```
+
 ### Conta bancária
 #### Valor Total
+
+##### Com o objeto
 ```php
 $type = 'CHECKING';
 $bank_number = '001';
@@ -356,7 +367,22 @@ $refund = $payment->refunds()
 print_r($refund);
 ```
 
+##### Passando apenas o ID
+```php
+$bankAccount = $moip->bankaccount()
+    ->setType('CHECKING')
+    ->setBankNumber('237')
+    ->setAgencyNumber('12346')
+    ->setAgencyCheckNumber('0')
+    ->setAccountNumber('12345679')
+    ->setAccountCheckNumber('7')
+    ->setHolder('Jose Silva', '22222222222', 'CPF');
+$refund = $moip->refunds()->bankAccount('RESOURCE-ID', $bankAccount);
+```
+
 #### Valor Parcial
+
+##### Com o objeto
 ```php
 $amount = 30000;
 $type = 'SAVING';
@@ -377,6 +403,19 @@ $refund = $payment->refunds()
         $customer
     );
 print_r($refund);
+```
+
+##### Passando apenas o ID
+```php
+$bankAccount = $moip->bankaccount()
+    ->setType('CHECKING')
+    ->setBankNumber('237')
+    ->setAgencyNumber('12346')
+    ->setAgencyCheckNumber('0')
+    ->setAccountNumber('12345679')
+    ->setAccountCheckNumber('7')
+    ->setHolder('Jose Silva', '22222222222', 'CPF');
+$refund = $moip->refunds()->bankAccount('RESOURCE-ID', $bankAccount, 5000);
 ```
 
 ## Multipedidos
