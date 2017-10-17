@@ -98,7 +98,7 @@ class RefundTest extends TestCase
         $this->assertEquals('PARTIAL', $refund->getType());
     }
 
-    public function testRefundCCFull()
+    public function testRefundCCFullWithResourceId()
     {
         $payment = $this->paymentCreditCard();
 
@@ -109,7 +109,7 @@ class RefundTest extends TestCase
         $this->assertEquals('FULL', $refund->getType());
     }
 
-    public function testRefundCCPartial()
+    public function testRefundCCPartialWithResourceId()
     {
         $payment = $this->paymentCreditCard();
 
@@ -120,7 +120,7 @@ class RefundTest extends TestCase
         $this->assertEquals('PARTIAL', $refund->getType());
     }
 
-    public function testRefundBankAccountFull()
+    public function testRefundBankAccountFullWithResourceId()
     {
         $payment = $this->paymentBoleto();
 
@@ -131,12 +131,56 @@ class RefundTest extends TestCase
         $this->assertEquals('FULL', $refund->getType());
     }
 
-    public function testRefundBankAccountPartial()
+    public function testRefundBankAccountPartialWithResourceId()
     {
         $payment = $this->paymentBoleto();
 
         $this->mockHttpSession($this->body_payment_refund_partial_bankaccount);
         $refund = $this->moip->refunds()->bankAccount($payment->getId(), $this->bankAccount(), 5000);
+
+        $this->assertNotEmpty($refund->getId());
+        $this->assertEquals('PARTIAL', $refund->getType());
+    }
+
+    public function testRefundOrderCCFullWithResourceId()
+    {
+        $order = $this->paymentCreditCard(false);
+
+        $this->mockHttpSession($this->body_order_refund_full_cc);
+        $refund = $this->moip->refunds()->creditCard($order->getId());
+
+        $this->assertNotEmpty($refund->getId());
+        $this->assertEquals('FULL', $refund->getType());
+    }
+
+    public function testRefundOrderCCPartialWithResourceId()
+    {
+        $order = $this->paymentCreditCard(false);
+
+        $this->mockHttpSession($this->body_order_refund_partial_cc);
+        $refund = $this->moip->refunds()->creditCard($order->getId(), 5000);
+
+        $this->assertNotEmpty($refund->getId());
+        $this->assertEquals('PARTIAL', $refund->getType());
+    }
+
+    public function testRefundOrderBankAccountFullWithResourceId()
+    {
+        $order = $this->paymentBoleto(false);
+
+        $this->mockHttpSession($this->body_order_refund_full_bankaccount);
+        $refund = $this->moip->refunds()->bankAccount($order->getId(), $this->bankAccount());
+
+        $this->assertNotEmpty($refund->getId());
+        $this->assertEquals('FULL', $refund->getType());
+    }
+
+    public function testRefundOrderBankAccountPartialWithResourceId()
+    {
+        $order = $this->paymentBoleto(false);
+
+        $this->mockHttpSession($this->body_order_refund_partial_bankaccount);
+        $refund = $this->moip->refunds()->bankAccount($order->getId(), $this->bankAccount(), 5000);
 
         $this->assertNotEmpty($refund->getId());
         $this->assertEquals('PARTIAL', $refund->getType());
