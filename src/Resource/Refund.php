@@ -343,6 +343,7 @@ class Refund extends MoipResource
         if (!is_null($amount)) {
             $data->amount = $amount;
         }
+
         return $this->execute($data, $resourceId);
     }
 

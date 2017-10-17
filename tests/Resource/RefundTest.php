@@ -218,7 +218,7 @@ class RefundTest extends TestCase
         $order = $this->createOrder()->create();
         $this->mockHttpSession($this->body_cc_pay_pci);
         $payment = ($order->payments()->setCreditCard(5, 2018, '5555666677778884', 123, $this->createCustomer())->execute());
-        
+
         return $returnPayment ? $payment : $order;
     }
 }
