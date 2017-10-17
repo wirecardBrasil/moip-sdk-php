@@ -378,6 +378,7 @@ $bankAccount = $moip->bankaccount()
     ->setAccountCheckNumber('7')
     ->setHolder('Jose Silva', '22222222222', 'CPF');
 $refund = $moip->refunds()->bankAccount('RESOURCE-ID', $bankAccount);
+print_r($refund);
 ```
 
 #### Valor Parcial
@@ -416,6 +417,7 @@ $bankAccount = $moip->bankaccount()
     ->setAccountCheckNumber('7')
     ->setHolder('Jose Silva', '22222222222', 'CPF');
 $refund = $moip->refunds()->bankAccount('RESOURCE-ID', $bankAccount, 5000);
+print_r($refund);
 ```
 
 ## Multipedidos
