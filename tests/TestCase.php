@@ -113,22 +113,12 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
     /**
      * @var string response from moip API.
      */
-    protected $body_refund_full_cc;
-
-    /**
-     * @var string response from moip API.
-     */
     protected $body_transfers_list;
 
     /**
      * @var string response from moip API.
      */
     protected $body_transfers_revert;
-
-    /**
-     * @var string response from moip API.
-     */
-    protected $body_refund_partial_cc;
 
     /**
      * @var string holds the last generated customer ownId. In mock mode it'll be always the default, but it changes on sandbox mode.
