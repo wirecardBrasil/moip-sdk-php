@@ -312,23 +312,41 @@ print_r($payment);
 
 ## Reembolsos
 
-Para fazer reembolsos é necessário ter o objeto **```Payment```** do pagamento que você deseja reembolsar.
+Para fazer reembolsos é necessário ter o objeto **```Payment```** do pagamento que você deseja reembolsar ou passar apenas o ID do pagamento.
 
 ### Cartão de crédito
 #### Valor Total
+
+##### Com o objeto
 ```php
 $refund = $payment->refunds()->creditCardFull();
 print_r($refund);
 ```
 
+##### Passando apenas o ID
+```php
+$refund = $moip->refunds()->creditCard('RESOURCE-ID');
+print_r($refund);
+```
+
 #### Valor Parcial
+
+##### Com o objeto
 ```php
 $refund = $payment->refunds()->creditCardPartial(30000);
 print_r($refund);
 ```
 
+##### Passando apenas o ID
+```php
+$refund = $moip->refunds()->creditCard('RESOURCE-ID', 5000);
+print_r($refund);
+```
+
 ### Conta bancária
 #### Valor Total
+
+##### Com o objeto
 ```php
 $type = 'CHECKING';
 $bank_number = '001';
@@ -349,7 +367,23 @@ $refund = $payment->refunds()
 print_r($refund);
 ```
 
+##### Passando apenas o ID
+```php
+$bankAccount = $moip->bankaccount()
+    ->setType('CHECKING')
+    ->setBankNumber('237')
+    ->setAgencyNumber('12346')
+    ->setAgencyCheckNumber('0')
+    ->setAccountNumber('12345679')
+    ->setAccountCheckNumber('7')
+    ->setHolder('Jose Silva', '22222222222', 'CPF');
+$refund = $moip->refunds()->bankAccount('RESOURCE-ID', $bankAccount);
+print_r($refund);
+```
+
 #### Valor Parcial
+
+##### Com o objeto
 ```php
 $amount = 30000;
 $type = 'SAVING';
@@ -369,6 +403,20 @@ $refund = $payment->refunds()
         $account_check_number, 
         $customer
     );
+print_r($refund);
+```
+
+##### Passando apenas o ID
+```php
+$bankAccount = $moip->bankaccount()
+    ->setType('CHECKING')
+    ->setBankNumber('237')
+    ->setAgencyNumber('12346')
+    ->setAgencyCheckNumber('0')
+    ->setAccountNumber('12345679')
+    ->setAccountCheckNumber('7')
+    ->setHolder('Jose Silva', '22222222222', 'CPF');
+$refund = $moip->refunds()->bankAccount('RESOURCE-ID', $bankAccount, 5000);
 print_r($refund);
 ```
 
