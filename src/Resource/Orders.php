@@ -161,7 +161,7 @@ class Orders extends MoipResource
         $this->orders->data->events = $this->structure($response, Event::PATH, Event::class);
 
         $this->orders->data->items = $response->items;
-        $this->orders->data->receivers = $response->receivers;
+        $this->orders->data->receivers = $this->getIfSet('receivers', $response);
         $this->orders->data->createdAt = $response->createdAt;
         $this->orders->data->status = $response->status;
         $this->orders->data->_links = $response->_links;

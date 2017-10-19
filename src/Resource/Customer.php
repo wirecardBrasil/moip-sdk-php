@@ -258,8 +258,8 @@ class Customer extends MoipResource
         $customer->data->phone->number = $this->getIfSet('number', $phone);
         $customer->data->birthDate = $this->getIfSet('birthDate', $response);
         $customer->data->taxDocument = new stdClass();
-        $customer->data->taxDocument->type = $this->getIfSet('type', $response->taxDocument);
-        $customer->data->taxDocument->number = $this->getIfSet('number', $response->taxDocument);
+        $customer->data->taxDocument->type = $this->getIfSet('type', $this->getIfSet('taxDocument', $response));
+        $customer->data->taxDocument->number = $this->getIfSet('number', $this->getIfSet('taxDocument', $response));
         $customer->data->addresses = [];
         $customer->data->shippingAddress = $this->getIfSet('shippingAddress', $response);
         $customer->data->billingAddress = $this->getIfSet('billingAddress', $response);
