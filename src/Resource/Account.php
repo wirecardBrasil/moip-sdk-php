@@ -387,7 +387,7 @@ class Account extends MoipResource
 
         $email = $this->getIfSet('email', $response);
 
-        $account->data->email->address = $this->getIfSet('address', $email);        
+        $account->data->email->address = $this->getIfSet('address', $email);
         $account->data->email->confirmed = $this->getIfSet('confirmed', $email);
 
         $account->data->login = $this->getIfSet('login', $response);

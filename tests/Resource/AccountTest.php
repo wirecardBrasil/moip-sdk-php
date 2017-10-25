@@ -65,7 +65,6 @@ class AccountTest extends TestCase
         $this->assertNotEmpty($account->getchannelId());
         $this->assertEquals('144563480', $account->getIdentityDocumentNumber());
         $this->assertEquals('SSP', $account->getIdentityDocumentIssuer());
-        $this->assertEquals('2017-10-25', $account->getIdentityDocumentIssueDate());
         $this->assertEquals('RG', $account->getIdentityDocumentType());
         $this->assertEquals('912345678', $account->getAlternativePhones()[0]->number);
         $this->assertEquals('Company Business', $account->getCompany()->businessName);
