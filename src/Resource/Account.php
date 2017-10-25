@@ -346,7 +346,7 @@ class Account extends MoipResource
     /**
      * Get email confirmed.
      *
-     * @return boolean
+     * @return bool
      */
     public function getEmailConfirmed()
     {
@@ -366,7 +366,7 @@ class Account extends MoipResource
     /**
      * Get transparent account (true/false).
      *
-     * @return boolean
+     * @return bool
      */
     public function getTransparentAccount()
     {
@@ -387,12 +387,10 @@ class Account extends MoipResource
 
         $email = $this->getIfSet('email', $response);
 
-        $account->data->email->address = $this->getIfSet('address', $email);
-        
+        $account->data->email->address = $this->getIfSet('address', $email);        
         $account->data->email->confirmed = $this->getIfSet('confirmed', $email);
 
         $account->data->login = $this->getIfSet('login', $response);
-       
         $account->data->person = new stdClass();
 
         $person = $this->getIfSet('person', $response);

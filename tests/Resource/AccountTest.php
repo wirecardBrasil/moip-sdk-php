@@ -29,7 +29,7 @@ class AccountTest extends TestCase
 
         $this->assertNotEmpty($account->getId());
         $this->assertNotEmpty($account->getAccessToken());
-        //$this->assertNotEmpty($account->getchannelId());
+        $this->assertNotEmpty($account->getchannelId());
         $this->assertEquals('144563480', $account->getIdentityDocumentNumber());
         $this->assertEquals('SSP', $account->getIdentityDocumentIssuer());
         $this->assertEquals('2017-10-25', $account->getIdentityDocumentIssueDate());
