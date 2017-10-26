@@ -93,7 +93,12 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
     /**
      * @var string response from moip API.
      */
-    protected $body_moip_account;
+    protected $body_moip_account_create;
+
+    /**
+     * @var string response from moip API.
+     */
+    protected $body_moip_account_get;
 
     /**
      * @var string response from moip API.
@@ -157,7 +162,9 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
 
         $this->body_notification_preference = $this->readJsonFile('jsons/notification/create');
 
-        $this->body_moip_account = $this->readJsonFile('jsons/account/create');
+        $this->body_moip_account_create = $this->readJsonFile('jsons/account/create');
+
+        $this->body_moip_account_get = $this->readJsonFile('jsons/account/get');
 
         $this->body_order_list = $this->readJsonFile('jsons/order/get_list');
 
