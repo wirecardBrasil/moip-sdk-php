@@ -41,7 +41,7 @@ try {
         ->create();
 
     // Now it's time to create a URL then redirect your user to ask him permissions to create projects in his name
-    $connect = new Connect('http://url.com/test/classical_account_flow_2.php', 'YOUR-APP-ID', true, Connect::ENDPOINT_SANDBOX);
+    $connect = new Connect('http://url.com/redirect_uri.php', 'YOUR-APP-ID', true, Connect::ENDPOINT_SANDBOX);
     $connect->setScope(Connect::RECEIVE_FUNDS)
         ->setScope(Connect::REFUND)
         ->setScope(Connect::MANAGE_ACCOUNT_INFO)

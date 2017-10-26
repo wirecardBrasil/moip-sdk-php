@@ -11,7 +11,7 @@ use Moip\Moip;
  * and get the client secret
  */
 try {
-    $connect = new Connect('http://url.com/test/classical_account_flow_2.php', 'YOUR-APP-ID', true, Connect::ENDPOINT_SANDBOX);
+    $connect = new Connect('http://url.com/redirect_uri.php', 'YOUR-APP-ID', true, Connect::ENDPOINT_SANDBOX);
 
     $connect->setClientSecret('5681772df8944ce1a79d36af34c9842b');
     $connect->setCode($_GET['code']);
