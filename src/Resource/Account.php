@@ -374,6 +374,16 @@ class Account extends MoipResource
     }
 
     /**
+     * Get account created at.
+     *
+     * @return string
+     */
+    public function getCreatedAt()
+    {
+        return $this->getIfSet('createdAt', $this->data);
+    }
+
+    /**
      * Mount the seller structure from account.
      *
      * @param \stdClass $response
@@ -431,6 +441,7 @@ class Account extends MoipResource
         $account->data->accessToken = $this->getIfSet('accessToken', $response);
         $account->data->channelId = $this->getIfSet('channelId', $response);
         $account->data->transparentAccount = $this->getIfSet('transparentAccount', $response);
+        $account->data->createdAt = $this->getIfSet('createdAt', $response);
 
         return $account;
     }

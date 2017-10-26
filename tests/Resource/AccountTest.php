@@ -30,6 +30,7 @@ class AccountTest extends TestCase
         $this->assertNotEmpty($account->getId());
         $this->assertNotEmpty($account->getAccessToken());
         $this->assertNotEmpty($account->getchannelId());
+        $this->assertNotEmpty($account->getCreatedAt());
         $this->assertEquals('144563480', $account->getIdentityDocumentNumber());
         $this->assertEquals('SSP', $account->getIdentityDocumentIssuer());
         $this->assertEquals('2017-10-25', $account->getIdentityDocumentIssueDate());
@@ -63,6 +64,7 @@ class AccountTest extends TestCase
         $this->assertNotEmpty($account->getId());
         $this->assertNotEmpty($account->getAccessToken());
         $this->assertNotEmpty($account->getchannelId());
+        $this->assertNotEmpty($account->getCreatedAt());
         $this->assertEquals('144563480', $account->getIdentityDocumentNumber());
         $this->assertEquals('SSP', $account->getIdentityDocumentIssuer());
         $this->assertEquals('RG', $account->getIdentityDocumentType());
@@ -89,6 +91,7 @@ class AccountTest extends TestCase
         $account = $this->moip->accounts()->get($account_id);
 
         $this->assertNotEmpty($account->getId());
+        $this->assertNotEmpty($account->getCreatedAt());
         $this->assertEquals(false, $account->getTransparentAccount());
         $this->assertEquals('fortestsminecustomer@mailinator.com', $account->getLogin());
         $this->assertEquals(true, $account->getEmailConfirmed());
