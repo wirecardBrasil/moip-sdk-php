@@ -68,7 +68,7 @@ try {
         ->execute();
 
     echo 'Order ID: '.$order->getId().'<br />';
-    
+
     echo 'Receivers: <br>';
 
     foreach ($order->getReceiverIterator() as $receiver) {
