@@ -31,7 +31,7 @@ try {
         ->setType('MERCHANT')
         ->setPhone(11, 66778899, 55)
         ->addAlternativePhone(11, 66448899, 55)
-        ->addAddress('Rua de teste', 123, 'Bairro', 'Sao Paulo', 'SP', '01234567', 'Apt. 23', 'BRA')        
+        ->addAddress('Rua de teste', 123, 'Bairro', 'Sao Paulo', 'SP', '01234567', 'Apt. 23', 'BRA')
         ->setCompanyName('Empresa Teste', 'Teste Empresa ME')
         ->setCompanyOpeningDate('2011-01-01')
         ->setCompanyPhone(11, 66558899, 55)

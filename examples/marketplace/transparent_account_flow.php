@@ -2,8 +2,8 @@
 
 require 'vendor/autoload.php';
 
-use Moip\Moip;
 use Moip\Auth\OAuth;
+use Moip\Moip;
 
 /*
  * Tip: Check how to create an Moip APP on https://dev.moip.com.br/reference#criar-um-app
@@ -26,7 +26,7 @@ try {
         ->setTransparentAccount(true)
         ->setPhone(11, 66778899, 55)
         ->addAlternativePhone(11, 66448899, 55)
-        ->addAddress('Rua de teste', 123, 'Bairro', 'Sao Paulo', 'SP', '01234567', 'Apt. 23', 'BRA')        
+        ->addAddress('Rua de teste', 123, 'Bairro', 'Sao Paulo', 'SP', '01234567', 'Apt. 23', 'BRA')
         ->setCompanyName('Empresa Teste', 'Teste Empresa ME')
         ->setCompanyOpeningDate('2011-01-01')
         ->setCompanyPhone(11, 66558899, 55)
@@ -40,7 +40,6 @@ try {
      * and you should save in your database to make transactions in name of the merchant
      */
     $merchantAccessToken = $account->getAccessToken();
-
 
     // Using OAuth token from merchant
     $moipMerchant = new Moip(new OAuth($merchantAccessToken), Moip::ENDPOINT_SANDBOX);
@@ -63,16 +62,16 @@ try {
 
     // Creating an order and splitting payment using 'addReceiver' method
     $order = $moipMerchant->orders()->setOwnId(uniqid())
-        ->addItem("bicicleta 1",1, "sku1", 10000)
-        ->addItem("bicicleta 2",1, "sku2", 11000)
-        ->addItem("bicicleta 3",1, "sku3", 12000)
-        ->addItem("bicicleta 4",1, "sku4", 13000)
-        ->addItem("bicicleta 5",1, "sku5", 14000)
-        ->addItem("bicicleta 6",1, "sku6", 15000)
-        ->addItem("bicicleta 7",1, "sku7", 16000)
-        ->addItem("bicicleta 8",1, "sku8", 17000)
-        ->addItem("bicicleta 9",1, "sku9", 18000)
-        ->addItem("bicicleta 10",1, "sku10", 19000)
+        ->addItem('bicicleta 1', 1, 'sku1', 10000)
+        ->addItem('bicicleta 2', 1, 'sku2', 11000)
+        ->addItem('bicicleta 3', 1, 'sku3', 12000)
+        ->addItem('bicicleta 4', 1, 'sku4', 13000)
+        ->addItem('bicicleta 5', 1, 'sku5', 14000)
+        ->addItem('bicicleta 6', 1, 'sku6', 15000)
+        ->addItem('bicicleta 7', 1, 'sku7', 16000)
+        ->addItem('bicicleta 8', 1, 'sku8', 17000)
+        ->addItem('bicicleta 9', 1, 'sku9', 18000)
+        ->addItem('bicicleta 10', 1, 'sku10', 19000)
         ->setShippingAmount(3000)->setAddition(1000)->setDiscount(5000)
         ->setCustomer($customer)
 
@@ -84,23 +83,23 @@ try {
     $payment = $order->payments()
         ->setCreditCard(12, 21, '4073020000000002', '123', $customer)
         ->setInstallmentCount(3)
-        ->setStatementDescriptor('teste de pag')          
+        ->setStatementDescriptor('teste de pag')
         ->execute();
 
-    echo 'Order ID: ' . $order->getId(). '<br />';
+    echo 'Order ID: '.$order->getId().'<br />';
     
     echo 'Receivers: <br>';
 
     foreach ($order->getReceiverIterator() as $receiver) {
-        echo $receiver->moipAccount->fullname . ' - ' .$receiver->moipAccount->id.'<br>';
+        echo $receiver->moipAccount->fullname.' - '.$receiver->moipAccount->id.'<br>';
     }
 
-    echo 'Payment ID: '. $payment->getId() . '<br />';
-    echo 'Created at: '. $payment->getCreatedAt()->format('Y-m-d H:i:s'). '<br />';
-    echo 'Status: '. $payment->getStatus(). '<br />';
-    echo 'Amount: '. $payment->getAmount()->total .'<br />';
-    echo 'Funding Instrument: '. $payment->getFundingInstrument()->method. '<br />';
-    echo 'Installment Count: '. $payment->getInstallmentCount(). '<br />';
+    echo 'Payment ID: '.$payment->getId().'<br />';
+    echo 'Created at: '.$payment->getCreatedAt()->format('Y-m-d H:i:s').'<br />';
+    echo 'Status: '.$payment->getStatus().'<br />';
+    echo 'Amount: '.$payment->getAmount()->total.'<br />';
+    echo 'Funding Instrument: '.$payment->getFundingInstrument()->method.'<br />';
+    echo 'Installment Count: '.$payment->getInstallmentCount().'<br />';
 } catch (\Moip\Exceptions\UnautorizedException $e) {
     echo $e->getMessage();
 } catch (\Moip\Exceptions\ValidationException $e) {
