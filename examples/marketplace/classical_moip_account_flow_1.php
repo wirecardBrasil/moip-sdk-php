@@ -51,7 +51,7 @@ try {
     header('Location: '.$connect->getAuthUrl());
 
     /*
-     * After redirect this implementation continues in classic_account_flow_2.php
+     * After redirect this implementation continues in classic_moip_account_flow_2.php
      */
 } catch (\Moip\Exceptions\UnautorizedException $e) {
     echo $e->getMessage();
