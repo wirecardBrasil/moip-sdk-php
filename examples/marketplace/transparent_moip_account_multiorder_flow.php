@@ -62,10 +62,10 @@ try {
 
     // Creating an multiorder and setting receiver for each order with `addReceiver` method
     $order = $moip->orders()->setOwnId(uniqid())
-        ->addItem("bicicleta 1",1, "sku1", 10000)
-        ->addItem("bicicleta 2",1, "sku2", 11000)
-        ->addItem("bicicleta 3",1, "sku3", 12000)
-        ->addItem("bicicleta 4",1, "sku4", 13000)
+        ->addItem('bicicleta 1', 1, 'sku1', 10000)
+        ->addItem('bicicleta 2', 1, 'sku2', 11000)
+        ->addItem('bicicleta 3', 1, 'sku3', 12000)
+        ->addItem('bicicleta 4', 1, 'sku4', 13000)
         ->setShippingAmount(3000)
         ->setAddition(1000)
         ->setDiscount(5000)
@@ -73,9 +73,9 @@ try {
         ->addReceiver('MPA-ID', 'PRIMARY', NULL);
 
     $order2 = $moip->orders()->setOwnId(uniqid())
-        ->addItem("bicicleta 1",1, "sku1", 10000)
-        ->addItem("bicicleta 2",1, "sku2", 11000)
-        ->addItem("bicicleta 3",1, "sku3", 12000)
+        ->addItem('bicicleta 1', 1, 'sku1', 10000)
+        ->addItem('bicicleta 2', 1, 'sku2', 11000)
+        ->addItem('bicicleta 3', 1, 'sku3', 12000)
         ->setShippingAmount(3000)
         ->setAddition(1000)
         ->setDiscount(5000)
@@ -109,7 +109,7 @@ try {
         echo 'Funding Instrument: '.$payment->fundingInstrument->method.'<br />';
         echo 'Installment Count: '.$payment->installmentCount.'<br />';
     }
-    
+
 } catch (\Moip\Exceptions\UnautorizedException $e) {
     echo $e->getMessage();
 } catch (\Moip\Exceptions\ValidationException $e) {
