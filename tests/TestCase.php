@@ -124,7 +124,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
      * @var string response from moip API.
      */
     protected $body_transfers_revert;
-  
+
     /**
      * @var string response from moip API.
      */
@@ -232,7 +232,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
         $this->body_order_refund_partial_cc = $this->readJsonFile('jsons/refund/order_partial_cc');
 
         $this->body_payment_refund_partial_cc = $this->readJsonFile('jsons/refund/payment_partial_cc');
-      
+
         $this->body_bank_account_create = $this->readJsonFile('jsons/bank_account/create');
 
         $this->body_bank_account_list = $this->readJsonFile('jsons/bank_account/list');

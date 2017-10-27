@@ -237,10 +237,10 @@ class BankAccount extends MoipResource
     public function setHolder($fullname, $number, $type)
     {
         $this->data->holder->fullname = $fullname;
-      
+
         $this->data->holder->taxDocument->type = $type;
         $this->data->holder->taxDocument->number = $number;
-      
+
         return $this;
     }
 
