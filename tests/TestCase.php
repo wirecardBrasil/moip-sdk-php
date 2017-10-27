@@ -93,7 +93,12 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
     /**
      * @var string response from moip API.
      */
-    protected $body_moip_account;
+    protected $body_moip_account_create;
+
+    /**
+     * @var string response from moip API.
+     */
+    protected $body_moip_account_get;
 
     /**
      * @var string response from moip API.
@@ -105,6 +110,21 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
      */
     protected $body_notification_list;
 
+    /**
+     * @var string response from moip API.
+     */
+    protected $body_transfers_create;
+
+    /**
+     * @var string response from moip API.
+     */
+    protected $body_transfers_list;
+
+    /**
+     * @var string response from moip API.
+     */
+    protected $body_transfers_revert;
+  
     /**
      * @var string response from moip API.
      */
@@ -155,13 +175,11 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
 
         $this->body_cc_multipay = $this->readJsonFile('jsons/multipayment/create_cc');
 
-        $this->body_refund_full_bankaccount = $this->readJsonFile('jsons/refund/full_bankaccount');
-
-        $this->body_refund_partial_bankaccount = $this->readJsonFile('jsons/refund/partial_bankaccount');
-
         $this->body_notification_preference = $this->readJsonFile('jsons/notification/create');
 
-        $this->body_moip_account = $this->readJsonFile('jsons/account/create');
+        $this->body_moip_account_create = $this->readJsonFile('jsons/account/create');
+
+        $this->body_moip_account_get = $this->readJsonFile('jsons/account/get');
 
         $this->body_order_list = $this->readJsonFile('jsons/order/get_list');
 
@@ -191,6 +209,30 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
 
         $this->body_get_multipay = $this->readJsonFile('jsons/multipayment/get');
 
+        $this->body_transfers_create = $this->readJsonFile('jsons/transfers/create');
+
+        $this->body_transfers_list = $this->readJsonFile('jsons/transfers/list');
+
+        $this->body_transfers_revert = $this->readJsonFile('jsons/transfers/revert');
+
+        $this->body_keys = $this->readJsonFile('jsons/keys/get');
+
+        $this->body_order_refund_full_bankaccount = $this->readJsonFile('jsons/refund/order_full_bankaccount');
+
+        $this->body_payment_refund_full_bankaccount = $this->readJsonFile('jsons/refund/payment_full_bankaccount');
+
+        $this->body_order_refund_partial_bankaccount = $this->readJsonFile('jsons/refund/order_partial_bankaccount');
+
+        $this->body_payment_refund_partial_bankaccount = $this->readJsonFile('jsons/refund/payment_partial_bankaccount');
+
+        $this->body_order_refund_full_cc = $this->readJsonFile('jsons/refund/order_full_cc');
+
+        $this->body_payment_refund_full_cc = $this->readJsonFile('jsons/refund/payment_full_cc');
+
+        $this->body_order_refund_partial_cc = $this->readJsonFile('jsons/refund/order_partial_cc');
+
+        $this->body_payment_refund_partial_cc = $this->readJsonFile('jsons/refund/payment_partial_cc');
+      
         $this->body_bank_account_create = $this->readJsonFile('jsons/bank_account/create');
 
         $this->body_bank_account_list = $this->readJsonFile('jsons/bank_account/list');

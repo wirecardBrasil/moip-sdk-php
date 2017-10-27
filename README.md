@@ -60,24 +60,28 @@
     - [Conta Bancária](#conta-bancária)
       - [Valor Total](#valor-total-1)
       - [Valor Parcial](#valor-parcial-1)
-    - [Consulta](#consulta-1)
   - [Multipedidos](#multipedidos)
     - [Criação](#criando-um-multipedido)
     - [Consulta](#consultando-um-multipedido)
   - [Multipagamentos](#multipagamentos)
     - [Criação](#criando-um-multipagamento)
-    - [Consulta](#consulta-2)
+    - [Consulta](#consulta-1)
   - [Conta Moip](#conta-moip)
     - [Criação](#criação-1)
-    - [Consulta](#consulta-3)
+    - [Consulta](#consulta-2)
     - [Verifica se usuário já possui Conta Moip](#verifica-se-usuário-já-possui-conta-moip)
+    - [Obter chave pública de uma Conta Moip](#obter-chave-pública-de-uma-conta-moip)
   - [Preferências de Notificação](#preferências-de-notificação)
     -  [Criação](#criação-2)
-    -  [Consulta](#consulta-4)
+    -  [Consulta](#consulta-3)
     -  [Exclusão](#exclusão)
     -  [Listagem](#listagem)
   - [Webhooks](#webhooks) 
+    - [Consulta](#consulta-4)
+  - [Transferência](#transferência)
+    - [Criando/executando uma transferência](#criandoexecutando-uma-transferência)
     - [Consulta](#consulta-5)
+    - [Reverter](#reverter)
   - [Contas bancárias](#contas-bancárias)
     - [Criação](#criação-3)
     - [Consulta](#consulta-6)
@@ -263,7 +267,6 @@ $payment = $order->payments()
     ->setCreditCardHash($hash, $customer)
     ->setInstallmentCount(3)
     ->setStatementDescriptor('teste de pag')
-    ->setDelayCapture(false)
     ->execute();
 print_r($payment);
 ```
@@ -314,23 +317,41 @@ print_r($payment);
 
 ## Reembolsos
 
-Para fazer reembolsos é necessário ter o objeto **```Payment```** do pagamento que você deseja reembolsar.
+Para fazer reembolsos é necessário ter o objeto **```Payment```** do pagamento que você deseja reembolsar ou passar apenas o ID do pagamento.
 
 ### Cartão de crédito
 #### Valor Total
+
+##### Com o objeto
 ```php
 $refund = $payment->refunds()->creditCardFull();
 print_r($refund);
 ```
 
+##### Passando apenas o ID
+```php
+$refund = $moip->refunds()->creditCard('RESOURCE-ID');
+print_r($refund);
+```
+
 #### Valor Parcial
+
+##### Com o objeto
 ```php
 $refund = $payment->refunds()->creditCardPartial(30000);
 print_r($refund);
 ```
 
+##### Passando apenas o ID
+```php
+$refund = $moip->refunds()->creditCard('RESOURCE-ID', 5000);
+print_r($refund);
+```
+
 ### Conta bancária
 #### Valor Total
+
+##### Com o objeto
 ```php
 $type = 'CHECKING';
 $bank_number = '001';
@@ -351,7 +372,23 @@ $refund = $payment->refunds()
 print_r($refund);
 ```
 
+##### Passando apenas o ID
+```php
+$bankAccount = $moip->bankaccount()
+    ->setType('CHECKING')
+    ->setBankNumber('237')
+    ->setAgencyNumber('12346')
+    ->setAgencyCheckNumber('0')
+    ->setAccountNumber('12345679')
+    ->setAccountCheckNumber('7')
+    ->setHolder('Jose Silva', '22222222222', 'CPF');
+$refund = $moip->refunds()->bankAccount('RESOURCE-ID', $bankAccount);
+print_r($refund);
+```
+
 #### Valor Parcial
+
+##### Com o objeto
 ```php
 $amount = 30000;
 $type = 'SAVING';
@@ -371,6 +408,20 @@ $refund = $payment->refunds()
         $account_check_number, 
         $customer
     );
+print_r($refund);
+```
+
+##### Passando apenas o ID
+```php
+$bankAccount = $moip->bankaccount()
+    ->setType('CHECKING')
+    ->setBankNumber('237')
+    ->setAgencyNumber('12346')
+    ->setAgencyCheckNumber('0')
+    ->setAccountNumber('12345679')
+    ->setAccountCheckNumber('7')
+    ->setHolder('Jose Silva', '22222222222', 'CPF');
+$refund = $moip->refunds()->bankAccount('RESOURCE-ID', $bankAccount, 5000);
 print_r($refund);
 ```
 
@@ -422,7 +473,6 @@ $payment = $multiorder->multipayments()
     ->setCreditCardHash($hash, $customer)
     ->setInstallmentCount(3)
     ->setStatementDescriptor('teste de pag')
-    ->setDelayCapture(false)
     ->execute();
 print_r($payment);
 ```
@@ -484,6 +534,16 @@ print_r($account);
 $moip->accounts()->checkAccountExists(CPF);
 ```
 
+### Obter chave pública de uma Conta Moip
+```php
+try {
+    $keys = $moip->keys()->get();
+    print_r($keys);
+} catch (Exception $e) {
+    printf($e->__toString());
+}
+```
+
 ## Preferências de notificação
 
 ### Criação
@@ -534,6 +594,54 @@ $moip->webhooks()->get();
 #### Com paginação e filtros por resource/evento
 ```php
 $moip->webhooks()->get(new Pagination(10, 0), 'ORD-ID', 'ORDER.PAID');
+```
+
+## Transferência
+
+### Criando/executando uma transferência
+```php
+$amount = 500;
+$bank_number = '001';
+$agency_number = '1111';
+$agency_check_number = '2';
+$account_number = '9999';
+$account_check_number = '8';
+$holder_name = 'Nome do Portador';
+$tax_document = '22222222222';
+
+$transfer = $moip->transfers()
+    ->setTransfers($amount, $bank_number, $agency_number, $agency_check_number, $account_number, $account_check_number)
+    ->setHolder($holder_name, $tax_document)
+    ->execute();
+
+print_r($transfer);
+```
+
+### Consulta
+#### Transferência específica
+```php
+$transfer_id = 'TRA-28HRLYNLMUFH';
+$transfer = $this->moip->transfers()->get($transfer_id);
+
+print_r($transfer);
+```
+
+#### Todas transferências
+##### Sem paginação
+```php
+$transfers = $this->moip->transfers()->getList();
+```
+
+##### Com paginação
+```php
+$transfers = $this->moip->transfers()->getList(new Pagination(10,0));
+```
+
+### Reverter
+```php
+$transfer_id = 'TRA-28HRLYNLMUFH';
+
+$transfer = $this->moip->transfers()->revert($transfer_id);
 ```
 
 ## Contas bancárias
@@ -610,6 +718,7 @@ try {
     //StatusCode >= 500
     echo $e->getMessage();
 }
+```
 
 ## Documentação
 

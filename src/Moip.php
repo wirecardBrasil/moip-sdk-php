@@ -7,10 +7,12 @@ use Moip\Resource\Account;
 use Moip\Resource\BankAccount;
 use Moip\Resource\Customer;
 use Moip\Resource\Entry;
+use Moip\Resource\Keys;
 use Moip\Resource\Multiorders;
 use Moip\Resource\NotificationPreferences;
 use Moip\Resource\Orders;
 use Moip\Resource\Payment;
+use Moip\Resource\Refund;
 use Moip\Resource\Transfers;
 use Moip\Resource\WebhookList;
 use Requests_Session;
@@ -222,6 +224,36 @@ class Moip
     public function webhooks()
     {
         return new WebhookList($this);
+    }
+
+    /**
+     * Create a new Keys instance.
+     *
+     * @return Keys
+     */
+    public function keys()
+    {
+        return new Keys($this);
+    }
+
+    /**
+     * Create a new Refund instance.
+     *
+     * @return Refund
+     */
+    public function refunds()
+    {
+        return new Refund($this);
+    }
+
+    /**
+     * Create a new BankAccount instance.
+     *
+     * @return BankAccount
+     */
+    public function bankaccount()
+    {
+        return new BankAccount($this);
     }
 
     /**

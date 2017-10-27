@@ -24,6 +24,20 @@ class BankAccount extends MoipResource
     const PATH_ACCOUNT = 'accounts';
 
     /**
+     * Bank account type.
+     *
+     * @const string
+     */
+    const CHECKING = 'CHECKING';
+  
+    /**
+     * Bank account type.
+     *
+     * @const string
+     */
+    const SAVING = 'SAVING';
+
+    /**
      * Initialize a new instance.
      */
     public function initialize()
@@ -40,17 +54,7 @@ class BankAccount extends MoipResource
      */
     public function getId()
     {
-        return $this->data->id;
-    }
-
-    /**
-     * Returns bank account type.
-     *
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->data->type;
+        return $this->getIfSet('id');
     }
 
     /**
@@ -66,17 +70,17 @@ class BankAccount extends MoipResource
 
         return $this;
     }
-
+  
     /**
-     * Returns bank number.
+     * Returns bank account type.
      *
      * @return string
      */
-    public function getBankNumber()
+    public function getType()
     {
-        return $this->data->bankNumber;
+        return $this->getIfSet('type');
     }
-
+  
     /**
      * Set bank number.
      *
@@ -92,15 +96,15 @@ class BankAccount extends MoipResource
     }
 
     /**
-     * Returns bank account agency number.
+     * Returns bank number.
      *
-     * @return int
+     * @return string
      */
-    public function getAgencyNumber()
+    public function getBankNumber()
     {
-        return $this->data->agencyNumber;
+        return $this->getIfSet('bankNumber');
     }
-
+  
     /**
      * Set bank account agency number.
      *
@@ -116,13 +120,13 @@ class BankAccount extends MoipResource
     }
 
     /**
-     * Returns bank account agency check number.
+     * Returns bank account agency number.
      *
      * @return int
      */
-    public function getAgencyCheckNumber()
+    public function getAgencyNumber()
     {
-        return $this->data->agencyCheckNumber;
+        return $this->getIfSet('agencyNumber');
     }
 
     /**
@@ -138,17 +142,17 @@ class BankAccount extends MoipResource
 
         return $this;
     }
-
+  
     /**
-     * Returns bank account number.
+     * Returns bank account agency check number.
      *
      * @return int
      */
-    public function getAccountNumber()
+    public function getAgencyCheckNumber()
     {
-        return $this->data->accountNumber;
+        return $this->getIfSet('agencyCheckNumber');
     }
-
+  
     /**
      * Set bank account number.
      *
@@ -164,15 +168,15 @@ class BankAccount extends MoipResource
     }
 
     /**
-     * Returns bank account check number.
+     * Returns bank account number.
      *
      * @return int
      */
-    public function getAccountCheckNumber()
+    public function getAccountNumber()
     {
-        return $this->data->accountCheckNumber;
+        return $this->getIfSet('accountNumber');
     }
-
+  
     /**
      * Set bank account check number.
      *
@@ -188,15 +192,15 @@ class BankAccount extends MoipResource
     }
 
     /**
-     * Returns holder full name.
+     * Returns bank account check number.
      *
-     * @return string
+     * @return int
      */
-    public function getFullname()
+    public function getAccountCheckNumber()
     {
-        return $this->data->holder->fullname;
+        return $this->getIfSet('accountCheckNumber');
     }
-
+  
     /**
      * Set holder full name.
      *
@@ -212,20 +216,39 @@ class BankAccount extends MoipResource
     }
 
     /**
-     * Returns holder tax document.
+     * Returns holder full name.
      *
-     * @return stdClass
+     * @return string
      */
-    public function getTaxDocument()
+    public function getFullname()
     {
-        return $this->data->holder->taxDocument;
+        return $this->getIfSet('fullname', $this->data->holder);
+    }
+
+    /**
+     * Set holder.
+     *
+     * @param string $fullname Holder full name.
+     * @param string $number   Document number.
+     * @param string $type     Document type (CPF or CNPJ).
+     *
+     * @return $this
+     */
+    public function setHolder($fullname, $number, $type)
+    {
+        $this->data->holder->fullname = $fullname;
+      
+        $this->data->holder->taxDocument->type = $type;
+        $this->data->holder->taxDocument->number = $number;
+      
+        return $this;
     }
 
     /**
      * Set holder tax document.
      *
-     * @param string $type   Document type (CPF or CNPJ)
-     * @param string $number Document number
+     * @param string $type   Document type (CPF or CNPJ).
+     * @param string $number Document number.
      *
      * @return $this
      */
@@ -235,6 +258,26 @@ class BankAccount extends MoipResource
         $this->data->holder->taxDocument->number = $number;
 
         return $this;
+    }
+  
+    /**
+     * Get tax document type from customer.
+     *
+     * @return string Type of value: CPF and CNPJ
+     */
+    public function getTaxDocumentType()
+    {
+        return $this->getIfSet('type', $this->data->holder->taxDocument);
+    }
+  
+    /**
+     * Get tax document number from customer.
+     *
+     * @return string Document Number.
+     */
+    public function getTaxDocumentNumber()
+    {
+        return $this->getIfSet('number', $this->data->holder->taxDocument);
     }
 
     /**
