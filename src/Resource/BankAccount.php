@@ -29,7 +29,7 @@ class BankAccount extends MoipResource
      * @const string
      */
     const CHECKING = 'CHECKING';
-  
+
     /**
      * Bank account type.
      *
@@ -70,7 +70,7 @@ class BankAccount extends MoipResource
 
         return $this;
     }
-  
+
     /**
      * Returns bank account type.
      *
@@ -80,7 +80,7 @@ class BankAccount extends MoipResource
     {
         return $this->getIfSet('type');
     }
-  
+
     /**
      * Set bank number.
      *
@@ -104,7 +104,7 @@ class BankAccount extends MoipResource
     {
         return $this->getIfSet('bankNumber');
     }
-  
+
     /**
      * Set bank account agency number.
      *
@@ -142,7 +142,7 @@ class BankAccount extends MoipResource
 
         return $this;
     }
-  
+
     /**
      * Returns bank account agency check number.
      *
@@ -152,7 +152,7 @@ class BankAccount extends MoipResource
     {
         return $this->getIfSet('agencyCheckNumber');
     }
-  
+
     /**
      * Set bank account number.
      *
@@ -176,7 +176,7 @@ class BankAccount extends MoipResource
     {
         return $this->getIfSet('accountNumber');
     }
-  
+
     /**
      * Set bank account check number.
      *
@@ -200,7 +200,7 @@ class BankAccount extends MoipResource
     {
         return $this->getIfSet('accountCheckNumber');
     }
-  
+
     /**
      * Set holder full name.
      *
@@ -259,7 +259,7 @@ class BankAccount extends MoipResource
 
         return $this;
     }
-  
+
     /**
      * Get tax document type from customer.
      *
@@ -269,7 +269,7 @@ class BankAccount extends MoipResource
     {
         return $this->getIfSet('type', $this->data->holder->taxDocument);
     }
-  
+
     /**
      * Get tax document number from customer.
      *
@@ -283,13 +283,13 @@ class BankAccount extends MoipResource
     /**
      * Get a bank account.
      *
-     * @param string $id Bank account id.
+     * @param string $bank_account_id Bank account id.
      *
      * @return stdClass
      */
-    public function get($id)
+    public function get($bank_account_id)
     {
-        return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, self::PATH, $id));
+        return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, self::PATH, $bank_account_id));
     }
 
     /**
@@ -321,27 +321,27 @@ class BankAccount extends MoipResource
     /**
      * Update a bank account.
      *
-     * @param string|null $id Bank account id.
+     * @param string|null $bank_account_id Bank account id.
      *
      * @return stdClass
      */
-    public function update($id = null)
+    public function update($bank_account_id = null)
     {
-        $id = (!empty($id) ? $id : $this->getId());
+        $bank_account_id = (!empty($bank_account_id) ? $bank_account_id : $this->getId());
 
-        return $this->updateByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, self::PATH, $id));
+        return $this->updateByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, self::PATH, $bank_account_id));
     }
 
     /**
      * Delete a bank account.
      *
-     * @param string $id Bank account id.
+     * @param string $bank_account_id Bank account id.
      *
      * @return mixed
      */
-    public function delete($id)
+    public function delete($bank_account_id)
     {
-        return $this->deleteByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, self::PATH, $id));
+        return $this->deleteByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, self::PATH, $bank_account_id));
     }
 
     /**
