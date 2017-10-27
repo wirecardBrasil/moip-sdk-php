@@ -266,6 +266,10 @@ abstract class MoipResource implements JsonSerializable
     {
         $response = $this->httpRequest($path, Requests::GET);
 
+        if (is_array($response)) {
+            $response = (object) $response;
+        }
+
         return $this->populate($response);
     }
 

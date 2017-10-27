@@ -101,6 +101,11 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
     protected $body_order_list;
 
     /**
+     * @var string response from moip API.
+     */
+    protected $body_notification_list;
+
+    /**
      * @var string holds the last generated customer ownId. In mock mode it'll be always the default, but it changes on sandbox mode.
      */
     protected $last_cus_id = 'meu_id_customer';
@@ -131,6 +136,10 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
 
         $this->body_billet_pay = $this->readJsonFile('jsons/payment/create_billet');
 
+        $this->body_billet_multipay = $this->readJsonFile('jsons/multipayment/create_billet');
+
+        $this->body_cc_multipay = $this->readJsonFile('jsons/multipayment/create_cc');
+
         $this->body_refund_full_bankaccount = $this->readJsonFile('jsons/refund/full_bankaccount');
 
         $this->body_refund_partial_bankaccount = $this->readJsonFile('jsons/refund/partial_bankaccount');
@@ -148,6 +157,26 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
         $this->body_list_webhook_pagination = $this->readJsonFile('jsons/webhooks/get_pagination');
 
         $this->body_list_webhook_all_filters = $this->readJsonFile('jsons/webhooks/get_all_filters');
+
+        $this->body_notification_list = $this->readJsonFile('jsons/notification/list');
+
+        $this->body_multiorder = $this->readJsonFile('jsons/multiorder/create');
+
+        $this->body_cc_delay_capture = $this->readJsonFile('jsons/payment/create_cc_delay_capture');
+
+        $this->body_capture_pay = $this->readJsonFile('jsons/payment/capture');
+
+        $this->body_capture_multipay = $this->readJsonFile('jsons/multipayment/capture');
+
+        $this->body_cancel_pay = $this->readJsonFile('jsons/payment/cancel_pre_authorized');
+
+        $this->body_cancel_multipay = $this->readJsonFile('jsons/multipayment/cancel_pre_authorized');
+
+        $this->body_get_pay = $this->readJsonFile('jsons/payment/get');
+
+        $this->body_get_multipay = $this->readJsonFile('jsons/multipayment/get');
+
+        $this->body_keys = $this->readJsonFile('jsons/keys/get');
     }
 
     /**
@@ -176,7 +205,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
      */
     public function readJsonFile($filename)
     {
-        return file_get_contents("$filename.json", FILE_USE_INCLUDE_PATH);
+        return file_get_contents($filename.'.json', FILE_USE_INCLUDE_PATH);
     }
 
     /**
@@ -270,6 +299,48 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
             ->setOwnId($this->last_ord_id);
 
         return $order;
+    }
+
+    /**
+     * Creates a multiorder.
+     *
+     * @return Multiorders
+     */
+    public function createMultiorder()
+    {
+        if ($this->sandbox_mock == self::SANDBOX) {
+            $this->last_ord_id = uniqid('MOR-');
+        } else {
+            $this->last_ord_id = 'meu_id_pedido';
+        }
+
+        $order = $this->moip->orders()->setOwnId(uniqid())
+            ->addItem('bicicleta 1', 1, 'sku1', 10000)
+            ->addItem('bicicleta 2', 1, 'sku2', 11000)
+            ->addItem('bicicleta 3', 1, 'sku3', 12000)
+            ->addItem('bicicleta 4', 1, 'sku4', 13000)
+            ->setShippingAmount(3000)
+            ->setAddition(1000)
+            ->setDiscount(5000)
+            ->setCustomer($this->createCustomer())
+            ->addReceiver('MPA-VB5OGTVPCI52', 'PRIMARY', null);
+
+        $order2 = $this->moip->orders()->setOwnId(uniqid())
+            ->addItem('bicicleta 1', 1, 'sku1', 10000)
+            ->addItem('bicicleta 2', 1, 'sku2', 11000)
+            ->addItem('bicicleta 3', 1, 'sku3', 12000)
+            ->setShippingAmount(3000)
+            ->setAddition(1000)
+            ->setDiscount(5000)
+            ->setCustomer($this->createCustomer())
+            ->addReceiver('MPA-IFYRB1HBL73Z', 'PRIMARY', null);
+
+        $multiorder = $this->moip->multiorders()
+                ->setOwnId(uniqid())
+                ->addOrder($order)
+                ->addOrder($order2);
+
+        return $multiorder;
     }
 
     /**
