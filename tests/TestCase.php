@@ -126,6 +126,21 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
     protected $body_transfers_revert;
 
     /**
+     * @var string response from moip API.
+     */
+    protected $body_bank_account_create;
+
+    /**
+     * @var string response from moip API.
+     */
+    protected $body_bank_account_list;
+
+    /**
+     * @var string response from moip API.
+     */
+    protected $body_bank_account_update;
+
+    /**
      * @var string holds the last generated customer ownId. In mock mode it'll be always the default, but it changes on sandbox mode.
      */
     protected $last_cus_id = 'meu_id_customer';
@@ -217,6 +232,12 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
         $this->body_order_refund_partial_cc = $this->readJsonFile('jsons/refund/order_partial_cc');
 
         $this->body_payment_refund_partial_cc = $this->readJsonFile('jsons/refund/payment_partial_cc');
+
+        $this->body_bank_account_create = $this->readJsonFile('jsons/bank_account/create');
+
+        $this->body_bank_account_list = $this->readJsonFile('jsons/bank_account/list');
+
+        $this->body_bank_account_update = $this->readJsonFile('jsons/bank_account/update');
     }
 
     /**

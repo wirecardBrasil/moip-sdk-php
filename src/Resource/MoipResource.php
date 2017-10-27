@@ -300,6 +300,20 @@ abstract class MoipResource implements JsonSerializable
     }
 
     /**
+     * Update an item in Moip.
+     *
+     * @param string $path
+     *
+     * @return stdClass
+     */
+    public function updateByPath($path)
+    {
+        $response = $this->httpRequest($path, Requests::PUT, $this);
+
+        return $this->populate($response);
+    }
+
+    /**
      * Delete a new item in Moip.
      *
      * @param $path

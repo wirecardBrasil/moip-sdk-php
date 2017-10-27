@@ -82,6 +82,11 @@
     - [Criando/executando uma transferência](#criandoexecutando-uma-transferência)
     - [Consulta](#consulta-5)
     - [Reverter](#reverter)
+  - [Contas bancárias](#contas-bancárias)
+    - [Criação](#criação-3)
+    - [Consulta](#consulta-6)
+    - [Exclusão](#exclusão-1)
+    - [Atualização](#atualização)
 - [Packages](#packages)
 - [Tratamento de exceções](#tratamento-de-exceções)
 - [Documentação](#documentação)
@@ -637,6 +642,58 @@ $transfers = $this->moip->transfers()->getList(new Pagination(10,0));
 $transfer_id = 'TRA-28HRLYNLMUFH';
 
 $transfer = $this->moip->transfers()->revert($transfer_id);
+```
+
+## Contas bancárias
+
+### Criação
+```php
+$account_id = 'MPA-05E8C79EAAAA';
+$bank_account = $moip->bank_accounts()
+        ->setBankNumber('237')
+        ->setAgencyNumber('12345')
+        ->setAgencyCheckNumber('0')
+        ->setAccountNumber('12345678')
+        ->setAccountCheckNumber('7')
+        ->setType('CHECKING')
+        ->setTaxDocument('CPF', '622.134.533-22')
+        ->setFullname('Demo Moip')
+        ->create($account_id);
+        
+print_r($bank_account);
+```
+
+### Consulta
+#### Conta bancária específica
+```php
+$bank_account_id = 'BKA-397X21X1G6LT';
+$bank_account = $moip->bank_accounts()->get($bank_account_id);
+
+print_r($bank_account);
+```
+
+#### Todas contas bancárias
+```php
+$account_id = 'MPA-05E8C79EAAAA';
+$bank_accounts = $moip->bank_accounts()->getList($account_id)->getBankAccounts();
+
+print_r($bank_accounts);
+```
+
+### Exclusão
+```php
+$bank_account_id = 'BKA-397X21X1G6LT';
+$moip->bank_accounts()->delete($bank_account_id);
+```
+
+### Atualização
+```php
+$bank_account_id = 'BKA-397X21X1G6LT';
+$bank_account = $moip->bank_accounts()->get($bank_account_id);
+$bank_account->setAccountCheckNumber('7');
+$bank_account->update();
+
+print_r($bank_account);
 ```
 
 ## Tratamento de Exceções
