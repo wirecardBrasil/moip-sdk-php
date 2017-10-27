@@ -656,8 +656,7 @@ $bank_account = $moip->bank_accounts()
         ->setAccountNumber('12345678')
         ->setAccountCheckNumber('7')
         ->setType('CHECKING')
-        ->setTaxDocument('CPF', '622.134.533-22')
-        ->setFullname('Demo Moip')
+        ->setHolder('Demo Moip', '622.134.533-22', 'CPF')
         ->create($account_id);
         
 print_r($bank_account);
