@@ -151,6 +151,7 @@ class MoipTest extends TestCase
         $sess->expects($this->once())->method('request')->willThrowException(new Requests_Exception('test error',
             'test'));
         $this->moip->setSession($sess);
+
         
         try {
             $this->moip->orders()->get('ORD-1AWC30TWYZMX');
