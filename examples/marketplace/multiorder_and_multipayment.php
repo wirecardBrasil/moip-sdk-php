@@ -13,37 +13,7 @@ $token = 'YOUR-OAUTH-TOKEN';
 $moip = new Moip(new OAuth($token), Moip::ENDPOINT_SANDBOX);
 
 try {
-
-    // Here we are creating a transparent account to a merchant
-    $account = $moip->accounts()
-        ->setName('Fulano')
-        ->setLastName('De Tal')
-        ->setEmail('fulano@email2.com')
-        ->setIdentityDocument('4737283560', 'SSP', '2015-06-23')
-        ->setBirthDate('1988-12-30')
-        ->setTaxDocument('16262131000')
-        ->setType('MERCHANT')
-        ->setTransparentAccount(true)
-        ->setPhone(11, 66778899, 55)
-        ->addAlternativePhone(11, 66448899, 55)
-        ->addAddress('Rua de teste', 123, 'Bairro', 'Sao Paulo', 'SP', '01234567', 'Apt. 23', 'BRA')
-        ->setCompanyName('Empresa Teste', 'Teste Empresa ME')
-        ->setCompanyOpeningDate('2011-01-01')
-        ->setCompanyPhone(11, 66558899, 55)
-        ->setCompanyTaxDocument('69086878000198')
-        ->setCompanyAddress('Rua de teste 2', 123, 'Bairro Teste', 'Sao Paulo', 'SP', '01234567', 'Apt. 23', 'BRA')
-        ->setCompanyMainActivity('82.91-1/00', 'Atividades de cobranças e informações cadastrais')
-        ->create();
-
-    /*
-     * When a transparent account is created, access token is returned from API
-     * and you should save in your database to make transactions in name of the merchant
-     */
-    $merchantAccessToken = $account->getAccessToken();
-
-    // Using OAuth token from merchant
-    $moipMerchant = new Moip(new OAuth($merchantAccessToken), Moip::ENDPOINT_SANDBOX);
-
+    
     // Creating an object customer to orders
     $customer = $moipMerchant->customers()->setOwnId(uniqid())
         ->setFullname('Fulano de Tal')
