@@ -12,7 +12,7 @@ class BankAccountTest extends TestCase
 
         $account_id = 'MPA-3C5358FF2296';
 
-        $bank_account = $this->moip->bank_accounts()
+        $bank_account = $this->moip->bankaccount()
             ->setBankNumber('237')
             ->setAgencyNumber('12345')
             ->setAgencyCheckNumber('0')
@@ -37,7 +37,7 @@ class BankAccountTest extends TestCase
 
         $this->mockHttpSession($this->body_bank_account_create);
 
-        $bank_account = $this->moip->bank_accounts()->get($bank_account_id);
+        $bank_account = $this->moip->bankaccount()->get($bank_account_id);
         $this->assertEquals($bank_account_id, $bank_account->getId());
         $this->assertEquals('CHECKING', $bank_account->getType());
         $this->assertEquals('237', $bank_account->getBankNumber());
@@ -56,7 +56,7 @@ class BankAccountTest extends TestCase
 
         $this->mockHttpSession($this->body_bank_account_update);
 
-        $bank_account = $this->moip->bank_accounts()
+        $bank_account = $this->moip->bankaccount()
             ->setAccountCheckNumber('8')
             ->update($bank_account_id);
 
