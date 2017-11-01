@@ -152,7 +152,6 @@ class MoipTest extends TestCase
             'test'));
         $this->moip->setSession($sess);
 
-        
         try {
             $this->moip->orders()->get('ORD-1AWC30TWYZMX');
         } catch (Exceptions\UnexpectedException $e) {
