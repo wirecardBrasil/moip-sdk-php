@@ -70,7 +70,7 @@ try {
         ->setAddition(1000)
         ->setDiscount(5000)
         ->setCustomer($customer)
-        ->addReceiver('MPA-ID', 'PRIMARY', NULL);
+        ->addReceiver('MPA-ID', 'PRIMARY', null);
 
     $order2 = $moip->orders()->setOwnId(uniqid())
         ->addItem('bicicleta 1', 1, 'sku1', 10000)
@@ -80,7 +80,7 @@ try {
         ->setAddition(1000)
         ->setDiscount(5000)
         ->setCustomer($customer)
-        ->addReceiver('MPA-ID', 'PRIMARY', NULL);
+        ->addReceiver('MPA-ID', 'PRIMARY', null);
 
     $multiorder = $moip->multiorders()
         ->setOwnId(uniqid())
@@ -109,7 +109,6 @@ try {
         echo 'Funding Instrument: '.$payment->fundingInstrument->method.'<br />';
         echo 'Installment Count: '.$payment->installmentCount.'<br />';
     }
-
 } catch (\Moip\Exceptions\UnautorizedException $e) {
     echo $e->getMessage();
 } catch (\Moip\Exceptions\ValidationException $e) {
