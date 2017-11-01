@@ -202,30 +202,6 @@ class BankAccount extends MoipResource
     }
 
     /**
-     * Set holder full name.
-     *
-     * @param string $fullname Holder full name.
-     *
-     * @return $this
-     */
-    public function setFullname($fullname)
-    {
-        $this->data->holder->fullname = $fullname;
-
-        return $this;
-    }
-
-    /**
-     * Returns holder full name.
-     *
-     * @return string
-     */
-    public function getFullname()
-    {
-        return $this->getIfSet('fullname', $this->data->holder);
-    }
-
-    /**
      * Set holder.
      *
      * @param string $fullname Holder full name.
@@ -245,19 +221,13 @@ class BankAccount extends MoipResource
     }
 
     /**
-     * Set holder tax document.
+     * Returns holder full name.
      *
-     * @param string $type   Document type (CPF or CNPJ).
-     * @param string $number Document number.
-     *
-     * @return $this
+     * @return string
      */
-    public function setTaxDocument($type, $number)
+    public function getFullname()
     {
-        $this->data->holder->taxDocument->type = $type;
-        $this->data->holder->taxDocument->number = $number;
-
-        return $this;
+        return $this->getIfSet('fullname', $this->data->holder);
     }
 
     /**

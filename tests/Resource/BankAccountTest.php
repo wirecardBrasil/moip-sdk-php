@@ -19,8 +19,7 @@ class BankAccountTest extends TestCase
             ->setAccountNumber('12345678')
             ->setAccountCheckNumber('7')
             ->setType('CHECKING')
-            ->setTaxDocument('CPF', '622.134.533-22')
-            ->setFullname('Demo Moip')
+            ->setHolder('Demo Moip', '622.134.533-22', 'CPF')
             ->create($account_id);
 
         return $bank_account;
@@ -47,10 +46,8 @@ class BankAccountTest extends TestCase
         $this->assertEquals('12345678', $bank_account->getAccountNumber());
         $this->assertEquals('7', $bank_account->getAccountCheckNumber());
         $this->assertEquals('Demo Moip', $bank_account->getFullname());
-
-        $taxDocument = $bank_account->getTaxDocument();
-        $this->assertEquals('CPF', $taxDocument->type);
-        $this->assertEquals('622.134.533-22', $taxDocument->number);
+        $this->assertEquals('CPF', $bank_account->getTaxDocumentType());
+        $this->assertEquals('622.134.533-22', $bank_account->getTaxDocumentNumber());
     }
 
     public function testShouldUpdateBankAccount()
