@@ -25,6 +25,10 @@
         {
             "name": "João Lucas Lucchetta",
             "email": "joao.lucchetta@moip.com.br"
+        },
+        {
+            "name": "Matheus Nakaya",
+            "email": "matheus.nakaya@moip.com.br"
         }
     ],
     "require": {
