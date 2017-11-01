@@ -12,7 +12,7 @@ class BankAccountListTest extends TestCase
 
         $account_id = 'MPA-3C5358FF2296';
 
-        $bank_accounts = $this->moip->bank_accounts()->getList($account_id);
+        $bank_accounts = $this->moip->bankaccount()->getList($account_id);
 
         $this->assertNotNull($bank_accounts->getBankAccounts());
     }

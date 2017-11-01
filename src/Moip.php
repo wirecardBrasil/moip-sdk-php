@@ -141,16 +141,6 @@ class Moip
     }
 
     /**
-     * Create a new BankAccount instance.
-     *
-     * @return \Moip\Resource\BankAccount
-     */
-    public function bank_accounts()
-    {
-        return new BankAccount($this);
-    }
-
-    /**
      * Create a new Entry instance.
      *
      * @return \Moip\Resource\Entry

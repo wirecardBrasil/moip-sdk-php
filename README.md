@@ -649,7 +649,7 @@ $transfer = $this->moip->transfers()->revert($transfer_id);
 ### Criação
 ```php
 $account_id = 'MPA-05E8C79EAAAA';
-$bank_account = $moip->bank_accounts()
+$bank_account = $moip->bankaccount()
         ->setBankNumber('237')
         ->setAgencyNumber('12345')
         ->setAgencyCheckNumber('0')
@@ -666,7 +666,7 @@ print_r($bank_account);
 #### Conta bancária específica
 ```php
 $bank_account_id = 'BKA-397X21X1G6LT';
-$bank_account = $moip->bank_accounts()->get($bank_account_id);
+$bank_account = $moip->bankaccount()->get($bank_account_id);
 
 print_r($bank_account);
 ```
@@ -674,7 +674,7 @@ print_r($bank_account);
 #### Todas contas bancárias
 ```php
 $account_id = 'MPA-05E8C79EAAAA';
-$bank_accounts = $moip->bank_accounts()->getList($account_id)->getBankAccounts();
+$bank_accounts = $moip->bankaccount()->getList($account_id)->getBankAccounts();
 
 print_r($bank_accounts);
 ```
@@ -682,13 +682,13 @@ print_r($bank_accounts);
 ### Exclusão
 ```php
 $bank_account_id = 'BKA-397X21X1G6LT';
-$moip->bank_accounts()->delete($bank_account_id);
+$moip->bankaccount()->delete($bank_account_id);
 ```
 
 ### Atualização
 ```php
 $bank_account_id = 'BKA-397X21X1G6LT';
-$bank_account = $moip->bank_accounts()->get($bank_account_id);
+$bank_account = $moip->bankaccount()->get($bank_account_id);
 $bank_account->setAccountCheckNumber('7');
 $bank_account->update();
 
