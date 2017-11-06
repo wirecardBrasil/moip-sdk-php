@@ -4,6 +4,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+<a name="v2.2.0"></a>
+## v2.2.0 (2017-11-01)
+
+
+#### Bug Fixes
+
+*   Prevent notice when tax document or receivers are not returned ((6f6c10bd))
+* **Transfers**
+  *  Improved fix to issue #184 ((a6e992f2))
+  *  Fix setHolder warning when called before setTransfers (#184). ((33f9126d))
+
+#### Features
+
+* **BankAccount**  Created bank account get id, get list, delete, update (#185) ((a4ac12d8))
+* **Keys**  adds method to get public key from moip account ((fc2143a2))
+* **NotificationPreferences**
+  *  added method to get a notification preference ((d9f40623))
+  *  Added method to get a list of notifications ((9be2ae45))
+* **Payment**
+  *  changed 'get' method to allow get a payment without get an order first ((7874a7ed))
+  *  add method 'cancel' to cancel pre-authorized payments ((858cece3))
+  *  changed 'capture' method to allow multipayments ((32d70e76))
+* **Transfers**  Added get list, get id, revert and getters ((8c03c932))
+* **account**
+  *  added getCreatedAt function ((98b1ff3b))
+  *  added missing properties to account ((14256c08))
+
 <a name="v2.1.0"></a>
 # [](https://github.com/moip/moip-sdk-php/compare/v2.0.0...v2.1.0) (2017-10-09)
 

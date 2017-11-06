@@ -70,6 +70,7 @@
   - [Conta Moip](#conta-moip)
     - [Criação](#criação-1)
     - [Consulta](#consulta-3)
+    - [Consulta](#consulta-1)
     - [Verifica se usuário já possui Conta Moip](#verifica-se-usuário-já-possui-conta-moip)
     - [Obter chave pública de uma Conta Moip](#obter-chave-pública-de-uma-conta-moip)
   - [Preferências de Notificação](#preferências-de-notificação)
@@ -259,7 +260,6 @@ $payment = $order->payments()
     ->setCreditCardHash($hash, $customer)
     ->setInstallmentCount(3)
     ->setStatementDescriptor('teste de pag')
-    ->setDelayCapture(false)
     ->execute();
 print_r($payment);
 ```
@@ -310,16 +310,20 @@ print_r($payment);
 
 ## Reembolsos
 
-Para fazer reembolsos é necessário ter o objeto **```Payment```** do pagamento que você deseja reembolsar.
+Para fazer reembolsos é necessário ter o objeto **```Payment```** do pagamento que você deseja reembolsar ou passar apenas o ID do pagamento.
 
 ### Cartão de crédito
 #### Valor Total
+
+##### Com o objeto
 ```php
 $refund = $payment->refunds()->creditCardFull();
 print_r($refund);
 ```
 
 #### Valor Parcial
+
+##### Com o objeto
 ```php
 $refund = $payment->refunds()->creditCardPartial(30000);
 print_r($refund);
@@ -327,6 +331,8 @@ print_r($refund);
 
 ### Conta bancária
 #### Valor Total
+
+##### Com o objeto
 ```php
 $type = 'CHECKING';
 $bank_number = '001';
@@ -348,6 +354,8 @@ print_r($refund);
 ```
 
 #### Valor Parcial
+
+##### Com o objeto
 ```php
 $amount = 30000;
 $type = 'SAVING';
@@ -418,7 +426,6 @@ $payment = $multiorder->multipayments()
     ->setCreditCardHash($hash, $customer)
     ->setInstallmentCount(3)
     ->setStatementDescriptor('teste de pag')
-    ->setDelayCapture(false)
     ->execute();
 print_r($payment);
 ```
@@ -540,6 +547,105 @@ $moip->webhooks()->get();
 #### Com paginação e filtros por resource/evento
 ```php
 $moip->webhooks()->get(new Pagination(10, 0), 'ORD-ID', 'ORDER.PAID');
+```
+
+## Transferência
+
+### Criando/executando uma transferência
+```php
+$amount = 500;
+$bank_number = '001';
+$agency_number = '1111';
+$agency_check_number = '2';
+$account_number = '9999';
+$account_check_number = '8';
+$holder_name = 'Nome do Portador';
+$tax_document = '22222222222';
+
+$transfer = $moip->transfers()
+    ->setTransfers($amount, $bank_number, $agency_number, $agency_check_number, $account_number, $account_check_number)
+    ->setHolder($holder_name, $tax_document)
+    ->execute();
+
+print_r($transfer);
+```
+
+### Consulta
+#### Transferência específica
+```php
+$transfer_id = 'TRA-28HRLYNLMUFH';
+$transfer = $this->moip->transfers()->get($transfer_id);
+
+print_r($transfer);
+```
+
+#### Todas transferências
+##### Sem paginação
+```php
+$transfers = $this->moip->transfers()->getList();
+```
+
+##### Com paginação
+```php
+$transfers = $this->moip->transfers()->getList(new Pagination(10,0));
+```
+
+### Reverter
+```php
+$transfer_id = 'TRA-28HRLYNLMUFH';
+
+$transfer = $this->moip->transfers()->revert($transfer_id);
+```
+
+## Contas bancárias
+
+### Criação
+```php
+$account_id = 'MPA-05E8C79EAAAA';
+$bank_account = $moip->bankaccount()
+        ->setBankNumber('237')
+        ->setAgencyNumber('12345')
+        ->setAgencyCheckNumber('0')
+        ->setAccountNumber('12345678')
+        ->setAccountCheckNumber('7')
+        ->setType('CHECKING')
+        ->setHolder('Demo Moip', '622.134.533-22', 'CPF')
+        ->create($account_id);
+        
+print_r($bank_account);
+```
+
+### Consulta
+#### Conta bancária específica
+```php
+$bank_account_id = 'BKA-397X21X1G6LT';
+$bank_account = $moip->bankaccount()->get($bank_account_id);
+
+print_r($bank_account);
+```
+
+#### Todas contas bancárias
+```php
+$account_id = 'MPA-05E8C79EAAAA';
+$bank_accounts = $moip->bankaccount()->getList($account_id)->getBankAccounts();
+
+print_r($bank_accounts);
+```
+
+### Exclusão
+```php
+$bank_account_id = 'BKA-397X21X1G6LT';
+$moip->bankaccount()->delete($bank_account_id);
+```
+
+### Atualização
+```php
+$bank_account_id = 'BKA-397X21X1G6LT';
+$bank_account = $moip->bankaccount()->get($bank_account_id);
+$bank_account->setAccountCheckNumber('7');
+$bank_account->update();
+
+print_r($bank_account);
 ```
 
 ## Tratamento de Exceções

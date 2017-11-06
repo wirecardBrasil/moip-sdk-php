@@ -164,6 +164,36 @@ class Account extends MoipResource
     }
 
     /**
+     * Get account access token.
+     *
+     * @return string
+     */
+    public function getAccessToken()
+    {
+        return $this->getIfSet('accessToken');
+    }
+
+    /**
+     * Get account channel ID.
+     *
+     * @return string
+     */
+    public function getChannelId()
+    {
+        return $this->getIfSet('channelId');
+    }
+
+    /**
+     * Get account login.
+     *
+     * @return string The buyer login.
+     */
+    public function getLogin()
+    {
+        return $this->getIfSet('login');
+    }
+
+    /**
      * Get account address.
      *
      * @return \stdClass Account's address.
@@ -234,6 +264,56 @@ class Account extends MoipResource
     }
 
     /**
+     * Get tax document number from account.
+     *
+     * @return string Document Number.
+     */
+    public function getTaxDocumentNumber()
+    {
+        return $this->getIfSet('number', $this->data->person->taxDocument);
+    }
+
+    /**
+     * Get identity document number from account.
+     *
+     * @return string
+     */
+    public function getIdentityDocumentNumber()
+    {
+        return $this->getIfSet('number', $this->data->person->identityDocument);
+    }
+
+    /**
+     * Get identity document issuer from account.
+     *
+     * @return string
+     */
+    public function getIdentityDocumentIssuer()
+    {
+        return $this->getIfSet('issuer', $this->data->person->identityDocument);
+    }
+
+    /**
+     * Get identity document issue date from account.
+     *
+     * @return \DateTime
+     */
+    public function getIdentityDocumentIssueDate()
+    {
+        return $this->getIfSet('issueDate', $this->data->person->identityDocument);
+    }
+
+    /**
+     * Get identity document type from account.
+     *
+     * @return string Type of value: RG
+     */
+    public function getIdentityDocumentType()
+    {
+        return $this->getIfSet('type', $this->data->person->identityDocument);
+    }
+
+    /**
      * Get alternative phones.
      *
      * @return array
@@ -254,13 +334,23 @@ class Account extends MoipResource
     }
 
     /**
-     * Get tax document number from account.
+     * Get email address.
      *
-     * @return string Document Number.
+     * @return string
      */
-    public function getTaxDocumentNumber()
+    public function getEmailAddress()
     {
-        return $this->getIfSet('number', $this->data->person->taxDocument);
+        return $this->getIfSet('address', $this->data->email);
+    }
+
+    /**
+     * Get email confirmed.
+     *
+     * @return bool
+     */
+    public function getEmailConfirmed()
+    {
+        return $this->getIfSet('confirmed', $this->data->email);
     }
 
     /**
@@ -271,6 +361,26 @@ class Account extends MoipResource
     public function getType()
     {
         return $this->getIfSet('type', $this->data);
+    }
+
+    /**
+     * Get transparent account (true/false).
+     *
+     * @return bool
+     */
+    public function getTransparentAccount()
+    {
+        return $this->getIfSet('transparentAccount', $this->data);
+    }
+
+    /**
+     * Get account created at.
+     *
+     * @return string
+     */
+    public function getCreatedAt()
+    {
+        return $this->getIfSet('createdAt', $this->data);
     }
 
     /**
@@ -288,6 +398,9 @@ class Account extends MoipResource
         $email = $this->getIfSet('email', $response);
 
         $account->data->email->address = $this->getIfSet('address', $email);
+        $account->data->email->confirmed = $this->getIfSet('confirmed', $email);
+
+        $account->data->login = $this->getIfSet('login', $response);
         $account->data->person = new stdClass();
 
         $person = $this->getIfSet('person', $response);
@@ -325,6 +438,10 @@ class Account extends MoipResource
         $account->data->_links = $this->getIfSet('_links', $response);
         $account->data->type = $this->getIfSet('type', $response);
         $account->data->id = $this->getIfSet('id', $response);
+        $account->data->accessToken = $this->getIfSet('accessToken', $response);
+        $account->data->channelId = $this->getIfSet('channelId', $response);
+        $account->data->transparentAccount = $this->getIfSet('transparentAccount', $response);
+        $account->data->createdAt = $this->getIfSet('createdAt', $response);
 
         return $account;
     }

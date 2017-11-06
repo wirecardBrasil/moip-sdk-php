@@ -95,6 +95,7 @@ class Refund extends MoipResource
             }
         }
 
+        $refund->data->type = $this->getIfSet('type', $response);
         $refund->data->status = $this->getIfSet('status', $response);
         $refund->data->method = $this->getIfSet('method', $response);
         $refund->data->createdAt = $this->getIfSet('createdAt', $response);
@@ -115,16 +116,38 @@ class Refund extends MoipResource
     }
 
     /**
+     * Get status from MoIP refund.
+     *
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->getIfSet('status');
+    }
+
+    /**
+     * Get MoIP refund type.
+     *
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->getIfSet('type');
+    }
+
+    /**
      * Create a new refund in api MoIP.
      *
      * @param stdClass $data
      *
      * @return $this
      */
-    private function execute(stdClass $data = null)
+    private function execute(stdClass $data = null, $resourceId = null)
     {
         $body = empty($data) ? new stdClass() : $data;
-        $response = $this->httpRequest($this->getPath(), Requests::POST, $body);
+        $response = $this->httpRequest($this->getPath($resourceId), Requests::POST, $body);
 
         return $this->populate($response);
     }
@@ -134,8 +157,14 @@ class Refund extends MoipResource
      *
      * @return string
      */
-    private function getPath()
+    private function getPath($resourceId = null)
     {
+        if (!is_null($resourceId)) {
+            $endpoint = ($this->isOrder($resourceId) ? Orders::PATH : Payment::PATH);
+
+            return sprintf('/%s/%s/%s/%s', MoipResource::VERSION, $endpoint, $resourceId, self::PATH);
+        }
+
         if ($this->order !== null) {
             return sprintf('/%s/%s/%s/%s', MoipResource::VERSION, Orders::PATH, $this->order->getId(), self::PATH);
         }
@@ -156,7 +185,7 @@ class Refund extends MoipResource
      *
      * @return \stdClass
      */
-    private function bankAccount($type, $bankNumber, $agencyNumber, $agencyCheckNumber, $accountNumber, $accountCheckNumber, Customer $holder)
+    private function bankAccountDataCustomer($type, $bankNumber, $agencyNumber, $agencyCheckNumber, $accountNumber, $accountCheckNumber, Customer $holder)
     {
         $data = new stdClass();
         $data->refundingInstrument = new stdClass();
@@ -178,6 +207,34 @@ class Refund extends MoipResource
     }
 
     /**
+     * Bank account is the bank address of a particular vendor or a customer.
+     *
+     * @param \Moip\Resource\BankAccount $bankAccount
+     *
+     * @return \stdClass
+     */
+    private function bankAccountData(BankAccount $bankAccount)
+    {
+        $data = new stdClass();
+        $data->refundingInstrument = new stdClass();
+        $data->refundingInstrument->method = self::METHOD_BANK_ACCOUNT;
+        $data->refundingInstrument->bankAccount = new stdClass();
+        $data->refundingInstrument->bankAccount->type = $bankAccount->getType();
+        $data->refundingInstrument->bankAccount->bankNumber = $bankAccount->getBankNumber();
+        $data->refundingInstrument->bankAccount->agencyNumber = $bankAccount->getAgencyNumber();
+        $data->refundingInstrument->bankAccount->agencyCheckNumber = $bankAccount->getAgencyCheckNumber();
+        $data->refundingInstrument->bankAccount->accountNumber = $bankAccount->getAccountNumber();
+        $data->refundingInstrument->bankAccount->accountCheckNumber = $bankAccount->getAccountCheckNumber();
+        $data->refundingInstrument->bankAccount->holder = new stdClass();
+        $data->refundingInstrument->bankAccount->holder->fullname = $bankAccount->getFullname();
+        $data->refundingInstrument->bankAccount->holder->taxDocument = new stdClass();
+        $data->refundingInstrument->bankAccount->holder->taxDocument->type = $bankAccount->getTaxDocumentType();
+        $data->refundingInstrument->bankAccount->holder->taxDocument->number = $bankAccount->getTaxDocumentNumber();
+
+        return $data;
+    }
+
+    /**
      * Making a full refund to the bank account.
      *
      * @param string                  $type               Kind of bank account. possible values: CHECKING, SAVING.
@@ -192,7 +249,7 @@ class Refund extends MoipResource
      */
     public function bankAccountFull($type, $bankNumber, $agencyNumber, $agencyCheckNumber, $accountNumber, $accountCheckNumber, Customer $holder)
     {
-        $data = $this->bankAccount($type, $bankNumber, $agencyNumber, $agencyCheckNumber, $accountNumber, $accountCheckNumber, $holder);
+        $data = $this->bankAccountDataCustomer($type, $bankNumber, $agencyNumber, $agencyCheckNumber, $accountNumber, $accountCheckNumber, $holder);
 
         return $this->execute($data);
     }
@@ -212,7 +269,7 @@ class Refund extends MoipResource
      */
     public function bankAccountPartial($amount, $type, $bankNumber, $agencyNumber, $agencyCheckNumber, $accountNumber, $accountCheckNumber, Customer $holder)
     {
-        $data = $this->bankAccount($type, $bankNumber, $agencyNumber, $agencyCheckNumber, $accountNumber, $accountCheckNumber, $holder);
+        $data = $this->bankAccountDataCustomer($type, $bankNumber, $agencyNumber, $agencyCheckNumber, $accountNumber, $accountCheckNumber, $holder);
         $data->amount = $amount;
 
         return $this->execute($data);
@@ -277,5 +334,33 @@ class Refund extends MoipResource
     public function setPayment(Payment $payment)
     {
         $this->payment = $payment;
+    }
+
+    public function bankAccount($resourceId, BankAccount $bankAccount, $amount = null)
+    {
+        $data = $this->bankAccountData($bankAccount);
+
+        if (!is_null($amount)) {
+            $data->amount = $amount;
+        }
+
+        return $this->execute($data, $resourceId);
+    }
+
+    public function creditCard($resourceId, $amount = null)
+    {
+        if (!is_null($amount)) {
+            $data = new stdClass();
+            $data->amount = $amount;
+
+            return $this->execute($data, $resourceId);
+        }
+
+        return $this->execute(null, $resourceId);
+    }
+
+    private function isOrder($resourceId)
+    {
+        return 0 === strpos($resourceId, 'ORD');
     }
 }

@@ -26,6 +26,7 @@ class Utils
 
         if (!is_float($amount)) {
             $type = gettype($amount);
+
             throw new \UnexpectedValueException("Needs a float! not $type");
         }
 
