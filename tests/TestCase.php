@@ -322,7 +322,6 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
      */
     public function createHolder()
     {
-
         $holder = $this->moip->holders()->setFullname('Jose Silva')
             ->setBirthDate(\DateTime::createFromFormat($this->date_format, $this->date_string))
             ->setTaxDocument('22222222222', 'CPF')
