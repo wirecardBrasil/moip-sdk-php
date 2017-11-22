@@ -9,7 +9,6 @@ use stdClass;
  */
 class Holder extends MoipResource
 {
-
     /**
      * Address Type.
      *
