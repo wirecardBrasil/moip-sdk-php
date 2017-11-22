@@ -153,7 +153,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
      */
     protected $last_ord_id = 'meu_id_pedido';
     protected $sandbox_mock = self::MOCK;
-    
+
     public function __construct()
     {
         parent::__construct();

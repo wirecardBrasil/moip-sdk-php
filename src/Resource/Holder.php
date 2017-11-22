@@ -23,7 +23,7 @@ class Holder extends MoipResource
      * @const string
      */
     const ADDRESS_COUNTRY = 'BRA';
-    
+
     /**
      * Standard document type.
      *
@@ -176,7 +176,7 @@ class Holder extends MoipResource
         $holder->data->taxDocument->number = $this->getIfSet('number', $this->getIfSet('taxDocument', $response));
         //$holder->data->addresses = [];
         $holder->data->billingAddress = $this->getIfSet('billingAddress', $response);
-        
+
         return $holder;
     }
 
