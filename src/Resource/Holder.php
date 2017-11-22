@@ -10,11 +10,11 @@ use stdClass;
 class Holder extends MoipResource
 {
 
-     /**
-      * Address Type.
-      *
-      * @const string
-      */
+    /**
+     * Address Type.
+     *
+     * @const string
+     */
     const ADDRESS_BILLING = 'BILLING';
 
     /**
@@ -23,7 +23,6 @@ class Holder extends MoipResource
      * @const string
      */
     const ADDRESS_COUNTRY = 'BRA';
-    
     
     /**
      * Standard document type.
@@ -178,7 +177,6 @@ class Holder extends MoipResource
         //$holder->data->addresses = [];
         $holder->data->billingAddress = $this->getIfSet('billingAddress', $response);
         
-
         return $holder;
     }
 

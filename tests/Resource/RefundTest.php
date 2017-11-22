@@ -204,7 +204,7 @@ class RefundTest extends TestCase
         $order = $this->createOrder()->create();
         $this->mockHttpSession($this->body_billet_pay);
         $payment = $order->payments()
-            ->setBoleto(new \DateTime('today +1day'),'http://dev.moip.com.br/images/logo-header-moip.png')
+            ->setBoleto(new \DateTime('today +1day'), 'http://dev.moip.com.br/images/logo-header-moip.png')
             ->execute();
         $this->mockHttpSession('');
         $payment->authorize();
