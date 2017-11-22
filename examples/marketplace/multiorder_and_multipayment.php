@@ -14,6 +14,7 @@ $moip = new Moip(new OAuth($token), Moip::ENDPOINT_SANDBOX);
 
 try {
     
+    
     // Creating an object customer to orders
     $customer = $moipMerchant->customers()->setOwnId(uniqid())
         ->setFullname('Fulano de Tal')

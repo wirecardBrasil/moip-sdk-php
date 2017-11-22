@@ -3,18 +3,18 @@
 namespace Moip\Resource;
 
 use stdClass;
-use UnexpectedValueException;
 
 /**
  * Class Holder.
  */
-class Holder extends MoipResource {
+class Holder extends MoipResource
+{
 
      /**
-     * Address Type.
-     *
-     * @const string
-     */
+      * Address Type.
+      *
+      * @const string
+      */
     const ADDRESS_BILLING = 'BILLING';
 
     /**
@@ -24,11 +24,12 @@ class Holder extends MoipResource {
      */
     const ADDRESS_COUNTRY = 'BRA';
     
+    
     /**
-    * Standard document type.
-    *
-    * @const string
-    */
+     * Standard document type.
+     *
+     * @const string
+     */
     const TAX_DOCUMENT = 'CPF';
 
     /**
@@ -54,7 +55,7 @@ class Holder extends MoipResource {
      *
      * @return $this
      */
-    public function setAddress($type = self::ADDRESS_BILLING, $street, $number, $district, $city, $state, $zip, $complement = null, $country = self::ADDRESS_COUNTRY)
+    public function setAddress($type, $street, $number, $district, $city, $state, $zip, $complement = null, $country = self::ADDRESS_COUNTRY)
     {
         $address = new stdClass();
         $address->street = $street;
@@ -177,6 +178,7 @@ class Holder extends MoipResource {
         //$holder->data->addresses = [];
         $holder->data->billingAddress = $this->getIfSet('billingAddress', $response);
         
+
         return $holder;
     }
 
