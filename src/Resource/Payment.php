@@ -581,11 +581,12 @@ class Payment extends MoipResource
     /**
      * Turns on a delay on credit card payment capture (pre-authorization).
      *
+     * @param $value bool
      * @return $this
      */
-    public function setDelayCapture()
+    public function setDelayCapture($value = true)
     {
-        $this->data->delayCapture = true;
+        $this->data->delayCapture = $value;
 
         return $this;
     }
