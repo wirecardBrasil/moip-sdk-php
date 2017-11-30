@@ -152,11 +152,11 @@ class Payment extends MoipResource
      */
     public function get($id_moip)
     {
-        if ($this->order !== null) {
-            return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, self::PATH, $id_moip));
+        if ($this->isMultipayment($id_moip)) {
+            return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, self::MULTI_PAYMENTS_PATH, $id_moip));
         }
 
-        return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, self::MULTI_PAYMENTS_PATH, $id_moip));
+        return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, self::PATH, $id_moip));
     }
 
     /**
@@ -189,6 +189,7 @@ class Payment extends MoipResource
         $payment->data->amount->currency = $this->getIfSet('currency', $response->amount);
         $payment->data->installmentCount = $this->getIfSet('installmentCount', $response);
         $payment->data->fundingInstrument = $this->getIfSet('fundingInstrument', $response);
+        $payment->data->payments = $this->getIfSet('payments', $response);
         $payment->data->escrows = $this->getIfSet('escrows', $response);
         $payment->data->fees = $this->getIfSet('fees', $response);
         $payment->data->refunds = $this->getIfSet('refunds', $response);
@@ -278,6 +279,39 @@ class Payment extends MoipResource
     }
 
     /**
+     * Get LineCode to Boleto
+     * *.
+     *
+     * @return stdClass
+     */
+    public function getLineCodeBoleto()
+    {
+        return $this->getIfSet('fundingInstrument')->boleto->lineCode;
+    }
+
+    /**
+     * Get href from print to Boleto
+     * *.
+     *
+     * @return stdClass
+     */
+    public function getHrefPrintBoleto()
+    {
+        return $this->getIfSet('_links')->payBoleto->printHref;
+    }
+
+    /**
+     * Get Expirate Date to Boleto
+     * *.
+     *
+     * @return stdClass
+     */
+    public function getExpirationDateBoleto()
+    {
+        return $this->getIfSet('fundingInstrument')->boleto->expirationDate;
+    }
+
+    /**
      * Returns payment amount.
      *
      * @return stdClass
@@ -298,6 +332,16 @@ class Payment extends MoipResource
     }
 
     /**
+     * Returns order.
+     *
+     * @return Order
+     */
+    public function getOrder()
+    {
+        return $this->order;
+    }
+
+    /**
      * Returns installment count.
      *
      * @return stdClass
@@ -305,6 +349,16 @@ class Payment extends MoipResource
     public function getInstallmentCount()
     {
         return $this->data->installmentCount;
+    }
+
+    /**
+     * Get payments.
+     *
+     * @return array
+     */
+    public function getPayments()
+    {
+        return $this->getIfSet('payments');
     }
 
     /**
@@ -561,10 +615,10 @@ class Payment extends MoipResource
      */
     public function capture()
     {
-        if (is_null($this->order)) {
-            throw new \Exception('Sorry, multipayment capture is not available on this version');
-        }
         $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, self::PATH, $this->getId(), 'capture');
+        if ($this->isMultipayment($this->getId())) {
+            $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, self::MULTI_PAYMENTS_PATH, $this->getId(), 'capture');
+        }
 
         $response = $this->httpRequest($path, Requests::POST, $this);
 
@@ -572,7 +626,26 @@ class Payment extends MoipResource
     }
 
     /**
-     * Avoid a pre-authorized amount on a credit card payment.
+     * Cancel a pre-authorized amount on a credit card payment.
+     *
+     * @throws \Exception
+     *
+     * @return Payment
+     */
+    public function cancel()
+    {
+        $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, self::PATH, $this->getId(), 'void');
+        if ($this->isMultipayment($this->getId())) {
+            $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, self::MULTI_PAYMENTS_PATH, $this->getId(), 'void');
+        }
+
+        $response = $this->httpRequest($path, Requests::POST, $this);
+
+        return $this->populate($response);
+    }
+
+    /**
+     * Cancel a pre-authorized amount on a credit card payment.
      *
      * @throws \Exception
      *
@@ -580,14 +653,9 @@ class Payment extends MoipResource
      */
     public function avoid()
     {
-        if (is_null($this->order)) {
-            throw new \Exception('Sorry, multipayment capture is not available on this version');
-        }
-        $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, self::PATH, $this->getId(), 'void');
+        trigger_error('The function \'avoid\' is deprecated, use \'cancel\' instead', E_USER_NOTICE);
 
-        $response = $this->httpRequest($path, Requests::POST, $this);
-
-        return $this->populate($response);
+        return $this->cancel();
     }
 
     /**
@@ -608,5 +676,10 @@ class Payment extends MoipResource
         }
 
         return false;
+    }
+
+    private function isMultipayment($paymentId)
+    {
+        return 0 === strpos($paymentId, 'MPY');
     }
 }

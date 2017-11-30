@@ -64,11 +64,31 @@ class NotificationPreferences extends MoipResource
     /**
      * Returns target.
      *
-     * @return stdClass
+     * @return string
      */
     public function getTarget()
     {
         return $this->data->target;
+    }
+
+    /**
+     * Returns media.
+     *
+     * @return string
+     */
+    public function getMedia()
+    {
+        return $this->data->media;
+    }
+
+    /**
+     * Returns events.
+     *
+     * @return array
+     */
+    public function getEvents()
+    {
+        return $this->data->events;
     }
 
     /**
@@ -79,6 +99,16 @@ class NotificationPreferences extends MoipResource
     public function getId()
     {
         return $this->data->id;
+    }
+
+    /**
+     * Returns notification token.
+     *
+     * @return stdClass
+     */
+    public function getToken()
+    {
+        return $this->data->token;
     }
 
     /**
@@ -101,6 +131,18 @@ class NotificationPreferences extends MoipResource
     public function get($notification_id)
     {
         return $this->getByPath($this->generatePath('notifications', $notification_id));
+    }
+
+    /**
+     * Create a new Notifications List instance.
+     *
+     * @return \Moip\Resource\NotificationPreferencesList
+     */
+    public function getList()
+    {
+        $notificationList = new NotificationPreferencesList($this->moip);
+
+        return $notificationList->get();
     }
 
     /**

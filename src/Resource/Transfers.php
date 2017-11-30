@@ -2,6 +2,8 @@
 
 namespace Moip\Resource;
 
+use Moip\Helper\Filters;
+use Moip\Helper\Pagination;
 use Requests;
 use stdClass;
 
@@ -11,22 +13,22 @@ use stdClass;
 class Transfers extends MoipResource
 {
     /**
-     * @const strign
+     * @const string
      */
     const PATH = 'transfers';
 
     /**
-     * @const strign
+     * @const string
      */
     const METHOD = 'BANK_ACCOUNT';
 
     /**
-     * @const strign
+     * @const string
      */
     const TYPE = 'CHECKING';
 
     /**
-     * @const strign
+     * @const string
      */
     const TYPE_HOLD = 'CPF';
 
@@ -36,6 +38,10 @@ class Transfers extends MoipResource
     protected function initialize()
     {
         $this->data = new stdClass();
+        $this->data->transferInstrument = new stdClass();
+        $this->data->transferInstrument->bankAccount = new stdClass();
+        $this->data->transferInstrument->bankAccount->holder = new stdClass();
+        $this->data->transferInstrument->bankAccount->holder->taxDocument = new stdClass();
     }
 
     /**
@@ -46,6 +52,30 @@ class Transfers extends MoipResource
     protected function populate(stdClass $response)
     {
         $transfers = clone $this;
+        $transfers->data->id = $this->getIfSet('id', $response);
+        $transfers->data->amount = $this->getIfSet('amount', $response);
+
+        $transfer_instrument = $this->getIfSet('transferInstrument', $response);
+        $transfers->data->transferInstrument = new stdClass();
+        $transfers->data->transferInstrument->method = $this->getIfSet('method', $transfer_instrument);
+
+        $bank_account = $this->getIfSet('bankAccount', $transfer_instrument);
+        $transfers->data->transferInstrument->bankAccount = new stdClass();
+        $transfers->data->transferInstrument->bankAccount->type = $this->getIfSet('type', $bank_account);
+        $transfers->data->transferInstrument->bankAccount->bankNumber = $this->getIfSet('bankNumber', $bank_account);
+        $transfers->data->transferInstrument->bankAccount->agencyNumber = $this->getIfSet('agencyNumber', $bank_account);
+        $transfers->data->transferInstrument->bankAccount->agencyCheckNumber = $this->getIfSet('agencyCheckNumber', $bank_account);
+        $transfers->data->transferInstrument->bankAccount->accountNumber = $this->getIfSet('accountNumber', $bank_account);
+        $transfers->data->transferInstrument->bankAccount->accountCheckNumber = $this->getIfSet('accountCheckNumber', $bank_account);
+
+        $holder = $this->getIfSet('holder', $bank_account);
+        $transfers->data->transferInstrument->bankAccount->holder = new stdClass();
+        $transfers->data->transferInstrument->bankAccount->holder->fullname = $this->getIfSet('fullname', $holder);
+
+        $tax_document = $this->getIfSet('taxDocument', $holder);
+        $this->data->transferInstrument->bankAccount->holder->taxDocument = new stdClass();
+        $this->data->transferInstrument->bankAccount->holder->taxDocument->type = $this->getIfSet('type', $tax_document);
+        $this->data->transferInstrument->bankAccount->holder->taxDocument->number = $this->getIfSet('number', $tax_document);
 
         return $transfers;
     }
@@ -53,12 +83,12 @@ class Transfers extends MoipResource
     /**
      * Set info of transfers.
      *
-     * @param $amount
-     * @param $bankNumber Bank number. possible values: 001, 237, 341, 041.
-     * @param $agencyNumber
-     * @param $agencyCheckNumber
-     * @param $accountNumber
-     * @param $accountCheckNumber
+     * @param int    $amount
+     * @param string $bankNumber         Bank number. possible values: 001, 237, 341, 041.
+     * @param int    $agencyNumber
+     * @param int    $agencyCheckNumber
+     * @param int    $accountNumber
+     * @param int    $accountCheckNumber
      *
      * @return $this
      */
@@ -71,9 +101,7 @@ class Transfers extends MoipResource
         $accountCheckNumber
     ) {
         $this->data->amount = $amount;
-        $this->data->transferInstrument = new stdClass();
         $this->data->transferInstrument->method = self::METHOD;
-        $this->data->transferInstrument->bankAccount = new stdClass();
         $this->data->transferInstrument->bankAccount->type = self::TYPE;
         $this->data->transferInstrument->bankAccount->bankNumber = $bankNumber;
         $this->data->transferInstrument->bankAccount->agencyNumber = $agencyNumber;
@@ -85,20 +113,40 @@ class Transfers extends MoipResource
     }
 
     /**
-     * @param $fullname
-     * @param $taxDocument
+     * Returns transfer.
+     *
+     * @return stdClass
+     */
+    public function getTransfers()
+    {
+        return $this->data;
+    }
+
+    /**
+     * Set info of holder.
+     *
+     * @param string $fullname
+     * @param int    $taxDocument
      *
      * @return $this
      */
     public function setHolder($fullname, $taxDocument)
     {
-        $this->data->transferInstrument->bankAccount->holder = new stdClass();
         $this->data->transferInstrument->bankAccount->holder->fullname = $fullname;
-        $this->data->transferInstrument->bankAccount->holder->taxDocument = new stdClass();
         $this->data->transferInstrument->bankAccount->holder->taxDocument->type = self::TYPE_HOLD;
         $this->data->transferInstrument->bankAccount->holder->taxDocument->number = $taxDocument;
 
         return $this;
+    }
+
+    /**
+     * Returns transfer holder.
+     *
+     * @return stdClass
+     */
+    public function getHolder()
+    {
+        return $this->data->transferInstrument->bankAccount->holder;
     }
 
     /**
@@ -113,6 +161,46 @@ class Transfers extends MoipResource
         $response = $this->httpRequest($path, Requests::POST, $this);
 
         return $this->populate($response);
+    }
+
+    /**
+     * Revert Tranfers.
+     *
+     * @param string $id Transfer id.
+     *
+     * @return Transfers
+     */
+    public function revert($id)
+    {
+        $path = sprintf('/%s/%s/%s/%s', MoipResource::VERSION, self::PATH, $id, 'reverse');
+
+        $response = $this->httpRequest($path, Requests::POST, $this);
+
+        return $this->populate($response);
+    }
+
+    /**
+     * Get a Transfer.
+     *
+     * @param string $id Transfer id.
+     *
+     * @return stdClass
+     */
+    public function get($id)
+    {
+        return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, self::PATH, $id));
+    }
+
+    /**
+     * Create a new Transfers list instance.
+     *
+     * @return \Moip\Resource\TransfersList
+     */
+    public function getList(Pagination $pagination = null, Filters $filters = null, $qParam = '')
+    {
+        $transfersList = new TransfersList($this->moip);
+
+        return $transfersList->get($pagination, $filters, $qParam);
     }
 
     /**

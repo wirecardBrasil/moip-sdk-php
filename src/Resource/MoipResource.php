@@ -133,6 +133,7 @@ abstract class MoipResource implements JsonSerializable
     {
         $rawDateTime = $this->getIfSet($key, $data);
 
+        $dateTime = null;
         if (!empty($rawDateTime)) {
             $dateTime = new \DateTime($rawDateTime);
         }
@@ -172,11 +173,11 @@ abstract class MoipResource implements JsonSerializable
      *
      * @param Pagination $pagination
      * @param Filters    $filters
-     * @param string     $qParam     Query a specific value.
+     * @param array      $params
      *
      * @return string
      */
-    public function generateListPath(Pagination $pagination = null, Filters $filters = null, $qParam = '')
+    public function generateListPath(Pagination $pagination = null, Filters $filters = null, $params = [])
     {
         $queryParams = [];
 
@@ -194,11 +195,15 @@ abstract class MoipResource implements JsonSerializable
             $queryParams['filters'] = $filters->__toString();
         }
 
-        if (!empty($qParam)) {
-            $queryParams['q'] = $qParam;
+        if (!empty($params)) {
+            $queryParams = array_merge($queryParams, $params);
         }
 
-        return sprintf('/%s/%s?%s', self::VERSION, static::PATH, http_build_query($queryParams));
+        if (!empty($queryParams)) {
+            return sprintf('/%s/%s?%s', self::VERSION, static::PATH, http_build_query($queryParams));
+        }
+
+        return sprintf('/%s/%s', self::VERSION, static::PATH);
     }
 
     /**
@@ -243,8 +248,10 @@ abstract class MoipResource implements JsonSerializable
             throw new Exceptions\UnautorizedException();
         } elseif ($code >= 400 && $code <= 499) {
             $errors = Exceptions\Error::parseErrors($response_body);
+
             throw new Exceptions\ValidationException($code, $errors);
         }
+
         throw new Exceptions\UnexpectedException();
     }
 
@@ -259,7 +266,23 @@ abstract class MoipResource implements JsonSerializable
     {
         $response = $this->httpRequest($path, Requests::GET);
 
+        if (is_array($response)) {
+            $response = (object) $response;
+        }
+
         return $this->populate($response);
+    }
+
+    /**
+     * Find by path with no populate method.
+     *
+     * @param string $path
+     *
+     * @return stdClass
+     */
+    public function getByPathNoPopulate($path)
+    {
+        return $this->httpRequest($path, Requests::GET);
     }
 
     /**
@@ -272,6 +295,20 @@ abstract class MoipResource implements JsonSerializable
     public function createResource($path)
     {
         $response = $this->httpRequest($path, Requests::POST, $this);
+
+        return $this->populate($response);
+    }
+
+    /**
+     * Update an item in Moip.
+     *
+     * @param string $path
+     *
+     * @return stdClass
+     */
+    public function updateByPath($path)
+    {
+        $response = $this->httpRequest($path, Requests::PUT, $this);
 
         return $this->populate($response);
     }

@@ -87,6 +87,7 @@ class MoipTest extends TestCase
         $model = json_decode($body);
         $error_model = $model->errors[0];
         $this->mockHttpSession($body, 400);
+
         try {
             $this->moip->customers()->setOwnId(uniqid())
                 ->setFullname('Fulano teste')
@@ -150,6 +151,7 @@ class MoipTest extends TestCase
         $sess->expects($this->once())->method('request')->willThrowException(new Requests_Exception('test error',
             'test'));
         $this->moip->setSession($sess);
+
         try {
             $this->moip->orders()->get('ORD-1AWC30TWYZMX');
         } catch (Exceptions\UnexpectedException $e) {

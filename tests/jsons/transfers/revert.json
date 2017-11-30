@@ -1,0 +1,1 @@
+{"fee":0,"amount":1000,"id":"TRA-B0W5FD5FCADG","transferInstrument":{"moipAccount":{"id":"MPA-AE2OAL41CBB1","email":"iori@labs.moip.com.br","login":"iori@labs.moip.com.br","fullname":"Iori Yagami"},"method":"MOIP_ACCOUNT"},"status":"REVERSED","createdAt":"2015-10-15T16:18:41-0300","_links":{"self":{"href":"https://sandbox.moip.com.br/v2/transfers/TRA-B0W5FD5FCADG"}}}
