@@ -411,7 +411,7 @@ class Payment extends MoipResource
      *
      * @param \Moip\Resource\Customer $holder
      */
-    private function setCreditCardHolder(Customer $holder)
+    private function setCreditCardHolder(Holder $holder)
     {
         $birthdate = $holder->getBirthDate();
         if ($birthdate instanceof \DateTime) {
@@ -439,7 +439,7 @@ class Payment extends MoipResource
      *
      * @return $this
      */
-    public function setCreditCardHash($hash, Customer $holder, $store = true)
+    public function setCreditCardHash($hash, Holder $holder, $store = true)
     {
         $this->data->fundingInstrument->method = self::METHOD_CREDIT_CARD;
         $this->data->fundingInstrument->creditCard = new stdClass();
@@ -464,7 +464,7 @@ class Payment extends MoipResource
      *
      * @return $this
      */
-    public function setCreditCard($expirationMonth, $expirationYear, $number, $cvc, Customer $holder, $store = true)
+    public function setCreditCard($expirationMonth, $expirationYear, $number, $cvc, Holder $holder, $store = true)
     {
         $this->data->fundingInstrument->method = self::METHOD_CREDIT_CARD;
         $this->data->fundingInstrument->creditCard = new stdClass();

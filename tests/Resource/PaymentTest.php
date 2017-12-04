@@ -17,7 +17,7 @@ class PaymentTest extends TestCase
         $order = $this->createOrder()->create();
         $this->mockHttpSession($this->body_cc_pay_pci);
         $cc = '5555666677778884';
-        $payment = $order->payments()->setCreditCard(5, 2018, $cc, 123, $this->createCustomer())->execute();
+        $payment = $order->payments()->setCreditCard(5, 2018, $cc, 123, $this->createHolder())->execute();
         $this->assertNotEmpty($payment->getFundingInstrument()->creditCard);
         $first6 = $payment->getFundingInstrument()->creditCard->first6;
         $last4 = $payment->getFundingInstrument()->creditCard->last4;
@@ -43,7 +43,7 @@ class PaymentTest extends TestCase
         $order = $this->createOrder()->create();
         $cc = '5555666677778884';
         $this->mockHttpSession($this->body_cc_pay_pci_store);
-        $payment = $order->payments()->setCreditCard(5, 2018, $cc, 123, $this->createCustomer(), false)->execute();
+        $payment = $order->payments()->setCreditCard(5, 2018, $cc, 123, $this->createHolder(), false)->execute();
         $this->assertFalse($payment->getFundingInstrument()->creditCard->store);
         $this->assertNotEmpty($payment->getId());
     }
@@ -55,7 +55,7 @@ class PaymentTest extends TestCase
         $cc = '5555666677778884';
         $this->mockHttpSession($this->body_cc_pay_pci_escrow);
         $payment = $order->payments()
-            ->setCreditCard(5, 2018, $cc, 123, $this->createCustomer(), false)
+            ->setCreditCard(5, 2018, $cc, 123, $this->createHolder(), false)
             ->setEscrow('teste de descricao')
             ->execute();
         $this->assertEquals('teste de descricao', $payment->getEscrow()->description);
@@ -70,7 +70,7 @@ class PaymentTest extends TestCase
         $order = $this->createMultiorder()->create();
         $this->mockHttpSession($this->body_cc_multipay);
         $cc = '4012001037141112';
-        $payment = $order->multipayments()->setCreditCard(5, 2018, $cc, 123, $this->createCustomer())->execute();
+        $payment = $order->multipayments()->setCreditCard(5, 2018, $cc, 123, $this->createHolder())->execute();
 
         $first6 = $payment->getPayments()[0]->fundingInstrument->creditCard->first6;
         $last4 = $payment->getPayments()[0]->fundingInstrument->creditCard->last4;
@@ -96,7 +96,7 @@ class PaymentTest extends TestCase
         $order = $this->createOrder()->create();
         $this->mockHttpSession($this->body_cc_delay_capture);
         $payment = $order->payments()
-            ->setCreditCard(5, 2018, '5555666677778884', 123, $this->createCustomer(), false)
+            ->setCreditCard(5, 2018, '5555666677778884', 123, $this->createHolder(), false)
             ->setDelayCapture(true)
             ->execute();
 
@@ -112,7 +112,7 @@ class PaymentTest extends TestCase
         $order = $this->createMultiorder()->create();
         $this->mockHttpSession($this->body_cc_multipay);
         $payment = $order->multipayments()
-            ->setCreditCard(5, 2018, '4012001037141112', 123, $this->createCustomer())
+            ->setCreditCard(5, 2018, '4012001037141112', 123, $this->createHolder())
             ->setDelayCapture(true)
             ->execute();
 
@@ -128,7 +128,7 @@ class PaymentTest extends TestCase
         $order = $this->createMultiorder()->create();
         $this->mockHttpSession($this->body_cc_multipay);
         $payment = $order->multipayments()
-            ->setCreditCard(5, 2018, '4012001037141112', 123, $this->createCustomer())
+            ->setCreditCard(5, 2018, '4012001037141112', 123, $this->createHolder())
             ->setDelayCapture(true)
             ->execute();
 
@@ -144,7 +144,7 @@ class PaymentTest extends TestCase
         $order = $this->createOrder()->create();
         $this->mockHttpSession($this->body_cc_delay_capture);
         $payment = $order->payments()
-            ->setCreditCard(5, 2018, '5555666677778884', 123, $this->createCustomer(), false)
+            ->setCreditCard(5, 2018, '5555666677778884', 123, $this->createHolder(), false)
             ->setDelayCapture(true)
             ->execute();
 
@@ -159,7 +159,7 @@ class PaymentTest extends TestCase
         $this->mockHttpSession($this->body_order);
         $order = $this->createOrder()->create();
         $this->mockHttpSession($this->body_cc_pay_pci);
-        $payment = $order->payments()->setCreditCard(5, 2018, '5555666677778884', 123, $this->createCustomer())->execute();
+        $payment = $order->payments()->setCreditCard(5, 2018, '5555666677778884', 123, $this->createHolder())->execute();
 
         $this->mockHttpSession($this->body_get_pay);
         $payment_get = $this->moip->payments()->get($payment->getId());
@@ -174,7 +174,7 @@ class PaymentTest extends TestCase
         $this->mockHttpSession($this->body_multiorder);
         $order = $this->createMultiorder()->create();
         $this->mockHttpSession($this->body_cc_multipay);
-        $payment = $order->multipayments()->setCreditCard(5, 2018, '4012001037141112', 123, $this->createCustomer())->execute();
+        $payment = $order->multipayments()->setCreditCard(5, 2018, '4012001037141112', 123, $this->createHolder())->execute();
 
         $this->mockHttpSession($this->body_get_multipay);
         $payment_get = $this->moip->payments()->get($payment->getId());

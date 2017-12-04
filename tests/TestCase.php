@@ -5,6 +5,7 @@ namespace Moip\Tests;
 use Moip\Auth\OAuth;
 use Moip\Moip;
 use Moip\Resource\Customer;
+use Moip\Resource\Holder;
 use Moip\Resource\Orders;
 use PHPUnit_Framework_TestCase;
 use Requests_Response;
@@ -312,6 +313,22 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
             ->addAddress(Customer::ADDRESS_SHIPPING, 'Avenida Faria Lima', '2927', 'Itaim', 'Sao Paulo', 'SP', '01234000', '8');
 
         return $customer;
+    }
+
+    /**
+     * Creates a holder.
+     *
+     * @return Holder
+     */
+    public function createHolder()
+    {
+        $holder = $this->moip->holders()->setFullname('Jose Silva')
+            ->setBirthDate(\DateTime::createFromFormat($this->date_format, $this->date_string))
+            ->setTaxDocument('22222222222', 'CPF')
+            ->setPhone(11, 66778899, 55)
+            ->setAddress(Holder::ADDRESS_BILLING, 'Avenida Faria Lima', '2927', 'Itaim', 'Sao Paulo', 'SP', '01234000', '8');
+
+        return $holder;
     }
 
     /**
