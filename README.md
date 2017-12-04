@@ -264,7 +264,7 @@ Após criar o pedido basta criar um pagamento nesse pedido.
 ```php
 $hash = 'i1naupwpTLrCSXDnigLLTlOgtm+xBWo6iX54V/hSyfBeFv3rvqa1VyQ8/pqWB2JRQX2GhzfGppXFPCmd/zcmMyDSpdnf1GxHQHmVemxu4AZeNxs+TUAbFWsqEWBa6s95N+O4CsErzemYZHDhsjEgJDe17EX9MqgbN3RFzRmZpJqRvqKXw9abze8hZfEuUJjC6ysnKOYkzDBEyQibvGJjCv3T/0Lz9zFruSrWBw+NxWXNZjXSY0KF8MKmW2Gx1XX1znt7K9bYNfhA/QO+oD+v42hxIeyzneeRcOJ/EXLEmWUsHDokevOkBeyeN4nfnET/BatcDmv8dpGXrTPEoxmmGQ==';
 $payment = $order->payments()
-    ->setCreditCardHash($hash, $customer)
+    ->setCreditCardHash($hash, $holder)
     ->setInstallmentCount(3)
     ->setStatementDescriptor('teste de pag')
     ->execute();
@@ -274,7 +274,7 @@ print_r($payment);
 ##### Com dados do cartão
 > Esse método requer certificação PCI. [Consulte a documentação.](https://documentao-moip.readme.io/v2.0/reference#criar-pagamento)
 ```php
-$payment = $order->payments()->setCreditCard(12, 21, '4073020000000002', '123', $customer)
+$payment = $order->payments()->setCreditCard(12, 21, '4073020000000002', '123', $holder)
     ->execute();
 print_r($payment);
 ```
