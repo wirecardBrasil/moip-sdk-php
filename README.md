@@ -47,6 +47,7 @@
   - [Pagamentos](#pagamentos)
     - [Criação](#criação)
       - [Cartão de Crédito](#cartão-de-crédito)
+        - [Inserir dados do portador](#inserir-dados-do-portador)
         - [Com Hash](#com-hash)
         - [Com Dados do Cartão](#com-dados-do-cartão)
       - [Com Boleto](#criando-um-pagamento-com-boleto)
@@ -258,7 +259,7 @@ $orders = $this->moip->orders()->getList(new Pagination(10,0), $filters, 'josé 
 #### Cartão de crédito
 Após criar o pedido basta criar um pagamento nesse pedido.
 
-##### Inserindo os dados do portador
+##### Inserir dados do portador
 Para realizar o pagamento, via cartão de crédito, utilizando o cartão de um terceiro (quando o cliente não é o portador do cartão que será utilizado), é necessário que estes dados sejam diferenciados e informados corretamente, para cada etapa do fluxo.
 
 ```php
