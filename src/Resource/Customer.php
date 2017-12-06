@@ -323,7 +323,6 @@ class Customer extends MoipResource
      *
      * @return $this
      */
-  
     public function setCreditCard($expirationMonth, $expirationYear, $number, $cvc, Holder $holder = null)
     {
         if ($holder === null) {
