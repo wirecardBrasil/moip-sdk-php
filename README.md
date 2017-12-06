@@ -47,6 +47,7 @@
   - [Pagamentos](#pagamentos)
     - [Criação](#criação)
       - [Cartão de Crédito](#cartão-de-crédito)
+        - [Inserir dados do portador](#inserir-dados-do-portador)
         - [Com Hash](#com-hash)
         - [Com Dados do Cartão](#com-dados-do-cartão)
       - [Com Boleto](#criando-um-pagamento-com-boleto)
@@ -258,13 +259,23 @@ $orders = $this->moip->orders()->getList(new Pagination(10,0), $filters, 'josé 
 #### Cartão de crédito
 Após criar o pedido basta criar um pagamento nesse pedido.
 
+##### Inserir dados do portador
+Para realizar o pagamento, via cartão de crédito, utilizando o cartão de um terceiro (quando o cliente não é o portador do cartão que será utilizado), é necessário que estes dados sejam diferenciados e informados corretamente, para cada etapa do fluxo.
+
+```php
+$holder = $this->moip->holders()->setFullname('Jose Silva')
+    ->setBirthDate(\DateTime::createFromFormat($this->date_format, $this->date_string))
+    ->setTaxDocument('22222222222', 'CPF')
+    ->setPhone(11, 66778899, 55)
+    ->setAddress(Holder::ADDRESS_BILLING, 'Avenida Faria Lima', '2927', 'Itaim', 'Sao Paulo', 'SP', '01234000', '8');
+```
 ##### Com hash
 > Para mais detalhes sobre a geração de hash com os dados do cartão [consulte a documentação.](https://dev.moip.com.br/docs/criptografia-de-cartao)
 
 ```php
 $hash = 'i1naupwpTLrCSXDnigLLTlOgtm+xBWo6iX54V/hSyfBeFv3rvqa1VyQ8/pqWB2JRQX2GhzfGppXFPCmd/zcmMyDSpdnf1GxHQHmVemxu4AZeNxs+TUAbFWsqEWBa6s95N+O4CsErzemYZHDhsjEgJDe17EX9MqgbN3RFzRmZpJqRvqKXw9abze8hZfEuUJjC6ysnKOYkzDBEyQibvGJjCv3T/0Lz9zFruSrWBw+NxWXNZjXSY0KF8MKmW2Gx1XX1znt7K9bYNfhA/QO+oD+v42hxIeyzneeRcOJ/EXLEmWUsHDokevOkBeyeN4nfnET/BatcDmv8dpGXrTPEoxmmGQ==';
 $payment = $order->payments()
-    ->setCreditCardHash($hash, $customer)
+    ->setCreditCardHash($hash, $holder)
     ->setInstallmentCount(3)
     ->setStatementDescriptor('teste de pag')
     ->execute();
@@ -274,7 +285,7 @@ print_r($payment);
 ##### Com dados do cartão
 > Esse método requer certificação PCI. [Consulte a documentação.](https://documentao-moip.readme.io/v2.0/reference#criar-pagamento)
 ```php
-$payment = $order->payments()->setCreditCard(12, 21, '4073020000000002', '123', $customer)
+$payment = $order->payments()->setCreditCard(12, 21, '4073020000000002', '123', $holder)
     ->execute();
 print_r($payment);
 ```

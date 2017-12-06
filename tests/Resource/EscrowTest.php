@@ -13,7 +13,7 @@ class EscrowTest extends TestCase
         $cc = '5555666677778884';
         $this->mockHttpSession($this->body_cc_pay_pci_escrow);
         $payment = $order->payments()
-            ->setCreditCard(5, 2018, $cc, 123, $this->createCustomer(), false)
+            ->setCreditCard(5, 2018, $cc, 123, $this->createHolder(), false)
             ->setEscrow('teste de descricao')
             ->execute();
         $this->mockHttpSession($this->body_release_escrow);
