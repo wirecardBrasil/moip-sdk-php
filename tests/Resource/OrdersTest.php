@@ -91,7 +91,7 @@ class OrdersTest extends TestCase
     }
 
     /**
-     * Test if created order shipping address is correct
+     * Test if created order shipping address is correct.
      */
     public function testShippingAddress()
     {
