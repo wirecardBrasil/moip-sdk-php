@@ -37,7 +37,7 @@ class OrdersTest extends TestCase
     }
 
     /**
-     * Defines what kind of payee as pripmary.
+     * Tests if the primary receiver constant has the correct value.
      *
      * @const string
      */
@@ -47,7 +47,7 @@ class OrdersTest extends TestCase
     }
 
     /**
-     * Defines what kind of payee as secundary.
+     * Tests if the secondary receiver constant has the correct value.
      *
      * @const string
      */
@@ -57,7 +57,7 @@ class OrdersTest extends TestCase
     }
 
     /**
-     * Currency used in the application.
+     * Tests the currency in the order creation response.
      *
      * @const string
      */
@@ -75,17 +75,36 @@ class OrdersTest extends TestCase
 
         $this->assertEquals($this->last_ord_id, $order_created->getOwnId());
         $this->assertEquals('CREATED', $order_created->getStatus());
+        $this->assertEquals(new \DateTime('2016-02-19T12:24:55.849-02'), $order_created->getCreatedAt());
+        $this->assertEquals(new \DateTime('2016-02-19T12:24:55.849-02'), $order_created->getUpdatedAt());
     }
 
     /**
-     * Teste if created itens price is correct.
+     * Tests if created items price are correct.
      */
-    public function testItens()
+    public function testItems()
     {
         $order_created = $this->executeOrder();
         $itens = $order_created->getItemIterator()->getArrayCopy();
         $this->assertEquals(100000, $itens[0]->price);
         $this->assertEquals(990, $itens[1]->price);
+    }
+
+    /**
+     * Test if created order shipping address is correct
+     */
+    public function testShippingAddress()
+    {
+        $order_created = $this->executeOrder();
+
+        $this->assertEquals('01234000', $order_created->getShippingAddressZipCode());
+        $this->assertEquals('Avenida Faria Lima', $order_created->getShippingAddressStreet());
+        $this->assertEquals('2927', $order_created->getShippingAddressStreetNumber());
+        $this->assertEquals('8', $order_created->getShippingAddressComplement());
+        $this->assertEquals('Sao Paulo', $order_created->getShippingAddressCity());
+        $this->assertEquals('Itaim', $order_created->getShippingAddressDistrict());
+        $this->assertEquals('SP', $order_created->getShippingAddressState());
+        $this->assertEquals('BRA', $order_created->getShippingAddressCountry());
     }
 
     /**
