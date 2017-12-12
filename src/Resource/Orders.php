@@ -118,7 +118,6 @@ class Orders extends MoipResource
         $this->data->amount->subtotals = new stdClass();
         $this->data->items = [];
         $this->data->receivers = [];
-        $this->data->shippingAddress = new stdClass();
         $this->data->checkoutPreferences = new stdClass();
         $this->data->checkoutPreferences->redirectUrls = new stdClass();
         $this->data->checkoutPreferences->installments = [];
@@ -166,15 +165,6 @@ class Orders extends MoipResource
         $this->orders->data->events = $this->structure($response, Event::PATH, Event::class);
 
         $this->orders->data->receivers = $this->getIfSet('receivers', $response);
-
-        $this->orders->data->shippingAddress->zipCode = $response->shippingAddress->zipCode;
-        $this->orders->data->shippingAddress->street = $response->shippingAddress->street;
-        $this->orders->data->shippingAddress->streetNumber = $response->shippingAddress->streetNumber;
-        $this->orders->data->shippingAddress->complement = $response->shippingAddress->complement;
-        $this->orders->data->shippingAddress->city = $response->shippingAddress->city;
-        $this->orders->data->shippingAddress->district = $response->shippingAddress->district;
-        $this->orders->data->shippingAddress->state = $response->shippingAddress->state;
-        $this->orders->data->shippingAddress->country = $response->shippingAddress->country;
 
         $this->orders->data->status = $response->status;
         $this->orders->data->_links = $response->_links;
