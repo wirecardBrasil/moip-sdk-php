@@ -97,14 +97,14 @@ class OrdersTest extends TestCase
     {
         $order_created = $this->executeOrder();
 
-        $this->assertEquals('01234000', $order_created->getShippingAddressZipCode());
-        $this->assertEquals('Avenida Faria Lima', $order_created->getShippingAddressStreet());
-        $this->assertEquals('2927', $order_created->getShippingAddressStreetNumber());
-        $this->assertEquals('8', $order_created->getShippingAddressComplement());
-        $this->assertEquals('Sao Paulo', $order_created->getShippingAddressCity());
-        $this->assertEquals('Itaim', $order_created->getShippingAddressDistrict());
-        $this->assertEquals('SP', $order_created->getShippingAddressState());
-        $this->assertEquals('BRA', $order_created->getShippingAddressCountry());
+        $this->assertEquals('01234000', $order_created->getCustomer()->getShippingAddress()->{'zipCode'});
+        $this->assertEquals('Avenida Faria Lima', $order_created->getCustomer()->getShippingAddress()->{'street'});
+        $this->assertEquals('2927', $order_created->getCustomer()->getShippingAddress()->{'streetNumber'});
+        $this->assertEquals('8', $order_created->getCustomer()->getShippingAddress()->{'complement'});
+        $this->assertEquals('Sao Paulo', $order_created->getCustomer()->getShippingAddress()->{'city'});
+        $this->assertEquals('Itaim', $order_created->getCustomer()->getShippingAddress()->{'district'});
+        $this->assertEquals('SP', $order_created->getCustomer()->getShippingAddress()->{'state'});
+        $this->assertEquals('BRA', $order_created->getCustomer()->getShippingAddress()->{'country'});
     }
 
     /**
