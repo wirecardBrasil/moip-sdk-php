@@ -113,6 +113,23 @@ class Transfers extends MoipResource
     }
 
     /**
+     * Set info of transfers to a saved bank account.
+     *
+     * @param int    $amount
+     * @param string $bankAccountId         Saved bank account id.
+     *
+     * @return $this
+     */
+    public function setTransfersToBankAccount($amount, $bankAccountId)
+    {
+        $this->data->amount = $amount;
+        $this->data->transferInstrument->method = self::METHOD;
+        $this->data->transferInstrument->bankAccount->id = $bankAccountId;
+
+        return $this;
+    }
+
+    /**
      * Returns transfer.
      *
      * @return stdClass
