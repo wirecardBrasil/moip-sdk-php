@@ -49,11 +49,12 @@ class Orders extends MoipResource
      * @param string $product  Name of the product.
      * @param int    $quantity Product Quantity.
      * @param string $detail   Additional product description.
+     * @param string category  Product category. see: https://dev.moip.com.br/v2.1/reference#tabela-de-categorias-de-produtos.
      * @param int    $price    Initial value of the item.
      *
      * @return $this
      */
-    public function addItem($product, $quantity, $detail, $price)
+    public function addItem($product, $quantity, $detail, $category, $price)
     {
         if (!is_int($price)) {
             throw new \UnexpectedValueException('Informe o valor do item como inteiro');
@@ -68,7 +69,7 @@ class Orders extends MoipResource
         $item->quantity = $quantity;
         $item->detail = $detail;
         $item->price = $price;
-
+        $item->category = $category;
         $this->data->items[] = $item;
 
         return $this;
