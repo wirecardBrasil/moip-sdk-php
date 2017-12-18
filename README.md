@@ -89,7 +89,7 @@
     - [Consulta](#consulta-6)
     - [Exclusão](#exclusão-1)
     - [Atualização](#atualização)
-  - [OAuth (Moip Connect)](#oauth-moip-conect)
+  - [OAuth (Moip Connect)](#oauth-moip-connect)
     - [Solicitar permissões de acesso ao usuário](#solicitar-permissões-de-acesso-ao-usuário)
     - [Gerando access token OAuth](#gerando-access-token-oauth)
 - [Packages](#packages)
