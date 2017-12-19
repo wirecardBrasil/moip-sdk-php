@@ -61,6 +61,7 @@ class Transfers extends MoipResource
 
         $bank_account = $this->getIfSet('bankAccount', $transfer_instrument);
         $transfers->data->transferInstrument->bankAccount = new stdClass();
+        $transfers->data->transferInstrument->bankAccount->id = $this->getIfSet('id', $bank_account);
         $transfers->data->transferInstrument->bankAccount->type = $this->getIfSet('type', $bank_account);
         $transfers->data->transferInstrument->bankAccount->bankNumber = $this->getIfSet('bankNumber', $bank_account);
         $transfers->data->transferInstrument->bankAccount->agencyNumber = $this->getIfSet('agencyNumber', $bank_account);
