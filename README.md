@@ -402,8 +402,6 @@ A URL passada como atributo deve ser exatamente a mesma que foi cadastrada na cr
 Com a permissão concedida, você receberá um `code` que lhe permitirá gerar o `accessToken` de autenticação e processar requisições envolvendo outro usuário.
 
 ```php
-use Moip\Auth\Connect;
-
 $redirect_uri = 'http://seusite.com.br/callback.php';
 $client_id = 'APP-18JTHC3LOMT9';
 $scope = true;
@@ -423,8 +421,6 @@ Usamos a variável `$code` para enviar o `code` recebido pela permissão do usu�
 A URL passada como atributo deve ser exatamente a mesma que foi cadastrada na criação do APP, caso haja alguma divergência não será possível recuperar o accessToken.
 
 ```php
-use Moip\Auth\Connect;
-
 $redirect_uri = 'http://seusite.com.br/callback.php';
 $client_id = 'APP-18JTHC3LOMT9';
 $scope = true;
