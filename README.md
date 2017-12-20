@@ -23,7 +23,7 @@
 
 ---
 
-**Índice** 
+**Índice**
 
 - [Instalação](#instalação)
 - [Configurando a autenticação](#configurando-a-autenticação)
@@ -50,6 +50,7 @@
         - [Com Hash](#com-hash)
         - [Com Dados do Cartão](#com-dados-do-cartão)
       - [Com Boleto](#criando-um-pagamento-com-boleto)
+      - [Com Débito Bancário](#criando-um-pagamento-com-débito-bancário)
     - [Consulta](#consulta)
     - [Capturar pagamento pré-autorizado](#capturar-pagamento-pré-autorizado)
     - [Cancelar pagamento pré-autorizado](#cancelar-pagamento-pré-autorizado)
@@ -61,6 +62,9 @@
       - [Valor Total](#valor-total-1)
       - [Valor Parcial](#valor-parcial-1)
     - [Consulta](#consulta-1)
+  - [OAuth (Moip Connect)](#oauth-moip-connect)
+    - [Solicitar permissões de acesso ao usuário](#solicitar-permissões-de-acesso-ao-usuário)
+    - [Gerando access token OAuth](#gerando-access-token-oauth)
   - [Multipedidos](#multipedidos)
     - [Criação](#criando-um-multipedido)
     - [Consulta](#consultando-um-multipedido)
@@ -78,7 +82,7 @@
     -  [Consulta](#consulta-4)
     -  [Exclusão](#exclusão)
     -  [Listagem](#listagem)
-  - [Webhooks](#webhooks) 
+  - [Webhooks](#webhooks)
     - [Consulta](#consulta-5)
 - [Packages](#packages)
 - [Tratamento de exceções](#tratamento-de-exceções)
@@ -90,7 +94,7 @@
 
 * [Laravel 5.x](https://github.com/artesaos/moip)
 * [Symfony 2 ou 3](https://github.com/leonnleite/moip-bundle)
-* [Laravel 4.x (MoIP API v1)](https://github.com/SOSTheBlack/moip) 
+* [Laravel 4.x (MoIP API v1)](https://github.com/SOSTheBlack/moip)
 
 ## Dependências
 #### require
@@ -283,6 +287,22 @@ $payment = $order->payments()
 print_r($payment);
 ```
 
+#### Criando um pagamento com Débito Bancário
+No pagamento por débito bancário online também são enviados apenas 3 parâmetros:
+
+- URL do logo que você deseja que apareça, representada abaixo com a variável: $return_uri;
+- Data de vencimento, representada pela variável $expiration_date;
+- Número do banco representado pela variável $bank_number (atualmente único valor possível é `341`, referente ao Banco Itaú).
+```php
+$bank_number = '341';
+$return_uri = 'https://moip.com.br';
+$expiration_date = new DateTime();
+$payment = $order->payments()                    
+    ->setOnlineBankDebit($bank_number, $expiration_date, $return_uri)
+    ->execute();
+print_r($payment);
+```
+
 ### Consulta
 ```php
 $payment = $moip->payments()->get('PAYMENT-ID');
@@ -291,12 +311,8 @@ print_r($payment);
 
 ### Capturar pagamento pré-autorizado
 ```php
-try {
-    $captured_payment = $payment->capture();
-    print_r($captured_payment);
-} catch (Exception $e) {
-    printf($e->__toString());
-}
+$captured_payment = $payment->capture();
+print_r($captured_payment);
 ```
 
 ### Cancelar pagamento pré-autorizado
@@ -342,12 +358,12 @@ $account_number = 1234;
 $account_check_number = 4;
 $refund = $payment->refunds()
     ->bankAccountFull(
-        $type, 
-        $bank_number, 
-        $agency_number, 
-        $agency_check_number, 
-        $account_number, 
-        $account_check_number, 
+        $type,
+        $bank_number,
+        $agency_number,
+        $agency_check_number,
+        $account_number,
+        $account_check_number,
         $customer
     );
 print_r($refund);
@@ -366,16 +382,55 @@ $account_number = 1234;
 $account_check_number = 4;
 $refund = $payment->refunds()
     ->bankAccountPartial(
-        $amount, 
-        $type, 
-        $bank_number, 
-        $agency_number, 
-        $agency_check_number, 
-        $account_number, 
-        $account_check_number, 
+        $amount,
+        $type,
+        $bank_number,
+        $agency_number,
+        $agency_check_number,
+        $account_number,
+        $account_check_number,
         $customer
     );
 print_r($refund);
+```
+## OAuth (Moip Connect)
+### Solicitar permissões de acesso ao usuário
+Para solicitar as permissões você deverá invocar o método getAuthUrl (que monta a URL) e redirecionar o usuário para a URL gerada. O usuário deverá conceder a permissão e então ele será redirecionado para a URL determinada pelo seu App e passada como atributo para o objeto Connect.
+
+A URL passada como atributo deve ser exatamente a mesma que foi cadastrada na criação do APP, caso haja alguma divergência o usuário não será redirecionado corretamente.
+
+Com a permissão concedida, você receberá um `code` que lhe permitirá gerar o `accessToken` de autenticação e processar requisições envolvendo outro usuário.
+
+```php
+$redirect_uri = 'http://seusite.com.br/callback.php';
+$client_id = 'APP-18JTHC3LOMT9';
+$scope = true;
+$connect = new Connect($redirect_uri, $client_id, $scope, Connect::ENDPOINT_SANDBOX);
+$connect->setScope(Connect::RECEIVE_FUNDS)
+    ->setScope(Connect::REFUND)
+    ->setScope(Connect::MANAGE_ACCOUNT_INFO)
+    ->setScope(Connect::RETRIEVE_FINANCIAL_INFO);
+header('Location: '.$connect->getAuthUrl());
+```
+
+### Gerando access token OAuth
+Abaixo usaremos o método authorize para gerar o access token OAuth. Note que é necessário instanciar o objeto Connect e passar os parâmetros como no exemplo abaixo.
+
+Usamos a variável `$code` para enviar o `code` recebido pela permissão do usuário e inserimos no objeto com o método `setCode`.
+
+A URL passada como atributo deve ser exatamente a mesma que foi cadastrada na criação do APP, caso haja alguma divergência não será possível recuperar o accessToken.
+
+```php
+$redirect_uri = 'http://seusite.com.br/callback.php';
+$client_id = 'APP-18JTHC3LOMT9';
+$scope = true;
+$connect = new Connect($redirect_uri, $client_id, $scope, Connect::ENDPOINT_SANDBOX);
+$client_secret = '20f76456f6ec4874a1f38082d3139326';
+$connect->setClientSecret($client_secret);
+$code = 'f9053ca6e9853dd73f0bc4f332a5ce337b0bb0da';
+$connect->setCode($code);
+$auth = $connect->authorize();
+print_r($auth);
 ```
 
 ## Multipedidos
@@ -400,7 +455,7 @@ $order2 = $moip->orders()->setOwnId(uniqid())
     ->setAddition(1000)
     ->setDiscount(5000)
     ->setCustomer($customer)
-    ->addReceiver('MPA-IFYRB1HBL73Z', 'PRIMARY', NULL); 
+    ->addReceiver('MPA-IFYRB1HBL73Z', 'PRIMARY', NULL);
 
 $multiorder = $this->moip->multiorders()
     ->setOwnId(uniqid())
@@ -419,7 +474,7 @@ print_r($multiorder);
 
 ## Multipagamentos
 
-### Criando um multipagamento 
+### Criando um multipagamento
 ```php
 $hash = 'i1naupwpTLrCSXDnigLLTlOgtm+xBWo6iX54V/hSyfBeFv3rvqa1VyQ8/pqWB2JRQX2GhzfGppXFPCmd/zcmMyDSpdnf1GxHQHmVemxu4AZeNxs+TUAbFWsqEWBa6s95N+O4CsErzemYZHDhsjEgJDe17EX9MqgbN3RFzRmZpJqRvqKXw9abze8hZfEuUJjC6ysnKOYkzDBEyQibvGJjCv3T/0Lz9zFruSrWBw+NxWXNZjXSY0KF8MKmW2Gx1XX1znt7K9bYNfhA/QO+oD+v42hxIeyzneeRcOJ/EXLEmWUsHDokevOkBeyeN4nfnET/BatcDmv8dpGXrTPEoxmmGQ==';
 $payment = $multiorder->multipayments()
@@ -489,12 +544,8 @@ $moip->accounts()->checkAccountExists(CPF);
 
 ### Obter chave pública de uma Conta Moip
 ```php
-try {
-    $keys = $moip->keys()->get();
-    print_r($keys);
-} catch (Exception $e) {
-    printf($e->__toString());
-}
+$keys = $moip->keys()->get();
+print_r($keys);
 ```
 
 ## Preferências de notificação
@@ -527,7 +578,7 @@ print_r($notifications);
 ```
 
 ## Webhooks
-> O PHP, por padrão, está preparado para receber apenas alguns tipos de `content-type` (`application/x-www-form-urlencoded` e `multipart/form-data`). A plataforma do Moip, no entanto, envia dados no formato JSON, o qual a linguagem não está preparada para receber por padrão. 
+> O PHP, por padrão, está preparado para receber apenas alguns tipos de `content-type` (`application/x-www-form-urlencoded` e `multipart/form-data`). A plataforma do Moip, no entanto, envia dados no formato JSON, o qual a linguagem não está preparada para receber por padrão.
 Para receber e acessar os dados enviados pelo Moip, você precisa adicionar o seguinte código ao seu arquivo que receberá os webhooks:
 
 ```php
@@ -611,7 +662,7 @@ $bank_account = $moip->bankaccount()
         ->setType('CHECKING')
         ->setHolder('Demo Moip', '622.134.533-22', 'CPF')
         ->create($account_id);
-        
+
 print_r($bank_account);
 ```
 
@@ -677,7 +728,7 @@ try {
 [Documentação oficial](https://documentao-moip.readme.io/v2.0/reference)
 
 ## Testes
-Por padrão os testes não fazem nenhuma requisição para a API do Moip. É possível rodar os testes contra 
+Por padrão os testes não fazem nenhuma requisição para a API do Moip. É possível rodar os testes contra
 o ambiente de [Sandbox](https://conta-sandbox.moip.com.br/) do moip, para isso basta setar a variável de ambiente:
  - `MOIP_ACCESS_TOKEN` Token de autenticação do seu aplicativo Moip.
 
