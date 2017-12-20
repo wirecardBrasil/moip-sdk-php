@@ -294,17 +294,13 @@ No pagamento por débito bancário online também são enviados apenas 3 parâme
 - Data de vencimento, representada pela variável $expiration_date;
 - Número do banco representado pela variável $bank_number (atualmente único valor possível é `341`, referente ao Banco Itaú).
 ```php
-try {
-    $bank_number = '341';
-    $return_uri = 'https://moip.com.br';
-    $expiration_date = new DateTime();
-    $payment = $order->payments()                    
-        ->setOnlineBankDebit($bank_number, $expiration_date, $return_uri)
-        ->execute();
-    print_r($payment);
-} catch (Exception $e) {
-    printf($e->__toString());
-}
+$bank_number = '341';
+$return_uri = 'https://moip.com.br';
+$expiration_date = new DateTime();
+$payment = $order->payments()                    
+    ->setOnlineBankDebit($bank_number, $expiration_date, $return_uri)
+    ->execute();
+print_r($payment);
 ```
 
 ### Consulta
@@ -315,12 +311,8 @@ print_r($payment);
 
 ### Capturar pagamento pré-autorizado
 ```php
-try {
-    $captured_payment = $payment->capture();
-    print_r($captured_payment);
-} catch (Exception $e) {
-    printf($e->__toString());
-}
+$captured_payment = $payment->capture();
+print_r($captured_payment);
 ```
 
 ### Cancelar pagamento pré-autorizado
@@ -412,19 +404,15 @@ Com a permissão concedida, você receberá um `code` que lhe permitirá gerar o
 ```php
 use Moip\Auth\Connect;
 
-try {
-    $redirect_uri = 'http://seusite.com.br/callback.php';
-    $client_id = 'APP-18JTHC3LOMT9';
-    $scope = true;
-    $connect = new Connect($redirect_uri, $client_id, $scope, Connect::ENDPOINT_SANDBOX);
-    $connect->setScope(Connect::RECEIVE_FUNDS)
-        ->setScope(Connect::REFUND)
-        ->setScope(Connect::MANAGE_ACCOUNT_INFO)
-        ->setScope(Connect::RETRIEVE_FINANCIAL_INFO);
-    header('Location: '.$connect->getAuthUrl());
-} catch (Exception $e) {
-    printf($e->__toString());
-}
+$redirect_uri = 'http://seusite.com.br/callback.php';
+$client_id = 'APP-18JTHC3LOMT9';
+$scope = true;
+$connect = new Connect($redirect_uri, $client_id, $scope, Connect::ENDPOINT_SANDBOX);
+$connect->setScope(Connect::RECEIVE_FUNDS)
+    ->setScope(Connect::REFUND)
+    ->setScope(Connect::MANAGE_ACCOUNT_INFO)
+    ->setScope(Connect::RETRIEVE_FINANCIAL_INFO);
+header('Location: '.$connect->getAuthUrl());
 ```
 
 ### Gerando access token OAuth
@@ -437,20 +425,16 @@ A URL passada como atributo deve ser exatamente a mesma que foi cadastrada na cr
 ```php
 use Moip\Auth\Connect;
 
-try {
-    $redirect_uri = 'http://seusite.com.br/callback.php';
-    $client_id = 'APP-18JTHC3LOMT9';
-    $scope = true;
-    $connect = new Connect($redirect_uri, $client_id, $scope, Connect::ENDPOINT_SANDBOX);
-    $client_secret = '20f76456f6ec4874a1f38082d3139326';
-    $connect->setClientSecret($client_secret);
-    $code = 'f9053ca6e9853dd73f0bc4f332a5ce337b0bb0da';
-    $connect->setCode($code);
-    $auth = $connect->authorize();
-    print_r($auth);
-} catch (Exception $e) {
-    printf($e->__toString());
-}
+$redirect_uri = 'http://seusite.com.br/callback.php';
+$client_id = 'APP-18JTHC3LOMT9';
+$scope = true;
+$connect = new Connect($redirect_uri, $client_id, $scope, Connect::ENDPOINT_SANDBOX);
+$client_secret = '20f76456f6ec4874a1f38082d3139326';
+$connect->setClientSecret($client_secret);
+$code = 'f9053ca6e9853dd73f0bc4f332a5ce337b0bb0da';
+$connect->setCode($code);
+$auth = $connect->authorize();
+print_r($auth);
 ```
 
 ## Multipedidos
@@ -564,12 +548,8 @@ $moip->accounts()->checkAccountExists(CPF);
 
 ### Obter chave pública de uma Conta Moip
 ```php
-try {
-    $keys = $moip->keys()->get();
-    print_r($keys);
-} catch (Exception $e) {
-    printf($e->__toString());
-}
+$keys = $moip->keys()->get();
+print_r($keys);
 ```
 
 ## Preferências de notificação
