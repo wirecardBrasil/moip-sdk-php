@@ -7,13 +7,13 @@ use Moip\Moip;
 use Moip\Resource\Customer;
 use Moip\Resource\Holder;
 use Moip\Resource\Orders;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase as BaseTestCase;
 use Requests_Response;
 
 /**
  * class TestCase.
  */
-abstract class TestCase extends PHPUnit_Framework_TestCase
+abstract class TestCase extends BaseTestCase
 {
     /**
      * Variables representing the test modes. On MOCK mode no http request will be made.
@@ -255,7 +255,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
             $auth = new OAuth($moip_access_token);
         } else {
             $this->sandbox_mock = self::MOCK;
-            $auth = $this->getMock('\Moip\Contracts\Authentication');
+            $auth = $this->getMockBuilder('\Moip\Contracts\Authentication')->getMock();
         }
         $this->moip = new Moip($auth, Moip::ENDPOINT_SANDBOX);
     }
@@ -286,7 +286,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
         $resp = new Requests_Response();
         $resp->body = $body;
         $resp->status_code = $status_code;
-        $sess = $this->getMock('\Requests_Session');
+        $sess = $this->getMockBuilder('\Requests_Session')->getMock();
         $sess->expects($this->once())->method('request')->willReturn($resp);
         $this->moip->setSession($sess);
     }
