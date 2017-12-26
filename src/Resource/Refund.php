@@ -116,6 +116,18 @@ class Refund extends MoipResource
     }
 
     /**
+     * Get a Refund.
+     *
+     * @param string $id Refund id.
+     *
+     * @return stdClass
+     */
+    public function get($id)
+    {
+        return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, self::PATH, $id));
+    }
+
+    /**
      * Get status from MoIP refund.
      *
      *
