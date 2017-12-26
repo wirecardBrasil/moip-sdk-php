@@ -54,7 +54,7 @@ class Orders extends MoipResource
      *
      * @return $this
      */
-    public function addItem($product, $quantity, $detail, $price, $category)
+    public function addItem($product, $quantity, $detail, $price, $category = 'OTHER_CATEGORIES')
     {
         if (!is_int($price)) {
             throw new \UnexpectedValueException('Informe o valor do item como inteiro');

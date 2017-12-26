@@ -371,7 +371,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
 
         $order = $this->moip->orders()->setCustomer($this->createCustomer())
             ->addItem('Nome do produto', 1, 'Mais info...', 100000, 'SHOES')
-            ->addItem('abacaxi', 2, 'Abacaxi de terra de areia', 990, 'JEWELRY')
+            ->addItem('abacaxi', 2, 'Abacaxi de terra de areia', 990, 'OTHER_CATEGORIES')
             ->setDiscount(1000)
             ->setShippingAmount(1490)
             ->setOwnId($this->last_ord_id);
@@ -393,10 +393,10 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
         }
 
         $order = $this->moip->orders()->setOwnId(uniqid())
-            ->addItem('bicicleta 1', 1, 'sku1', 10000, 'JEWELRY')
-            ->addItem('bicicleta 2', 1, 'sku2', 11000, 'JEWELRY')
-            ->addItem('bicicleta 3', 1, 'sku3', 12000, 'JEWELRY')
-            ->addItem('bicicleta 4', 1, 'sku4', 13000, 'JEWELRY')
+            ->addItem('bicicleta 1', 1, 'sku1', 10000)
+            ->addItem('bicicleta 2', 1, 'sku2', 11000)
+            ->addItem('bicicleta 3', 1, 'sku3', 12000)
+            ->addItem('bicicleta 4', 1, 'sku4', 13000)
             ->setShippingAmount(3000)
             ->setAddition(1000)
             ->setDiscount(5000)
@@ -404,9 +404,9 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
             ->addReceiver('MPA-VB5OGTVPCI52', 'PRIMARY', null);
 
         $order2 = $this->moip->orders()->setOwnId(uniqid())
-            ->addItem('bicicleta 1', 1, 'sku1', 10000, 'JEWELRY')
-            ->addItem('bicicleta 2', 1, 'sku2', 11000, 'JEWELRY')
-            ->addItem('bicicleta 3', 1, 'sku3', 12000, 'JEWELRY')
+            ->addItem('bicicleta 1', 1, 'sku1', 10000)
+            ->addItem('bicicleta 2', 1, 'sku2', 11000)
+            ->addItem('bicicleta 3', 1, 'sku3', 12000)
             ->setShippingAmount(3000)
             ->setAddition(1000)
             ->setDiscount(5000)
