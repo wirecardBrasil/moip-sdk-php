@@ -39,7 +39,7 @@ class Customer extends MoipResource
     const ADDRESS_COUNTRY = 'BRA';
 
     /**
-     * Standard document type.
+     *  Document type PF.
      *
      * @const string
      */
@@ -48,6 +48,18 @@ class Customer extends MoipResource
     /**
      * Initialize a new instance.
      */
+
+     /**
+      *  Document type PJ.
+      *
+      * @const string
+      */
+     const TAX_DOCUMENT_PJ = 'CNPJ';
+
+     /**
+      * Initialize a new instance.
+      */
+
     public function initialize()
     {
         $this->data = new stdClass();
@@ -373,7 +385,7 @@ class Customer extends MoipResource
     }
 
     /**
-     * Set tax document from customer.
+     * Set tax document (CPF) from customer.
      *
      * @param string $number Document number.
      * @param string $type   Document type.
@@ -381,6 +393,23 @@ class Customer extends MoipResource
      * @return $this
      */
     public function setTaxDocument($number, $type = self::TAX_DOCUMENT)
+    {
+        $this->data->taxDocument = new stdClass();
+        $this->data->taxDocument->type = $type;
+        $this->data->taxDocument->number = $number;
+
+        return $this;
+    }
+
+    /**
+     * Set tax document (CNPJ) from customer.
+     *
+     * @param string $number Document number.
+     * @param string $type   Document type.
+     *
+     * @return $this
+     */
+    public function setTaxDocumentPJ($number, $type = self::TAX_DOCUMENT_PJ)
     {
         $this->data->taxDocument = new stdClass();
         $this->data->taxDocument->type = $type;
