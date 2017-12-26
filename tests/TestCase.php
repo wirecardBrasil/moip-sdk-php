@@ -370,8 +370,8 @@ abstract class TestCase extends BaseTestCase
         }
 
         $order = $this->moip->orders()->setCustomer($this->createCustomer())
-            ->addItem('Nome do produto', 1, 'Mais info...', 100000)
-            ->addItem('abacaxi', 2, 'Abacaxi de terra de areia', 990)
+            ->addItem('Nome do produto', 1, 'Mais info...', 100000, 'SHOES')
+            ->addItem('abacaxi', 2, 'Abacaxi de terra de areia', 990, 'OTHER_CATEGORIES')
             ->setDiscount(1000)
             ->setShippingAmount(1490)
             ->setOwnId($this->last_ord_id);
