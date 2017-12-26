@@ -26,9 +26,42 @@ class TransfersTest extends TestCase
         return $transfer;
     }
 
+    private function createBankAccount()
+    {
+        $this->mockHttpSession($this->body_bank_account_create);
+
+        $account_id = 'MPA-3C5358FF2296';
+
+        $bank_account = $this->moip->bankaccount()
+            ->setBankNumber('237')
+            ->setAgencyNumber('12345')
+            ->setAgencyCheckNumber('0')
+            ->setAccountNumber('12345678')
+            ->setAccountCheckNumber('7')
+            ->setType('CHECKING')
+            ->setHolder('Demo Moip', '622.134.533-22', 'CPF')
+            ->create($account_id);
+
+        return $bank_account;
+    }
+
     public function testShouldCreateTransfer()
     {
         $transfer = $this->createTransfer();
+        $this->assertNotEmpty($transfer->getId());
+    }
+
+    public function testShouldCreateTransferWithBankAccountId()
+    {
+        $bank_account = $this->createBankAccount();
+
+        $this->mockHttpSession($this->body_transfers_create);
+
+        $amount = 500;
+        $transfer = $this->moip->transfers()
+            ->setTransfersToBankAccount($amount, $bank_account->getId())
+            ->execute();
+
         $this->assertNotEmpty($transfer->getId());
     }
 
