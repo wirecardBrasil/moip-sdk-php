@@ -116,8 +116,8 @@ class Transfers extends MoipResource
     /**
      * Set info of transfers to a saved bank account.
      *
-     * @param int    $amount
-     * @param string $bankAccountId         Saved bank account id.
+     * @param int    $amount        Amount
+     * @param string $bankAccountId Saved bank account id.
      *
      * @return $this
      */
