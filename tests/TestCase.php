@@ -142,6 +142,11 @@ abstract class TestCase extends BaseTestCase
     protected $body_bank_account_update;
 
     /**
+     * @var string response from moip API.
+     */
+    protected $body_balances;
+
+    /**
      * @var string holds the last generated customer ownId. In mock mode it'll be always the default, but it changes on sandbox mode.
      */
     protected $last_cus_id = 'meu_id_customer';
@@ -239,6 +244,8 @@ abstract class TestCase extends BaseTestCase
         $this->body_bank_account_list = $this->readJsonFile('jsons/bank_account/list');
 
         $this->body_bank_account_update = $this->readJsonFile('jsons/bank_account/update');
+
+        $this->body_balances = $this->readJsonFile('jsons/balances/get');
     }
 
     /**

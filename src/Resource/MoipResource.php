@@ -25,6 +25,13 @@ abstract class MoipResource implements JsonSerializable
     const VERSION = 'v2';
 
     /**
+     * Api version content type
+     *
+     * @cont string
+     */
+    const ACCEPT_VERSION = 'application/json;version=2.1';
+
+    /**
      * @var \Moip\Moip
      */
     protected $moip;
@@ -210,9 +217,10 @@ abstract class MoipResource implements JsonSerializable
      * Execute a http request. If payload == null no body will be sent. Empty body ('{}') is supported by sending a
      * empty stdClass.
      *
-     * @param string     $path
-     * @param string     $method
-     * @param mixed|null $payload
+     * @param string     $path request path
+     * @param string     $method http method
+     * @param mixed|null $payload request body
+     * @param array      $headers request headers
      *
      * @throws Exceptions\ValidationException  if the API returns a 4xx http status code. Usually means invalid data was sent.
      * @throws Exceptions\UnautorizedException if the API returns a 401 http status code. Check API token and key.
@@ -220,15 +228,16 @@ abstract class MoipResource implements JsonSerializable
      *
      * @return stdClass
      */
-    protected function httpRequest($path, $method, $payload = null)
+    protected function httpRequest($path, $method, $payload = null, $headers = [])
     {
         $http_sess = $this->moip->getSession();
-        $headers = [];
         $body = null;
         if ($payload !== null) {
             $body = json_encode($payload, JSON_UNESCAPED_SLASHES);
-            if ($body) {// if it's json serializable
-                $headers['Content-Type'] = 'application/json';
+            if ($body) { // if it's json serializable
+                if(!isset($headers['Content-Type'])) {
+                    $headers['Content-Type'] = 'application/json';
+                }
             } else {
                 $body = null;
             }
@@ -258,13 +267,13 @@ abstract class MoipResource implements JsonSerializable
     /**
      * Find by path.
      *
-     * @param string $path
-     *
+     * @param string $path resource path
+     * @param array $headers request headers
      * @return stdClass
      */
-    public function getByPath($path)
+    public function getByPath($path, $headers = [])
     {
-        $response = $this->httpRequest($path, Requests::GET);
+        $response = $this->httpRequest($path, Requests::GET, null, $headers);
 
         if (is_array($response)) {
             $response = (object) $response;
