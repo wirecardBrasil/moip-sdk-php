@@ -123,6 +123,20 @@ class Transfers extends MoipResource
     }
 
     /**
+     * Get own request id. external reference.
+     *
+     * @param mixed $ownId id
+     *
+     * @return $this
+     */
+    public function setOwnId($ownId)
+    {
+        $this->data->ownId = $ownId;
+
+        return $this;
+    }
+
+    /**
      * Set info of holder.
      *
      * @param string $fullname
@@ -211,5 +225,15 @@ class Transfers extends MoipResource
     public function getId()
     {
         return $this->getIfSet('id');
+    }
+
+    /**
+     * Get own request id. external reference.
+     *
+     * @return mixed
+     */
+    public function getOwnId()
+    {
+        return $this->getIfSet('ownId');
     }
 }
