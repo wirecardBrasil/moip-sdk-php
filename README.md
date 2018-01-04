@@ -264,7 +264,7 @@ $holder = $this->moip->holders()->setFullname('Jose Silva')
     ->setBirthDate(\DateTime::createFromFormat($this->date_format, $this->date_string))
     ->setTaxDocument('22222222222', 'CPF')
     ->setPhone(11, 66778899, 55)
-    ->setAddress(Holder::ADDRESS_BILLING, 'Avenida Faria Lima', '2927', 'Itaim', 'Sao Paulo', 'SP', '01234000', '8');
+    ->setAddress(Holder::ADDRESS_BILLING, 'Avenida Faria Lima', '2927', 'Itaim', 'Sao Paulo', 'SP', '01234000', 'Apt 101');
 ```
 ##### Com hash
 > Para mais detalhes sobre a geração de hash com os dados do cartão [consulte a documentação.](https://dev.moip.com.br/docs/criptografia-de-cartao)
