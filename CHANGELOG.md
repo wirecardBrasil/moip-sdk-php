@@ -29,7 +29,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   *  add attribute paid to order creation mock ([2f01ad91](https://github.com/moip/moip-sdk-php/commit/2f01ad91))
 
 #### BREAKING CHANGES
-The type `Holder` was added to be used on payment creation and at some other features linked on funding instrument.
+The type `Holder` was added to be used on payment creation and on some other features linked on funding instrument.
 
 <a name="v2.2.0"></a>
 # [](https://github.com/moip/moip-sdk-php/compare/v2.1.0...v2.2.0) (2017-11-01)
