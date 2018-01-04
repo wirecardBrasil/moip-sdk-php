@@ -36,7 +36,7 @@
         "rmccue/requests": ">=1.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "~4.0",
+        "phpunit/phpunit": "~4.8.35 || ^5.7 || ^6.4",
         "codacy/coverage": "dev-master"
     },
     "autoload": {

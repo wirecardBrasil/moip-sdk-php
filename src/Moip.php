@@ -7,6 +7,7 @@ use Moip\Resource\Account;
 use Moip\Resource\BankAccount;
 use Moip\Resource\Customer;
 use Moip\Resource\Entry;
+use Moip\Resource\Holder;
 use Moip\Resource\Keys;
 use Moip\Resource\Multiorders;
 use Moip\Resource\NotificationPreferences;
@@ -128,6 +129,16 @@ class Moip
     public function customers()
     {
         return new Customer($this);
+    }
+
+    /**
+     * Create a new Holder instance.
+     *
+     * @return \Moip\Resource\Holder
+     */
+    public function holders()
+    {
+        return new Holder($this);
     }
 
     /**

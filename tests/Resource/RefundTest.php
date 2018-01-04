@@ -204,7 +204,7 @@ class RefundTest extends TestCase
         $order = $this->createOrder()->create();
         $this->mockHttpSession($this->body_billet_pay);
         $payment = $order->payments()
-            ->setBoleto(new \DateTime('today +1day'),'http://dev.moip.com.br/images/logo-header-moip.png')
+            ->setBoleto(new \DateTime('today +1day'), 'http://dev.moip.com.br/images/logo-header-moip.png')
             ->execute();
         $this->mockHttpSession('');
         $payment->authorize();
@@ -217,7 +217,7 @@ class RefundTest extends TestCase
         $this->mockHttpSession($this->body_order);
         $order = $this->createOrder()->create();
         $this->mockHttpSession($this->body_cc_pay_pci);
-        $payment = ($order->payments()->setCreditCard(5, 2018, '5555666677778884', 123, $this->createCustomer())->execute());
+        $payment = ($order->payments()->setCreditCard(5, 2018, '5555666677778884', 123, $this->createHolder())->execute());
 
         return $returnPayment ? $payment : $order;
     }
