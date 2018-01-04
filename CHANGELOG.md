@@ -4,6 +4,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+<a name="v3.0.0"></a>
+## v3.0.0 (2018-01-04)
+
+
+#### Bug Fixes
+
+*   Fixed errors treatment ((3862cc69))
+
+#### Features
+
+* **Holder**  Add Holder resource and resolves Holder params. ((9f84f793))
+* **Order**
+  *  map attributes on order creation ((8f9755ef))
+  *  add attribute paid to order creation mock ((2f01ad91))
+  *  remove shipping address attributes from populate ((7eda9b6f))
+
+#### Tests
+
+*  Support PHPUnit 5 and 6 ((5a316192))
+*  Test against PHP 7.1 and 7.2 ((c6983f63))
+* **Order**
+  *  add tests for the new mapped attributes ((9c99d832))
+  *  add attribute paid to order creation mock ((2f01ad91))
+
+#### BREAKING CHANGES
+The type `Holder` was added to be used on payment creation and at some other features linked on funding instrument.
+
 <a name="v2.2.0"></a>
 ## v2.2.0 (2017-11-01)
 
