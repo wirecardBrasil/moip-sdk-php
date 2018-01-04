@@ -173,7 +173,6 @@ class Holder extends MoipResource
         $holder->data->taxDocument = new stdClass();
         $holder->data->taxDocument->type = $this->getIfSet('type', $this->getIfSet('taxDocument', $response));
         $holder->data->taxDocument->number = $this->getIfSet('number', $this->getIfSet('taxDocument', $response));
-        //$holder->data->addresses = [];
         $holder->data->billingAddress = $this->getIfSet('billingAddress', $response);
 
         return $holder;
