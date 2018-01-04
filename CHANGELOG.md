@@ -10,53 +10,53 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 #### Bug Fixes
 
-*   Fixed errors treatment ((3862cc69))
+*   Fixed errors treatment ([3862cc69](https://github.com/moip/moip-sdk-php/commit/3862cc69))
 
 #### Features
 
-* **Holder**  Add Holder resource and resolves Holder params. ((9f84f793))
+* **Holder**  Add Holder resource and resolves Holder params. ([9f84f793](https://github.com/moip/moip-sdk-php/commit/9f84f793))
 * **Order**
-  *  map attributes on order creation ((8f9755ef))
-  *  add attribute paid to order creation mock ((2f01ad91))
-  *  remove shipping address attributes from populate ((7eda9b6f))
+  *  map attributes on order creation ([8f9755ef](https://github.com/moip/moip-sdk-php/commit/8f9755ef))
+  *  add attribute paid to order creation mock ([2f01ad91](https://github.com/moip/moip-sdk-php/commit/2f01ad91))
+  *  remove shipping address attributes from populate ([7eda9b6f](https://github.com/moip/moip-sdk-php/commit/7eda9b6f))
 
 #### Tests
 
-*  Support PHPUnit 5 and 6 ((5a316192))
-*  Test against PHP 7.1 and 7.2 ((c6983f63))
+*  Support PHPUnit 5 and 6 ([5a316192](https://github.com/moip/moip-sdk-php/commit/5a316192))
+*  Test against PHP 7.1 and 7.2 ([c6983f63](https://github.com/moip/moip-sdk-php/commit/c6983f63))
 * **Order**
-  *  add tests for the new mapped attributes ((9c99d832))
-  *  add attribute paid to order creation mock ((2f01ad91))
+  *  add tests for the new mapped attributes ([9c99d832](https://github.com/moip/moip-sdk-php/commit/9c99d832))
+  *  add attribute paid to order creation mock ([2f01ad91](https://github.com/moip/moip-sdk-php/commit/2f01ad91))
 
 #### BREAKING CHANGES
 The type `Holder` was added to be used on payment creation and at some other features linked on funding instrument.
 
 <a name="v2.2.0"></a>
-## v2.2.0 (2017-11-01)
+# [](https://github.com/moip/moip-sdk-php/compare/v2.1.0...v2.2.0) (2017-11-01)
 
 
 #### Bug Fixes
 
-*   Prevent notice when tax document or receivers are not returned ((6f6c10bd))
+*   Prevent notice when tax document or receivers are not returned ([6f6c10bd](https://github.com/moip/moip-sdk-php/commit/6f6c10bd))
 * **Transfers**
-  *  Improved fix to issue #184 ((a6e992f2))
-  *  Fix setHolder warning when called before setTransfers (#184). ((33f9126d))
+  *  Improved fix to issue #184 ([a6e992f2](https://github.com/moip/moip-sdk-php/commit/a6e992f2))
+  *  Fix setHolder warning when called before setTransfers (#184). ([33f9126d](https://github.com/moip/moip-sdk-php/commit/33f9126d))
 
 #### Features
 
-* **BankAccount**  Created bank account get id, get list, delete, update (#185) ((a4ac12d8))
-* **Keys**  adds method to get public key from moip account ((fc2143a2))
+* **BankAccount**  Created bank account get id, get list, delete, update (#185) ([a4ac12d8](https://github.com/moip/moip-sdk-php/commit/a4ac12d8))
+* **Keys**  adds method to get public key from moip account ([fc2143a2](https://github.com/moip/moip-sdk-php/commit/fc2143a2))
 * **NotificationPreferences**
-  *  added method to get a notification preference ((d9f40623))
-  *  Added method to get a list of notifications ((9be2ae45))
+  *  added method to get a notification preference ([d9f40623](https://github.com/moip/moip-sdk-php/commit/d9f40623))
+  *  Added method to get a list of notifications ([9be2ae45](https://github.com/moip/moip-sdk-php/commit/9be2ae45))
 * **Payment**
-  *  changed 'get' method to allow get a payment without get an order first ((7874a7ed))
-  *  add method 'cancel' to cancel pre-authorized payments ((858cece3))
-  *  changed 'capture' method to allow multipayments ((32d70e76))
-* **Transfers**  Added get list, get id, revert and getters ((8c03c932))
+  *  changed 'get' method to allow get a payment without get an order first ([7874a7ed](https://github.com/moip/moip-sdk-php/commit/7874a7ed))
+  *  add method 'cancel' to cancel pre-authorized payments ([858cece3](https://github.com/moip/moip-sdk-php/commit/858cece3))
+  *  changed 'capture' method to allow multipayments ([32d70e76](https://github.com/moip/moip-sdk-php/commit/32d70e76))
+* **Transfers**  Added get list, get id, revert and getters ([8c03c932](https://github.com/moip/moip-sdk-php/commit/8c03c932))
 * **account**
-  *  added getCreatedAt function ((98b1ff3b))
-  *  added missing properties to account ((14256c08))
+  *  added getCreatedAt function ([98b1ff3b](https://github.com/moip/moip-sdk-php/commit/98b1ff3b))
+  *  added missing properties to account ([14256c08](https://github.com/moip/moip-sdk-php/commit/14256c08))
 
 <a name="v2.1.0"></a>
 # [](https://github.com/moip/moip-sdk-php/compare/v2.0.0...v2.1.0) (2017-10-09)
