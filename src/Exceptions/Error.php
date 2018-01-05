@@ -90,6 +90,8 @@ class Error
             foreach ($error_obj->errors as $error) {
                 $errors[] = new self($error->code, $error->path, $error->description);
             }
+        } elseif (!empty($error_obj->error)) {
+            $errors[] = new self('', '', $error_obj->error);
         }
 
         return $errors;
