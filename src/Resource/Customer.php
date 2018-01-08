@@ -4,6 +4,9 @@ namespace Moip\Resource;
 
 use stdClass;
 use UnexpectedValueException;
+use ArrayIterator;
+use Moip\Helper\Filters;
+use Moip\Helper\Pagination;
 
 /**
  * Class Customer.
@@ -134,6 +137,18 @@ class Customer extends MoipResource
     public function get($moip_id)
     {
         return $this->getByPath(sprintf('/%s/%s/%s', MoipResource::VERSION, self::PATH, $moip_id));
+    }
+
+    /**
+     * Create a new Customers list instance.
+     *
+     * @return \Moip\Resource\CustomerList
+     */
+    public function getList(Pagination $pagination = null, Filters $filters = null, $qParam = '')
+    {
+        $customerList = new CustomerList($this->moip);
+
+        return $customerList->get($pagination, $filters, $qParam);
     }
 
     /**
