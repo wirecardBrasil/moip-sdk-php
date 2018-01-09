@@ -61,6 +61,7 @@ class Transfers extends MoipResource
 
         $bank_account = $this->getIfSet('bankAccount', $transfer_instrument);
         $transfers->data->transferInstrument->bankAccount = new stdClass();
+        $transfers->data->transferInstrument->bankAccount->id = $this->getIfSet('id', $bank_account);
         $transfers->data->transferInstrument->bankAccount->type = $this->getIfSet('type', $bank_account);
         $transfers->data->transferInstrument->bankAccount->bankNumber = $this->getIfSet('bankNumber', $bank_account);
         $transfers->data->transferInstrument->bankAccount->agencyNumber = $this->getIfSet('agencyNumber', $bank_account);
@@ -108,6 +109,23 @@ class Transfers extends MoipResource
         $this->data->transferInstrument->bankAccount->agencyCheckNumber = $agencyCheckNumber;
         $this->data->transferInstrument->bankAccount->accountNumber = $accountNumber;
         $this->data->transferInstrument->bankAccount->accountCheckNumber = $accountCheckNumber;
+
+        return $this;
+    }
+
+    /**
+     * Set info of transfers to a saved bank account.
+     *
+     * @param int    $amount        Amount
+     * @param string $bankAccountId Saved bank account id.
+     *
+     * @return $this
+     */
+    public function setTransfersToBankAccount($amount, $bankAccountId)
+    {
+        $this->data->amount = $amount;
+        $this->data->transferInstrument->method = self::METHOD;
+        $this->data->transferInstrument->bankAccount->id = $bankAccountId;
 
         return $this;
     }
