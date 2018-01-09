@@ -186,6 +186,21 @@ class RefundTest extends TestCase
         $this->assertEquals('PARTIAL', $refund->getType());
     }
 
+    public function testShouldGetRefund()
+    {
+        $payment = $this->paymentCreditCard();
+
+        $this->mockHttpSession($this->body_payment_refund_full_cc);
+        $refund_id = $payment->refunds()->creditCardFull()->getId();
+
+        $this->mockHttpSession($this->body_payment_refund_full_cc);
+        $refund = $payment->refunds()->get($refund_id);
+
+        $this->assertEquals($refund_id, $refund->getId());
+        $this->assertEquals('FULL', $refund->getType());
+        $this->assertEquals('COMPLETED', $refund->getStatus());
+    }
+
     private function bankAccount()
     {
         return $this->moip->bankaccount()
