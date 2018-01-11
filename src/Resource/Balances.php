@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: leoneparise
- * Date: 27/12/17
- * Time: 12:49
- */
 
 namespace Moip\Resource;
 
@@ -16,7 +10,7 @@ use stdClass;
 class Balances extends MoipResource
 {
     /**
-     * Path accounts API.
+     * Path balances API.
      *
      * @const string
      */
@@ -27,6 +21,7 @@ class Balances extends MoipResource
      */
     public function initialize()
     {
+        $this->data = new stdClass();
         $this->data->unavailable = [];
         $this->data->future = [];
         $this->data->current = [];
