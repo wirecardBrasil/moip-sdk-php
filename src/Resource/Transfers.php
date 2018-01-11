@@ -52,7 +52,9 @@ class Transfers extends MoipResource
     protected function populate(stdClass $response)
     {
         $transfers = clone $this;
+
         $transfers->data->id = $this->getIfSet('id', $response);
+        $transfers->data->ownId = $this->getIfSet('ownId', $response);
         $transfers->data->amount = $this->getIfSet('amount', $response);
 
         $transfer_instrument = $this->getIfSet('transferInstrument', $response);
