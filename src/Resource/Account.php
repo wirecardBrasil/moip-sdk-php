@@ -384,6 +384,16 @@ class Account extends MoipResource
     }
 
     /**
+     * Get link to set the password of created account.
+     * 
+     * @return string
+     */
+    public function getPasswordLink()
+    {
+        return $this->getIfSet('href', $this->data->_links->setPassword);
+    }
+
+    /**
      * Mount the seller structure from account.
      *
      * @param \stdClass $response
@@ -435,7 +445,14 @@ class Account extends MoipResource
         $account->data->person->alternativePhones = $this->getIfSet('alternativePhones', $person);
 
         $account->data->company = $this->getIfSet('company', $response);
-        $account->data->_links = $this->getIfSet('_links', $response);
+        $account->data->_links = new stdClass();
+        
+        $_links = $this->getIfSet('_links', $response);
+        $account->data->_links->setPassword = new stdClass();
+        
+        $setPassword = $this->getIfSet('setPassword', $_links);
+        $account->data->_links->setPassword->href = $this->getIfSet('href', $setPassword);
+
         $account->data->type = $this->getIfSet('type', $response);
         $account->data->id = $this->getIfSet('id', $response);
         $account->data->accessToken = $this->getIfSet('accessToken', $response);

@@ -35,6 +35,7 @@ class AccountTest extends TestCase
         $this->assertEquals('SSP', $account->getIdentityDocumentIssuer());
         $this->assertEquals('2017-10-25', $account->getIdentityDocumentIssueDate());
         $this->assertEquals('RG', $account->getIdentityDocumentType());
+        $this->assertEquals('https://desenvolvedor.moip.com.br/sandbox/AskForNewPassword.do?method=confirm&email=dev.moip%40labs.moip.com.br&code=8e3b306d59907f4a47508913956c96ba', $account->getPasswordLink());
     }
 
     public function testShouldCreateAccountWithCompany()
