@@ -25,7 +25,7 @@ abstract class MoipResource implements JsonSerializable
     const VERSION = 'v2';
 
     /**
-     * Api version content type
+     * Api version content type.
      *
      * @cont string
      */
@@ -217,8 +217,8 @@ abstract class MoipResource implements JsonSerializable
      * Execute a http request. If payload == null no body will be sent. Empty body ('{}') is supported by sending a
      * empty stdClass.
      *
-     * @param string     $path request path
-     * @param string     $method http method
+     * @param string     $path    request path
+     * @param string     $method  http method
      * @param mixed|null $payload request body
      * @param array      $headers request headers
      *
@@ -235,7 +235,7 @@ abstract class MoipResource implements JsonSerializable
         if ($payload !== null) {
             $body = json_encode($payload, JSON_UNESCAPED_SLASHES);
             if ($body) { // if it's json serializable
-                if(!isset($headers['Content-Type'])) {
+                if (!isset($headers['Content-Type'])) {
                     $headers['Content-Type'] = 'application/json';
                 }
             } else {
@@ -267,8 +267,8 @@ abstract class MoipResource implements JsonSerializable
     /**
      * Find by path.
      *
-     * @param string $path resource path
-     * @param array $headers request headers
+     * @param string $path    resource path
+     * @param array  $headers request headers
      * @return stdClass
      */
     public function getByPath($path, $headers = [])

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: leoneparise
- * Date: 27/12/17
- * Time: 13:27
- */
 
 namespace Moip\Tests\Resource;
 
