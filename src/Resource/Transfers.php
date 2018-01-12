@@ -52,7 +52,9 @@ class Transfers extends MoipResource
     protected function populate(stdClass $response)
     {
         $transfers = clone $this;
+
         $transfers->data->id = $this->getIfSet('id', $response);
+        $transfers->data->ownId = $this->getIfSet('ownId', $response);
         $transfers->data->amount = $this->getIfSet('amount', $response);
 
         $transfer_instrument = $this->getIfSet('transferInstrument', $response);
@@ -138,6 +140,20 @@ class Transfers extends MoipResource
     public function getTransfers()
     {
         return $this->data;
+    }
+
+    /**
+     * Get own request id. external reference.
+     *
+     * @param mixed $ownId id
+     *
+     * @return $this
+     */
+    public function setOwnId($ownId)
+    {
+        $this->data->ownId = $ownId;
+
+        return $this;
     }
 
     /**
@@ -229,5 +245,15 @@ class Transfers extends MoipResource
     public function getId()
     {
         return $this->getIfSet('id');
+    }
+
+    /**
+     * Get own request id. external reference.
+     *
+     * @return mixed
+     */
+    public function getOwnId()
+    {
+        return $this->getIfSet('ownId');
     }
 }
