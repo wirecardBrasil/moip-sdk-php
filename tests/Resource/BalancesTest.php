@@ -4,7 +4,6 @@ namespace Moip\Tests\Resource;
 
 use Moip\Tests\TestCase;
 
-
 class BalancesTest extends TestCase
 {
     public function testShouldGetBalances()

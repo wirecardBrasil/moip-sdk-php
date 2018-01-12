@@ -31,6 +31,7 @@ class Balances extends MoipResource
      * Populate this instance.
      *
      * @param stdClass $response response object
+     *
      * @return mixed|Balances
      */
     protected function populate(stdClass $response)
@@ -51,7 +52,7 @@ class Balances extends MoipResource
     public function get()
     {
         $path = sprintf('/%s/%s', MoipResource::VERSION, self::PATH);
-        return $this->getByPath($path, ['Accept' => static::ACCEPT_VERSION ]);
+        return $this->getByPath($path, ['Accept' => static::ACCEPT_VERSION]);
     }
 
     /**

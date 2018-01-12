@@ -269,6 +269,7 @@ abstract class MoipResource implements JsonSerializable
      *
      * @param string $path    resource path
      * @param array  $headers request headers
+     *
      * @return stdClass
      */
     public function getByPath($path, $headers = [])
