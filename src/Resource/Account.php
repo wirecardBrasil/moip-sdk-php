@@ -385,7 +385,7 @@ class Account extends MoipResource
 
     /**
      * Get link to set the password of created account.
-     * 
+     *
      * @return string
      */
     public function getPasswordLink()
@@ -446,10 +446,10 @@ class Account extends MoipResource
 
         $account->data->company = $this->getIfSet('company', $response);
         $account->data->_links = new stdClass();
-        
+
         $_links = $this->getIfSet('_links', $response);
         $account->data->_links->setPassword = new stdClass();
-        
+
         $setPassword = $this->getIfSet('setPassword', $_links);
         $account->data->_links->setPassword->href = $this->getIfSet('href', $setPassword);
 
