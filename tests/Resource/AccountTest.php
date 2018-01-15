@@ -24,6 +24,7 @@ class AccountTest extends TestCase
             ->setPhone(11, 965213244, 55)
             ->addAlternativePhone(11, 912345678, 55)
             ->setTransparentAccount(false)
+            ->setBusinessSegment(5)
             ->addAddress('Av. Brigadeiro Faria Lima', 2927, 'Itaim', 'São Paulo', 'SP', '01234000', 'Apt. X', 'BRA')
             ->create();
 
@@ -36,6 +37,9 @@ class AccountTest extends TestCase
         $this->assertEquals('2017-10-25', $account->getIdentityDocumentIssueDate());
         $this->assertEquals('RG', $account->getIdentityDocumentType());
         $this->assertEquals('https://desenvolvedor.moip.com.br/sandbox/AskForNewPassword.do?method=confirm&email=dev.moip%40labs.moip.com.br&code=8e3b306d59907f4a47508913956c96ba', $account->getPasswordLink());
+        $this->assertEquals(5, $account->getBusinessSegmentId());
+        $this->assertEquals('Antiguidades / Negociante de artes / Galerias', $account->getBusinessSegmentName());
+        $this->assertEquals(5971, $account->getBusinessSegmentMcc());
     }
 
     public function testShouldCreateAccountWithCompany()
