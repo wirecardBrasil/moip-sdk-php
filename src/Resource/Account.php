@@ -366,7 +366,7 @@ class Account extends MoipResource
 
     /**
      * Get business segment id.
-     * 
+     *
      * @return int id.
      */
     public function getBusinessSegmentId()
@@ -376,7 +376,7 @@ class Account extends MoipResource
 
     /**
      * Get business segment name.
-     * 
+     *
      * @return string name.
      */
     public function getBusinessSegmentName()
@@ -386,7 +386,7 @@ class Account extends MoipResource
 
     /**
      * Get business segment mcc.
-     * 
+     *
      * @return int mcc.
      */
     public function getBusinessSegmentMcc()
