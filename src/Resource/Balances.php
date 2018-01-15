@@ -52,7 +52,7 @@ class Balances extends MoipResource
     public function get()
     {
         $path = sprintf('/%s/%s', MoipResource::VERSION, self::PATH);
-        
+
         return $this->getByPath($path, ['Accept' => static::ACCEPT_VERSION]);
     }
 
