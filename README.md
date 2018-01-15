@@ -260,11 +260,11 @@ Após criar o pedido basta criar um pagamento nesse pedido.
 Para realizar o pagamento, via cartão de crédito, utilizando o cartão de um terceiro (quando o cliente não é o portador do cartão que será utilizado), é necessário que estes dados sejam diferenciados e informados corretamente, para cada etapa do fluxo.
 
 ```php
-$holder = $this->moip->holders()->setFullname('Jose Silva')
-    ->setBirthDate(\DateTime::createFromFormat($this->date_format, $this->date_string))
+$holder = $moip->holders()->setFullname('Jose Silva')
+    ->setBirthDate("1990-10-10")
     ->setTaxDocument('22222222222', 'CPF')
     ->setPhone(11, 66778899, 55)
-    ->setAddress(Holder::ADDRESS_BILLING, 'Avenida Faria Lima', '2927', 'Itaim', 'Sao Paulo', 'SP', '01234000', 'Apt 101');
+    ->setAddress('BILLING', 'Avenida Faria Lima', '2927', 'Itaim', 'Sao Paulo', 'SP', '01234000', 'Apt 101');
 ```
 ##### Com hash
 > Para mais detalhes sobre a geração de hash com os dados do cartão [consulte a documentação.](https://dev.moip.com.br/docs/criptografia-de-cartao)
