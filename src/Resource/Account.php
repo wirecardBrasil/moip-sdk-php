@@ -352,6 +352,16 @@ class Account extends MoipResource
     {
         return $this->getIfSet('confirmed', $this->data->email);
     }
+    
+    /**
+     * Get password Link.
+     *
+     * @return stdClass
+     */
+     public function getPasswordLink()
+         {
+             return $this->getIfSet('_links')->setPassword->href;
+         }
 
     /**
      * Get account type.
