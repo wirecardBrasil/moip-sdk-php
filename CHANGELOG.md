@@ -4,8 +4,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+<a name="v3.1.0"></a>
+## v3.1.0 (2018-01-17)
+
+
+#### Bug Fixes
+
+* **Accounts**: Resolves Warning on account creation. ([4a712974](https://github.com/moip/moip-sdk-php/commit/4a712974))
+
+#### Features
+
+* **Orders**: Adds item category argument into `addItem()` method. ([749fa85e](https://github.com/moip/moip-sdk-php/commit/749fa85e))
+
+* **Accounts**: Adds `getPasswordLink()` method. ([fe2c4d6d](https://github.com/moip/moip-sdk-php/commit/fe2c4d6d))
+
+* **Balances**: Get balances of Moip Account. ([37b085a8](https://github.com/moip/moip-sdk-php/commit/37b085a8))
+
+* **Transfers**:
+  * Create a transfer to a saved bank account. ([749fa85e](https://github.com/moip/moip-sdk-php/commit/749fa85e))
+  * Adds set and get `ownId` to a transfer. ([1c297d14](https://github.com/moip/moip-sdk-php/commit/1c297d14))
+
 <a name="v3.0.0"></a>
-## v3.0.0 (2018-01-04)
+# [](https://github.com/moip/moip-sdk-php/compare/v2.2.0...v3.0.0) (2018-01-04)
 
 
 #### Bug Fixes
