@@ -78,13 +78,15 @@
     - [Consulta](#consulta-1)
     - [Verifica se usuário já possui Conta Moip](#verifica-se-usuário-já-possui-conta-moip)
     - [Obter chave pública de uma Conta Moip](#obter-chave-pública-de-uma-conta-moip)
+  - [Saldo Moip](#saldo-moip)
+    - [Consulta](#consulta-4)
   - [Preferências de Notificação](#preferências-de-notificação)
     -  [Criação](#criação-2)
-    -  [Consulta](#consulta-4)
+    -  [Consulta](#consulta-5)
     -  [Exclusão](#exclusão)
     -  [Listagem](#listagem)
   - [Webhooks](#webhooks)
-    - [Consulta](#consulta-5)
+    - [Consulta](#consulta-6)
 - [Packages](#packages)
 - [Tratamento de exceções](#tratamento-de-exceções)
 - [Documentação](#documentação)
@@ -558,6 +560,17 @@ $moip->accounts()->checkAccountExists(CPF);
 $keys = $moip->keys()->get();
 print_r($keys);
 ```
+
+## Saldo Moip
+O Saldo é a composição de valores atuais disponíveis, indisponíveis (bloqueados) e futuros de uma determinada **Conta Moip**.
+
+> Esta API está na versão 2.1, contendo o _header_ **Accept**, com o valor `application/json;version=2.1`.
+### Consulta
+```php
+$balances = $moip->balances()->get();
+```
+
+_Requer autenticação `OAuth`._
 
 ## Preferências de notificação
 
