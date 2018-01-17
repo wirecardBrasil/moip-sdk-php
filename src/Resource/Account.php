@@ -54,6 +54,7 @@ class Account extends MoipResource
         $this->data->email = new stdClass();
         $this->data->person = new stdClass();
         $this->data->person->alternativePhones = [];
+        $this->data->businessSegment = new stdClass();
         $this->data->type = self::ACCOUNT_TYPE;
     }
 
@@ -364,6 +365,36 @@ class Account extends MoipResource
     }
 
     /**
+     * Get business segment id.
+     *
+     * @return int id.
+     */
+    public function getBusinessSegmentId()
+    {
+        return $this->getIfSet('id', $this->data->businessSegment);
+    }
+
+    /**
+     * Get business segment name.
+     *
+     * @return string name.
+     */
+    public function getBusinessSegmentName()
+    {
+        return $this->getIfSet('name', $this->data->businessSegment);
+    }
+
+    /**
+     * Get business segment mcc.
+     *
+     * @return int mcc.
+     */
+    public function getBusinessSegmentMcc()
+    {
+        return $this->getIfSet('mcc', $this->data->businessSegment);
+    }
+
+    /**
      * Get transparent account (true/false).
      *
      * @return bool
@@ -443,6 +474,12 @@ class Account extends MoipResource
         $account->data->person->address = $this->getIfSet('address', $person);
 
         $account->data->person->alternativePhones = $this->getIfSet('alternativePhones', $person);
+
+        $businessSegment = $this->getIfSet('businessSegment', $response);
+
+        $account->data->businessSegment->id = $this->getIfSet('id', $businessSegment);
+        $account->data->businessSegment->name = $this->getIfSet('name', $businessSegment);
+        $account->data->businessSegment->mcc = $this->getIfSet('mcc', $businessSegment);
 
         $account->data->company = $this->getIfSet('company', $response);
         $account->data->_links = new stdClass();
