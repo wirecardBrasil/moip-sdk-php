@@ -59,10 +59,10 @@
     - [Cartão de crédito](#cartão-de-crédito-1)
       - [Valor Total](#valor-total)
       - [Valor Parcial](#valor-parcial)
-    - [Conta Bancária](#conta-bancária)
+    - [Conta bancária](#conta-bancária)
       - [Valor Total](#valor-total-1)
       - [Valor Parcial](#valor-parcial-1)
-    - [Consulta](#consulta-1)
+    - [Consulta](#consultar-reembolso)
   - [OAuth (Moip Connect)](#oauth-moip-connect)
     - [Solicitar permissões de acesso ao usuário](#solicitar-permissões-de-acesso-ao-usuário)
     - [Gerando access token OAuth](#gerando-access-token-oauth)
@@ -79,7 +79,18 @@
     - [Verifica se usuário já possui Conta Moip](#verifica-se-usuário-já-possui-conta-moip)
     - [Obter chave pública de uma Conta Moip](#obter-chave-pública-de-uma-conta-moip)
   - [Saldo Moip](#saldo-moip)
-    - [Consulta](#consulta-4)
+    - [Consulta](#consultar-saldos)
+  - [Conta Bancária](#conta-bancária-1)
+    - [Criação](#criar-conta-bancária)
+    - [Consulta](#consultar-conta-bancária)
+    - [Listagem](#listar-contas-bancárias)
+    - [Atualização](#atualizar-conta-bancária)
+    - [Deletar](#deletar-conta-bancária)
+  - [Transferência](#transferência)
+    - [Criação](#criando/executando-uma-transferência)
+    - [Consulta](#consultar-transferência)
+    - [Listagem](#listar-transferências)
+    - [Reversão](#reverter-transferência)
   - [Preferências de Notificação](#preferências-de-notificação)
     -  [Criação](#criação-2)
     -  [Consulta](#consulta-5)
@@ -406,6 +417,12 @@ $refund = $payment->refunds()
     );
 print_r($refund);
 ```
+
+### Consultar reembolso
+```php
+$refund = $payment->refunds()->get($refund_id);
+```
+
 ## OAuth (Moip Connect)
 ### Solicitar permissões de acesso ao usuário
 Para solicitar as permissões você deverá invocar o método getAuthUrl (que monta a URL) e redirecionar o usuário para a URL gerada. O usuário deverá conceder a permissão e então ele será redirecionado para a URL determinada pelo seu App e passada como atributo para o objeto Connect.
@@ -565,12 +582,50 @@ print_r($keys);
 O Saldo é a composição de valores atuais disponíveis, indisponíveis (bloqueados) e futuros de uma determinada **Conta Moip**.
 
 > Esta API está na versão 2.1, contendo o _header_ **Accept**, com o valor `application/json;version=2.1`.
-### Consulta
+### Consultar saldos
 ```php
 $balances = $moip->balances()->get();
 ```
 
 _Requer autenticação `OAuth`._
+
+## Conta Bancária
+A Conta bancária é o domicílio bancário de uma determinada Conta Moip. Esta API permite a criação, a consulta e a alteração dos dados de uma Conta Bancária.
+
+### Criar Conta Bancária
+```php
+$bank_account = $moip->bankaccount()
+    ->setBankNumber('237')
+    ->setAgencyNumber('12345')
+    ->setAgencyCheckNumber('0')
+    ->setAccountNumber('12345678')
+    ->setAccountCheckNumber('7')
+    ->setType('CHECKING')
+    ->setHolder('Demo Moip', '622.134.533-22', 'CPF')
+    ->create($moip_account_id);
+```
+
+### Consultar Conta Bancária
+```php
+$bank_account = $moip->bankaccount()->get($bank_account_id);
+```
+
+### Listar Contas Bancárias
+```php
+$bank_accounts = $moip->bankaccount()->getList($account_id)->getBankAccounts();
+```
+
+### Atualizar Conta Bancária
+```php
+$bank_account = $moip->bankaccount()
+    ->setAccountCheckNumber('8')
+    ->update($bank_account_id);
+```
+
+### Deletar Conta Bancária
+```php
+$moip->bankaccount()->delete($bank_account_id);
+```
 
 ## Preferências de notificação
 
@@ -625,8 +680,11 @@ $moip->webhooks()->get(new Pagination(10, 0), 'ORD-ID', 'ORDER.PAID');
 ```
 
 ## Transferência
+A Transferência é uma movimentação de fundos entre uma Conta Moip e outra conta de pagamento (pode ser uma Conta bancária ou uma determinada Conta Moip).
 
 ### Criando/executando uma transferência
+#### Por conta bancária
+
 ```php
 $amount = 500;
 $bank_number = '001';
@@ -645,82 +703,37 @@ $transfer = $moip->transfers()
 print_r($transfer);
 ```
 
-### Consulta
-#### Transferência específica
+Para realizar uma transferência utilizando uma conta bancária já cadastrada:
+```php
+$transfer = $moip->transfers()
+    ->setTransfersToBankAccount($amount, $bank_account_id)
+    ->execute();
+```
+
+### Consultar transferência
 ```php
 $transfer_id = 'TRA-28HRLYNLMUFH';
-$transfer = $this->moip->transfers()->get($transfer_id);
+$transfer = $moip->transfers()->get($transfer_id);
 
 print_r($transfer);
 ```
 
-#### Todas transferências
-##### Sem paginação
+### Listar transferências
+#### Sem paginação
 ```php
-$transfers = $this->moip->transfers()->getList();
+$transfers = $moip->transfers()->getList();
 ```
 
-##### Com paginação
+#### Com paginação
 ```php
-$transfers = $this->moip->transfers()->getList(new Pagination(10,0));
+$transfers = $moip->transfers()->getList(new Pagination(10,0));
 ```
 
-### Reverter
+### Reverter transferência
 ```php
 $transfer_id = 'TRA-28HRLYNLMUFH';
 
-$transfer = $this->moip->transfers()->revert($transfer_id);
-```
-
-## Contas bancárias
-
-### Criação
-```php
-$account_id = 'MPA-05E8C79EAAAA';
-$bank_account = $moip->bankaccount()
-        ->setBankNumber('237')
-        ->setAgencyNumber('12345')
-        ->setAgencyCheckNumber('0')
-        ->setAccountNumber('12345678')
-        ->setAccountCheckNumber('7')
-        ->setType('CHECKING')
-        ->setHolder('Demo Moip', '622.134.533-22', 'CPF')
-        ->create($account_id);
-
-print_r($bank_account);
-```
-
-### Consulta
-#### Conta bancária específica
-```php
-$bank_account_id = 'BKA-397X21X1G6LT';
-$bank_account = $moip->bankaccount()->get($bank_account_id);
-
-print_r($bank_account);
-```
-
-#### Todas contas bancárias
-```php
-$account_id = 'MPA-05E8C79EAAAA';
-$bank_accounts = $moip->bankaccount()->getList($account_id)->getBankAccounts();
-
-print_r($bank_accounts);
-```
-
-### Exclusão
-```php
-$bank_account_id = 'BKA-397X21X1G6LT';
-$moip->bankaccount()->delete($bank_account_id);
-```
-
-### Atualização
-```php
-$bank_account_id = 'BKA-397X21X1G6LT';
-$bank_account = $moip->bankaccount()->get($bank_account_id);
-$bank_account->setAccountCheckNumber('7');
-$bank_account->update();
-
-print_r($bank_account);
+$transfer = $moip->transfers()->revert($transfer_id);
 ```
 
 ## Tratamento de Exceções
