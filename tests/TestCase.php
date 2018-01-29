@@ -142,6 +142,11 @@ abstract class TestCase extends BaseTestCase
     protected $body_bank_account_update;
 
     /**
+     * @var string response from moip API.
+     */
+    protected $body_balances;
+
+    /**
      * @var string holds the last generated customer ownId. In mock mode it'll be always the default, but it changes on sandbox mode.
      */
     protected $last_cus_id = 'meu_id_customer';
@@ -243,6 +248,8 @@ abstract class TestCase extends BaseTestCase
         $this->body_bank_account_list = $this->readJsonFile('jsons/bank_account/list');
 
         $this->body_bank_account_update = $this->readJsonFile('jsons/bank_account/update');
+
+        $this->body_balances = $this->readJsonFile('jsons/balances/get');
     }
 
     /**
@@ -374,8 +381,8 @@ abstract class TestCase extends BaseTestCase
         }
 
         $order = $this->moip->orders()->setCustomer($this->createCustomer())
-            ->addItem('Nome do produto', 1, 'Mais info...', 100000)
-            ->addItem('abacaxi', 2, 'Abacaxi de terra de areia', 990)
+            ->addItem('Nome do produto', 1, 'Mais info...', 100000, 'SHOES')
+            ->addItem('abacaxi', 2, 'Abacaxi de terra de areia', 990, 'OTHER_CATEGORIES')
             ->setDiscount(1000)
             ->setShippingAmount(1490)
             ->setOwnId($this->last_ord_id);

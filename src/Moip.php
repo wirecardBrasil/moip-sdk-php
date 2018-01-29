@@ -4,6 +4,7 @@ namespace Moip;
 
 use Moip\Contracts\Authentication;
 use Moip\Resource\Account;
+use Moip\Resource\Balances;
 use Moip\Resource\BankAccount;
 use Moip\Resource\Customer;
 use Moip\Resource\Entry;
@@ -49,7 +50,7 @@ class Moip
      *
      * @const string
      */
-    const CLIENT_VERSION = '3.0.0';
+    const CLIENT_VERSION = '3.1.0';
 
     /**
      * Authentication that will be added to the header of request.
@@ -255,6 +256,16 @@ class Moip
     public function bankaccount()
     {
         return new BankAccount($this);
+    }
+
+    /**
+     * Create a new Balances instance.
+     *
+     * @return Balances
+     */
+    public function balances()
+    {
+        return new Balances($this);
     }
 
     /**
