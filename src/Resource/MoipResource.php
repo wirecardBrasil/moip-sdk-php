@@ -234,10 +234,8 @@ abstract class MoipResource implements JsonSerializable
         $body = null;
         if ($payload !== null) {
             $body = json_encode($payload, JSON_UNESCAPED_SLASHES);
-            if ($body) { // if it's json serializable
-                if (!isset($headers['Content-Type'])) {
-                    $headers['Content-Type'] = 'application/json';
-                }
+            if ($body) {    // if it's json serializable
+                $headers['Content-Type'] = 'application/json';
             } else {
                 $body = null;
             }
