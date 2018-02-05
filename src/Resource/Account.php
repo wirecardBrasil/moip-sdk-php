@@ -699,6 +699,7 @@ class Account extends MoipResource
      */
     public function setBusinessSegment($segmentId)
     {
+        $this->data->businessSegment = new stdClass();
         $this->data->businessSegment->id = $segmentId;
 
         return $this;
