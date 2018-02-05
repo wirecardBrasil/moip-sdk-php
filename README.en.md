@@ -549,7 +549,7 @@ $account = $moip->accounts()
 ### Transparent Moip Account
 But what if you don't want your sellers to know about the existence of Moip behind your marketplace?
 
-It is simple, Moip can process your transactions in a transparent way. To attend this issue, we have what is called **Moi Transparent Account**.
+It is simple, Moip can process your transactions in a transparent way. To attend this issue, we have what is called **Moip Transparent Account**.
 
 > **WARNING!**
 > If you choose to use the **transparent account**, you should assume the responsibility of providing all information and resources your sellers need to manage their business, besides that you will assume full responsibility of support to your sellers.
