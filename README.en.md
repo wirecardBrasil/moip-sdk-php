@@ -847,7 +847,7 @@ $notification = $moip->notifications()->delete('NOTIFICATION-ID');
 ```
 
 ## Webhooks
-PHP is, by default, able to receive just some types of 'content-type' ('application/x-www-form-urlencoded' e 'multipart/form-data'), but Moip sends data in JSON format. So, to receive and access the data sent by Moip, you should add the below code to the file which will receive the notifications.
+PHP is, by default, able to receive just some types of 'content-type' ('application/x-www-form-urlencoded' and 'multipart/form-data'), but Moip sends data in JSON format. So, to receive and access the data sent by Moip, you should add the below code to the file which will receive the notifications.
 
 ```php
 // Gets the request's raw data
