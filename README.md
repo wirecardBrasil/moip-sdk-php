@@ -103,6 +103,7 @@
 - [Documentação](#documentação)
 - [Testes](#testes)
 - [Licença](#licença)
+- [Comunidade Slack](#comunidade-slack)
 
 ## Packages
 
@@ -783,3 +784,7 @@ vendor/bin/phpunit -c .
 ## Licença
 
 [The MIT License](https://github.com/moip/php-sdk/blob/master/LICENSE)
+
+## Comunidade Slack
+
+Tem dúvidas? Fale com a gente no [Slack](https://slackin-cqtchmfquq.now.sh/)!
