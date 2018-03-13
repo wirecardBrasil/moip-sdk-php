@@ -103,7 +103,7 @@
 - [Documentação](#documentação)
 - [Testes](#testes)
 - [Licença](#licença)
-- [Comunidade Slack](#comunidade-slack)
+- [Comunidade Slack](#comunidade-slack-) [![Slack](https://user-images.githubusercontent.com/4432322/37355972-ba0e9f32-26c3-11e8-93d3-39917eb24109.png)](https://slackin-cqtchmfquq.now.sh)
 
 ## Packages
 
@@ -785,6 +785,7 @@ vendor/bin/phpunit -c .
 
 [The MIT License](https://github.com/moip/php-sdk/blob/master/LICENSE)
 
-## Comunidade Slack
+## Comunidade Slack [![Slack](https://user-images.githubusercontent.com/4432322/37355972-ba0e9f32-26c3-11e8-93d3-39917eb24109.png)](https://slackin-cqtchmfquq.now.sh)
 
-Tem dúvidas? Fale com a gente no [Slack](https://slackin-cqtchmfquq.now.sh/)!
+
+Tem dúvidas? Fale com a gente no [Slack](https://slackin-cqtchmfquq.now.sh/)! 
