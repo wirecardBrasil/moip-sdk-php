@@ -371,7 +371,7 @@ $payment = $order->payments()
 	->setCreditCardHash($hash, $holder)
 	->setInstallmentCount(3)
 	->setStatementDescriptor("Minha Loja")
- 	->setDelayCapture()
+ 	->setDelayCapture(true)
  	->execute();
 ```
 

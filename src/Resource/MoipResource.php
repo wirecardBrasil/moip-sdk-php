@@ -138,6 +138,8 @@ abstract class MoipResource implements JsonSerializable
      */
     protected function getIfSetDateTime($key, stdClass $data = null)
     {
+        date_default_timezone_set('Brazil/East');
+        
         $rawDateTime = $this->getIfSet($key, $data);
 
         $dateTime = null;
