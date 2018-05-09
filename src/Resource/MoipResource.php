@@ -25,6 +25,13 @@ abstract class MoipResource implements JsonSerializable
     const VERSION = 'v2';
 
     /**
+     * Api version content type.
+     *
+     * @cont string
+     */
+    const ACCEPT_VERSION = 'application/json;version=2.1';
+
+    /**
      * @var \Moip\Moip
      */
     protected $moip;
@@ -224,7 +231,7 @@ abstract class MoipResource implements JsonSerializable
      *
      * @return stdClass
      */
-    protected function httpRequest($path, $method, $payload = null, $headers = [], $accept = false)
+    protected function httpRequest($path, $method, $payload = null, $headers = [])
     {
         $http_sess = $this->moip->getSession();
         $body = null;
@@ -236,10 +243,6 @@ abstract class MoipResource implements JsonSerializable
                 $body = null;
             }
         }
-        if ($accept == true) {
-            $headers['Accept'] = 'application/json;version=2.1';
-        }
-
         try {
             $http_response = $http_sess->request($path, $headers, $body, $method);
         } catch (Requests_Exception $e) {
@@ -269,9 +272,9 @@ abstract class MoipResource implements JsonSerializable
      *
      * @return stdClass
      */
-    public function getByPath($path, $headers = [], $accept = null)
+    public function getByPath($path, $headers = [])
     {
-        $response = $this->httpRequest($path, Requests::GET, null, $headers, $accept);
+        $response = $this->httpRequest($path, Requests::GET, null, $headers);
 
         if (is_array($response)) {
             $response = (object) $response;
