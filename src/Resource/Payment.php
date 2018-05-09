@@ -323,7 +323,7 @@ class Payment extends MoipResource
 
     /**
      * Returns delay capture.
-     * 
+     *
      * @return stdClass
      */
     public function getDelayCapture()
