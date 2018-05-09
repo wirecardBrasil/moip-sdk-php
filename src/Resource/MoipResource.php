@@ -243,7 +243,7 @@ abstract class MoipResource implements JsonSerializable
                 $body = null;
             }
         }
-        
+
         try {
             $http_response = $http_sess->request($path, $headers, $body, $method);
         } catch (Requests_Exception $e) {
