@@ -36,7 +36,7 @@ class EntriesList extends MoipResource
      */
     public function get()
     {
-        return $this->getByPath(sprintf('/%s/%s', MoipResource::VERSION, self::PATH), [], '2.1');
+        return $this->getByPath(sprintf('/%s/%s', MoipResource::VERSION, self::PATH), [], true);
     }
 
     protected function populate(stdClass $response)

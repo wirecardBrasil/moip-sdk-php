@@ -25,13 +25,6 @@ abstract class MoipResource implements JsonSerializable
     const VERSION = 'v2';
 
     /**
-     * Api version content type.
-     *
-     * @cont string
-     */
-    const ACCEPT_VERSION = 'application/json;version=';
-
-    /**
      * @var \Moip\Moip
      */
     protected $moip;
@@ -231,7 +224,7 @@ abstract class MoipResource implements JsonSerializable
      *
      * @return stdClass
      */
-    protected function httpRequest($path, $method, $payload = null, $headers = [], $accept = null)
+    protected function httpRequest($path, $method, $payload = null, $headers = [], $accept = false)
     {
         $http_sess = $this->moip->getSession();
         $body = null;
@@ -243,8 +236,8 @@ abstract class MoipResource implements JsonSerializable
                 $body = null;
             }
         }
-        if ($accept == '2.1') {
-            $headers['Accept'] = ACCEPT_VERSION + $accept;
+        if ($accept == true) {
+            $headers['Accept'] = 'application/json;version=2.1';
         }
 
         try {
