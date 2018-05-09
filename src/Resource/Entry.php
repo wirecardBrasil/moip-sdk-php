@@ -75,7 +75,7 @@ class Entry extends MoipResource
 
     /**
      * Create a new Entries List instance.
-     * 
+     *
      * @return \Moip\Resource\EntriesList
      */
     public function getList()

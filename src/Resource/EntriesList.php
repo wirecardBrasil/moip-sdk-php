@@ -21,7 +21,7 @@ class EntriesList extends MoipResource
 
     /**
      * Get entries.
-     * 
+     *
      * @return array
      */
     public function getEntries()
@@ -31,7 +31,7 @@ class EntriesList extends MoipResource
 
     /**
      * Get a entries list.
-     * 
+     *
      * @return stdClass
      */
     public function get()
@@ -44,7 +44,7 @@ class EntriesList extends MoipResource
         $entriesList = clone $this;
 
         $entriesList->data->summary->amount = $response->summary->amount;
-        
+
         $entriesList->data->summary->count = $response->summary->count;
 
         $entriesList->data->_links->previous = new stdClass();
