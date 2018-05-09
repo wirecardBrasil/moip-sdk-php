@@ -29,7 +29,7 @@ abstract class MoipResource implements JsonSerializable
      *
      * @cont string
      */
-    const ACCEPT_VERSION = 'application/json;version=2.1';
+    const ACCEPT_VERSION = 'application/json;version=';
 
     /**
      * @var \Moip\Moip
@@ -223,6 +223,7 @@ abstract class MoipResource implements JsonSerializable
      * @param string     $method  http method
      * @param mixed|null $payload request body
      * @param array      $headers request headers
+     * @param string     $accept
      *
      * @throws Exceptions\ValidationException  if the API returns a 4xx http status code. Usually means invalid data was sent.
      * @throws Exceptions\UnautorizedException if the API returns a 401 http status code. Check API token and key.
@@ -230,7 +231,7 @@ abstract class MoipResource implements JsonSerializable
      *
      * @return stdClass
      */
-    protected function httpRequest($path, $method, $payload = null, $headers = [])
+    protected function httpRequest($path, $method, $payload = null, $headers = [], $accept = null)
     {
         $http_sess = $this->moip->getSession();
         $body = null;
@@ -241,6 +242,9 @@ abstract class MoipResource implements JsonSerializable
             } else {
                 $body = null;
             }
+        }
+        if ($accept == '2.1') {
+            $headers['Accept'] = ACCEPT_VERSION + $accept;
         }
 
         try {
@@ -272,9 +276,9 @@ abstract class MoipResource implements JsonSerializable
      *
      * @return stdClass
      */
-    public function getByPath($path, $headers = [])
+    public function getByPath($path, $headers = [], $accept = null)
     {
-        $response = $this->httpRequest($path, Requests::GET, null, $headers);
+        $response = $this->httpRequest($path, Requests::GET, null, $headers, $accept);
 
         if (is_array($response)) {
             $response = (object) $response;
