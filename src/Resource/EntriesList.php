@@ -20,6 +20,26 @@ class EntriesList extends MoipResource
     }
 
     /**
+     * Get summary.
+     *
+     * @return stdClass
+     */
+    public function getSummary()
+    {
+        return $this->getIfSet('summary');
+    }
+
+    /**
+     * Get _links.
+     *
+     * @return stdClass
+     */
+    public function getLinks()
+    {
+        return $this->getIfSet('_links');
+    }
+
+    /**
      * Get entries.
      *
      * @return array
