@@ -20,17 +20,12 @@ class Transfers extends MoipResource
     /**
      * @const string
      */
-    const METHOD = 'BANK_ACCOUNT';
+    const METHOD_BKA = 'BANK_ACCOUNT';
 
     /**
      * @const string
      */
     const TYPE = 'CHECKING';
-
-    /**
-     * @const string
-     */
-    const TYPE_HOLD = 'CPF';
 
     /**
      * Initializes new instances.
@@ -84,9 +79,32 @@ class Transfers extends MoipResource
     }
 
     /**
-     * Set info of transfers.
+     * Set the amount of transfer.
+     * 
+     * @param int   $amount
+     * 
+     * @return $this
+     */
+    public function setAmount($amount)
+    {
+        $this->data->amount = $amount;
+
+        return $this;
+    }
+
+    /**
+     * Returns amount.
+     * 
+     * @return amount
+     */
+    public function getAmount()
+    {
+        return $this->data->amount;
+    }
+
+    /**
+     * Set the bank accout transfer.
      *
-     * @param int    $amount
      * @param string $bankNumber         Bank number. possible values: 001, 237, 341, 041.
      * @param int    $agencyNumber
      * @param int    $agencyCheckNumber
@@ -95,16 +113,14 @@ class Transfers extends MoipResource
      *
      * @return $this
      */
-    public function setTransfers(
-        $amount,
+    public function setTransferToBankAccount(
         $bankNumber,
         $agencyNumber,
         $agencyCheckNumber,
         $accountNumber,
         $accountCheckNumber
     ) {
-        $this->data->amount = $amount;
-        $this->data->transferInstrument->method = self::METHOD;
+        $this->data->transferInstrument->method = self::METHOD_BKA;
         $this->data->transferInstrument->bankAccount->type = self::TYPE;
         $this->data->transferInstrument->bankAccount->bankNumber = $bankNumber;
         $this->data->transferInstrument->bankAccount->agencyNumber = $agencyNumber;
@@ -123,10 +139,10 @@ class Transfers extends MoipResource
      *
      * @return $this
      */
-    public function setTransfersToBankAccount($amount, $bankAccountId)
+    public function setTransferWithBankAccountId($amount, $bankAccountId)
     {
         $this->data->amount = $amount;
-        $this->data->transferInstrument->method = self::METHOD;
+        $this->data->transferInstrument->method = self::METHOD_BKA;
         $this->data->transferInstrument->bankAccount->id = $bankAccountId;
 
         return $this;
@@ -164,11 +180,11 @@ class Transfers extends MoipResource
      *
      * @return $this
      */
-    public function setHolder($fullname, $taxDocument)
+    public function setHolder($fullname, $taxDocumentNumber, $taxDocumentType = 'CPF')
     {
         $this->data->transferInstrument->bankAccount->holder->fullname = $fullname;
-        $this->data->transferInstrument->bankAccount->holder->taxDocument->type = self::TYPE_HOLD;
-        $this->data->transferInstrument->bankAccount->holder->taxDocument->number = $taxDocument;
+        $this->data->transferInstrument->bankAccount->holder->taxDocument->type = $taxDocumentType;
+        $this->data->transferInstrument->bankAccount->holder->taxDocument->number = $taxDocumentNumber;
 
         return $this;
     }

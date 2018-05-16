@@ -19,7 +19,8 @@ class TransfersTest extends TestCase
         $holder_name = 'Integração Taxa por canal';
         $tax_document = '033.575.852-51';
         $transfer = $this->moip->transfers()
-            ->setTransfers($amount, $bank_number, $agency_number, $agency_check_number, $account_number, $account_check_number)
+            ->setAmount($amount)
+            ->setTransferToBankAccount($bank_number, $agency_number, $agency_check_number, $account_number, $account_check_number)
             ->setHolder($holder_name, $tax_document)
             ->execute();
 
@@ -59,7 +60,7 @@ class TransfersTest extends TestCase
 
         $amount = 500;
         $transfer = $this->moip->transfers()
-            ->setTransfersToBankAccount($amount, $bank_account->getId())
+            ->setTransferWithBankAccountId($amount, $bank_account->getId())
             ->execute();
 
         $this->assertNotEmpty($transfer->getId());
