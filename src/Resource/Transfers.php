@@ -25,6 +25,11 @@ class Transfers extends MoipResource
     /**
      * @const string
      */
+    const METHOD_MPA = 'MOIP_ACCOUNT';
+
+    /**
+     * @const string
+     */
     const TYPE = 'CHECKING';
 
     /**
@@ -34,6 +39,7 @@ class Transfers extends MoipResource
     {
         $this->data = new stdClass();
         $this->data->transferInstrument = new stdClass();
+        $this->data->transferInstrument->moipAccount = new stdClass();
         $this->data->transferInstrument->bankAccount = new stdClass();
         $this->data->transferInstrument->bankAccount->holder = new stdClass();
         $this->data->transferInstrument->bankAccount->holder->taxDocument = new stdClass();
@@ -52,21 +58,25 @@ class Transfers extends MoipResource
         $transfers->data->ownId = $this->getIfSet('ownId', $response);
         $transfers->data->amount = $this->getIfSet('amount', $response);
 
-        $transfer_instrument = $this->getIfSet('transferInstrument', $response);
+        $transferInstrument = $this->getIfSet('transferInstrument', $response);
         $transfers->data->transferInstrument = new stdClass();
-        $transfers->data->transferInstrument->method = $this->getIfSet('method', $transfer_instrument);
+        $transfers->data->transferInstrument->method = $this->getIfSet('method', $transferInstrument);
 
-        $bank_account = $this->getIfSet('bankAccount', $transfer_instrument);
+        $moipAccount = $this->getIfSet('moipAccount', $transferInstrument);
+        $transfers->data->transferInstrument->moipAccount = new stdClass();
+        $transfers->data->transferInstrument->moipAccount->id = $this->getIfSet('id', $moipAccount);
+
+        $bankAccount = $this->getIfSet('bankAccount', $transferInstrument);
         $transfers->data->transferInstrument->bankAccount = new stdClass();
-        $transfers->data->transferInstrument->bankAccount->id = $this->getIfSet('id', $bank_account);
-        $transfers->data->transferInstrument->bankAccount->type = $this->getIfSet('type', $bank_account);
-        $transfers->data->transferInstrument->bankAccount->bankNumber = $this->getIfSet('bankNumber', $bank_account);
-        $transfers->data->transferInstrument->bankAccount->agencyNumber = $this->getIfSet('agencyNumber', $bank_account);
-        $transfers->data->transferInstrument->bankAccount->agencyCheckNumber = $this->getIfSet('agencyCheckNumber', $bank_account);
-        $transfers->data->transferInstrument->bankAccount->accountNumber = $this->getIfSet('accountNumber', $bank_account);
-        $transfers->data->transferInstrument->bankAccount->accountCheckNumber = $this->getIfSet('accountCheckNumber', $bank_account);
+        $transfers->data->transferInstrument->bankAccount->id = $this->getIfSet('id', $bankAccount);
+        $transfers->data->transferInstrument->bankAccount->type = $this->getIfSet('type', $bankAccount);
+        $transfers->data->transferInstrument->bankAccount->bankNumber = $this->getIfSet('bankNumber', $bankAccount);
+        $transfers->data->transferInstrument->bankAccount->agencyNumber = $this->getIfSet('agencyNumber', $bankAccount);
+        $transfers->data->transferInstrument->bankAccount->agencyCheckNumber = $this->getIfSet('agencyCheckNumber', $bankAccount);
+        $transfers->data->transferInstrument->bankAccount->accountNumber = $this->getIfSet('accountNumber', $bankAccount);
+        $transfers->data->transferInstrument->bankAccount->accountCheckNumber = $this->getIfSet('accountCheckNumber', $bankAccount);
 
-        $holder = $this->getIfSet('holder', $bank_account);
+        $holder = $this->getIfSet('holder', $bankAccount);
         $transfers->data->transferInstrument->bankAccount->holder = new stdClass();
         $transfers->data->transferInstrument->bankAccount->holder->fullname = $this->getIfSet('fullname', $holder);
 
@@ -80,9 +90,9 @@ class Transfers extends MoipResource
 
     /**
      * Set the amount of transfer.
-     * 
-     * @param int   $amount
-     * 
+     *
+     * @param int $amount
+     *
      * @return $this
      */
     public function setAmount($amount)
@@ -113,7 +123,7 @@ class Transfers extends MoipResource
      *
      * @return $this
      */
-    public function setTransferToBankAccount(
+    public function transferToBankAccount(
         $bankNumber,
         $agencyNumber,
         $agencyCheckNumber,
@@ -132,18 +142,29 @@ class Transfers extends MoipResource
     }
 
     /**
-     * Set info of transfers to a saved bank account.
+     * Set the ID of a saved bank account.
      *
-     * @param int    $amount        Amount
-     * @param string $bankAccountId Saved bank account id.
+     * @param string $bankAccountId Saved bank account ID (BKA-XXXXXXX).
      *
      * @return $this
      */
-    public function setTransferWithBankAccountId($amount, $bankAccountId)
+    public function transferWithBankAccountId($bankAccountId)
     {
-        $this->data->amount = $amount;
         $this->data->transferInstrument->method = self::METHOD_BKA;
         $this->data->transferInstrument->bankAccount->id = $bankAccountId;
+
+        return $this;
+    }
+
+    /**
+     * Set the Moip Account ID to create a transfer to this account.
+     * 
+     * @param string $moipAccountId The Moip Account ID (MPA-XXXXXXX)
+     */
+    public function transferToMoipAccount($moipAccountId)
+    {
+        $this->data->transferInstrument->method = self::METHOD_MPA;
+        $this->data->transferInstrument->moipAccount->id = $moipAccountId;
 
         return $this;
     }
