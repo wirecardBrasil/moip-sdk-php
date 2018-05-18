@@ -104,7 +104,7 @@ class Transfers extends MoipResource
 
     /**
      * Returns amount.
-     * 
+     *
      * @return amount
      */
     public function getAmount()
@@ -158,7 +158,7 @@ class Transfers extends MoipResource
 
     /**
      * Set the Moip Account ID to create a transfer to this account.
-     * 
+     *
      * @param string $moipAccountId The Moip Account ID (MPA-XXXXXXX)
      */
     public function transferToMoipAccount($moipAccountId)

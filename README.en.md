@@ -91,6 +91,7 @@
   - [Transfers](#transfers)
     - [Create a Transfer](#create-a-transfer)
       - [Transfer to a Bank Account](#transfer-to-a-bank-account)
+      - [Transfer to a Moip Account](#transfer-to-a-moip-account)
     - [Get Transfer](#get-transfer)
     - [List Transfers](#list-transfers)
       - [List Transfers without pagination](#list-transfers-without-pagination)
@@ -776,15 +777,31 @@ $holderName = 'Nome do Portador';
 $taxDocument = '22222222222';
 
 $transfer = $moip->transfers()
-    ->setTransfers($amount, $bankNumber, $agencyNumber, $agencyCheckNumber, $accountNumber, $accountCheckNumber)
-    ->setHolder($holderName, $taxDocument)
+    ->setAmount($amount)
+    ->transferToBankAccount($bank_number, $agency_number, $agency_check_number, $account_number, $account_check_number)
+    ->setHolder($holder_name, $tax_document, $tax_document_pf)
     ->execute();
 ```
 
 To transfer using a previously created bank account:
 ```php
+$amount = 500;
+$id = 'BKA-HUGBGX2QT9JY';
+
 $transfer = $moip->transfers()
-    ->setTransfersToBankAccount($amount, $bankAccountId)
+    ->setAmount($amount)
+    ->transferWithBankAccountId($id)
+    ->execute();
+```
+
+#### Transfer to a Moip Account
+```php
+$amount = 1000;
+$id = 'MPA-5E1C4C369E8C';
+
+$transfer = $moip->transfers()
+    ->setAmount($amount)
+    ->transferToMoipAccount($id)
     ->execute();
 ```
 
