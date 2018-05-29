@@ -264,6 +264,7 @@ class Customer extends MoipResource
         $customer->data->shippingAddress = $this->getIfSet('shippingAddress', $response);
         $customer->data->billingAddress = $this->getIfSet('billingAddress', $response);
         $customer->data->fundingInstrument = $this->getIfSet('fundingInstrument', $response);
+        $customer->data->fundingInstruments = $this->getIfSet('fundingInstruments', $response);
 
         $customer->data->_links = $this->getIfSet('_links', $response);
 
