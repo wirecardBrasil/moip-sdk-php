@@ -558,6 +558,17 @@ class Orders extends MoipResource
     }
 
     /**
+     * Get checkout href types for Checkout Moip.
+     * 
+     *
+     * @return stdClass
+     */
+    public function getCheckoutTypesHref()
+    {
+        return $this->getIfSet('_links')->checkout;
+    }
+
+    /**
      * Create a new Orders list instance.
      *
      * @return \Moip\Resource\OrdersList
