@@ -51,6 +51,7 @@ class Customer extends MoipResource
     public function initialize()
     {
         $this->data = new stdClass();
+        #$this->data->fundingInstruments = [];
     }
 
     /**
@@ -232,6 +233,16 @@ class Customer extends MoipResource
     public function getTaxDocumentNumber()
     {
         return $this->getIfSet('number', $this->data->taxDocument);
+    }
+
+    /**
+     * Get funding instruments from customer.
+     *
+     * @return array FundingInstruments.
+     */   
+    public function getFundingInstruments()
+    {
+        return $this->getIfSet('fundingInstruments');
     }
 
     /**

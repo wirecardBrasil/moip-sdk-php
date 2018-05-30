@@ -149,6 +149,11 @@ abstract class TestCase extends BaseTestCase
     /**
      * @var string response from moip API.
      */
+    protected $body_get_customer;
+
+    /**
+     * @var string response from moip API.
+     */
     protected $body_entries_list;
 
     /**
@@ -257,6 +262,8 @@ abstract class TestCase extends BaseTestCase
         $this->body_balances = $this->readJsonFile('jsons/balances/get');
 
         $this->body_entries_list = $this->readJsonFile('jsons/entries/list');
+
+        $this->body_get_customer = $this->readJsonFile('jsons/customer/get');
     }
 
     /**

@@ -1,0 +1,53 @@
+Looking for git in: git
+Using git 2.7.4 from git
+git rev-parse --show-toplevel
+git config --get commit.template
+git status -z -u
+git symbolic-ref --short HEAD
+git rev-parse fix/creditcard-list
+git rev-parse --symbolic-full-name --abbrev-ref fix/creditcard-list@{u}
+fatal: no upstream configured for branch 'fix/creditcard-list'
+
+git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+git remote --verbose
+git show :tests/Resource/CustomerTest.php
+git status -z -u
+git symbolic-ref --short HEAD
+git rev-parse fix/creditcard-list
+git rev-parse --symbolic-full-name --abbrev-ref fix/creditcard-list@{u}
+fatal: no upstream configured for branch 'fix/creditcard-list'
+
+git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+git remote --verbose
+git status -z -u
+git symbolic-ref --short HEAD
+git rev-parse fix/creditcard-list
+git rev-parse --symbolic-full-name --abbrev-ref fix/creditcard-list@{u}
+fatal: no upstream configured for branch 'fix/creditcard-list'
+
+git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+git remote --verbose
+git status -z -u
+git symbolic-ref --short HEAD
+git rev-parse fix/creditcard-list
+git rev-parse --symbolic-full-name --abbrev-ref fix/creditcard-list@{u}
+fatal: no upstream configured for branch 'fix/creditcard-list'
+
+git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+git remote --verbose
+git status -z -u
+git symbolic-ref --short HEAD
+git rev-parse fix/creditcard-list
+git rev-parse --symbolic-full-name --abbrev-ref fix/creditcard-list@{u}
+fatal: no upstream configured for branch 'fix/creditcard-list'
+
+git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+git remote --verbose
+git status -z -u
+git symbolic-ref --short HEAD
+git rev-parse fix/creditcard-list
+git rev-parse --symbolic-full-name --abbrev-ref fix/creditcard-list@{u}
+fatal: no upstream configured for branch 'fix/creditcard-list'
+
+git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+git remote --verbose
