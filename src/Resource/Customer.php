@@ -51,7 +51,6 @@ class Customer extends MoipResource
     public function initialize()
     {
         $this->data = new stdClass();
-        #$this->data->fundingInstruments = [];
     }
 
     /**

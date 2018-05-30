@@ -444,5 +444,18 @@
         }
     },
     "theme": "vs-dark vscode-theme-defaults-themes-dark_plus-json",
-    "themeBackground": "#1e1e1e"
+    "themeBackground": "#1e1e1e",
+    "windowsState": {
+        "openedWindows": [],
+        "lastActiveWindow": {
+            "backupPath": "/var/www/html/sdks-workspaces/moip-sdk-php/tests/Resource/argument/Backups/1527713353682",
+            "uiState": {
+                "mode": 0,
+                "x": 65,
+                "y": 24,
+                "width": 1301,
+                "height": 744
+            }
+        }
+    }
 }
