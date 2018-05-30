@@ -238,7 +238,7 @@ class Customer extends MoipResource
      * Get funding instruments from customer.
      *
      * @return array FundingInstruments.
-     */   
+     */
     public function getFundingInstruments()
     {
         return $this->getIfSet('fundingInstruments');
