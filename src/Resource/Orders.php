@@ -559,7 +559,6 @@ class Orders extends MoipResource
 
     /**
      * Get checkout href types for Checkout Moip.
-     * 
      *
      * @return stdClass
      */
