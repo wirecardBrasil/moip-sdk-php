@@ -229,7 +229,9 @@ abstract class TestCase extends BaseTestCase
 
         $this->body_keys = $this->readJsonFile('jsons/keys/get');
 
-        $this->body_transfers_create = $this->readJsonFile('jsons/transfers/create');
+        $this->body_transfers_bankaccount_create = $this->readJsonFile('jsons/transfers/create_bankaccount');
+
+        $this->body_transfers_moipaccount_create = $this->readJsonFile('jsons/transfers/create_moipaccount');
 
         $this->body_transfers_list = $this->readJsonFile('jsons/transfers/list');
 
