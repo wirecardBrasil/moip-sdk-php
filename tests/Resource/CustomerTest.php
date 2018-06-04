@@ -94,4 +94,18 @@ class CustomerTest extends TestCase
         $this->assertEquals($creditCard->getFirst6(), '401200');
         $this->assertEquals($creditCard->getLast4(), '1112');
     }
+
+    /**
+     * MoipTest get credit cards for customer.
+     */
+    public function testFundingInstruments()
+    {
+        $this->mockHttpSession($this->body_get_customer);
+        $getCustomer = $this->moip->customers()->get('CUS-Q273W8ZY54IV');
+
+        $this->assertEquals($getCustomer->getFundingInstruments()[0]->creditCard->id, 'CRC-7LKWIS07IETJ');
+        $this->assertEquals($getCustomer->getFundingInstruments()[0]->creditCard->brand, 'VISA');
+        $this->assertEquals($getCustomer->getFundingInstruments()[0]->creditCard->first6, '411111');
+        $this->assertEquals($getCustomer->getFundingInstruments()[0]->creditCard->last4, '1111');
+    }
 }
