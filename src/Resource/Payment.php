@@ -275,7 +275,7 @@ class Payment extends MoipResource
      */
     public function getHrefBoleto()
     {
-        return $this->getIfSet('_links')->payBoleto->redirectHref;
+        return (isset($this->getIfSet('_links')->payBoleto)) ? $this->getIfSet('_links')->payBoleto->redirectHref : $this->getIfSet('_links')->checkout->payBoleto->redirectHref;
     }
 
     /**
@@ -297,7 +297,7 @@ class Payment extends MoipResource
      */
     public function getHrefPrintBoleto()
     {
-        return $this->getIfSet('_links')->payBoleto->printHref;
+        return (isset($this->getIfSet('_links')->payBoleto)) ? $this->getIfSet('_links')->payBoleto->printHref : $this->getIfSet('_links')->checkout->payBoleto->printHref;
     }
 
     /**
@@ -319,6 +319,16 @@ class Payment extends MoipResource
     public function getAmount()
     {
         return $this->data->amount;
+    }
+
+    /**
+     * Returns delay capture.
+     *
+     * @return stdClass
+     */
+    public function getDelayCapture()
+    {
+        return $this->data->delayCapture;
     }
 
     /**
@@ -583,9 +593,9 @@ class Payment extends MoipResource
      *
      * @return $this
      */
-    public function setDelayCapture()
+    public function setDelayCapture($delayCapture = true)
     {
-        $this->data->delayCapture = true;
+        $this->data->delayCapture = $delayCapture;
 
         return $this;
     }
