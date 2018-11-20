@@ -2,6 +2,7 @@
 
 namespace Moip\Resource;
 
+use ArrayIterator;
 use Requests;
 use stdClass;
 
@@ -169,6 +170,16 @@ class Payment extends MoipResource
     {
         return $this->getIfSet('id');
     }
+    
+    /**
+     * Get releases associated with the request.
+     *
+     * @return ArrayIterator
+     */
+    public function getEventIterator()
+    {
+        return new ArrayIterator($this->data->events);
+    }
 
     /**
      * Mount payment structure.
@@ -192,6 +203,7 @@ class Payment extends MoipResource
         $payment->data->payments = $this->getIfSet('payments', $response);
         $payment->data->escrows = $this->getIfSet('escrows', $response);
         $payment->data->fees = $this->getIfSet('fees', $response);
+        $payment->data->events = $this->getIfSet('events', $response);
         $payment->data->refunds = $this->getIfSet('refunds', $response);
         $payment->data->_links = $this->getIfSet('_links', $response);
         $payment->data->createdAt = $this->getIfSetDateTime('createdAt', $response);
