@@ -217,7 +217,7 @@ $order = $moip->orders()->setOwnId(uniqid())
     ->addItem("bicicleta 10",1, "sku10", 19000)
     ->setShippingAmount(3000)->setAddition(1000)->setDiscount(5000)
     ->setUrlSuccess('https://sualoja.com.br/url-confirmacao-de-pagamento')
-    ->setUrlFalture('https://sualoja.com.br/url-falha-no-pagamento')
+    ->setUrlFailure('https://sualoja.com.br/url-falha-no-pagamento')
     ->setCustomer($customer)
     ->create();
 print_r($order);
