@@ -50,6 +50,7 @@ class Transfers extends MoipResource
         $this->data = new stdClass();
         $this->data->transferInstrument = new stdClass();
         $this->data->transferInstrument->bankAccount = new stdClass();
+        $this->data->transferInstrument->bankAccount->type = self::TYPE_DEFAULT;
         $this->data->transferInstrument->bankAccount->holder = new stdClass();
         $this->data->transferInstrument->bankAccount->holder->taxDocument = new stdClass();
     }
