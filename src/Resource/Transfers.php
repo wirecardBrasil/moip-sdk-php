@@ -25,7 +25,17 @@ class Transfers extends MoipResource
     /**
      * @const string
      */
-    const TYPE = 'CHECKING';
+    const TYPE_DEFAULT = self::TYPE_BANK_ACOUNT_CHECKING;
+
+    /**
+     * @const string
+     */
+    const TYPE_BANK_ACOUNT_CHECKING = 'CHECKING';
+
+    /**
+     * @const string
+     */
+    const TYPE_BANK_ACOUNT_SAVING = 'SAVING';
 
     /**
      * @const string
@@ -84,6 +94,26 @@ class Transfers extends MoipResource
     }
 
     /**
+     * set type account SAVING
+     * @return $this
+     */
+    public function setTypeBankAccountSaving() {
+        $this->data->transferInstrument->bankAccount->type = self::TYPE_BANK_ACOUNT_SAVING;
+
+        return $this;
+    }
+
+    /**
+     * set type account CHECKING
+     * @return $this
+     */
+    public function setTypeBankAccountChecking() {
+        $this->data->transferInstrument->bankAccount->type = self::TYPE_BANK_ACOUNT_CHECKING;
+
+        return $this;
+    }
+
+    /**
      * Set info of transfers.
      *
      * @param int    $amount
@@ -105,7 +135,6 @@ class Transfers extends MoipResource
     ) {
         $this->data->amount = $amount;
         $this->data->transferInstrument->method = self::METHOD;
-        $this->data->transferInstrument->bankAccount->type = self::TYPE;
         $this->data->transferInstrument->bankAccount->bankNumber = $bankNumber;
         $this->data->transferInstrument->bankAccount->agencyNumber = $agencyNumber;
         $this->data->transferInstrument->bankAccount->agencyCheckNumber = $agencyCheckNumber;
