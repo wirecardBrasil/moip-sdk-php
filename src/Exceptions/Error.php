@@ -88,7 +88,10 @@ class Error
         $errors = [];
         if (!empty($error_obj->errors)) {
             foreach ($error_obj->errors as $error) {
-                $errors[] = new self($error->code, $error->path, $error->description);
+                $code = $error->code ?? null;
+                $path = $error->path ?? null;
+                $description = $error->description ?? null;
+                $errors[] = new self($code, $path, $description);
             }
         } elseif (!empty($error_obj->error)) {
             $errors[] = new self('', '', $error_obj->error);
