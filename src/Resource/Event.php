@@ -22,7 +22,7 @@ class Event extends MoipResource
         $this->data = new stdClass();
         $this->data->type = null;
         $this->data->createdAt = null;
-        $this->data->descriotion = null;
+        $this->data->description = null;
     }
 
     /**
