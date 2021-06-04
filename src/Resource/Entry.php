@@ -74,18 +74,6 @@ class Entry extends MoipResource
     }
 
     /**
-     * Create a new Entries List instance.
-     *
-     * @return \Moip\Resource\EntriesList
-     */
-    public function getList()
-    {
-        $entriesList = new EntriesList($this->moip);
-
-        return $entriesList->get();
-    }
-
-    /**
      * Get id from entry.
      *
      * @return string Event ID that generated the launch.
