@@ -138,8 +138,6 @@ abstract class MoipResource implements JsonSerializable
      */
     protected function getIfSetDateTime($key, stdClass $data = null)
     {
-        date_default_timezone_set('Brazil/East');
-
         $rawDateTime = $this->getIfSet($key, $data);
 
         $dateTime = null;
@@ -223,7 +221,6 @@ abstract class MoipResource implements JsonSerializable
      * @param string     $method  http method
      * @param mixed|null $payload request body
      * @param array      $headers request headers
-     * @param string     $accept
      *
      * @throws Exceptions\ValidationException  if the API returns a 4xx http status code. Usually means invalid data was sent.
      * @throws Exceptions\UnautorizedException if the API returns a 401 http status code. Check API token and key.

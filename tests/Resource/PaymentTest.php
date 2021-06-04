@@ -104,7 +104,6 @@ class PaymentTest extends TestCase
         $captured_payment = $payment->capture();
 
         $this->assertEquals('AUTHORIZED', $captured_payment->getStatus());
-        $this->assertEquals(true, $captured_payment->getDelayCapture());
     }
 
     public function testCapturePreAuthorizedMultiPayment()

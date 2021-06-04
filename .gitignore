@@ -2,7 +2,3 @@ composer.lock
 vendor
 .idea/
 .DS_Store
-
-### VisualStudioCode ###
-.vscode/
-  
