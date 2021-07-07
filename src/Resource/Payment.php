@@ -575,7 +575,7 @@ class Payment extends MoipResource
      *
      * @return $this
      */
-    public function setDeviceFingerprint($ip, $latitude, $longitude, $userAgent, $fingerprint)
+    public function setDeviceFingerprint($ip, $userAgent, $fingerprint, $latitude = null, $longitude = null,)
     {
         $this->data->device->geolocation = new stdClass();
         $this->data->device->geolocation->latitude = $latitude;
