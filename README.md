@@ -161,10 +161,6 @@ $customer = $moip->customers()->setOwnId(uniqid())
     ->setBirthDate('1988-12-30')
     ->setTaxDocument('22222222222')
     ->setPhone(11, 66778899)
-    ->addAddress('BILLING',
-        'Rua de teste', 123,
-        'Bairro', 'Sao Paulo', 'SP',
-        '01234567', 8)
     ->addAddress('SHIPPING',
                 'Rua de teste do SHIPPING', 123,
                 'Bairro do SHIPPING', 'Sao Paulo', 'SP',
@@ -278,7 +274,10 @@ $holder = $moip->holders()->setFullname('Jose Silva')
     ->setBirthDate("1990-10-10")
     ->setTaxDocument('22222222222', 'CPF')
     ->setPhone(11, 66778899, 55)
-    ->setAddress('BILLING', 'Avenida Faria Lima', '2927', 'Itaim', 'Sao Paulo', 'SP', '01234000', 'Apt 101');
+    ->setAddress('BILLING', 
+                'Avenida Faria Lima', '2927', 
+                'Itaim', 'Sao Paulo', 'SP', 
+                '01234000', 'Apt 101');
 ```
 ##### Com hash
 > Para mais detalhes sobre a geração de hash com os dados do cartão [consulte a documentação.](https://dev.moip.com.br/docs/criptografia-de-cartao)
