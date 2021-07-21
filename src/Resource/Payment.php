@@ -287,7 +287,7 @@ class Payment extends MoipResource
      */
     public function getHrefBoleto()
     {
-        return $this->getIfSet('_links')->payBoleto->redirectHref;
+        return $this->getIfSet('_links')->checkout->payBoleto->redirectHref;
     }
 
     /**
@@ -309,7 +309,7 @@ class Payment extends MoipResource
      */
     public function getHrefPrintBoleto()
     {
-        return $this->getIfSet('_links')->payBoleto->printHref;
+        return $this->getIfSet('_links')->checkout->payBoleto->printHref;
     }
 
     /**
