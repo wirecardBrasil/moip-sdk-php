@@ -5,14 +5,15 @@ namespace Moip\Tests;
 use Moip\Auth\OAuth;
 use Moip\Moip;
 use Moip\Resource\Customer;
+use Moip\Resource\Holder;
 use Moip\Resource\Orders;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase as BaseTestCase;
 use Requests_Response;
 
 /**
  * class TestCase.
  */
-abstract class TestCase extends PHPUnit_Framework_TestCase
+abstract class TestCase extends BaseTestCase
 {
     /**
      * Variables representing the test modes. On MOCK mode no http request will be made.
@@ -141,6 +142,11 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
     protected $body_bank_account_update;
 
     /**
+     * @var string response from moip API.
+     */
+    protected $body_balances;
+
+    /**
      * @var string holds the last generated customer ownId. In mock mode it'll be always the default, but it changes on sandbox mode.
      */
     protected $last_cus_id = 'meu_id_customer';
@@ -242,6 +248,8 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
         $this->body_bank_account_list = $this->readJsonFile('jsons/bank_account/list');
 
         $this->body_bank_account_update = $this->readJsonFile('jsons/bank_account/update');
+
+        $this->body_balances = $this->readJsonFile('jsons/balances/get');
     }
 
     /**
@@ -258,7 +266,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
             $auth = new OAuth($moip_access_token);
         } else {
             $this->sandbox_mock = self::MOCK;
-            $auth = $this->getMock('\Moip\Contracts\Authentication');
+            $auth = $this->getMockBuilder('\Moip\Contracts\Authentication')->getMock();
         }
         $this->moip = new Moip($auth, Moip::ENDPOINT_SANDBOX);
     }
@@ -289,7 +297,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
         $resp = new Requests_Response();
         $resp->body = $body;
         $resp->status_code = $status_code;
-        $sess = $this->getMock('\Requests_Session');
+        $sess = $this->getMockBuilder('\Requests_Session')->getMock();
         $sess->expects($this->once())->method('request')->willReturn($resp);
         $this->moip->setSession($sess);
     }
@@ -316,6 +324,22 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
             ->addAddress(Customer::ADDRESS_SHIPPING, 'Avenida Faria Lima', '2927', 'Itaim', 'Sao Paulo', 'SP', '01234000', '8');
 
         return $customer;
+    }
+
+    /**
+     * Creates a holder.
+     *
+     * @return Holder
+     */
+    public function createHolder()
+    {
+        $holder = $this->moip->holders()->setFullname('Jose Silva')
+            ->setBirthDate(\DateTime::createFromFormat($this->date_format, $this->date_string))
+            ->setTaxDocument('22222222222', 'CPF')
+            ->setPhone(11, 66778899, 55)
+            ->setAddress(Holder::ADDRESS_BILLING, 'Avenida Faria Lima', '2927', 'Itaim', 'Sao Paulo', 'SP', '01234000', '8');
+
+        return $holder;
     }
 
     /**
@@ -357,8 +381,8 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
         }
 
         $order = $this->moip->orders()->setCustomer($this->createCustomer())
-            ->addItem('Nome do produto', 1, 'Mais info...', 100000)
-            ->addItem('abacaxi', 2, 'Abacaxi de terra de areia', 990)
+            ->addItem('Nome do produto', 1, 'Mais info...', 100000, 'SHOES')
+            ->addItem('abacaxi', 2, 'Abacaxi de terra de areia', 990, 'OTHER_CATEGORIES')
             ->setDiscount(1000)
             ->setShippingAmount(1490)
             ->setOwnId($this->last_ord_id);

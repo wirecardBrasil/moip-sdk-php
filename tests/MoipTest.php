@@ -108,6 +108,8 @@ class MoipTest extends TestCase
 
     /**
      * MoipTest if \Moip\Exceptios\UnautorizedException is thrown.
+     *
+     * @expectedException Moip\Exceptions\UnautorizedException
      */
     public function testShouldRaiseUnautorizedException()
     {
@@ -116,7 +118,6 @@ class MoipTest extends TestCase
 
             return;
         }
-        $this->setExpectedException('\Moip\Exceptions\UnautorizedException');
         $body = '{ "ERROR" : "Token or Key are invalids" }'; // the body is not processed in any way, i'm putting this for completeness
         $this->mockHttpSession($body, 401);
         $this->moip->orders()->get('ORD-1AWC30TWYZMX');
@@ -124,6 +125,8 @@ class MoipTest extends TestCase
 
     /**
      * MoipTest if UnexpectedException is thrown when 500 http status code is returned.
+     *
+     * @expectedException Moip\Exceptions\UnexpectedException
      */
     public function testShouldRaiseUnexpectedException500()
     {
@@ -132,7 +135,6 @@ class MoipTest extends TestCase
 
             return;
         }
-        $this->setExpectedException('\Moip\Exceptions\UnexpectedException');
         $this->mockHttpSession('error', 500); // the body isn't processed
         $this->moip->orders()->get('ORD-1AWC30TWYZMX');
     }
@@ -147,7 +149,7 @@ class MoipTest extends TestCase
 
             return;
         }
-        $sess = $this->getMock('\Requests_Session');
+        $sess = $this->getMockBuilder('\Requests_Session')->getMock();
         $sess->expects($this->once())->method('request')->willThrowException(new Requests_Exception('test error',
             'test'));
         $this->moip->setSession($sess);

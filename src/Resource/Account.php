@@ -54,6 +54,7 @@ class Account extends MoipResource
         $this->data->email = new stdClass();
         $this->data->person = new stdClass();
         $this->data->person->alternativePhones = [];
+        $this->data->businessSegment = new stdClass();
         $this->data->type = self::ACCOUNT_TYPE;
     }
 
@@ -364,6 +365,36 @@ class Account extends MoipResource
     }
 
     /**
+     * Get business segment id.
+     *
+     * @return int id.
+     */
+    public function getBusinessSegmentId()
+    {
+        return $this->getIfSet('id', $this->data->businessSegment);
+    }
+
+    /**
+     * Get business segment name.
+     *
+     * @return string name.
+     */
+    public function getBusinessSegmentName()
+    {
+        return $this->getIfSet('name', $this->data->businessSegment);
+    }
+
+    /**
+     * Get business segment mcc.
+     *
+     * @return int mcc.
+     */
+    public function getBusinessSegmentMcc()
+    {
+        return $this->getIfSet('mcc', $this->data->businessSegment);
+    }
+
+    /**
      * Get transparent account (true/false).
      *
      * @return bool
@@ -381,6 +412,16 @@ class Account extends MoipResource
     public function getCreatedAt()
     {
         return $this->getIfSet('createdAt', $this->data);
+    }
+
+    /**
+     * Get link to set the password of created account.
+     *
+     * @return string
+     */
+    public function getPasswordLink()
+    {
+        return $this->getIfSet('href', $this->data->_links->setPassword);
     }
 
     /**
@@ -434,8 +475,21 @@ class Account extends MoipResource
 
         $account->data->person->alternativePhones = $this->getIfSet('alternativePhones', $person);
 
+        $businessSegment = $this->getIfSet('businessSegment', $response);
+
+        $account->data->businessSegment->id = $this->getIfSet('id', $businessSegment);
+        $account->data->businessSegment->name = $this->getIfSet('name', $businessSegment);
+        $account->data->businessSegment->mcc = $this->getIfSet('mcc', $businessSegment);
+
         $account->data->company = $this->getIfSet('company', $response);
-        $account->data->_links = $this->getIfSet('_links', $response);
+        $account->data->_links = new stdClass();
+
+        $_links = $this->getIfSet('_links', $response);
+        $account->data->_links->setPassword = new stdClass();
+
+        $setPassword = $this->getIfSet('setPassword', $_links);
+        $account->data->_links->setPassword->href = $this->getIfSet('href', $setPassword);
+
         $account->data->type = $this->getIfSet('type', $response);
         $account->data->id = $this->getIfSet('id', $response);
         $account->data->accessToken = $this->getIfSet('accessToken', $response);

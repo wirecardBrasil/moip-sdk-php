@@ -23,7 +23,7 @@
 
 ---
 
-**Índice** 
+**Índice**
 
 - [Instalação](#instalação)
 - [Configurando a autenticação](#configurando-a-autenticação)
@@ -47,9 +47,11 @@
   - [Pagamentos](#pagamentos)
     - [Criação](#criação)
       - [Cartão de Crédito](#cartão-de-crédito)
+        - [Inserir dados do portador](#inserir-dados-do-portador)
         - [Com Hash](#com-hash)
         - [Com Dados do Cartão](#com-dados-do-cartão)
       - [Com Boleto](#criando-um-pagamento-com-boleto)
+      - [Com Débito Bancário](#criando-um-pagamento-com-débito-bancário)
     - [Consulta](#consulta)
     - [Capturar pagamento pré-autorizado](#capturar-pagamento-pré-autorizado)
     - [Cancelar pagamento pré-autorizado](#cancelar-pagamento-pré-autorizado)
@@ -57,10 +59,13 @@
     - [Cartão de crédito](#cartão-de-crédito-1)
       - [Valor Total](#valor-total)
       - [Valor Parcial](#valor-parcial)
-    - [Conta Bancária](#conta-bancária)
+    - [Conta bancária](#conta-bancária)
       - [Valor Total](#valor-total-1)
       - [Valor Parcial](#valor-parcial-1)
-    - [Consulta](#consulta-1)
+    - [Consulta](#consultar-reembolso)
+  - [OAuth (Moip Connect)](#oauth-moip-connect)
+    - [Solicitar permissões de acesso ao usuário](#solicitar-permissões-de-acesso-ao-usuário)
+    - [Gerando access token OAuth](#gerando-access-token-oauth)
   - [Multipedidos](#multipedidos)
     - [Criação](#criando-um-multipedido)
     - [Consulta](#consultando-um-multipedido)
@@ -73,24 +78,38 @@
     - [Consulta](#consulta-1)
     - [Verifica se usuário já possui Conta Moip](#verifica-se-usuário-já-possui-conta-moip)
     - [Obter chave pública de uma Conta Moip](#obter-chave-pública-de-uma-conta-moip)
+  - [Saldo Moip](#saldo-moip)
+    - [Consulta](#consultar-saldos)
+  - [Conta Bancária](#conta-bancária-1)
+    - [Criação](#criar-conta-bancária)
+    - [Consulta](#consultar-conta-bancária)
+    - [Listagem](#listar-contas-bancárias)
+    - [Atualização](#atualizar-conta-bancária)
+    - [Deletar](#deletar-conta-bancária)
+  - [Transferência](#transferência)
+    - [Criação](#criando/executando-uma-transferência)
+    - [Consulta](#consultar-transferência)
+    - [Listagem](#listar-transferências)
+    - [Reversão](#reverter-transferência)
   - [Preferências de Notificação](#preferências-de-notificação)
     -  [Criação](#criação-2)
-    -  [Consulta](#consulta-4)
+    -  [Consulta](#consulta-5)
     -  [Exclusão](#exclusão)
     -  [Listagem](#listagem)
-  - [Webhooks](#webhooks) 
-    - [Consulta](#consulta-5)
+  - [Webhooks](#webhooks)
+    - [Consulta](#consulta-6)
 - [Packages](#packages)
 - [Tratamento de exceções](#tratamento-de-exceções)
 - [Documentação](#documentação)
 - [Testes](#testes)
 - [Licença](#licença)
+- [Comunidade Slack](#comunidade-slack-) [![Slack](https://user-images.githubusercontent.com/4432322/37355972-ba0e9f32-26c3-11e8-93d3-39917eb24109.png)](https://slackin-cqtchmfquq.now.sh)
 
 ## Packages
 
 * [Laravel 5.x](https://github.com/artesaos/moip)
 * [Symfony 2 ou 3](https://github.com/leonnleite/moip-bundle)
-* [Laravel 4.x (MoIP API v1)](https://github.com/SOSTheBlack/moip) 
+* [Laravel 4.x (MoIP API v1)](https://github.com/SOSTheBlack/moip)
 
 ## Dependências
 #### require
@@ -251,13 +270,23 @@ $orders = $this->moip->orders()->getList(new Pagination(10,0), $filters, 'josé 
 #### Cartão de crédito
 Após criar o pedido basta criar um pagamento nesse pedido.
 
+##### Inserir dados do portador
+Para realizar o pagamento, via cartão de crédito, utilizando o cartão de um terceiro (quando o cliente não é o portador do cartão que será utilizado), é necessário que estes dados sejam diferenciados e informados corretamente, para cada etapa do fluxo.
+
+```php
+$holder = $moip->holders()->setFullname('Jose Silva')
+    ->setBirthDate("1990-10-10")
+    ->setTaxDocument('22222222222', 'CPF')
+    ->setPhone(11, 66778899, 55)
+    ->setAddress('BILLING', 'Avenida Faria Lima', '2927', 'Itaim', 'Sao Paulo', 'SP', '01234000', 'Apt 101');
+```
 ##### Com hash
 > Para mais detalhes sobre a geração de hash com os dados do cartão [consulte a documentação.](https://dev.moip.com.br/docs/criptografia-de-cartao)
 
 ```php
 $hash = 'i1naupwpTLrCSXDnigLLTlOgtm+xBWo6iX54V/hSyfBeFv3rvqa1VyQ8/pqWB2JRQX2GhzfGppXFPCmd/zcmMyDSpdnf1GxHQHmVemxu4AZeNxs+TUAbFWsqEWBa6s95N+O4CsErzemYZHDhsjEgJDe17EX9MqgbN3RFzRmZpJqRvqKXw9abze8hZfEuUJjC6ysnKOYkzDBEyQibvGJjCv3T/0Lz9zFruSrWBw+NxWXNZjXSY0KF8MKmW2Gx1XX1znt7K9bYNfhA/QO+oD+v42hxIeyzneeRcOJ/EXLEmWUsHDokevOkBeyeN4nfnET/BatcDmv8dpGXrTPEoxmmGQ==';
 $payment = $order->payments()
-    ->setCreditCardHash($hash, $customer)
+    ->setCreditCardHash($hash, $holder)
     ->setInstallmentCount(3)
     ->setStatementDescriptor('teste de pag')
     ->execute();
@@ -267,7 +296,7 @@ print_r($payment);
 ##### Com dados do cartão
 > Esse método requer certificação PCI. [Consulte a documentação.](https://documentao-moip.readme.io/v2.0/reference#criar-pagamento)
 ```php
-$payment = $order->payments()->setCreditCard(12, 21, '4073020000000002', '123', $customer)
+$payment = $order->payments()->setCreditCard(12, 21, '4073020000000002', '123', $holder)
     ->execute();
 print_r($payment);
 ```
@@ -283,6 +312,22 @@ $payment = $order->payments()
 print_r($payment);
 ```
 
+#### Criando um pagamento com Débito Bancário
+No pagamento por débito bancário online também são enviados apenas 3 parâmetros:
+
+- URL do logo que você deseja que apareça, representada abaixo com a variável: $return_uri;
+- Data de vencimento, representada pela variável $expiration_date;
+- Número do banco representado pela variável $bank_number (atualmente único valor possível é `341`, referente ao Banco Itaú).
+```php
+$bank_number = '341';
+$return_uri = 'https://moip.com.br';
+$expiration_date = new DateTime();
+$payment = $order->payments()                    
+    ->setOnlineBankDebit($bank_number, $expiration_date, $return_uri)
+    ->execute();
+print_r($payment);
+```
+
 ### Consulta
 ```php
 $payment = $moip->payments()->get('PAYMENT-ID');
@@ -291,12 +336,8 @@ print_r($payment);
 
 ### Capturar pagamento pré-autorizado
 ```php
-try {
-    $captured_payment = $payment->capture();
-    print_r($captured_payment);
-} catch (Exception $e) {
-    printf($e->__toString());
-}
+$captured_payment = $payment->capture();
+print_r($captured_payment);
 ```
 
 ### Cancelar pagamento pré-autorizado
@@ -342,12 +383,12 @@ $account_number = 1234;
 $account_check_number = 4;
 $refund = $payment->refunds()
     ->bankAccountFull(
-        $type, 
-        $bank_number, 
-        $agency_number, 
-        $agency_check_number, 
-        $account_number, 
-        $account_check_number, 
+        $type,
+        $bank_number,
+        $agency_number,
+        $agency_check_number,
+        $account_number,
+        $account_check_number,
         $customer
     );
 print_r($refund);
@@ -366,16 +407,61 @@ $account_number = 1234;
 $account_check_number = 4;
 $refund = $payment->refunds()
     ->bankAccountPartial(
-        $amount, 
-        $type, 
-        $bank_number, 
-        $agency_number, 
-        $agency_check_number, 
-        $account_number, 
-        $account_check_number, 
+        $amount,
+        $type,
+        $bank_number,
+        $agency_number,
+        $agency_check_number,
+        $account_number,
+        $account_check_number,
         $customer
     );
 print_r($refund);
+```
+
+### Consultar reembolso
+```php
+$refund = $payment->refunds()->get($refund_id);
+```
+
+## OAuth (Moip Connect)
+### Solicitar permissões de acesso ao usuário
+Para solicitar as permissões você deverá invocar o método getAuthUrl (que monta a URL) e redirecionar o usuário para a URL gerada. O usuário deverá conceder a permissão e então ele será redirecionado para a URL determinada pelo seu App e passada como atributo para o objeto Connect.
+
+A URL passada como atributo deve ser exatamente a mesma que foi cadastrada na criação do APP, caso haja alguma divergência o usuário não será redirecionado corretamente.
+
+Com a permissão concedida, você receberá um `code` que lhe permitirá gerar o `accessToken` de autenticação e processar requisições envolvendo outro usuário.
+
+```php
+$redirect_uri = 'http://seusite.com.br/callback.php';
+$client_id = 'APP-18JTHC3LOMT9';
+$scope = true;
+$connect = new Connect($redirect_uri, $client_id, $scope, Connect::ENDPOINT_SANDBOX);
+$connect->setScope(Connect::RECEIVE_FUNDS)
+    ->setScope(Connect::REFUND)
+    ->setScope(Connect::MANAGE_ACCOUNT_INFO)
+    ->setScope(Connect::RETRIEVE_FINANCIAL_INFO);
+header('Location: '.$connect->getAuthUrl());
+```
+
+### Gerando access token OAuth
+Abaixo usaremos o método authorize para gerar o access token OAuth. Note que é necessário instanciar o objeto Connect e passar os parâmetros como no exemplo abaixo.
+
+Usamos a variável `$code` para enviar o `code` recebido pela permissão do usuário e inserimos no objeto com o método `setCode`.
+
+A URL passada como atributo deve ser exatamente a mesma que foi cadastrada na criação do APP, caso haja alguma divergência não será possível recuperar o accessToken.
+
+```php
+$redirect_uri = 'http://seusite.com.br/callback.php';
+$client_id = 'APP-18JTHC3LOMT9';
+$scope = true;
+$connect = new Connect($redirect_uri, $client_id, $scope, Connect::ENDPOINT_SANDBOX);
+$client_secret = '20f76456f6ec4874a1f38082d3139326';
+$connect->setClientSecret($client_secret);
+$code = 'f9053ca6e9853dd73f0bc4f332a5ce337b0bb0da';
+$connect->setCode($code);
+$auth = $connect->authorize();
+print_r($auth);
 ```
 
 ## Multipedidos
@@ -400,7 +486,7 @@ $order2 = $moip->orders()->setOwnId(uniqid())
     ->setAddition(1000)
     ->setDiscount(5000)
     ->setCustomer($customer)
-    ->addReceiver('MPA-IFYRB1HBL73Z', 'PRIMARY', NULL); 
+    ->addReceiver('MPA-IFYRB1HBL73Z', 'PRIMARY', NULL);
 
 $multiorder = $this->moip->multiorders()
     ->setOwnId(uniqid())
@@ -419,7 +505,7 @@ print_r($multiorder);
 
 ## Multipagamentos
 
-### Criando um multipagamento 
+### Criando um multipagamento
 ```php
 $hash = 'i1naupwpTLrCSXDnigLLTlOgtm+xBWo6iX54V/hSyfBeFv3rvqa1VyQ8/pqWB2JRQX2GhzfGppXFPCmd/zcmMyDSpdnf1GxHQHmVemxu4AZeNxs+TUAbFWsqEWBa6s95N+O4CsErzemYZHDhsjEgJDe17EX9MqgbN3RFzRmZpJqRvqKXw9abze8hZfEuUJjC6ysnKOYkzDBEyQibvGJjCv3T/0Lz9zFruSrWBw+NxWXNZjXSY0KF8MKmW2Gx1XX1znt7K9bYNfhA/QO+oD+v42hxIeyzneeRcOJ/EXLEmWUsHDokevOkBeyeN4nfnET/BatcDmv8dpGXrTPEoxmmGQ==';
 $payment = $multiorder->multipayments()
@@ -489,12 +575,57 @@ $moip->accounts()->checkAccountExists(CPF);
 
 ### Obter chave pública de uma Conta Moip
 ```php
-try {
-    $keys = $moip->keys()->get();
-    print_r($keys);
-} catch (Exception $e) {
-    printf($e->__toString());
-}
+$keys = $moip->keys()->get();
+print_r($keys);
+```
+
+## Saldo Moip
+O Saldo é a composição de valores atuais disponíveis, indisponíveis (bloqueados) e futuros de uma determinada **Conta Moip**.
+
+> Esta API está na versão 2.1, contendo o _header_ **Accept**, com o valor `application/json;version=2.1`.
+### Consultar saldos
+```php
+$balances = $moip->balances()->get();
+```
+
+_Requer autenticação `OAuth`._
+
+## Conta Bancária
+A Conta bancária é o domicílio bancário de uma determinada Conta Moip. Esta API permite a criação, a consulta e a alteração dos dados de uma Conta Bancária.
+
+### Criar Conta Bancária
+```php
+$bank_account = $moip->bankaccount()
+    ->setBankNumber('237')
+    ->setAgencyNumber('12345')
+    ->setAgencyCheckNumber('0')
+    ->setAccountNumber('12345678')
+    ->setAccountCheckNumber('7')
+    ->setType('CHECKING')
+    ->setHolder('Demo Moip', '622.134.533-22', 'CPF')
+    ->create($moip_account_id);
+```
+
+### Consultar Conta Bancária
+```php
+$bank_account = $moip->bankaccount()->get($bank_account_id);
+```
+
+### Listar Contas Bancárias
+```php
+$bank_accounts = $moip->bankaccount()->getList($account_id)->getBankAccounts();
+```
+
+### Atualizar Conta Bancária
+```php
+$bank_account = $moip->bankaccount()
+    ->setAccountCheckNumber('8')
+    ->update($bank_account_id);
+```
+
+### Deletar Conta Bancária
+```php
+$moip->bankaccount()->delete($bank_account_id);
 ```
 
 ## Preferências de notificação
@@ -527,7 +658,7 @@ print_r($notifications);
 ```
 
 ## Webhooks
-> O PHP, por padrão, está preparado para receber apenas alguns tipos de `content-type` (`application/x-www-form-urlencoded` e `multipart/form-data`). A plataforma do Moip, no entanto, envia dados no formato JSON, o qual a linguagem não está preparada para receber por padrão. 
+> O PHP, por padrão, está preparado para receber apenas alguns tipos de `content-type` (`application/x-www-form-urlencoded` e `multipart/form-data`). A plataforma do Moip, no entanto, envia dados no formato JSON, o qual a linguagem não está preparada para receber por padrão.
 Para receber e acessar os dados enviados pelo Moip, você precisa adicionar o seguinte código ao seu arquivo que receberá os webhooks:
 
 ```php
@@ -550,8 +681,11 @@ $moip->webhooks()->get(new Pagination(10, 0), 'ORD-ID', 'ORDER.PAID');
 ```
 
 ## Transferência
+A Transferência é uma movimentação de fundos entre uma Conta Moip e outra conta de pagamento (pode ser uma Conta bancária ou uma determinada Conta Moip).
 
 ### Criando/executando uma transferência
+#### Por conta bancária
+
 ```php
 $amount = 500;
 $bank_number = '001';
@@ -570,82 +704,37 @@ $transfer = $moip->transfers()
 print_r($transfer);
 ```
 
-### Consulta
-#### Transferência específica
+Para realizar uma transferência utilizando uma conta bancária já cadastrada:
+```php
+$transfer = $moip->transfers()
+    ->setTransfersToBankAccount($amount, $bank_account_id)
+    ->execute();
+```
+
+### Consultar transferência
 ```php
 $transfer_id = 'TRA-28HRLYNLMUFH';
-$transfer = $this->moip->transfers()->get($transfer_id);
+$transfer = $moip->transfers()->get($transfer_id);
 
 print_r($transfer);
 ```
 
-#### Todas transferências
-##### Sem paginação
+### Listar transferências
+#### Sem paginação
 ```php
-$transfers = $this->moip->transfers()->getList();
+$transfers = $moip->transfers()->getList();
 ```
 
-##### Com paginação
+#### Com paginação
 ```php
-$transfers = $this->moip->transfers()->getList(new Pagination(10,0));
+$transfers = $moip->transfers()->getList(new Pagination(10,0));
 ```
 
-### Reverter
+### Reverter transferência
 ```php
 $transfer_id = 'TRA-28HRLYNLMUFH';
 
-$transfer = $this->moip->transfers()->revert($transfer_id);
-```
-
-## Contas bancárias
-
-### Criação
-```php
-$account_id = 'MPA-05E8C79EAAAA';
-$bank_account = $moip->bankaccount()
-        ->setBankNumber('237')
-        ->setAgencyNumber('12345')
-        ->setAgencyCheckNumber('0')
-        ->setAccountNumber('12345678')
-        ->setAccountCheckNumber('7')
-        ->setType('CHECKING')
-        ->setHolder('Demo Moip', '622.134.533-22', 'CPF')
-        ->create($account_id);
-        
-print_r($bank_account);
-```
-
-### Consulta
-#### Conta bancária específica
-```php
-$bank_account_id = 'BKA-397X21X1G6LT';
-$bank_account = $moip->bankaccount()->get($bank_account_id);
-
-print_r($bank_account);
-```
-
-#### Todas contas bancárias
-```php
-$account_id = 'MPA-05E8C79EAAAA';
-$bank_accounts = $moip->bankaccount()->getList($account_id)->getBankAccounts();
-
-print_r($bank_accounts);
-```
-
-### Exclusão
-```php
-$bank_account_id = 'BKA-397X21X1G6LT';
-$moip->bankaccount()->delete($bank_account_id);
-```
-
-### Atualização
-```php
-$bank_account_id = 'BKA-397X21X1G6LT';
-$bank_account = $moip->bankaccount()->get($bank_account_id);
-$bank_account->setAccountCheckNumber('7');
-$bank_account->update();
-
-print_r($bank_account);
+$transfer = $moip->transfers()->revert($transfer_id);
 ```
 
 ## Tratamento de Exceções
@@ -677,7 +766,7 @@ try {
 [Documentação oficial](https://documentao-moip.readme.io/v2.0/reference)
 
 ## Testes
-Por padrão os testes não fazem nenhuma requisição para a API do Moip. É possível rodar os testes contra 
+Por padrão os testes não fazem nenhuma requisição para a API do Moip. É possível rodar os testes contra
 o ambiente de [Sandbox](https://conta-sandbox.moip.com.br/) do moip, para isso basta setar a variável de ambiente:
  - `MOIP_ACCESS_TOKEN` Token de autenticação do seu aplicativo Moip.
 
@@ -695,3 +784,8 @@ vendor/bin/phpunit -c .
 ## Licença
 
 [The MIT License](https://github.com/moip/php-sdk/blob/master/LICENSE)
+
+## Comunidade Slack [![Slack](https://user-images.githubusercontent.com/4432322/37355972-ba0e9f32-26c3-11e8-93d3-39917eb24109.png)](https://slackin-cqtchmfquq.now.sh)
+
+
+Tem dúvidas? Fale com a gente no [Slack](https://slackin-cqtchmfquq.now.sh/)! 

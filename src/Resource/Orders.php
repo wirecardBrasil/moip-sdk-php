@@ -50,10 +50,11 @@ class Orders extends MoipResource
      * @param int    $quantity Product Quantity.
      * @param string $detail   Additional product description.
      * @param int    $price    Initial value of the item.
+     * @param string category  Product category. see: https://dev.moip.com.br/v2.1/reference#tabela-de-categorias-de-produtos.
      *
      * @return $this
      */
-    public function addItem($product, $quantity, $detail, $price)
+    public function addItem($product, $quantity, $detail, $price, $category = 'OTHER_CATEGORIES')
     {
         if (!is_int($price)) {
             throw new \UnexpectedValueException('Informe o valor do item como inteiro');
@@ -68,7 +69,7 @@ class Orders extends MoipResource
         $item->quantity = $quantity;
         $item->detail = $detail;
         $item->price = $price;
-
+        $item->category = $category;
         $this->data->items[] = $item;
 
         return $this;
@@ -145,24 +146,27 @@ class Orders extends MoipResource
         $this->orders = clone $this;
         $this->orders->data->id = $response->id;
         $this->orders->data->ownId = $response->ownId;
+        $this->orders->data->createdAt = $response->createdAt;
+        $this->orders->data->updatedAt = $response->updatedAt;
+        $this->orders->data->amount->paid = $response->amount->paid;
         $this->orders->data->amount->total = $response->amount->total;
         $this->orders->data->amount->fees = $response->amount->fees;
         $this->orders->data->amount->refunds = $response->amount->refunds;
         $this->orders->data->amount->liquid = $response->amount->liquid;
         $this->orders->data->amount->otherReceivers = $response->amount->otherReceivers;
         $this->orders->data->amount->subtotals = $response->amount->subtotals;
-
+        $this->orders->data->items = $response->items;
         $customer = new Customer($this->moip);
         $this->orders->data->customer = $customer->populate($response->customer);
 
         $this->orders->data->payments = $this->structure($response, Payment::PATH, Payment::class);
+        $this->orders->data->escrows = $this->structure($response, Payment::PATH, Escrow::class);
         $this->orders->data->refunds = $this->structure($response, Refund::PATH, Refund::class);
         $this->orders->data->entries = $this->structure($response, Entry::PATH, Entry::class);
         $this->orders->data->events = $this->structure($response, Event::PATH, Event::class);
 
-        $this->orders->data->items = $response->items;
         $this->orders->data->receivers = $this->getIfSet('receivers', $response);
-        $this->orders->data->createdAt = $response->createdAt;
+
         $this->orders->data->status = $response->status;
         $this->orders->data->_links = $response->_links;
 
@@ -232,6 +236,16 @@ class Orders extends MoipResource
     public function getOwnId()
     {
         return $this->getIfSet('ownId');
+    }
+
+    /**
+     * Get paid value of order.
+     *
+     * @return int|float
+     */
+    public function getAmountPaid()
+    {
+        return $this->getIfSet('paid', $this->data->amount);
     }
 
     /**
@@ -363,6 +377,86 @@ class Orders extends MoipResource
     }
 
     /**
+     * Get zipCode of shippingAddress.
+     *
+     * @return string
+     */
+    public function getShippingAddressZipCode()
+    {
+        return $this->getIfSet('zipCode', $this->data->shippingAddress);
+    }
+
+    /**
+     * Get street of shippingAddress.
+     *
+     * @return string
+     */
+    public function getShippingAddressStreet()
+    {
+        return $this->getIfSet('street', $this->data->shippingAddress);
+    }
+
+    /**
+     * Get streetNumber of shippingAddress.
+     *
+     * @return string
+     */
+    public function getShippingAddressStreetNumber()
+    {
+        return $this->getIfSet('streetNumber', $this->data->shippingAddress);
+    }
+
+    /**
+     * Get complement of shippingAddress.
+     *
+     * @return string
+     */
+    public function getShippingAddressComplement()
+    {
+        return $this->getIfSet('complement', $this->data->shippingAddress);
+    }
+
+    /**
+     * Get city of shippingAddress.
+     *
+     * @return string
+     */
+    public function getShippingAddressCity()
+    {
+        return $this->getIfSet('city', $this->data->shippingAddress);
+    }
+
+    /**
+     * Get district of shippingAddress.
+     *
+     * @return string
+     */
+    public function getShippingAddressDistrict()
+    {
+        return $this->getIfSet('district', $this->data->shippingAddress);
+    }
+
+    /**
+     * Get state of shippingAddress.
+     *
+     * @return string
+     */
+    public function getShippingAddressState()
+    {
+        return $this->getIfSet('state', $this->data->shippingAddress);
+    }
+
+    /**
+     * Get country of shippingAddress.
+     *
+     * @return string
+     */
+    public function getShippingAddressCountry()
+    {
+        return $this->getIfSet('country', $this->data->shippingAddress);
+    }
+
+    /**
      * Get payments associated with the request.
      *
      * @return ArrayIterator
@@ -373,13 +467,33 @@ class Orders extends MoipResource
     }
 
     /**
-     * Get recipient structure of payments.
+     * Get escrows associated with the request.
      *
      * @return ArrayIterator
      */
-    public function getReceiverIterator()
+    public function getEscrowIterator()
     {
-        return new ArrayIterator($this->data->receivers);
+        return new ArrayIterator($this->data->escrows);
+    }
+
+    /**
+     * Get refunds associated with the request.
+     *
+     * @return ArrayIterator
+     */
+    public function getRefundIterator()
+    {
+        return new ArrayIterator($this->data->refunds);
+    }
+
+    /**
+     * Get entries associated with the request.
+     *
+     * @return ArrayIterator
+     */
+    public function getEntryIterator()
+    {
+        return new ArrayIterator($this->data->entries);
     }
 
     /**
@@ -393,13 +507,13 @@ class Orders extends MoipResource
     }
 
     /**
-     * Get repayments associated with the request.
+     * Get recipient structure of payments.
      *
      * @return ArrayIterator
      */
-    public function getRefundIterator()
+    public function getReceiverIterator()
     {
-        return new ArrayIterator($this->data->refunds);
+        return new ArrayIterator($this->data->receivers);
     }
 
     /**

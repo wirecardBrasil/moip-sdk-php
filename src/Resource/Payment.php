@@ -123,6 +123,7 @@ class Payment extends MoipResource
         $this->data = new stdClass();
         $this->data->installmentCount = 1;
         $this->data->fundingInstrument = new stdClass();
+        $this->data->device = new stdClass();
     }
 
     /**
@@ -189,6 +190,7 @@ class Payment extends MoipResource
         $payment->data->amount->currency = $this->getIfSet('currency', $response->amount);
         $payment->data->installmentCount = $this->getIfSet('installmentCount', $response);
         $payment->data->fundingInstrument = $this->getIfSet('fundingInstrument', $response);
+        $payment->data->device = $this->getIfSet('device', $response);
         $payment->data->payments = $this->getIfSet('payments', $response);
         $payment->data->escrows = $this->getIfSet('escrows', $response);
         $payment->data->fees = $this->getIfSet('fees', $response);
@@ -268,6 +270,16 @@ class Payment extends MoipResource
     }
 
     /**
+     * Returns the device fingerprint data.
+     *
+     * @return stdClass
+     */
+    public function getDeviceFingerprint()
+    {
+        return $this->data->device;
+    }
+
+    /**
      * Get href to Boleto
      * *.
      *
@@ -319,6 +331,16 @@ class Payment extends MoipResource
     public function getAmount()
     {
         return $this->data->amount;
+    }
+
+    /**
+     * Returns delay capture.
+     *
+     * @return stdClass
+     */
+    public function getDelayCapture()
+    {
+        return $this->data->delayCapture;
     }
 
     /**
@@ -376,6 +398,20 @@ class Payment extends MoipResource
     }
 
     /**
+     * Set payment device.
+     *
+     * @param \stdClass $device
+     *
+     * @return $this
+     */
+    public function setDevice(stdClass $device)
+    {
+        $this->data->device = $device;
+
+        return $this;
+    }
+
+    /**
      * Set billet.
      *
      * @param \DateTime|string $expirationDate   Expiration date of a billet.
@@ -411,7 +447,7 @@ class Payment extends MoipResource
      *
      * @param \Moip\Resource\Customer $holder
      */
-    private function setCreditCardHolder(Customer $holder)
+    private function setCreditCardHolder(Holder $holder)
     {
         $birthdate = $holder->getBirthDate();
         if ($birthdate instanceof \DateTime) {
@@ -439,7 +475,7 @@ class Payment extends MoipResource
      *
      * @return $this
      */
-    public function setCreditCardHash($hash, Customer $holder, $store = true)
+    public function setCreditCardHash($hash, Holder $holder, $store = true)
     {
         $this->data->fundingInstrument->method = self::METHOD_CREDIT_CARD;
         $this->data->fundingInstrument->creditCard = new stdClass();
@@ -464,7 +500,7 @@ class Payment extends MoipResource
      *
      * @return $this
      */
-    public function setCreditCard($expirationMonth, $expirationYear, $number, $cvc, Customer $holder, $store = true)
+    public function setCreditCard($expirationMonth, $expirationYear, $number, $cvc, Holder $holder, $store = true)
     {
         $this->data->fundingInstrument->method = self::METHOD_CREDIT_CARD;
         $this->data->fundingInstrument->creditCard = new stdClass();
@@ -528,6 +564,30 @@ class Payment extends MoipResource
     }
 
     /**
+     * Set device fingerprint
+     * Customer device data used in the payment.
+     *
+     * @param string                  $ip              Customer IP address
+     * @param float                   $latitude        Customer latitude.
+     * @param float                   $longitude       Customer longitude.
+     * @param string                  $userAgent       Device userAgent.
+     * @param string                  $fingerprint     Device fingerprint.
+     *
+     * @return $this
+     */
+    public function setDeviceFingerprint($ip, $latitude, $longitude, $userAgent, $fingerprint)
+    {
+        $this->data->device->geolocation = new stdClass();
+        $this->data->device->geolocation->latitude = $latitude;
+        $this->data->device->geolocation->longitude = $longitude;
+        $this->data->device->ip = $ip;
+        $this->data->device->userAgent = $userAgent;
+        $this->data->device->fingerprint = $fingerprint;
+
+        return $this;
+    }
+
+    /**
      * Set payment means made available by banks.
      *
      * @param string           $bankNumber     Bank number. Possible values: 001, 237, 341, 041.
@@ -583,9 +643,9 @@ class Payment extends MoipResource
      *
      * @return $this
      */
-    public function setDelayCapture()
+    public function setDelayCapture($delayCapture = true)
     {
-        $this->data->delayCapture = true;
+        $this->data->delayCapture = $delayCapture;
 
         return $this;
     }
