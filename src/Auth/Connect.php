@@ -25,7 +25,7 @@ class Connect implements Authentication, JsonSerializable
     /**
      * @const string
      */
-    const ENDPOINT_SANDBOX = 'https://connect-sandbox.moip.com.br';
+    const ENDPOINT_SANDBOX = 'https://connect-sandbox.wirecard.com.br';
 
     /**
      * @const string
