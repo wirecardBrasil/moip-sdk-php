@@ -445,9 +445,9 @@ class Payment extends MoipResource
     /**
      * Set credit card holder.
      *
-     * @param \Moip\Resource\Customer $holder
+     * @param \Moip\Resource\Customer|\Moip\Resource\Holder $holder
      */
-    private function setCreditCardHolder(Holder $holder)
+    private function setCreditCardHolder($holder)
     {
         $birthdate = $holder->getBirthDate();
         if ($birthdate instanceof \DateTime) {
@@ -469,13 +469,13 @@ class Payment extends MoipResource
     /**
      * Set credit cardHash.
      *
-     * @param string                  $hash   Credit card hash encripted using Moip.js
-     * @param \Moip\Resource\Customer $holder
-     * @param bool                    $store  Flag to know if credit card should be saved.
+     * @param string                                        $hash   Credit card hash encripted using Moip.js
+     * @param \Moip\Resource\Customer|\Moip\Resource\Holder $holder
+     * @param bool                                          $store  Flag to know if credit card should be saved.
      *
      * @return $this
      */
-    public function setCreditCardHash($hash, Holder $holder, $store = true)
+    public function setCreditCardHash($hash, $holder, $store = true)
     {
         $this->data->fundingInstrument->method = self::METHOD_CREDIT_CARD;
         $this->data->fundingInstrument->creditCard = new stdClass();
@@ -491,16 +491,16 @@ class Payment extends MoipResource
      * Credit card used in a payment.
      * The card when returned within a parent resource is presented in its minimum representation.
      *
-     * @param int                     $expirationMonth Card expiration month
-     * @param int                     $expirationYear  Year of card expiration.
-     * @param string                  $number          Card number.
-     * @param int                     $cvc             Card Security Code.
-     * @param \Moip\Resource\Customer $holder
-     * @param bool                    $store           Flag to know if credit card should be saved.
+     * @param int                                           $expirationMonth Card expiration month
+     * @param int                                           $expirationYear  Year of card expiration.
+     * @param string                                        $number          Card number.
+     * @param int                                           $cvc             Card Security Code.
+     * @param \Moip\Resource\Customer|\Moip\Resource\Holder $holder
+     * @param bool                                          $store           Flag to know if credit card should be saved.
      *
      * @return $this
      */
-    public function setCreditCard($expirationMonth, $expirationYear, $number, $cvc, Holder $holder, $store = true)
+    public function setCreditCard($expirationMonth, $expirationYear, $number, $cvc, $holder, $store = true)
     {
         $this->data->fundingInstrument->method = self::METHOD_CREDIT_CARD;
         $this->data->fundingInstrument->creditCard = new stdClass();
