@@ -1,32 +1,31 @@
 <?php
 
+/*
+ * Tip: This setup section generally goes in other files,
+ * and you access them in your controllers as globals,
+ * instead of reinstantiating them every time.
+ */
 require 'vendor/autoload.php';
 
-use Moip\Auth\Connect;
-use Moip\Auth\OAuth;
+use Moip\Auth\BasicAuth;
 use Moip\Moip;
 
+$token = 'YOUR-TOKEN';
+$key = 'YOUR-KEY';
+$moip = new Moip(new BasicAuth($token, $key), Moip::ENDPOINT_SANDBOX);
+
 /*
- * Tip: Check how to create a Moip APP on https://dev.moip.com.br/reference#criar-um-app
- * and get the client secret
+ * Don't forget you must generate your hash to encrypt credit card data using https://github.com/moip/moip-sdk-js
  */
+$hash = 'YOUR-HASH';
+
 try {
-    $connect = new Connect('http://url.com/redirect_uri.php', 'YOUR-APP-ID', true, Connect::ENDPOINT_SANDBOX);
-
-    $connect->setClientSecret('5681772df8944ce1a79d36af34c9842b');
-    $connect->setCode($_GET['code']);
-
     /*
-     * After the user authorize your app, you must generate an OAuth token
-     * to make transactions in his name.
+     * If you want to persist your customer data and save later, now is the time to create it.
+     * TIP: Don't forget to generate your `ownId` or use one you already have,
+     * here we set using uniqid() function.
      */
-    $authorize = $connect->authorize();
-
-    // Using OAuth token from merchant
-    $moipMerchant = new Moip(new OAuth($authorize->access_token), Moip::ENDPOINT_SANDBOX);
-
-    // Creating an object customer to order
-    $customer = $moipMerchant->customers()->setOwnId(uniqid())
+    $customer = $moip->customers()->setOwnId(uniqid())
         ->setFullname('Fulano de Tal')
         ->setEmail('fulano@email.com')
         ->setBirthDate('1988-12-30')
@@ -37,12 +36,13 @@ try {
             'Bairro', 'Sao Paulo', 'SP',
             '01234567', 8)
         ->addAddress('SHIPPING',
-                'Rua de teste do SHIPPING', 123,
-                'Bairro do SHIPPING', 'Sao Paulo', 'SP',
-                '01234567', 8)->create();
+                  'Rua de teste do SHIPPING', 123,
+                  'Bairro do SHIPPING', 'Sao Paulo', 'SP',
+                  '01234567', 8)
+        ->create();
 
-    // Creating an order and splitting payment using 'addReceiver' method
-    $order = $moipMerchant->orders()->setOwnId(uniqid())
+    // Creating an order
+    $order = $moip->orders()->setOwnId(uniqid())
         ->addItem('bicicleta 1', 1, 'sku1', 10000)
         ->addItem('bicicleta 2', 1, 'sku2', 11000)
         ->addItem('bicicleta 3', 1, 'sku3', 12000)
@@ -55,26 +55,16 @@ try {
         ->addItem('bicicleta 10', 1, 'sku10', 19000)
         ->setShippingAmount(3000)->setAddition(1000)->setDiscount(5000)
         ->setCustomer($customer)
-
-        // Here we're setting a secondary account to receive 90% from order value
-        ->addReceiver('MPA-ID', 'SECONDARY', null, 90, true)
         ->create();
 
     // Creating payment to order
     $payment = $order->payments()
-        ->setCreditCard(12, 21, '4073020000000002', '123', $customer)
+        ->setCreditCardHash($hash, $customer)
         ->setInstallmentCount(3)
         ->setStatementDescriptor('teste de pag')
         ->execute();
 
     echo 'Order ID: '.$order->getId().'<br />';
-
-    echo 'Receivers: <br>';
-
-    foreach ($order->getReceiverIterator() as $receiver) {
-        echo $receiver->moipAccount->fullname.' - '.$receiver->moipAccount->id.'<br>';
-    }
-
     echo 'Payment ID: '.$payment->getId().'<br />';
     echo 'Created at: '.$payment->getCreatedAt()->format('Y-m-d H:i:s').'<br />';
     echo 'Status: '.$payment->getStatus().'<br />';

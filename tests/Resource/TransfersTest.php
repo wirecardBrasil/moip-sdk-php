@@ -8,7 +8,7 @@ class TransfersTest extends TestCase
 {
     private function createTransfer()
     {
-        $this->mockHttpSession($this->body_transfers_bankaccount_create);
+        $this->mockHttpSession($this->body_transfers_create);
 
         $amount = 500;
         $bank_number = '001';
@@ -19,8 +19,7 @@ class TransfersTest extends TestCase
         $holder_name = 'Integração Taxa por canal';
         $tax_document = '033.575.852-51';
         $transfer = $this->moip->transfers()
-            ->setAmount($amount)
-            ->transferToBankAccount($bank_number, $agency_number, $agency_check_number, $account_number, $account_check_number)
+            ->setTransfers($amount, $bank_number, $agency_number, $agency_check_number, $account_number, $account_check_number)
             ->setHolder($holder_name, $tax_document)
             ->execute();
 
@@ -56,36 +55,21 @@ class TransfersTest extends TestCase
     {
         $bank_account = $this->createBankAccount();
 
-        $this->mockHttpSession($this->body_transfers_bankaccount_create);
+        $this->mockHttpSession($this->body_transfers_create);
 
         $amount = 500;
         $transfer = $this->moip->transfers()
-            ->setAmount($amount)
-            ->transferWithBankAccountId($bank_account->getId())
+            ->setTransfersToBankAccount($amount, $bank_account->getId())
             ->execute();
 
         $this->assertNotEmpty($transfer->getId());
-    }
-
-    public function testShouldCreateTransferWithMoipAccountId()
-    {
-        $this->mockHttpSession($this->body_transfers_moipaccount_create);
-
-        $ammount = 500;
-        $moipAccountId = 'MPA-5E1C4C369E8C';
-        $transfer = $this->moip->transfers()
-            ->setAmount($ammount)
-            ->transferToMoipAccount($moipAccountId)
-            ->execute();
-
-        $this->assertNotEmpty($transfer->getAmount());
     }
 
     public function testShouldGetTransfer()
     {
         $transfer_id = $this->createTransfer()->getId();
 
-        $this->mockHttpSession($this->body_transfers_bankaccount_create);
+        $this->mockHttpSession($this->body_transfers_create);
 
         $transfer = $this->moip->transfers()->get($transfer_id);
         $this->assertEquals($transfer_id, $transfer->getId());
